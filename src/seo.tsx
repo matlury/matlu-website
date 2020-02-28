@@ -67,7 +67,23 @@ function SEO({ description, lang, meta, title }) {
           name: `twitter:description`,
           content: metaDescription,
         },
+        {
+          name: "google-site-verification",
+          content: "8Im5qjwtdRS1T2VZHEe8kf3UudgPq4ES7x-XeTGdy0U",
+        },
+        {
+          name: "robots",
+          content: "noindex,nofollow",
+        },
       ].concat(meta)}
+      link={[
+        {
+          href:
+            "https://fonts.googleapis.com/css?family=Open+Sans:300,400,700&display=swap",
+          rel: "stylesheet",
+        },
+      ]}
+      script={[]}
     />
   )
 }
