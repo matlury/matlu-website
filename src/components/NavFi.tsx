@@ -1,31 +1,36 @@
 import React from "react"
 import { Link } from "gatsby"
 import styles from "./Nav.module.scss"
+import { LocalizedLink } from "../utils"
 
-export const NavEn = () => (
+interface LocalizedNavProps {
+  localizedLinks: LocalizedLink
+}
+
+export const NavFi: React.FC<LocalizedNavProps> = ({ localizedLinks }) => (
   <nav className={styles.nav}>
-    <Link to="/home" activeClassName="active">
+    <Link to="/home" activeClassName="active-navlink">
       <a className={styles.navLink}>Matlu</a>
     </Link>
-    <Link to="/board" activeClassName="active">
+    <Link to="/board" activeClassName="active-navlink" partiallyActive={true}>
       <a className={styles.navLink}>Hallitus</a>
     </Link>
-    <Link to="/members" activeClassName="active">
+    <Link to="/members" activeClassName="active-navlink">
       <a className={styles.navLink}>Jäsenjärjestöt</a>
     </Link>
-    <Link to="/contact" activeClassName="active">
+    <Link to="/contact" activeClassName="active-navlink">
       <a className={styles.navLink}>Yhteystiedot</a>
     </Link>
-    <Link to="/interests" activeClassName="active">
+    <Link to="/interests" activeClassName="active-navlink">
       <a className={styles.navLink}>Edunvalvonta</a>
     </Link>
-    <Link to="/events" activeClassName="active">
+    <Link to="/events" activeClassName="active-navlink">
       <a className={styles.navLink}>Tapahtumat</a>
     </Link>
-    <Link to="/rules" activeClassName="active">
+    <Link to="/rules" activeClassName="active-navlink">
       <a className={styles.navLink}>Säännöt</a>
     </Link>
-    <Link to="/officials" activeClassName="active">
+    <Link to="/officials" activeClassName="active-navlink">
       <a className={styles.navLink}>Virat</a>
     </Link>
     <a
@@ -36,8 +41,8 @@ export const NavEn = () => (
     >
       Matlu Klusteri
     </a>
-    <Link to="/en">
-      <a className={styles.navLink}>In English</a>
+    <Link to={localizedLinks.en}>
+      <a className={styles.navLink}>In english</a>
     </Link>
   </nav>
 )

@@ -1,0 +1,27 @@
+@import "../mixins";
+
+.appFooter {
+  display: grid;
+  grid-template-columns: auto auto;
+}
+
+ul.documentLinks,
+ul.matluSome {
+  margin-top: 12px;
+  line-height: 1.8em;
+  font-size: 0.7em;
+  list-style-type: none;
+}
+
+@include mobile {
+  .appFooterSection {
+    padding: 12px;
+  }
+}
+
+.footerBottom {
+  grid-column: 1 / 3;
+  width: 100%;
+  text-align: center;
+  font-size: 0.75em;
+}
