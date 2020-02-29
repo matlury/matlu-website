@@ -34,38 +34,54 @@ exports.createPages = async ({ graphql, actions }) => {
           localizedLinks: { en: `/en` },
         },
       })
-    }
-    createPage({
-      path: `/${node.page}`,
-      component: require.resolve("./src/templates/PageTemplate.tsx"),
-      context: {
-        id: node.id,
-        language: "fi",
-        localizedLinks: { en: `/en/${node.page}` },
-      },
-    })
-  })
-  pageData.allStrapiPage.edges.forEach(({ node }, index) => {
-    if (node.page === "home") {
       createPage({
         path: `/en`,
         component: require.resolve("./src/templates/PageTemplate.tsx"),
         context: {
           id: node.id,
-          language: "fi",
+          language: "en",
           localizedLinks: { fi: `/` },
         },
       })
+    } else if (node.page === "contact") {
+      createPage({
+        path: `/contact`,
+        component: require.resolve("./src/templates/ContactPageTemplate.tsx"),
+        context: {
+          id: node.id,
+          language: "fi",
+          localizedLinks: { en: `/en/contact` },
+        },
+      })
+      createPage({
+        path: `/en/contact`,
+        component: require.resolve("./src/templates/ContactPageTemplate.tsx"),
+        context: {
+          id: node.id,
+          language: "en",
+          localizedLinks: { fi: `/contact` },
+        },
+      })
+    } else {
+      createPage({
+        path: `/${node.page}`,
+        component: require.resolve("./src/templates/PageTemplate.tsx"),
+        context: {
+          id: node.id,
+          language: "fi",
+          localizedLinks: { en: `/en/${node.page}` },
+        },
+      })
+      createPage({
+        path: `/en/${node.page}`,
+        component: require.resolve("./src/templates/PageTemplate.tsx"),
+        context: {
+          id: node.id,
+          language: "en",
+          localizedLinks: { fi: `/${node.page}` },
+        },
+      })
     }
-    createPage({
-      path: `/en/${node.page}`,
-      component: require.resolve("./src/templates/PageTemplate.tsx"),
-      context: {
-        id: node.id,
-        language: "en",
-        localizedLinks: { fi: `/${node.page}` },
-      },
-    })
   })
 
   const result2 = await graphql(
