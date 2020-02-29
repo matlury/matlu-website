@@ -1,10 +1,10 @@
 import React from "react"
 
 import Layout from "../components/layout"
-import SEO from "../components/seo"
+import { SEO } from "../SEO"
 
 const NotFoundPage = () => (
-  <Layout>
+  <Layout language="en" localizedLinks={{}}>
     <SEO title="404: Not found" />
     <h1>Not found</h1>
   </Layout>

@@ -1,0 +1,21 @@
+@import "../vars";
+@import "../mixins";
+
+.logoWrapper {
+  width: $app-width;
+  margin-top: 16px;
+  margin-left: auto;
+  margin-right: auto;
+  @include mobile {
+    width: 100%;
+  }
+}
+
+.matluLogo {
+  height: 90px;
+  width: auto;
+  margin: 16px 16px 16px 0px;
+  @include mobile {
+    margin: 16px;
+  }
+}

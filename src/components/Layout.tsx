@@ -1,40 +1,34 @@
-/**
- * Layout component that queries for data
- * with Gatsby's useStaticQuery component
- *
- * See: https://www.gatsbyjs.org/docs/use-static-query/
- */
-
 import React from "react"
 import PropTypes from "prop-types"
-import { useStaticQuery, graphql } from "gatsby"
 
-import Header from "./header"
 import "../style.scss"
-// @ts-ignore
 import styles from "./Layout.module.scss"
+import logoStyles from "./LogoWrapper.module.scss"
+import { Nav } from "./Nav"
+import { Language, LocalizedLink } from "../utils"
+import { Footer } from "./Footer"
+import MatluImage from "./image"
 
-const Layout = ({ children }) => {
-  const data = useStaticQuery(graphql`
-    query SiteTitleQuery {
-      site {
-        siteMetadata {
-          title
-        }
-      }
-    }
-  `)
+interface LayoutProps {
+  language: Language
+  localizedLinks: LocalizedLink
+  children: React.ReactNode
+}
 
+const Layout: React.FC<LayoutProps> = ({
+  language,
+  children,
+  localizedLinks,
+}) => {
   return (
     <>
-      <Header siteTitle={data.site.siteMetadata.title} />
-      <div>
-        <main className={styles.wrapper}>{children}</main>
-        <footer>
-          © {new Date().getFullYear()}, Built with
-          {` `}
-          <a href="https://www.gatsbyjs.org">Gatsby</a>
-        </footer>
+      <div className={logoStyles.logoWrapper}>
+        <MatluImage />
+      </div>
+      <Nav language={language} localizedLinks={localizedLinks} />
+      <div className={styles.wrapper}>
+        <article>{children}</article>
+        <Footer language={language} />
       </div>
     </>
   )

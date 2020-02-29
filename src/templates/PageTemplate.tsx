@@ -1,8 +1,8 @@
 import React from "react"
 import ReactMarkdown from "react-markdown"
 import { graphql } from "gatsby"
-import SEO from "../components/seo"
 import Layout from "../components/Layout"
+import { SEO } from "../SEO"
 
 const PageTemplate = ({ data, pageContext }) => {
   const dta = {
@@ -17,7 +17,10 @@ const PageTemplate = ({ data, pageContext }) => {
     dta.body = data.strapiPage.body_en
   }
   return (
-    <Layout>
+    <Layout
+      language={pageContext.language}
+      localizedLinks={pageContext.localizedLinks}
+    >
       <SEO title={dta.title} lang={pageContext.language} />
       <ReactMarkdown source={dta.body} />
     </Layout>
