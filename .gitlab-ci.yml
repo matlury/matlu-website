@@ -1,0 +1,30 @@
+image: node:10.16
+
+before_script:
+  - curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+  - python get-pip.py
+  - pip install awscli
+
+stages:
+  - build
+  - export
+  - deploy
+
+build-production:
+  stage: build
+  script:
+    - npm install
+    - npm run build
+
+export-production:
+  stage: export
+  script:
+    - npm install
+    - npm run build
+
+deploy-to-aws:
+  stage: deploy
+  script:
+    - ./deploy.sh
+  only:
+    - master

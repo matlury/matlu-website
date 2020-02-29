@@ -39,8 +39,26 @@ exports.createPages = async ({ graphql, actions }) => {
         component: require.resolve("./src/templates/PageTemplate.tsx"),
         context: {
           id: node.id,
-          language: "en",
+          language: "fi",
           localizedLinks: { fi: `/` },
+        },
+      })
+      createPage({
+        path: `/home`,
+        component: require.resolve("./src/templates/PageTemplate.tsx"),
+        context: {
+          id: node.id,
+          language: "fi",
+          localizedLinks: { en: `/en/home` },
+        },
+      })
+      createPage({
+        path: `/en/home`,
+        component: require.resolve("./src/templates/PageTemplate.tsx"),
+        context: {
+          id: node.id,
+          language: "en",
+          localizedLinks: { fi: `/home` },
         },
       })
     } else if (node.page === "contact") {
