@@ -7,17 +7,10 @@ before_script:
 
 stages:
   - build
-  - export
   - deploy
 
 build-production:
   stage: build
-  script:
-    - npm install
-    - npm run build
-
-export-production:
-  stage: export
   script:
     - npm install
     - npm run build

@@ -1,7 +1,7 @@
 #!/bin/bash
 npm install
-rm -rf out
-rm -rf .next
+rm -rf .cache
+rm -rf public
 npm run build
 DIR="public"
 if [ -d "$DIR" ]; then
