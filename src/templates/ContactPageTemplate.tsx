@@ -23,8 +23,8 @@ const ContactPageTemplate = ({ data, pageContext }) => {
       localizedLinks={pageContext.localizedLinks}
     >
       <SEO title={dta.title} lang={pageContext.language} />
+      <ContactForm lang={pageContext.language} />
       <ReactMarkdown source={dta.body} />
-      <ContactForm />
     </Layout>
   )
 }

@@ -9,29 +9,62 @@ interface LocalizedNavProps {
 
 export const NavFi: React.FC<LocalizedNavProps> = ({ localizedLinks }) => (
   <nav className={styles.nav}>
-    <Link to="/home" activeClassName="active-navlink">
-      <a className={styles.navLink}>Matlu</a>
+    <Link
+      to="/home"
+      className={styles.navLink}
+      activeClassName="active-navlink"
+    >
+      Matlu
     </Link>
-    <Link to="/board" activeClassName="active-navlink" partiallyActive={true}>
-      <a className={styles.navLink}>Hallitus</a>
+    <Link
+      to="/board"
+      className={styles.navLink}
+      activeClassName="active-navlink"
+      partiallyActive={true}
+    >
+      Hallitus
     </Link>
-    <Link to="/members" activeClassName="active-navlink">
-      <a className={styles.navLink}>Jäsenjärjestöt</a>
+    <Link
+      to="/members"
+      className={styles.navLink}
+      activeClassName="active-navlink"
+    >
+      Jäsenjärjestöt
     </Link>
-    <Link to="/contact" activeClassName="active-navlink">
-      <a className={styles.navLink}>Yhteystiedot</a>
+    <Link
+      to="/contact"
+      className={styles.navLink}
+      activeClassName="active-navlink"
+    >
+      Yhteystiedot
     </Link>
-    <Link to="/interests" activeClassName="active-navlink">
-      <a className={styles.navLink}>Edunvalvonta</a>
+    <Link
+      to="/interests"
+      className={styles.navLink}
+      activeClassName="active-navlink"
+    >
+      Edunvalvonta
     </Link>
-    <Link to="/events" activeClassName="active-navlink">
-      <a className={styles.navLink}>Tapahtumat</a>
+    <Link
+      to="/events"
+      className={styles.navLink}
+      activeClassName="active-navlink"
+    >
+      Tapahtumat
     </Link>
-    <Link to="/rules" activeClassName="active-navlink">
-      <a className={styles.navLink}>Säännöt</a>
+    <Link
+      to="/rules"
+      className={styles.navLink}
+      activeClassName="active-navlink"
+    >
+      Säännöt
     </Link>
-    <Link to="/officials" activeClassName="active-navlink">
-      <a className={styles.navLink}>Virat</a>
+    <Link
+      to="/officials"
+      className={styles.navLink}
+      activeClassName="active-navlink"
+    >
+      Virat
     </Link>
     <a
       className={styles.navLink}
@@ -41,8 +74,8 @@ export const NavFi: React.FC<LocalizedNavProps> = ({ localizedLinks }) => (
     >
       Matlu Klusteri
     </a>
-    <Link to={localizedLinks.en}>
-      <a className={styles.navLink}>In english</a>
+    <Link to={localizedLinks.en} className={styles.navLink}>
+      In english
     </Link>
   </nav>
 )

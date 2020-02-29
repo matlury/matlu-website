@@ -43,5 +43,12 @@ module.exports = {
         contentTypes: [`board`, `page`],
       },
     },
+    {
+      resolve: `gatsby-plugin-recaptcha`,
+      options: {
+        async: true,
+        defer: false,
+      },
+    },
   ],
 }
