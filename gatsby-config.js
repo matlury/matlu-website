@@ -50,5 +50,6 @@ module.exports = {
         defer: false,
       },
     },
+    `gatsby-plugin-catch-links`,
   ],
 }
