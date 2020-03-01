@@ -2,11 +2,16 @@
 
 .appFooter {
   display: grid;
-  grid-template-columns: auto auto;
+  column-gap: 8px;
+  grid-template-columns: repeat(3, 1fr);
+  @include mobile {
+    display: block;
+  }
 }
 
 ul.documentLinks,
 ul.matluSome {
+  padding-left: 0px;
   margin-top: 12px;
   line-height: 1.8em;
   font-size: 0.7em;
@@ -19,8 +24,12 @@ ul.matluSome {
   }
 }
 
+.calendarEvents {
+  font-size: 0.7em;
+}
+
 .footerBottom {
-  grid-column: 1 / 3;
+  grid-column: 1 / 4;
   width: 100%;
   text-align: center;
   font-size: 0.75em;

@@ -1,0 +1,22 @@
+@import "../vars";
+
+.matlu-events {
+  list-style-type: none;
+}
+
+.matlu-event {
+  min-height: 50px;
+  padding-left: 8px;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  display: flex;
+  flex-direction: column;
+  .event-title {
+    font-size: 1.1em;
+  }
+  .event-time,
+  .event-location {
+    font-size: 0.8em;
+  }
+  border-left: 3px solid $main-color;
+}

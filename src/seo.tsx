@@ -75,6 +75,10 @@ export const SEO = ({ description, lang, meta, title }) => {
             "https://fonts.googleapis.com/css?family=Open+Sans:300,400,700&display=swap",
           rel: "stylesheet",
         },
+        {
+          href: "/css/all.css",
+          rel: "stylesheet",
+        },
       ]}
       script={[]}
     />

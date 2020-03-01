@@ -14,6 +14,7 @@ export const NavEn: React.FC<LocalizedNavProps> = ({ localizedLinks }) => {
         to="/en/home"
         className={styles.navLink}
         activeClassName="active-navlink"
+        partiallyActive={true}
       >
         Matlu
       </Link>
@@ -29,6 +30,7 @@ export const NavEn: React.FC<LocalizedNavProps> = ({ localizedLinks }) => {
         to="/en/members"
         className={styles.navLink}
         activeClassName="active-navlink"
+        partiallyActive={true}
       >
         Members
       </Link>
@@ -36,6 +38,7 @@ export const NavEn: React.FC<LocalizedNavProps> = ({ localizedLinks }) => {
         to="/en/contact"
         className={styles.navLink}
         activeClassName="active-navlink"
+        partiallyActive={true}
       >
         Contact
       </Link>
@@ -43,6 +46,7 @@ export const NavEn: React.FC<LocalizedNavProps> = ({ localizedLinks }) => {
         to="/en/interests"
         className={styles.navLink}
         activeClassName="active-navlink"
+        partiallyActive={true}
       >
         Interests
       </Link>
@@ -50,6 +54,7 @@ export const NavEn: React.FC<LocalizedNavProps> = ({ localizedLinks }) => {
         to="/en/events"
         className={styles.navLink}
         activeClassName="active-navlink"
+        partiallyActive={true}
       >
         Events
       </Link>
@@ -57,6 +62,7 @@ export const NavEn: React.FC<LocalizedNavProps> = ({ localizedLinks }) => {
         to="/en/rules"
         className={styles.navLink}
         activeClassName="active-navlink"
+        partiallyActive={true}
       >
         Rules
       </Link>
@@ -64,6 +70,7 @@ export const NavEn: React.FC<LocalizedNavProps> = ({ localizedLinks }) => {
         to="/en/officials"
         className={styles.navLink}
         activeClassName="active-navlink"
+        partiallyActive={true}
       >
         Officials
       </Link>
@@ -73,7 +80,7 @@ export const NavEn: React.FC<LocalizedNavProps> = ({ localizedLinks }) => {
         target="_blank"
         rel="noopener noreferrer"
       >
-        Matlu Klusteri
+        <i className="fas fa-external-link-alt"></i> Matlu Klusteri
       </a>
       <Link to={localizedLinks.fi} className={styles.navLink}>
         Suomeksi

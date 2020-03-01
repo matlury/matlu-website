@@ -40,7 +40,7 @@ module.exports = {
       options: {
         apiURL: process.env.API_URL || "http://localhost:1337",
         queryLimit: 100,
-        contentTypes: [`board`, `page`],
+        contentTypes: [`board`, `page`, `calendar-event`],
       },
     },
     {
