@@ -51,7 +51,7 @@ export const FooterEn: React.FC = () => (
       <h4>Upcoming Matlu events</h4>
       <div className={styles.calendarEvents}>
         <CalendarEvents language="en" />
-        <Link to="/events">Show all</Link>
+        <Link to="/en/events">Show all</Link>
       </div>
     </div>
     <div className={styles.footerBottom}>&copy; 2020 Matlu ry</div>
