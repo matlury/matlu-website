@@ -10,9 +10,6 @@
 body {
   font-family: "Open Sans", sans-serif;
   font-size: 15pt;
-  @include mobile {
-    font-size: 13pt;
-  }
 }
 
 ul,
@@ -161,10 +158,14 @@ img[src*="#thumbnail"] {
 }
 
 .team {
+  ul {
+    padding-left: 0px;
+  }
   ul li {
     list-style-type: none;
     margin-top: 12px;
     margin-bottom: 12px;
+    padding-left: 0px;
     font-size: 0.7em;
     @include mobile {
       padding: 8px;
@@ -173,6 +174,9 @@ img[src*="#thumbnail"] {
 }
 
 .former-boards {
+  ul {
+    padding-left: 0px;
+  }
   ul li {
     list-style-type: none;
     margin-top: 12px;
@@ -182,24 +186,4 @@ img[src*="#thumbnail"] {
       padding: 8px;
     }
   }
-}
-
-.matlu-events {
-  list-style-type: none;
-}
-
-.matlu-event {
-  min-height: 50px;
-  padding-left: 8px;
-  margin-top: 8px;
-  margin-bottom: 8px;
-  display: flex;
-  flex-direction: column;
-  .event-title {
-    font-size: 1.1em;
-  }
-  .event-time {
-    font-size: 0.8em;
-  }
-  border-left: 3px solid $main-color;
 }

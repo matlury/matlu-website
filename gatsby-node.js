@@ -39,7 +39,7 @@ exports.createPages = async ({ graphql, actions }) => {
         component: require.resolve("./src/templates/PageTemplate.tsx"),
         context: {
           id: node.id,
-          language: "fi",
+          language: "en",
           localizedLinks: { fi: `/` },
         },
       })
@@ -78,6 +78,25 @@ exports.createPages = async ({ graphql, actions }) => {
           id: node.id,
           language: "en",
           localizedLinks: { fi: `/contact` },
+        },
+      })
+    } else if (node.page === "events") {
+      createPage({
+        path: `/events`,
+        component: require.resolve("./src/templates/EventsPageTemplate.tsx"),
+        context: {
+          id: node.id,
+          language: "fi",
+          localizedLinks: { en: `/en/events` },
+        },
+      })
+      createPage({
+        path: `/en/events`,
+        component: require.resolve("./src/templates/EventsPageTemplate.tsx"),
+        context: {
+          id: node.id,
+          language: "en",
+          localizedLinks: { fi: `/events` },
         },
       })
     } else {
