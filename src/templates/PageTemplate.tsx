@@ -4,38 +4,32 @@ import { graphql } from "gatsby"
 import Layout from "../components/Layout"
 import { SEO } from "../SEO"
 
-const PageTemplate = ({ data, pageContext }) => {
-  const dta = {
-    body: "",
-    title: "",
-  }
-  if (pageContext.language === "fi") {
-    dta.title = data.strapiPage.Page_title_fi
-    dta.body = data.strapiPage.body_fi
-  } else if (pageContext.language === "en") {
-    dta.title = data.strapiPage.Page_title_en
-    dta.body = data.strapiPage.body_en
-  }
-  return (
-    <Layout
-      language={pageContext.language}
-      localizedLinks={pageContext.localizedLinks}
-    >
-      <SEO title={dta.title} lang={pageContext.language} />
-      <ReactMarkdown source={dta.body} />
-    </Layout>
-  )
-}
+const PageTemplate = ({ data, pageContext }) => (
+  <Layout
+    language={pageContext.language}
+    localizedLinks={pageContext.localizedLinks}
+  >
+    <SEO
+      title={data.strapiPage.Title[pageContext.language]}
+      lang={pageContext.language}
+    />
+    <ReactMarkdown source={data.strapiPage.body[pageContext.language]} />
+  </Layout>
+)
 
 export default PageTemplate
 
 export const query = graphql`
   query PageTemplate($id: String) {
     strapiPage(id: { eq: $id }) {
-      body_fi
-      body_en
-      Page_title_fi
-      Page_title_en
+      body {
+        fi: Fi
+        en: En
+      }
+      Title {
+        fi
+        en
+      }
     }
   }
 `
