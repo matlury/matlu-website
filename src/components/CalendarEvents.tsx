@@ -36,6 +36,9 @@ const CalendarEvents: React.FC<CalendarEventsProps> = ({
     }
   `)
   const eventData = data.allStrapiCalendarEvent.nodes
+  if (eventData.length === 0) {
+    return <div></div>
+  }
   let events = eventData
   if (!showAll) {
     const [first, second] = eventData
