@@ -1,7 +1,7 @@
 import React from "react"
 import { Link, graphql } from "gatsby"
 import Layout from "../components/Layout"
-import { SEO } from "../SEO"
+import { SEO } from "../seo"
 
 const BoardTemplateEn: React.FC<any> = ({ data, pageContext }) => {
   const board = data.strapiBoard

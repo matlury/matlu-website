@@ -16,6 +16,7 @@ build-production:
   stage: build
   script:
     - npm install
+    - npm run clean
     - npm run build
 
 deploy-to-aws:
