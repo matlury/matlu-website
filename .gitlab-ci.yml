@@ -1,16 +1,16 @@
 image: node:10.16
 
 variables:
-    PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
+    PIP_CACHE_DIR: "$CI_PROJECT_DIR/.pip-cache/pip"
 
 cache:
   key: ${CI_COMMIT_REF_SLUG}
   paths:
   - .npm/
-  - public/
   - .cache/
+  - .pip-cache/
   - node_modules/
-  - .cache/pip
+  - public/
 
 before_script:
   - npm ci --cache .npm --prefer-offline
@@ -25,20 +25,11 @@ stages:
 
 install-dependencies:
   stage: install_deps
-  cache:
-    key: ${CI_COMMIT_REF_SLUG}
-    paths:
-      - node_modules/
   script:
     - npm install
 
 build-project:
   stage: build
-  cache:
-    key: ${CI_COMMIT_REF_SLUG}
-    paths:
-    - .cache/
-    - public/
   script:
     - npm run clean
     - npm run build
