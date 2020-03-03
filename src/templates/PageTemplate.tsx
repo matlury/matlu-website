@@ -2,7 +2,7 @@ import React from "react"
 import ReactMarkdown from "react-markdown"
 import { graphql } from "gatsby"
 import Layout from "../components/Layout"
-import { SEO } from "../SEO"
+import { SEO } from "../seo"
 
 const PageTemplate = ({ data, pageContext }) => (
   <Layout
