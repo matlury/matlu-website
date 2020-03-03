@@ -5,39 +5,33 @@ import Layout from "../components/Layout"
 import { SEO } from "../SEO"
 import ContactForm from "../components/ContactForm"
 
-const ContactPageTemplate = ({ data, pageContext }) => {
-  const dta = {
-    body: "",
-    title: "",
-  }
-  if (pageContext.language === "fi") {
-    dta.title = data.strapiPage.Page_title_fi
-    dta.body = data.strapiPage.body_fi
-  } else if (pageContext.language === "en") {
-    dta.title = data.strapiPage.Page_title_en
-    dta.body = data.strapiPage.body_en
-  }
-  return (
-    <Layout
-      language={pageContext.language}
-      localizedLinks={pageContext.localizedLinks}
-    >
-      <SEO title={dta.title} lang={pageContext.language} />
-      <ContactForm lang={pageContext.language} />
-      <ReactMarkdown source={dta.body} />
-    </Layout>
-  )
-}
+const ContactPageTemplate = ({ data, pageContext }) => (
+  <Layout
+    language={pageContext.language}
+    localizedLinks={pageContext.localizedLinks}
+  >
+    <SEO
+      title={data.strapiPage.Title[pageContext.language]}
+      lang={pageContext.language}
+    />
+    <ContactForm lang={pageContext.language} />
+    <ReactMarkdown source={data.strapiPage.body[pageContext.language]} />
+  </Layout>
+)
 
 export default ContactPageTemplate
 
 export const query = graphql`
   query ContactPageTemplate($id: String) {
     strapiPage(id: { eq: $id }) {
-      body_fi
-      body_en
-      Page_title_fi
-      Page_title_en
+      body {
+        fi: Fi
+        en: En
+      }
+      Title {
+        fi
+        en
+      }
     }
   }
 `
