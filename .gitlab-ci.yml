@@ -8,6 +8,8 @@ cache:
   paths:
   - .npm/
   - public/
+  - .cache/
+  - node_modules/
   - .cache/pip
 
 before_script:
@@ -17,13 +19,27 @@ before_script:
   - pip install awscli
 
 stages:
+  - install_deps
   - build
   - deploy
 
-build-production:
-  stage: build
+install-dependencies:
+  stage: install_deps
+  cache:
+    key: ${CI_COMMIT_REF_SLUG}
+    paths:
+      - node_modules/
   script:
     - npm install
+
+build-project:
+  stage: build
+  cache:
+    key: ${CI_COMMIT_REF_SLUG}
+    paths:
+    - .cache/
+    - public/
+  script:
     - npm run clean
     - npm run build
 
