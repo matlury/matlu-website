@@ -1,9 +1,4 @@
 #!/bin/bash
-npm install
-rm -rf .cache
-rm -rf public
-npm run clean
-npm run build
 DIR="public"
 if [ -d "$DIR" ]; then
     cd $DIR
