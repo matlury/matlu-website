@@ -2,7 +2,6 @@ image: node:10.16
 
 variables:
   AWS_DEFAULT_REGION: eu-central-1
-  BUCKET_NAME: matluwebsite-matluwebsite09e50f60-zrzlg944choa
 
 stages:
   - build
