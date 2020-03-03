@@ -124,6 +124,21 @@ img[src*="#thumbnail"] {
   width: auto;
 }
 
+img[src*="#thumbnail_1_5x"] {
+  height: 150px;
+  width: auto;
+}
+
+img[src*="#thumbnail_2x"] {
+  height: 200px;
+  width: auto;
+}
+
+img[src*="#thumbnail_3x"] {
+  height: 300px;
+  width: auto;
+}
+
 .officers {
   display: flex;
   flex-direction: row;
