@@ -36,9 +36,6 @@ const CalendarEvents: React.FC<CalendarEventsProps> = ({
     }
   `)
   const eventData = data.allStrapiCalendarEvent.nodes
-  if (eventData.length === 0) {
-    return <div></div>
-  }
   let events = eventData
   if (!showAll) {
     const [first, second] = eventData
@@ -46,17 +43,19 @@ const CalendarEvents: React.FC<CalendarEventsProps> = ({
   }
   return (
     <div>
-      {events.map(evt => (
-        <CalendarEvent
-          key={evt.id}
-          language={language}
-          title={evt.title}
-          hide_location={evt.hide_location}
-          location={evt.location}
-          start_date={evt.start_date}
-          event_link={evt.event_link}
-        />
-      ))}
+      {events
+        .filter(evt => evt !== undefined)
+        .map(evt => (
+          <CalendarEvent
+            key={evt.id}
+            language={language}
+            title={evt.title}
+            hide_location={evt.hide_location}
+            location={evt.location}
+            start_date={evt.start_date}
+            event_link={evt.event_link}
+          />
+        ))}
     </div>
   )
 }
