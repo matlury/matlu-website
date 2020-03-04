@@ -5,75 +5,50 @@ import { LocalizedLink } from "../utils"
 
 interface LocalizedNavProps {
   localizedLinks: LocalizedLink
+  navLinks: {
+    id: string
+    page: string
+    Ordering: number
+    Draft: boolean
+    Title: {
+      en: string
+      fi: string
+    }
+  }[]
 }
 
-export const NavFi: React.FC<LocalizedNavProps> = ({ localizedLinks }) => {
+export const NavFi: React.FC<LocalizedNavProps> = ({
+  navLinks,
+  localizedLinks,
+}) => {
   return (
     <nav className={styles.nav}>
       <Link
-        to="/home"
+        to={`/`}
         className={styles.navLink}
         activeClassName="active-navlink"
-        partiallyActive={true}
       >
         Matlu
       </Link>
       <Link
-        to="/board"
+        to={`/board`}
         className={styles.navLink}
         activeClassName="active-navlink"
         partiallyActive={true}
       >
         Hallitus
       </Link>
-      <Link
-        to="/members"
-        className={styles.navLink}
-        activeClassName="active-navlink"
-        partiallyActive={true}
-      >
-        Jäsenjärjestöt
-      </Link>
-      <Link
-        to="/contact"
-        className={styles.navLink}
-        activeClassName="active-navlink"
-        partiallyActive={true}
-      >
-        Yhteystiedot
-      </Link>
-      <Link
-        to="/interests"
-        className={styles.navLink}
-        activeClassName="active-navlink"
-        partiallyActive={true}
-      >
-        Edunvalvonta
-      </Link>
-      <Link
-        to="/events"
-        className={styles.navLink}
-        activeClassName="active-navlink"
-        partiallyActive={true}
-      >
-        Tapahtumat
-      </Link>
-      <Link
-        to="/rules"
-        className={styles.navLink}
-        activeClassName="active-navlink"
-        partiallyActive={true}
-      >
-        Säännöt
-      </Link>
-      <Link
-        to="/officials"
-        className={styles.navLink}
-        activeClassName="active-navlink"
-        partiallyActive={true}
-      >
-        Virat
-      </Link>
+      {navLinks.map(navLink => (
+        <Link
+          key={navLink.id}
+          to={`/${navLink.page}`}
+          className={styles.navLink}
+          activeClassName="active-navlink"
+          partiallyActive={true}
+        >
+          {navLink.Title.fi}
+        </Link>
+      ))}
       <a
         className={styles.navLink}
         href="https://matlu.fi/ilotalo"

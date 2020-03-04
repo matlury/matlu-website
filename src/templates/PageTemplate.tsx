@@ -12,6 +12,7 @@ const PageTemplate = ({ data, pageContext }) => (
     <SEO
       title={data.strapiPage.Title[pageContext.language]}
       lang={pageContext.language}
+      hideFromSearchEngine={pageContext.hideFromSearchEngine}
     />
     <ReactMarkdown source={data.strapiPage.body[pageContext.language]} />
   </Layout>

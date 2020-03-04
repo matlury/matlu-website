@@ -8,7 +8,11 @@ const BoardTemplateFi: React.FC<any> = ({ data, pageContext }) => {
   const boardYears = pageContext.boardYears
   return (
     <Layout language="fi" localizedLinks={pageContext.localizedLinks}>
-      <SEO title={"Hallitus " + board.year} lang={pageContext.language} />
+      <SEO
+        title={"Hallitus " + board.year}
+        lang={pageContext.language}
+        hideFromSearchEngine
+      />
       <h1>Hallitus {board.year}</h1>
       <p>
         Sähköpostit pääsääntöisesti muotoa <b>etu.suku@helsinki.fi</b>.<br />{" "}

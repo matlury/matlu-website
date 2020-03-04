@@ -13,6 +13,7 @@ const ContactPageTemplate = ({ data, pageContext }) => (
     <SEO
       title={data.strapiPage.Title[pageContext.language]}
       lang={pageContext.language}
+      hideFromSearchEngine={pageContext.hideFromSearchEngine}
     />
     <ContactForm lang={pageContext.language} />
     <ReactMarkdown source={data.strapiPage.body[pageContext.language]} />

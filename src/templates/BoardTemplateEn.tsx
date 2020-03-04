@@ -8,7 +8,11 @@ const BoardTemplateEn: React.FC<any> = ({ data, pageContext }) => {
   const boardYears = pageContext.boardYears
   return (
     <Layout language="en" localizedLinks={pageContext.localizedLinks}>
-      <SEO title={"Board of " + board.year} lang={pageContext.language} />
+      <SEO
+        title={"Board of " + board.year}
+        lang={pageContext.language}
+        hideFromSearchEngine
+      />
       <h1>Board of {board.year}</h1>
       <p>
         E-mail addresses are mostly in the form of <b>etu.suku@helsinki.fi</b>.

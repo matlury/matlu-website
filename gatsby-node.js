@@ -6,11 +6,14 @@ exports.createPages = async ({ graphql, actions }) => {
   const result = await graphql(
     `
       query {
-        allStrapiPage {
+        allStrapiPage(
+          filter: { Draft: { eq: false }, page: { nin: ["home", "board"] } }
+        ) {
           edges {
             node {
               id
               page
+              HideFromSearchEngine
             }
           }
         }
@@ -24,44 +27,7 @@ exports.createPages = async ({ graphql, actions }) => {
 
   const pageData = result.data
   pageData.allStrapiPage.edges.forEach(({ node }, index) => {
-    if (node.page === "home") {
-      createPage({
-        path: `/`,
-        component: require.resolve("./src/templates/PageTemplate.tsx"),
-        context: {
-          id: node.id,
-          language: "fi",
-          localizedLinks: { en: `/en` },
-        },
-      })
-      createPage({
-        path: `/en`,
-        component: require.resolve("./src/templates/PageTemplate.tsx"),
-        context: {
-          id: node.id,
-          language: "en",
-          localizedLinks: { fi: `/` },
-        },
-      })
-      createPage({
-        path: `/home`,
-        component: require.resolve("./src/templates/PageTemplate.tsx"),
-        context: {
-          id: node.id,
-          language: "fi",
-          localizedLinks: { en: `/en/home` },
-        },
-      })
-      createPage({
-        path: `/en/home`,
-        component: require.resolve("./src/templates/PageTemplate.tsx"),
-        context: {
-          id: node.id,
-          language: "en",
-          localizedLinks: { fi: `/home` },
-        },
-      })
-    } else if (node.page === "contact") {
+    if (node.page === "contact") {
       createPage({
         path: `/contact`,
         component: require.resolve("./src/templates/ContactPageTemplate.tsx"),
@@ -69,6 +35,7 @@ exports.createPages = async ({ graphql, actions }) => {
           id: node.id,
           language: "fi",
           localizedLinks: { en: `/en/contact` },
+          hideFromSearchEngine: node.HideFromSearchEngine,
         },
       })
       createPage({
@@ -78,6 +45,7 @@ exports.createPages = async ({ graphql, actions }) => {
           id: node.id,
           language: "en",
           localizedLinks: { fi: `/contact` },
+          hideFromSearchEngine: node.HideFromSearchEngine,
         },
       })
     } else if (node.page === "events") {
@@ -88,6 +56,7 @@ exports.createPages = async ({ graphql, actions }) => {
           id: node.id,
           language: "fi",
           localizedLinks: { en: `/en/events` },
+          hideFromSearchEngine: node.HideFromSearchEngine,
         },
       })
       createPage({
@@ -97,6 +66,7 @@ exports.createPages = async ({ graphql, actions }) => {
           id: node.id,
           language: "en",
           localizedLinks: { fi: `/events` },
+          hideFromSearchEngine: node.HideFromSearchEngine,
         },
       })
     } else {
@@ -107,6 +77,7 @@ exports.createPages = async ({ graphql, actions }) => {
           id: node.id,
           language: "fi",
           localizedLinks: { en: `/en/${node.page}` },
+          hideFromSearchEngine: node.HideFromSearchEngine,
         },
       })
       createPage({
@@ -116,6 +87,7 @@ exports.createPages = async ({ graphql, actions }) => {
           id: node.id,
           language: "en",
           localizedLinks: { fi: `/${node.page}` },
+          hideFromSearchEngine: node.HideFromSearchEngine,
         },
       })
     }
@@ -124,7 +96,7 @@ exports.createPages = async ({ graphql, actions }) => {
   const result2 = await graphql(
     `
       query {
-        allStrapiBoard {
+        allStrapiBoard(filter: { hidden: { eq: false } }) {
           edges {
             node {
               id

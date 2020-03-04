@@ -5,7 +5,7 @@ import Layout from "../components/Layout"
 import { SEO } from "../seo"
 import CalendarEvents from "../components/CalendarEvents"
 
-const PageTemplate = ({ data, pageContext }) => (
+const EventsPageTemplate = ({ data, pageContext }) => (
   <Layout
     language={pageContext.language}
     localizedLinks={pageContext.localizedLinks}
@@ -13,13 +13,16 @@ const PageTemplate = ({ data, pageContext }) => (
     <h1>
       {pageContext.language === "fi" ? "Tulevat tapahtumat" : "Upcoming events"}
     </h1>
-    <SEO title={data.strapiPage.Title[pageContext.language]} />
+    <SEO
+      title={data.strapiPage.Title[pageContext.language]}
+      hideFromSearchEngine={pageContext.hideFromSearchEngine}
+    />
     <CalendarEvents language={pageContext.language} showAll />
     <ReactMarkdown source={data.strapiPage.body[pageContext.language]} />
   </Layout>
 )
 
-export default PageTemplate
+export default EventsPageTemplate
 
 export const query = graphql`
   query EventsPageTemplate($id: String) {
