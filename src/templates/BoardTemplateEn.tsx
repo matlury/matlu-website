@@ -77,9 +77,9 @@ const BoardTemplateEn: React.FC<any> = ({ data, pageContext }) => {
           <h2>Former and other boards</h2>
           <ul>
             {boardYears.map(boardYear => (
-              <li key={"boardyear_" + boardYear}>
+              <li key={`boardyear_${boardYear}_en`}>
                 <Link
-                  to={"/en/board/" + boardYear}
+                  to={`/en/board/${boardYear}/`}
                   activeClassName="active-board"
                 >
                   {boardYear}
