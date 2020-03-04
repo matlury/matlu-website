@@ -11,7 +11,7 @@ const NotFoundPage = () => (
       en: "/en",
     }}
   >
-    <SEO title="404: Not found" />
+    <SEO title="404: Not found" hideFromSearchEngine />
     <h1>Not found</h1>
   </Layout>
 )

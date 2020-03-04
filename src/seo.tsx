@@ -3,7 +3,13 @@ import PropTypes from "prop-types"
 import Helmet from "react-helmet"
 import { useStaticQuery, graphql } from "gatsby"
 
-export const SEO = ({ description, lang, meta, title }) => {
+export const SEO = ({
+  description,
+  lang,
+  meta,
+  title,
+  hideFromSearchEngine,
+}) => {
   const { site } = useStaticQuery(
     graphql`
       query {
@@ -64,10 +70,12 @@ export const SEO = ({ description, lang, meta, title }) => {
           name: "google-site-verification",
           content: "8Im5qjwtdRS1T2VZHEe8kf3UudgPq4ES7x-XeTGdy0U",
         },
-        {
-          name: "robots",
-          content: "noindex,nofollow",
-        },
+        hideFromSearchEngine
+          ? {
+              name: "robots",
+              content: "noindex,nofollow",
+            }
+          : {},
       ].concat(meta)}
       link={[
         {

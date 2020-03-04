@@ -5,75 +5,50 @@ import { LocalizedLink } from "../utils"
 
 interface LocalizedNavProps {
   localizedLinks: LocalizedLink
+  navLinks: {
+    id: string
+    page: string
+    Ordering: number
+    Draft: boolean
+    Title: {
+      en: string
+      fi: string
+    }
+  }[]
 }
 
-export const NavEn: React.FC<LocalizedNavProps> = ({ localizedLinks }) => {
+export const NavEn: React.FC<LocalizedNavProps> = ({
+  navLinks,
+  localizedLinks,
+}) => {
   return (
     <nav className={styles.nav}>
       <Link
-        to="/en/home"
+        to={`/en/`}
         className={styles.navLink}
         activeClassName="active-navlink"
-        partiallyActive={true}
       >
         Matlu
       </Link>
       <Link
-        to="/en/board"
+        to={`/en/board`}
         className={styles.navLink}
         activeClassName="active-navlink"
         partiallyActive={true}
       >
         Board
       </Link>
-      <Link
-        to="/en/members"
-        className={styles.navLink}
-        activeClassName="active-navlink"
-        partiallyActive={true}
-      >
-        Members
-      </Link>
-      <Link
-        to="/en/contact"
-        className={styles.navLink}
-        activeClassName="active-navlink"
-        partiallyActive={true}
-      >
-        Contact
-      </Link>
-      <Link
-        to="/en/interests"
-        className={styles.navLink}
-        activeClassName="active-navlink"
-        partiallyActive={true}
-      >
-        Interests
-      </Link>
-      <Link
-        to="/en/events"
-        className={styles.navLink}
-        activeClassName="active-navlink"
-        partiallyActive={true}
-      >
-        Events
-      </Link>
-      <Link
-        to="/en/rules"
-        className={styles.navLink}
-        activeClassName="active-navlink"
-        partiallyActive={true}
-      >
-        Rules
-      </Link>
-      <Link
-        to="/en/officials"
-        className={styles.navLink}
-        activeClassName="active-navlink"
-        partiallyActive={true}
-      >
-        Officials
-      </Link>
+      {navLinks.map(navLink => (
+        <Link
+          key={navLink.id}
+          to={`/en/${navLink.page}`}
+          className={styles.navLink}
+          activeClassName="active-navlink"
+          partiallyActive={true}
+        >
+          {navLink.Title.en}
+        </Link>
+      ))}
       <a
         className={styles.navLink}
         href="https://matlu.fi/ilotalo"
