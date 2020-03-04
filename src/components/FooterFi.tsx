@@ -53,7 +53,7 @@ export const FooterFi: React.FC = () => (
       <h4>Tulevia Matlun tapahtumia</h4>
       <div className={styles.calendarEvents}>
         <CalendarEvents language="fi" />
-        <Link to="/events">Näytä kaikki tapahtumat</Link>
+        <Link to="/events/">Näytä kaikki tapahtumat</Link>
       </div>
     </div>
     <div className={styles.footerBottom}>&copy; 2020 Matlu ry</div>
