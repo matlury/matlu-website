@@ -51,6 +51,5 @@ module.exports = {
       },
     },
     `gatsby-plugin-catch-links`,
-    `gatsby-plugin-force-trailing-slashes`,
   ],
 }

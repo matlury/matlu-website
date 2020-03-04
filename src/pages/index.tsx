@@ -12,7 +12,7 @@ const FrontPageFi = ({ data }) => {
         language="fi"
         localizedLinks={{
           fi: "/",
-          en: "/en",
+          en: "/en/",
         }}
       >
         <SEO title={"Etusivu"} lang="fi" hideFromSearchEngine={true} />
@@ -25,7 +25,7 @@ const FrontPageFi = ({ data }) => {
       language="fi"
       localizedLinks={{
         fi: "/",
-        en: "/en",
+        en: "/en/",
       }}
     >
       <SEO

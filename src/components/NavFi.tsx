@@ -31,7 +31,7 @@ export const NavFi: React.FC<LocalizedNavProps> = ({
         Matlu
       </Link>
       <Link
-        to={`/board`}
+        to={`/board/`}
         className={styles.navLink}
         activeClassName="active-navlink"
         partiallyActive={true}
@@ -41,7 +41,7 @@ export const NavFi: React.FC<LocalizedNavProps> = ({
       {navLinks.map(navLink => (
         <Link
           key={navLink.id}
-          to={`/${navLink.page}`}
+          to={`/${navLink.page}/`}
           className={styles.navLink}
           activeClassName="active-navlink"
           partiallyActive={true}
