@@ -2,6 +2,7 @@ import React from "react"
 import PropTypes from "prop-types"
 import Helmet from "react-helmet"
 import { useStaticQuery, graphql } from "gatsby"
+import { SEOQuery } from "./utils"
 
 export const SEO = ({
   description,
@@ -10,7 +11,7 @@ export const SEO = ({
   title,
   hideFromSearchEngine,
 }) => {
-  const { site } = useStaticQuery(
+  const { site }: SEOQuery = useStaticQuery(
     graphql`
       query {
         site {
@@ -97,6 +98,7 @@ SEO.defaultProps = {
   lang: `en`,
   meta: [],
   description: ``,
+  hideFromSearchEngine: false,
 }
 
 SEO.propTypes = {

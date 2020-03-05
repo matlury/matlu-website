@@ -4,8 +4,13 @@ import Layout from "../components/Layout"
 import { graphql } from "gatsby"
 import { SEO } from "../seo"
 import ReactMarkdown from "react-markdown"
+import { FrontPageQuery, LocalizedTextFi } from "../utils"
 
-const FrontPageFi = ({ data }) => {
+interface FrontPageFiProps {
+  data: FrontPageQuery<LocalizedTextFi>
+}
+
+const FrontPageFi: React.FC<FrontPageFiProps> = ({ data }) => {
   if (data.strapiPage === null) {
     return (
       <Layout

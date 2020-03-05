@@ -2,8 +2,17 @@ import React from "react"
 import { Link, graphql } from "gatsby"
 import Layout from "../components/Layout"
 import { SEO } from "../seo"
+import { BoardTemplateQuery, LocalizedTextFi, BoardPageContext } from "../utils"
 
-const BoardTemplateFi: React.FC<any> = ({ data, pageContext }) => {
+interface BoardTemplateFiProps {
+  data: BoardTemplateQuery<LocalizedTextFi>
+  pageContext: BoardPageContext
+}
+
+const BoardTemplateFi: React.FC<BoardTemplateFiProps> = ({
+  data,
+  pageContext,
+}) => {
   const board = data.strapiBoard
   const boardYears = pageContext.boardYears
   return (
@@ -11,7 +20,7 @@ const BoardTemplateFi: React.FC<any> = ({ data, pageContext }) => {
       <SEO
         title={"Hallitus " + board.year}
         lang={pageContext.language}
-        hideFromSearchEngine
+        hideFromSearchEngine={pageContext.hideFromSearchEngine}
       />
       <h1>Hallitus {board.year}</h1>
       <p>
@@ -20,25 +29,26 @@ const BoardTemplateFi: React.FC<any> = ({ data, pageContext }) => {
         <a href="mailto:hallitus@matlu.fi">hallitus@matlu.fi</a>.
       </p>
       <div className="board-members">
-        {[...board.members.sort((a, b) => a.id - b.id)].map(member => (
-          <section
-            className="board-member"
-            key={"board_member_" + member.name + "_" + member.id}
-          >
-            <div className="member-picture"></div>
-            <div className="member-name">
-              <h4>{member.name}</h4>
-            </div>
-            <div className="member-title">{member.role.fi}</div>
-            {member.email !== null && (
-              <div className="member-email">
-                <a href={"mailto:" + member.email}>{member.email}</a>
+        {board.members !== null &&
+          [...board.members.sort((a, b) => a.id - b.id)].map(member => (
+            <section
+              className="board-member"
+              key={"board_member_" + member.name + "_" + member.id}
+            >
+              <div className="member-picture"></div>
+              <div className="member-name">
+                <h4>{member.name}</h4>
               </div>
-            )}
-          </section>
-        ))}
+              <div className="member-title">{member.role.fi}</div>
+              {member.email !== null && (
+                <div className="member-email">
+                  <a href={"mailto:" + member.email}>{member.email}</a>
+                </div>
+              )}
+            </section>
+          ))}
       </div>
-      {board.officers.length > 0 && (
+      {board.officers !== null && board.officers.length > 0 && (
         <section>
           <h2>Virkailijat {board.year}</h2>
           <div className="officers">
@@ -57,7 +67,8 @@ const BoardTemplateFi: React.FC<any> = ({ data, pageContext }) => {
           </div>
         </section>
       )}
-      {board.teams.length > 0 &&
+      {board.teams !== null &&
+        board.teams.length > 0 &&
         [...board.teams.sort((a, b) => a.id - b.id)].map(team => (
           <section className="team" key={team.id}>
             <h2>{team.title.fi}</h2>
