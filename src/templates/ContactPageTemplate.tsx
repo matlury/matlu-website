@@ -4,8 +4,20 @@ import { graphql } from "gatsby"
 import Layout from "../components/Layout"
 import { SEO } from "../seo"
 import ContactForm from "../components/ContactForm"
+import {
+  ContactPageTemplateQuery,
+  ContactPageTemplatePageContext,
+} from "../utils"
 
-const ContactPageTemplate = ({ data, pageContext }) => (
+interface ContactPageTemplateProps {
+  data: ContactPageTemplateQuery
+  pageContext: ContactPageTemplatePageContext
+}
+
+const ContactPageTemplate: React.FC<ContactPageTemplateProps> = ({
+  data,
+  pageContext,
+}) => (
   <Layout
     language={pageContext.language}
     localizedLinks={pageContext.localizedLinks}

@@ -4,8 +4,13 @@ import Layout from "../../components/Layout"
 import { graphql } from "gatsby"
 import { SEO } from "../../seo"
 import ReactMarkdown from "react-markdown"
+import { FrontPageQuery, LocalizedTextEn } from "../../utils"
 
-const FrontPageEn = ({ data }) => {
+interface FrontPageEnProps {
+  data: FrontPageQuery<LocalizedTextEn>
+}
+
+const FrontPageEn: React.FC<FrontPageEnProps> = ({ data }) => {
   if (data.strapiPage === null) {
     return (
       <Layout
@@ -32,7 +37,7 @@ const FrontPageEn = ({ data }) => {
         title={data.strapiPage.Title.en}
         description={data.strapiPage.Description.en}
         lang="fi"
-        hideFromSearchEngine={data.strapiPage.hideFromSearchEngine}
+        hideFromSearchEngine={data.strapiPage.HideFromSearchEngine}
       />
       <ReactMarkdown source={data.strapiPage.body.en} />
     </Layout>

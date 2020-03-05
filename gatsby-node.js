@@ -110,6 +110,7 @@ exports.createPages = async ({ graphql, actions }) => {
           boardYears,
           language: "fi",
           localizedLinks: { en: "/en/board/" },
+          hideFromSearchEngine: false,
         },
       })
       createPage({
@@ -120,6 +121,7 @@ exports.createPages = async ({ graphql, actions }) => {
           boardYears,
           language: "en",
           localizedLinks: { fi: "/board/" },
+          hideFromSearchEngine: false,
         },
       })
     }
@@ -131,6 +133,7 @@ exports.createPages = async ({ graphql, actions }) => {
         boardYears,
         language: "fi",
         localizedLinks: { en: `/en/board/${node.year}/` },
+        hideFromSearchEngine: false,
       },
     })
     createPage({
@@ -141,6 +144,7 @@ exports.createPages = async ({ graphql, actions }) => {
         boardYears,
         language: "en",
         localizedLinks: { fi: `/board/${node.year}/` },
+        hideFromSearchEngine: false,
       },
     })
   })

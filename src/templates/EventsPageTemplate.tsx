@@ -4,8 +4,20 @@ import { graphql } from "gatsby"
 import Layout from "../components/Layout"
 import { SEO } from "../seo"
 import CalendarEvents from "../components/CalendarEvents"
+import {
+  EventsPageTemplateQuery,
+  EventsPageTemplatePageContext,
+} from "../utils"
 
-const EventsPageTemplate = ({ data, pageContext }) => (
+interface EventsPageTemplateProps {
+  data: EventsPageTemplateQuery
+  pageContext: EventsPageTemplatePageContext
+}
+
+const EventsPageTemplate: React.FC<EventsPageTemplateProps> = ({
+  data,
+  pageContext,
+}) => (
   <Layout
     language={pageContext.language}
     localizedLinks={pageContext.localizedLinks}
