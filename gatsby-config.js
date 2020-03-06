@@ -8,6 +8,10 @@ module.exports = {
     description: `Helsingin yliopiston Matemaattis-luonnontieteellisten opiskelijajärjestöjen yhteistyöjärjestö`,
     author: `Matlu ry`,
     siteUrl: `https://www.matlu.fi`,
+    recaptchaSiteKey:
+      process.env.RECAPTCHA_SITE_KEY ||
+      "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI",
+    feedbackFormHandler: process.env.FEEDBACK_FORM_HANDLER_URL || "",
   },
   plugins: [
     `gatsby-plugin-typescript`,
