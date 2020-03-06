@@ -2,11 +2,20 @@ import React from "react"
 import styles from "./ContactForm.module.scss"
 import { Language } from "../utils"
 import Recaptcha from "react-recaptcha"
+import { graphql, useStaticQuery } from "gatsby"
 interface ContactFormProps {
   lang: Language
 }
 
-const ContactFormFi = () => (
+interface ContactFormFragmentProps {
+  reCaptchaSiteKey: string
+  feedbackFormHandler: string
+}
+
+const ContactFormFi: React.FC<ContactFormFragmentProps> = ({
+  reCaptchaSiteKey,
+  feedbackFormHandler,
+}) => (
   <section>
     <h1>Yhteydenottolomake</h1>
     <p>
@@ -14,7 +23,11 @@ const ContactFormFi = () => (
       sähköpostitse. Voit halutessasi jättää viestiin yhteystietosi, jos haluat
       vastauksen yhteydenottoosi.
     </p>
-    <form action="contact.php" method="POST" className={styles.contactForm}>
+    <form
+      action={feedbackFormHandler}
+      method="POST"
+      className={styles.contactForm}
+    >
       <div className={styles.contactFormGroup}>
         <label htmlFor="contactmsg">Viesti</label>
         <textarea
@@ -26,7 +39,7 @@ const ContactFormFi = () => (
         />
       </div>
       <div className={styles.contactFormGroup}>
-        <Recaptcha sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI" />
+        <Recaptcha sitekey={reCaptchaSiteKey} />
       </div>
       <div className={styles.contactFormGroup}>
         <button type="submit">Lähetä</button>
@@ -35,7 +48,10 @@ const ContactFormFi = () => (
   </section>
 )
 
-const ContactFormEn = () => (
+const ContactFormEn: React.FC<ContactFormFragmentProps> = ({
+  reCaptchaSiteKey,
+  feedbackFormHandler,
+}) => (
   <section>
     <h1>Contact form</h1>
     <p>
@@ -43,7 +59,11 @@ const ContactFormEn = () => (
       email. Optionally, you can choose to leave your contact information, if
       you want an answer to your contact request.
     </p>
-    <form action="contact.php" method="POST" className={styles.contactForm}>
+    <form
+      action={feedbackFormHandler}
+      method="POST"
+      className={styles.contactForm}
+    >
       <div className={styles.contactFormGroup}>
         <label htmlFor="contactmsg">Message</label>
         <textarea
@@ -54,7 +74,7 @@ const ContactFormEn = () => (
         />
       </div>
       <div className={styles.contactFormGroup}>
-        <Recaptcha sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI" />
+        <Recaptcha sitekey={reCaptchaSiteKey} />
       </div>
       <div className={styles.contactFormGroup}>
         <button type="submit">Send</button>
@@ -63,11 +83,42 @@ const ContactFormEn = () => (
   </section>
 )
 
-const ContactForm: React.FC<ContactFormProps> = ({ lang }) => {
-  if (lang === "fi") {
-    return <ContactFormFi />
+interface ContactFormQuery {
+  site: {
+    siteMetadata: {
+      recaptchaSiteKey: string
+      feedbackFormHandler: string
+    }
   }
-  return <ContactFormEn />
+}
+
+const ContactForm: React.FC<ContactFormProps> = ({ lang }) => {
+  const qry: ContactFormQuery = useStaticQuery(
+    graphql`
+      query {
+        site {
+          siteMetadata {
+            recaptchaSiteKey
+            feedbackFormHandler
+          }
+        }
+      }
+    `
+  )
+  if (lang === "fi") {
+    return (
+      <ContactFormFi
+        reCaptchaSiteKey={qry.site.siteMetadata.recaptchaSiteKey}
+        feedbackFormHandler={qry.site.siteMetadata.feedbackFormHandler}
+      />
+    )
+  }
+  return (
+    <ContactFormEn
+      reCaptchaSiteKey={qry.site.siteMetadata.recaptchaSiteKey}
+      feedbackFormHandler={qry.site.siteMetadata.feedbackFormHandler}
+    />
+  )
 }
 
 export default ContactForm
