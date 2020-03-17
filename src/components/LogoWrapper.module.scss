@@ -8,11 +8,12 @@
   margin-right: auto;
   @include mobile {
     width: 100%;
+    margin: 16px;
   }
 }
 
 .matluLogo {
-  height: 90px;
+  height: 60px;
   width: auto;
   margin: 16px 16px 16px 0px;
   @include mobile {

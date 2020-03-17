@@ -7,7 +7,7 @@ export const MatluImage: React.FC = () => {
     query {
       placeholderImage: file(relativePath: { eq: "matlu.png" }) {
         childImageSharp {
-          fluid(maxWidth: 250) {
+          fluid(maxWidth: 160) {
             ...GatsbyImageSharpFluid
             presentationWidth
           }
