@@ -27,6 +27,8 @@ a.navLink {
   margin: 16px 16px 16px 0px;
   @include mobile {
     margin: 16px;
+    display: block;
+    width: 100%;
   }
   height: 16px;
   display: inline-block;

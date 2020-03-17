@@ -34,7 +34,7 @@ const ContactFormFi: React.FC<ContactFormFragmentProps> = ({
           id="contactmsg"
           name="message"
           cols={80}
-          rows={20}
+          rows={10}
           placeholder="Kirjoita viestisi..."
         />
       </div>
@@ -69,7 +69,7 @@ const ContactFormEn: React.FC<ContactFormFragmentProps> = ({
         <textarea
           id="contactmsg"
           cols={80}
-          rows={20}
+          rows={10}
           placeholder="Write your message..."
         />
       </div>
