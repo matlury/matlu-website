@@ -1,13 +1,13 @@
-import React from "react"
-import ReactMarkdown from "react-markdown"
-import { graphql } from "gatsby"
-import Layout from "../components/Layout"
-import { SEO } from "../seo"
-import { PageTemplateQuery, PageTemplatePageContext } from "../utils"
+import React from "react";
+import ReactMarkdown from "react-markdown";
+import { graphql } from "gatsby";
+import Layout from "../components/Layout";
+import { SEO } from "../seo";
+import { PageTemplateQuery, PageTemplatePageContext } from "../utils";
 
 interface PageTemplateProps {
-  data: PageTemplateQuery
-  pageContext: PageTemplatePageContext
+  data: PageTemplateQuery;
+  pageContext: PageTemplatePageContext;
 }
 
 const PageTemplate: React.FC<PageTemplateProps> = ({ data, pageContext }) => (
@@ -22,9 +22,9 @@ const PageTemplate: React.FC<PageTemplateProps> = ({ data, pageContext }) => (
     />
     <ReactMarkdown source={data.strapiPage.body[pageContext.language]} />
   </Layout>
-)
+);
 
-export default PageTemplate
+export default PageTemplate;
 
 export const query = graphql`
   query PageTemplate($id: String) {
@@ -39,4 +39,4 @@ export const query = graphql`
       }
     }
   }
-`
+`;

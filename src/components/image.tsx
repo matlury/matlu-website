@@ -1,6 +1,6 @@
-import React from "react"
-import { useStaticQuery, graphql } from "gatsby"
-import Img from "gatsby-image"
+import React from "react";
+import { useStaticQuery, graphql } from "gatsby";
+import Img from "gatsby-image";
 
 export const MatluImage: React.FC = () => {
   const data = useStaticQuery(graphql`
@@ -14,7 +14,7 @@ export const MatluImage: React.FC = () => {
         }
       }
     }
-  `)
+  `);
   return (
     <Img
       fluid={data.placeholderImage.childImageSharp.fluid}
@@ -22,7 +22,7 @@ export const MatluImage: React.FC = () => {
         maxWidth: data.placeholderImage.childImageSharp.fluid.presentationWidth,
       }}
     />
-  )
-}
+  );
+};
 
-export default MatluImage
+export default MatluImage;

@@ -1,20 +1,20 @@
-import React from "react"
-import { Link } from "gatsby"
-import styles from "./Nav.module.scss"
-import { LocalizedLink } from "../utils"
+import React from "react";
+import { Link } from "gatsby";
+import styles from "./Nav.module.scss";
+import { LocalizedLink } from "../utils";
 
 interface LocalizedNavProps {
-  localizedLinks: LocalizedLink
+  localizedLinks: LocalizedLink;
   navLinks: {
-    id: string
-    page: string
-    Ordering: number
-    Draft: boolean
+    id: string;
+    page: string;
+    Ordering: number;
+    Draft: boolean;
     Title: {
-      en: string
-      fi: string
-    }
-  }[]
+      en: string;
+      fi: string;
+    };
+  }[];
 }
 
 export const NavEn: React.FC<LocalizedNavProps> = ({
@@ -61,5 +61,5 @@ export const NavEn: React.FC<LocalizedNavProps> = ({
         Suomeksi
       </Link>
     </nav>
-  )
-}
+  );
+};

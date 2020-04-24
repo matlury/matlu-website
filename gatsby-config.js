@@ -1,13 +1,13 @@
 require("dotenv").config({
   path: `.env.${process.env.NODE_ENV}`,
-})
+});
 
 module.exports = {
   siteMetadata: {
     title: `Matlu ry`,
     description: `Helsingin yliopiston Matemaattis-luonnontieteellisten opiskelijajärjestöjen yhteistyöjärjestö`,
     author: `Matlu ry`,
-    siteUrl: `https://www.matlu.fi`,
+    siteUrl: process.env.SITE_URL,
     recaptchaSiteKey:
       process.env.RECAPTCHA_SITE_KEY ||
       "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI",
@@ -56,4 +56,4 @@ module.exports = {
     },
     `gatsby-plugin-catch-links`,
   ],
-}
+};

@@ -1,20 +1,20 @@
-import React from "react"
-import { Link, graphql } from "gatsby"
-import Layout from "../components/Layout"
-import { SEO } from "../seo"
-import { BoardTemplateQuery, LocalizedTextEn, BoardPageContext } from "../utils"
+import React from "react";
+import { Link, graphql } from "gatsby";
+import Layout from "../components/Layout";
+import { SEO } from "../seo";
+import { BoardTemplateQuery, LocalizedTextEn, BoardPageContext } from "../utils";
 
 interface BoardTemplateEnProps {
-  data: BoardTemplateQuery<LocalizedTextEn>
-  pageContext: BoardPageContext
+  data: BoardTemplateQuery<LocalizedTextEn>;
+  pageContext: BoardPageContext;
 }
 
 const BoardTemplateEn: React.FC<BoardTemplateEnProps> = ({
   data,
   pageContext,
 }) => {
-  const board = data.strapiBoard
-  const boardYears = pageContext.boardYears
+  const board = data.strapiBoard;
+  const boardYears = pageContext.boardYears;
   return (
     <Layout language="en" localizedLinks={pageContext.localizedLinks}>
       <SEO
@@ -101,10 +101,10 @@ const BoardTemplateEn: React.FC<BoardTemplateEnProps> = ({
         </section>
       )}
     </Layout>
-  )
-}
+  );
+};
 
-export default BoardTemplateEn
+export default BoardTemplateEn;
 
 export const query = graphql`
   query BoardTemplateEn($id: String) {
@@ -141,4 +141,4 @@ export const query = graphql`
       }
     }
   }
-`
+`;

@@ -1,7 +1,7 @@
-import React from "react"
+import React from "react";
 
-import Layout from "../components/Layout"
-import { SEO } from "../seo"
+import Layout from "../components/Layout";
+import { SEO } from "../seo";
 
 const ThankYou: React.FC = () => {
   return (
@@ -20,7 +20,7 @@ const ThankYou: React.FC = () => {
       />
       <h1>Kiitos yhteydenotostasi! / Thank you for contacting!</h1>
     </Layout>
-  )
-}
+  );
+};
 
-export default ThankYou
+export default ThankYou;

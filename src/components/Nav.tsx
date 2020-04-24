@@ -1,12 +1,12 @@
-import React from "react"
-import { Language, LocalizedText, NavQuery } from "../utils"
-import { NavFi } from "./NavFi"
-import { NavEn } from "./NavEn"
-import { graphql, useStaticQuery } from "gatsby"
+import React from "react";
+import { Language, LocalizedText, NavQuery } from "../utils";
+import { NavFi } from "./NavFi";
+import { NavEn } from "./NavEn";
+import { graphql, useStaticQuery } from "gatsby";
 
 interface NavProps {
-  language: Language
-  localizedLinks: LocalizedText
+  language: Language;
+  localizedLinks: LocalizedText;
 }
 
 export const Nav: React.FC<NavProps> = ({ language, localizedLinks }) => {
@@ -28,10 +28,10 @@ export const Nav: React.FC<NavProps> = ({ language, localizedLinks }) => {
         }
       }
     }
-  `)
-  const links = qry.allStrapiPage.nodes
+  `);
+  const links = qry.allStrapiPage.nodes;
   if (language === "fi") {
-    return <NavFi navLinks={links} localizedLinks={localizedLinks} />
+    return <NavFi navLinks={links} localizedLinks={localizedLinks} />;
   }
-  return <NavEn navLinks={links} localizedLinks={localizedLinks} />
-}
+  return <NavEn navLinks={links} localizedLinks={localizedLinks} />;
+};

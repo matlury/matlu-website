@@ -1,8 +1,8 @@
 exports.onPostBuild = ({ reporter }) => {
-  reporter.info(`Your Gatsby site has been built!`)
-}
+  reporter.info(`Your Gatsby site has been built!`);
+};
 exports.createPages = async ({ graphql, actions }) => {
-  const { createPage } = actions
+  const { createPage } = actions;
   const result = await graphql(
     `
       query {
@@ -19,24 +19,24 @@ exports.createPages = async ({ graphql, actions }) => {
         }
       }
     `
-  )
+  );
 
   if (result.errors) {
-    throw result.errors
+    throw result.errors;
   }
 
-  const pageData = result.data
+  const pageData = result.data;
 
   // Custom page templates
   const contactPageTemplate = require.resolve(
     "./src/templates/ContactPageTemplate.tsx"
-  )
+  );
   const eventsPageTemplate = require.resolve(
     "./src/templates/EventsPageTemplate.tsx"
-  )
+  );
   const defaultPageTemplate = require.resolve(
     "./src/templates/PageTemplate.tsx"
-  )
+  );
 
   /**
    * Resolves page template based on the page identifier
@@ -44,15 +44,15 @@ exports.createPages = async ({ graphql, actions }) => {
    */
   const resolvePageTemplate = page => {
     if (page === "contact") {
-      return contactPageTemplate
+      return contactPageTemplate;
     }
     if (page === "events") {
-      return eventsPageTemplate
+      return eventsPageTemplate;
     }
-    return defaultPageTemplate
-  }
+    return defaultPageTemplate;
+  };
 
-  pageData.allStrapiPage.edges.forEach(({ node }, index) => {
+  pageData.allStrapiPage.edges.forEach(({ node }, _index) => {
     createPage({
       path: `/${node.page}/`,
       component: resolvePageTemplate(node.page),
@@ -62,7 +62,7 @@ exports.createPages = async ({ graphql, actions }) => {
         localizedLinks: { en: `/en/${node.page}/` },
         hideFromSearchEngine: node.HideFromSearchEngine,
       },
-    })
+    });
     createPage({
       path: `/en/${node.page}/`,
       component: resolvePageTemplate(node.page),
@@ -72,8 +72,8 @@ exports.createPages = async ({ graphql, actions }) => {
         localizedLinks: { fi: `/${node.page}/` },
         hideFromSearchEngine: node.HideFromSearchEngine,
       },
-    })
-  })
+    });
+  });
 
   const result2 = await graphql(
     `
@@ -88,19 +88,19 @@ exports.createPages = async ({ graphql, actions }) => {
         }
       }
     `
-  )
+  );
 
   if (result2.errors) {
-    throw result2.errors
+    throw result2.errors;
   }
 
-  const boardData = result2.data
+  const boardData = result2.data;
   const boardYears = boardData.allStrapiBoard.edges.map(({ node }) =>
     Number(node.year)
-  )
-  const latestBoard = Math.max(...boardYears)
+  );
+  const latestBoard = Math.max(...boardYears);
 
-  boardData.allStrapiBoard.edges.forEach(({ node }, index) => {
+  boardData.allStrapiBoard.edges.forEach(({ node }, _index) => {
     if (node.year === latestBoard) {
       createPage({
         path: `/board/`,
@@ -112,7 +112,7 @@ exports.createPages = async ({ graphql, actions }) => {
           localizedLinks: { en: "/en/board/" },
           hideFromSearchEngine: false,
         },
-      })
+      });
       createPage({
         path: `/en/board/`,
         component: require.resolve("./src/templates/BoardTemplateEn.tsx"),
@@ -123,7 +123,7 @@ exports.createPages = async ({ graphql, actions }) => {
           localizedLinks: { fi: "/board/" },
           hideFromSearchEngine: false,
         },
-      })
+      });
     }
     createPage({
       path: `/board/${node.year}/`,
@@ -135,7 +135,7 @@ exports.createPages = async ({ graphql, actions }) => {
         localizedLinks: { en: `/en/board/${node.year}/` },
         hideFromSearchEngine: false,
       },
-    })
+    });
     createPage({
       path: `/en/board/${node.year}/`,
       component: require.resolve("./src/templates/BoardTemplateEn.tsx"),
@@ -146,6 +146,6 @@ exports.createPages = async ({ graphql, actions }) => {
         localizedLinks: { fi: `/board/${node.year}/` },
         hideFromSearchEngine: false,
       },
-    })
-  })
-}
+    });
+  });
+};

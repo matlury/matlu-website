@@ -33,22 +33,27 @@ h1 {
   font-size: 2em;
   margin: 0.67em 0;
 }
+
 h2 {
   font-size: 1.5em;
   margin: 0.75em 0;
 }
+
 h3 {
   font-size: 1.17em;
   margin: 0.83em 0;
 }
+
 h5 {
   font-size: 0.83em;
   margin: 1.5em 0;
 }
+
 h6 {
   font-size: 0.75em;
   margin: 1.67em 0;
 }
+
 h1,
 h2,
 h3,
@@ -64,6 +69,7 @@ h6 {
   justify-content: left;
   align-content: flex-start;
   flex-wrap: wrap;
+
   .board-member {
     text-align: left;
     display: inline-block;
@@ -72,20 +78,25 @@ h6 {
     line-height: 1.5em;
     margin: 4px 4px 4px 0;
     padding: 8px 0;
+
     &:last-child {
       margin-right: 0;
     }
+
     @include mobile {
       width: 100%;
       min-height: unset;
       padding: 8px;
+
       &:nth-child(even) {
         background-color: #ececec;
       }
     }
+
     .member-title {
       width: 70%;
     }
+
     .member-title,
     .member-email {
       font-size: 0.7em;
@@ -111,6 +122,7 @@ article {
   @include mobile {
     padding: 12px;
   }
+
   margin-bottom: 32px;
 }
 
@@ -145,6 +157,7 @@ img[src*="#thumbnail_3x"] {
   justify-content: left;
   align-content: flex-start;
   flex-wrap: wrap;
+
   .officer {
     text-align: left;
     display: inline-block;
@@ -153,17 +166,21 @@ img[src*="#thumbnail_3x"] {
     line-height: 1.5em;
     margin: 4px 4px 4px 0;
     padding: 8px 0;
+
     &:last-child {
       margin-right: 0;
     }
+
     @include mobile {
       width: 100%;
       min-height: unset;
       padding: 8px;
+
       &:nth-child(even) {
         background-color: #ececec;
       }
     }
+
     .officer-title,
     .officer-email {
       font-size: 0.7em;
@@ -174,14 +191,16 @@ img[src*="#thumbnail_3x"] {
 
 .team {
   ul {
-    padding-left: 0px;
+    padding-left: 0;
   }
+
   ul li {
     list-style-type: none;
     margin-top: 12px;
     margin-bottom: 12px;
-    padding-left: 0px;
+    padding-left: 0;
     font-size: 0.7em;
+
     @include mobile {
       padding: 8px;
     }
@@ -190,13 +209,15 @@ img[src*="#thumbnail_3x"] {
 
 .former-boards {
   ul {
-    padding-left: 0px;
+    padding-left: 0;
   }
+
   ul li {
     list-style-type: none;
     margin-top: 12px;
     margin-bottom: 12px;
     font-size: 0.7em;
+
     @include mobile {
       padding: 8px;
     }

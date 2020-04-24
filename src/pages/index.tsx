@@ -1,13 +1,13 @@
-import React from "react"
+import React from "react";
 
-import Layout from "../components/Layout"
-import { graphql } from "gatsby"
-import { SEO } from "../seo"
-import ReactMarkdown from "react-markdown"
-import { FrontPageQuery, LocalizedTextFi } from "../utils"
+import Layout from "../components/Layout";
+import { graphql } from "gatsby";
+import { SEO } from "../seo";
+import ReactMarkdown from "react-markdown";
+import { FrontPageQuery, LocalizedTextFi } from "../utils";
 
 interface FrontPageFiProps {
-  data: FrontPageQuery<LocalizedTextFi>
+  data: FrontPageQuery<LocalizedTextFi>;
 }
 
 const FrontPageFi: React.FC<FrontPageFiProps> = ({ data }) => {
@@ -23,7 +23,7 @@ const FrontPageFi: React.FC<FrontPageFiProps> = ({ data }) => {
         <SEO title={"Etusivu"} lang="fi" hideFromSearchEngine={true} />
         <div>Etusivun sisältö on tyhjä - ole hyvä ja luo se CMS:n avulla.</div>
       </Layout>
-    )
+    );
   }
   return (
     <Layout
@@ -41,10 +41,10 @@ const FrontPageFi: React.FC<FrontPageFiProps> = ({ data }) => {
       />
       <ReactMarkdown source={data.strapiPage.body.fi} />
     </Layout>
-  )
-}
+  );
+};
 
-export default FrontPageFi
+export default FrontPageFi;
 
 export const query = graphql`
   query FrontPageFi {
@@ -61,4 +61,4 @@ export const query = graphql`
       HideFromSearchEngine
     }
   }
-`
+`;

@@ -5,16 +5,19 @@
     @content;
   }
 }
+
 @mixin tablet {
   @media (min-width: $tablet-breakpoint) and (max-width: $desktop-breakpoint) {
     @content;
   }
 }
+
 @mixin desktop {
   @media (min-width: $desktop-breakpoint + 1) and (max-width: $big-desktop-breakpoint) {
     @content;
   }
 }
+
 @mixin bigDesktop {
   @media (min-width: $big-desktop-breakpoint + 1) {
     @content;

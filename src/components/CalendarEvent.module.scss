@@ -11,12 +11,15 @@
   margin-bottom: 8px;
   display: flex;
   flex-direction: column;
+
   .event-title {
     font-size: 1.1em;
   }
+
   .event-time,
   .event-location {
     font-size: 0.8em;
   }
+
   border-left: 3px solid $main-color;
 }
