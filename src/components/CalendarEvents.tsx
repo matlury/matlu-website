@@ -2,6 +2,7 @@ import React from "react";
 import { graphql, useStaticQuery } from "gatsby";
 import { Language } from "../utils";
 import CalendarEvent from "./CalendarEvent";
+import { compareAsc, parseISO } from "date-fns/esm";
 
 interface CalendarEventsProps {
   language: Language;
@@ -42,7 +43,7 @@ const CalendarEvents: React.FC<CalendarEventsProps> = ({
   }
   return (
     <div>
-      {events.map(evt => (
+      {events.filter(evt => compareAsc(parseISO(evt.start_date), new Date()) >= 0).map(evt => (
         <CalendarEvent
           key={evt.id}
           language={language}
