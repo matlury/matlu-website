@@ -1,17 +1,17 @@
-import React from "react"
-import ReactMarkdown from "react-markdown"
-import { graphql } from "gatsby"
-import Layout from "../components/Layout"
-import { SEO } from "../seo"
-import ContactForm from "../components/ContactForm"
+import React from "react";
+import ReactMarkdown from "react-markdown";
+import { graphql } from "gatsby";
+import Layout from "../components/Layout";
+import { SEO } from "../seo";
+import ContactForm from "../components/ContactForm";
 import {
   ContactPageTemplateQuery,
   ContactPageTemplatePageContext,
-} from "../utils"
+} from "../utils";
 
 interface ContactPageTemplateProps {
-  data: ContactPageTemplateQuery
-  pageContext: ContactPageTemplatePageContext
+  data: ContactPageTemplateQuery;
+  pageContext: ContactPageTemplatePageContext;
 }
 
 const ContactPageTemplate: React.FC<ContactPageTemplateProps> = ({
@@ -30,9 +30,9 @@ const ContactPageTemplate: React.FC<ContactPageTemplateProps> = ({
     <ContactForm lang={pageContext.language} />
     <ReactMarkdown source={data.strapiPage.body[pageContext.language]} />
   </Layout>
-)
+);
 
-export default ContactPageTemplate
+export default ContactPageTemplate;
 
 export const query = graphql`
   query ContactPageTemplate($id: String) {
@@ -47,4 +47,4 @@ export const query = graphql`
       }
     }
   }
-`
+`;

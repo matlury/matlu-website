@@ -1,15 +1,15 @@
-import React from "react"
-import styles from "./ContactForm.module.scss"
-import { Language } from "../utils"
-import Recaptcha from "react-recaptcha"
-import { graphql, useStaticQuery } from "gatsby"
+import React from "react";
+import styles from "./ContactForm.module.scss";
+import { Language } from "../utils";
+import Recaptcha from "react-recaptcha";
+import { graphql, useStaticQuery } from "gatsby";
 interface ContactFormProps {
-  lang: Language
+  lang: Language;
 }
 
 interface ContactFormFragmentProps {
-  reCaptchaSiteKey: string
-  feedbackFormHandler: string
+  reCaptchaSiteKey: string;
+  feedbackFormHandler: string;
 }
 
 const ContactFormFi: React.FC<ContactFormFragmentProps> = ({
@@ -46,7 +46,7 @@ const ContactFormFi: React.FC<ContactFormFragmentProps> = ({
       </div>
     </form>
   </section>
-)
+);
 
 const ContactFormEn: React.FC<ContactFormFragmentProps> = ({
   reCaptchaSiteKey,
@@ -81,15 +81,15 @@ const ContactFormEn: React.FC<ContactFormFragmentProps> = ({
       </div>
     </form>
   </section>
-)
+);
 
 interface ContactFormQuery {
   site: {
     siteMetadata: {
-      recaptchaSiteKey: string
-      feedbackFormHandler: string
-    }
-  }
+      recaptchaSiteKey: string;
+      feedbackFormHandler: string;
+    };
+  };
 }
 
 const ContactForm: React.FC<ContactFormProps> = ({ lang }) => {
@@ -104,21 +104,21 @@ const ContactForm: React.FC<ContactFormProps> = ({ lang }) => {
         }
       }
     `
-  )
+  );
   if (lang === "fi") {
     return (
       <ContactFormFi
         reCaptchaSiteKey={qry.site.siteMetadata.recaptchaSiteKey}
         feedbackFormHandler={qry.site.siteMetadata.feedbackFormHandler}
       />
-    )
+    );
   }
   return (
     <ContactFormEn
       reCaptchaSiteKey={qry.site.siteMetadata.recaptchaSiteKey}
       feedbackFormHandler={qry.site.siteMetadata.feedbackFormHandler}
     />
-  )
-}
+  );
+};
 
-export default ContactForm
+export default ContactForm;

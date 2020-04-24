@@ -1,15 +1,15 @@
-import React from "react"
-import { format, parseISO } from "date-fns"
-import { fi, enUS } from "date-fns/locale"
-import { Language } from "../utils"
-import styles from "./CalendarEvent.module.scss"
+import React from "react";
+import { format, parseISO } from "date-fns";
+import { fi, enUS } from "date-fns/locale";
+import { Language } from "../utils";
+import styles from "./CalendarEvent.module.scss";
 interface EventProps {
-  title: Record<Language, string>
-  hide_location: boolean
-  location: Record<Language, string> | null
-  start_date: string
-  event_link: string
-  language: Language
+  title: Record<Language, string>;
+  hide_location: boolean;
+  location: Record<Language, string> | null;
+  start_date: string;
+  event_link: string;
+  language: Language;
 }
 
 const CalendarEvent: React.FC<EventProps> = ({
@@ -41,6 +41,6 @@ const CalendarEvent: React.FC<EventProps> = ({
       <span className={styles.eventLocation}>{location[language]}</span>
     )}
   </div>
-)
+);
 
-export default CalendarEvent
+export default CalendarEvent;

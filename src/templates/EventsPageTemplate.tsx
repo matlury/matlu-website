@@ -1,17 +1,17 @@
-import React from "react"
-import ReactMarkdown from "react-markdown"
-import { graphql } from "gatsby"
-import Layout from "../components/Layout"
-import { SEO } from "../seo"
-import CalendarEvents from "../components/CalendarEvents"
+import React from "react";
+import ReactMarkdown from "react-markdown";
+import { graphql } from "gatsby";
+import Layout from "../components/Layout";
+import { SEO } from "../seo";
+import CalendarEvents from "../components/CalendarEvents";
 import {
   EventsPageTemplateQuery,
   EventsPageTemplatePageContext,
-} from "../utils"
+} from "../utils";
 
 interface EventsPageTemplateProps {
-  data: EventsPageTemplateQuery
-  pageContext: EventsPageTemplatePageContext
+  data: EventsPageTemplateQuery;
+  pageContext: EventsPageTemplatePageContext;
 }
 
 const EventsPageTemplate: React.FC<EventsPageTemplateProps> = ({
@@ -32,9 +32,9 @@ const EventsPageTemplate: React.FC<EventsPageTemplateProps> = ({
     <CalendarEvents language={pageContext.language} showAll />
     <ReactMarkdown source={data.strapiPage.body[pageContext.language]} />
   </Layout>
-)
+);
 
-export default EventsPageTemplate
+export default EventsPageTemplate;
 
 export const query = graphql`
   query EventsPageTemplate($id: String) {
@@ -49,4 +49,4 @@ export const query = graphql`
       }
     }
   }
-`
+`;

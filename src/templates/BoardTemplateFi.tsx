@@ -1,20 +1,20 @@
-import React from "react"
-import { Link, graphql } from "gatsby"
-import Layout from "../components/Layout"
-import { SEO } from "../seo"
-import { BoardTemplateQuery, LocalizedTextFi, BoardPageContext } from "../utils"
+import React from "react";
+import { Link, graphql } from "gatsby";
+import Layout from "../components/Layout";
+import { SEO } from "../seo";
+import { BoardTemplateQuery, LocalizedTextFi, BoardPageContext } from "../utils";
 
 interface BoardTemplateFiProps {
-  data: BoardTemplateQuery<LocalizedTextFi>
-  pageContext: BoardPageContext
+  data: BoardTemplateQuery<LocalizedTextFi>;
+  pageContext: BoardPageContext;
 }
 
 const BoardTemplateFi: React.FC<BoardTemplateFiProps> = ({
   data,
   pageContext,
 }) => {
-  const board = data.strapiBoard
-  const boardYears = pageContext.boardYears
+  const board = data.strapiBoard;
+  const boardYears = pageContext.boardYears;
   return (
     <Layout language="fi" localizedLinks={pageContext.localizedLinks}>
       <SEO
@@ -101,10 +101,10 @@ const BoardTemplateFi: React.FC<BoardTemplateFiProps> = ({
         </section>
       )}
     </Layout>
-  )
-}
+  );
+};
 
-export default BoardTemplateFi
+export default BoardTemplateFi;
 
 export const query = graphql`
   query BoardTemplateFi($id: String) {
@@ -141,4 +141,4 @@ export const query = graphql`
       }
     }
   }
-`
+`;

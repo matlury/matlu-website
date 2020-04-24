@@ -4,6 +4,7 @@
   display: grid;
   column-gap: 8px;
   grid-template-columns: repeat(3, 1fr);
+
   @include mobile {
     display: block;
   }
@@ -11,7 +12,7 @@
 
 ul.documentLinks,
 ul.matluSome {
-  padding-left: 0px;
+  padding-left: 0;
   margin-top: 12px;
   line-height: 1.8em;
   font-size: 0.7em;

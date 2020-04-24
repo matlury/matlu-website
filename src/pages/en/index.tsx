@@ -1,13 +1,13 @@
-import React from "react"
+import React from "react";
 
-import Layout from "../../components/Layout"
-import { graphql } from "gatsby"
-import { SEO } from "../../seo"
-import ReactMarkdown from "react-markdown"
-import { FrontPageQuery, LocalizedTextEn } from "../../utils"
+import Layout from "../../components/Layout";
+import { graphql } from "gatsby";
+import { SEO } from "../../seo";
+import ReactMarkdown from "react-markdown";
+import { FrontPageQuery, LocalizedTextEn } from "../../utils";
 
 interface FrontPageEnProps {
-  data: FrontPageQuery<LocalizedTextEn>
+  data: FrontPageQuery<LocalizedTextEn>;
 }
 
 const FrontPageEn: React.FC<FrontPageEnProps> = ({ data }) => {
@@ -23,7 +23,7 @@ const FrontPageEn: React.FC<FrontPageEnProps> = ({ data }) => {
         <SEO title={"Frontpage"} lang="en" hideFromSearchEngine={true} />
         <div>Front page content is empty - please create it in the CMS.</div>
       </Layout>
-    )
+    );
   }
   return (
     <Layout
@@ -41,10 +41,10 @@ const FrontPageEn: React.FC<FrontPageEnProps> = ({ data }) => {
       />
       <ReactMarkdown source={data.strapiPage.body.en} />
     </Layout>
-  )
-}
+  );
+};
 
-export default FrontPageEn
+export default FrontPageEn;
 
 export const query = graphql`
   query FrontPageEn {
@@ -61,4 +61,4 @@ export const query = graphql`
       HideFromSearchEngine
     }
   }
-`
+`;

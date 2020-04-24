@@ -1,91 +1,91 @@
-export type Language = "fi" | "en"
-export type LocalizedLink = Record<Language, string>
+export type Language = "fi" | "en";
+export type LocalizedLink = Record<Language, string>;
 type SiteMetadata = {
-  title: string
-  description: string
-  author: string
-}
+  title: string;
+  description: string;
+  author: string;
+};
 export type SEOQuery = {
   site: {
-    siteMetadata: SiteMetadata
-  }
-}
+    siteMetadata: SiteMetadata;
+  };
+};
 export type PageTemplateQuery = {
   strapiPage: {
-    body: Record<Language, string>
-    Title: Record<Language, string>
-  }
-}
+    body: Record<Language, string>;
+    Title: Record<Language, string>;
+  };
+};
 export type BasePageContext = {
-  id: string
-  language: Language
-  localizedLinks: LocalizedText
-  hideFromSearchEngine: boolean
-}
+  id: string;
+  language: Language;
+  localizedLinks: LocalizedText;
+  hideFromSearchEngine: boolean;
+};
 export type BoardPageContext = BasePageContext & {
-  boardYears: number[]
-}
+  boardYears: number[];
+};
 
-export type PageTemplatePageContext = BasePageContext
-export type EventsPageTemplateQuery = PageTemplateQuery
-export type EventsPageTemplatePageContext = BasePageContext
-export type ContactPageTemplateQuery = PageTemplateQuery
-export type ContactPageTemplatePageContext = BasePageContext
+export type PageTemplatePageContext = BasePageContext;
+export type EventsPageTemplateQuery = PageTemplateQuery;
+export type EventsPageTemplatePageContext = BasePageContext;
+export type ContactPageTemplateQuery = PageTemplateQuery;
+export type ContactPageTemplatePageContext = BasePageContext;
 
-export type LocalizedTextFi = Record<"id" | "fi", string>
-export type LocalizedTextEn = Record<"id" | "en", string>
-export type LocalizedText = Record<Language, string>
+export type LocalizedTextFi = Record<"id" | "fi", string>;
+export type LocalizedTextEn = Record<"id" | "en", string>;
+export type LocalizedText = Record<Language, string>;
 
 type BoardMember<T = LocalizedTextFi | LocalizedTextEn> = {
-  id: number
-  name: string
-  email: string | null
-  role: T
-}
+  id: number;
+  name: string;
+  email: string | null;
+  role: T;
+};
 type Officer<T = LocalizedTextFi | LocalizedTextEn> = {
-  id: number
-  name: string
-  role: T
-}
+  id: number;
+  name: string;
+  role: T;
+};
 
 type TeamMember = {
-  id: number
-  name: string
-}
+  id: number;
+  name: string;
+};
 
 type Team<T = LocalizedTextFi | LocalizedTextEn> = {
-  id: number
-  title: T
-  team_members: TeamMember[]
-}
+  id: number;
+  title: T;
+  team_members: TeamMember[];
+};
 
 export type FrontPageQuery<T = LocalizedTextFi | LocalizedTextEn> = {
   strapiPage: {
-    body: T
-    Title: T
-    Description: T
-    HideFromSearchEngine: boolean
-  } | null
-}
+    body: T;
+    Title: T;
+    Description: T;
+    HideFromSearchEngine: boolean;
+  } | null;
+};
 
 export type BoardTemplateQuery<T = LocalizedTextFi | LocalizedTextEn> = {
   strapiBoard: {
-    id: number
-    year: number
-    members: BoardMember<T>[] | null
-    officers: Officer<T>[] | null
-    teams: Team<T>[] | null
-  }
-}
+    id: number;
+    year: number;
+    members: BoardMember<T>[] | null;
+    officers: Officer<T>[] | null;
+    teams: Team<T>[] | null;
+  };
+};
 
 export type NavQuery = {
   allStrapiPage: {
     nodes: Array<{
-      id: string
-      page: string
-      Ordering: number
-      Draft: boolean
-      Title: LocalizedText
-    }>
-  }
-}
+      id: string;
+      page: string;
+      Ordering: number;
+      Draft: boolean;
+      Title: LocalizedText;
+    }>;
+  };
+};

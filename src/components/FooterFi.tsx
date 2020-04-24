@@ -1,7 +1,7 @@
-import React from "react"
-import styles from "./Footer.module.scss"
-import CalendarEvents from "./CalendarEvents"
-import { Link } from "gatsby"
+import React from "react";
+import styles from "./Footer.module.scss";
+import CalendarEvents from "./CalendarEvents";
+import { Link } from "gatsby";
 
 export const FooterFi: React.FC = () => (
   <footer className={styles.appFooter}>
@@ -58,4 +58,4 @@ export const FooterFi: React.FC = () => (
     </div>
     <div className={styles.footerBottom}>&copy; 2020 Matlu ry</div>
   </footer>
-)
+);

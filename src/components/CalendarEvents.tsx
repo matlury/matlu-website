@@ -1,11 +1,11 @@
-import React from "react"
-import { graphql, useStaticQuery } from "gatsby"
-import { Language } from "../utils"
-import CalendarEvent from "./CalendarEvent"
+import React from "react";
+import { graphql, useStaticQuery } from "gatsby";
+import { Language } from "../utils";
+import CalendarEvent from "./CalendarEvent";
 
 interface CalendarEventsProps {
-  language: Language
-  showAll?: boolean
+  language: Language;
+  showAll?: boolean;
 }
 
 const CalendarEvents: React.FC<CalendarEventsProps> = ({
@@ -34,11 +34,11 @@ const CalendarEvents: React.FC<CalendarEventsProps> = ({
         }
       }
     }
-  `)
-  const eventData = data.allStrapiCalendarEvent.nodes
-  let events = eventData
+  `);
+  const eventData = data.allStrapiCalendarEvent.nodes;
+  let events = eventData;
   if (!showAll) {
-    events = [...eventData.slice(0, 2)]
+    events = [...eventData.slice(0, 2)];
   }
   return (
     <div>
@@ -54,7 +54,7 @@ const CalendarEvents: React.FC<CalendarEventsProps> = ({
         />
       ))}
     </div>
-  )
-}
+  );
+};
 
-export default CalendarEvents
+export default CalendarEvents;
