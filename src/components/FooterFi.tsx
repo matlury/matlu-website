@@ -1,7 +1,5 @@
 import React from "react";
 import styles from "./Footer.module.scss";
-import CalendarEvents from "./CalendarEvents";
-import { Link } from "gatsby";
 
 export const FooterFi: React.FC = () => (
   <footer className={styles.appFooter}>
@@ -48,13 +46,6 @@ export const FooterFi: React.FC = () => (
           </a>
         </li>
       </ul>
-    </div>
-    <div className={styles.appFooterSection}>
-      <h4>Tulevia Matlun tapahtumia</h4>
-      <div className={styles.calendarEvents}>
-        <CalendarEvents language="fi" />
-        <Link to="/events/">Näytä kaikki tapahtumat</Link>
-      </div>
     </div>
     <div className={styles.footerBottom}>&copy; 2020 Matlu ry</div>
   </footer>
