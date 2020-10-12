@@ -1,7 +1,5 @@
 import React from "react";
 import styles from "./Footer.module.scss";
-import CalendarEvents from "./CalendarEvents";
-import { Link } from "gatsby";
 
 export const FooterEn: React.FC = () => (
   <footer className={styles.appFooter}>
@@ -29,7 +27,7 @@ export const FooterEn: React.FC = () => (
       <ul className={styles.matluSome}>
         <li>
           <a
-            href="https://facebook.com"
+            href="https://www.facebook.com/Matlury/"
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -38,7 +36,7 @@ export const FooterEn: React.FC = () => (
         </li>
         <li>
           <a
-            href="https://instagram.com"
+            href="https://instagram.com/matlury/"
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -46,13 +44,6 @@ export const FooterEn: React.FC = () => (
           </a>
         </li>
       </ul>
-    </div>
-    <div className={styles.appFooterSection}>
-      <h4>Upcoming Matlu events</h4>
-      <div className={styles.calendarEvents}>
-        <CalendarEvents language="en" />
-        <Link to="/en/events/">Show all</Link>
-      </div>
     </div>
     <div className={styles.footerBottom}>&copy; 2020 Matlu ry</div>
   </footer>
