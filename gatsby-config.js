@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
 require("dotenv").config({
   path: `.env.${process.env.NODE_ENV}`,
 });
@@ -44,7 +46,7 @@ module.exports = {
       options: {
         apiURL: process.env.API_URL || "http://localhost:1337",
         queryLimit: 100,
-        contentTypes: [`board`, `page`, `calendar-event`],
+        contentTypes: [`board`, `page`, `calendar-event`, `document`],
       },
     },
     {

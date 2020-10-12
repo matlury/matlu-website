@@ -1,26 +1,12 @@
 import React from "react";
+import { MatluDocuments } from "./Documents";
 import styles from "./Footer.module.scss";
 
 export const FooterFi: React.FC = () => (
   <footer className={styles.appFooter}>
     <div className={styles.appFooterSection}>
       <h4>Dokumentteja</h4>
-      <ul className={styles.documentLinks}>
-        <li>
-          <a href="/doc/test.txt">
-            Christina Reginan kulkuavainrekisterin tietosuojaseloste
-          </a>
-        </li>
-        <li>
-          <a href="/doc/test.txt">Tietosuojapolitiikka</a>
-        </li>
-        <li>
-          <a href="/doc/test.txt">Matlun tietosuojaseloste</a>
-        </li>
-        <li>
-          <a href="/doc/test.txt">Matlun turvallisen tilan periaatteet</a>
-        </li>
-      </ul>
+      <MatluDocuments language={"fi"} />
     </div>
     <div className={styles.appFooterSection}>
       <h4>Matlu sosiaalisessa mediassa</h4>
