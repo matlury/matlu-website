@@ -37,13 +37,13 @@ const CalendarEvents: React.FC<CalendarEventsProps> = ({
     }
   `);
   const eventData = data.allStrapiCalendarEvent.nodes;
-  let events = eventData;
+  let events = [...eventData.filter(event => compareAsc(parseISO(event.start_date), new Date()) >= 0)];
   if (!showAll) {
     events = [...eventData.slice(0, 2)];
   }
   return (
     <div>
-      {events.filter(evt => compareAsc(parseISO(evt.start_date), new Date()) >= 0).map(evt => (
+      {events.length > 0 && events.map(evt => (
         <CalendarEvent
           key={evt.id}
           language={language}
@@ -54,6 +54,7 @@ const CalendarEvents: React.FC<CalendarEventsProps> = ({
           event_link={evt.event_link}
         />
       ))}
+      {events.length == 0 && (language === "fi" ? "Ei tulevia tapahtumia." : "No upcoming events.")}
     </div>
   );
 };
