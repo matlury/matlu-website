@@ -1,6 +1,2 @@
-User-Agent: *
-Disallow: /
-Disallow: /doc
-Disallow: /img
-Disallow: /logos
-Disallow: /webfonts
+User-agent: *
+Allow: /

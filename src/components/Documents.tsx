@@ -42,7 +42,6 @@ export const MatluDocuments: React.FC<Props> = ({ language }) => {
     }
   `);
   const documents: Document[] = data.allStrapiDocument.edges;
-  console.log(documents);
   return (
     <ul className={styles.documentLinks}>
       {documents.map((document) => (
