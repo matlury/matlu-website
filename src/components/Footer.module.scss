@@ -1,6 +1,8 @@
 @import "../mixins";
 
 .appFooter {
+  background-color: $main-color;
+  color: white;
   display: grid;
   column-gap: 8px;
   grid-template-columns: repeat(3, 1fr);
@@ -10,13 +12,20 @@
   }
 }
 
-ul.documentLinks,
+.appFooterSection {
+  padding: 12px;
+}
+
 ul.matluSome {
+  padding: 16px;
   padding-left: 0;
   margin-top: 12px;
   line-height: 1.8em;
   font-size: 0.7em;
   list-style-type: none;
+  a {
+    color: white;
+  }
 }
 
 @include mobile {
@@ -30,6 +39,8 @@ ul.matluSome {
 }
 
 .footerBottom {
+  color: white;
+  height: 48px;
   grid-column: 1 / 4;
   width: 100%;
   text-align: center;

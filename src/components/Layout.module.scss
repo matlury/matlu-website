@@ -5,7 +5,12 @@
   width: $app-width;
   margin-left: auto;
   margin-right: auto;
-  padding-bottom: 32px;
+
+  article {
+    a {
+      color: $main-color;
+    }
+  }
 
   @include mobile {
     width: 100%;

@@ -51,7 +51,7 @@ export const NavEn: React.FC<LocalizedNavProps> = ({
       ))}
       <a
         className={styles.navLink}
-        href="https://matlu.fi/ilotalo"
+        href="https://ilotalo.matlu.fi"
         target="_blank"
         rel="noopener noreferrer"
       >
