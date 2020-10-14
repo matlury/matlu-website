@@ -1,10 +1,18 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { Helmet } from "react-helmet";
 import { useStaticQuery, graphql } from "gatsby";
-import { SEOQuery } from "./utils";
+import { Language, SEOQuery } from "./utils";
 
-export const SEO = ({
+interface SEOProps {
+  description: string;
+  lang: Language;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  meta?: any;
+  title: string;
+  hideFromSearchEngine: boolean;
+}
+
+export const SEO: React.FC<SEOProps> = ({
   description,
   lang,
   meta,
@@ -99,11 +107,4 @@ SEO.defaultProps = {
   meta: [],
   description: ``,
   hideFromSearchEngine: false,
-};
-
-SEO.propTypes = {
-  description: PropTypes.string,
-  lang: PropTypes.string,
-  meta: PropTypes.arrayOf(PropTypes.object),
-  title: PropTypes.string.isRequired,
 };
