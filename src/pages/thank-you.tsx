@@ -6,7 +6,7 @@ import { SEO } from "../seo";
 const ThankYou: React.FC = () => {
   return (
     <Layout
-      language="en"
+      language="fi"
       localizedLinks={{
         fi: "/",
         en: "/en/",
