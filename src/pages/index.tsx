@@ -21,7 +21,10 @@ const FrontPageFi: React.FC<FrontPageFiProps> = ({ data }) => {
         }}
       >
         <SEO title={"Etusivu"} lang="fi" hideFromSearchEngine={true} />
-        <div>Etusivun sisältö on tyhjä - ole hyvä ja luo se CMS:n avulla.</div>
+        <div>
+          Etusivun sisältö on tyhjä - ole hyvä ja luo se sisällönhallinnan
+          avulla: <a href="https://cms.matlu.fi">https://cms.matlu.fi</a>
+        </div>
       </Layout>
     );
   }

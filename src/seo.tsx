@@ -4,7 +4,7 @@ import { useStaticQuery, graphql } from "gatsby";
 import { Language, SEOQuery } from "./utils";
 
 interface SEOProps {
-  description: string;
+  description?: string;
   lang: Language;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   meta?: any;

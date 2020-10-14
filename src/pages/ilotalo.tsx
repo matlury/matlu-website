@@ -20,7 +20,7 @@ const IlotaloFi: React.FC = () => {
       />
       <h1>Matlu Klusterin varauskalenteri</h1>
       <p>
-        Siirry Matlu Klusterin varauskalenteriin painamalla tätä linkkiä:{" "}
+        Siirry Matlu Klusterin varauskalenteriin tästä linkistä:{" "}
         <a
           href="https://ilotalo.matlu.fi"
           target="_blank"

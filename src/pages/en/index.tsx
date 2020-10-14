@@ -21,7 +21,11 @@ const FrontPageEn: React.FC<FrontPageEnProps> = ({ data }) => {
         }}
       >
         <SEO title={"Frontpage"} lang="en" hideFromSearchEngine={true} />
-        <div>Front page content is empty - please create it in the CMS.</div>
+        <div>
+          Front page content is empty - please create it in the content
+          management system:{" "}
+          <a href="https://cms.matlu.fi">https://cms.matlu.fi</a>
+        </div>
       </Layout>
     );
   }
