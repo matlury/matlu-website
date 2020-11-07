@@ -50,7 +50,7 @@ const BoardTemplateEn: React.FC<BoardTemplateEnProps> = ({
       </div>
       {board.officers !== null && board.officers.length > 0 && (
         <section>
-          <h2>Virkailijat {board.year}</h2>
+          <h2>Officials of {board.year}</h2>
           <div className="officers">
             {[...board.officers.sort((a, b) => a.id - b.id)].map(officer => (
               <section
