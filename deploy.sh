@@ -1,9 +1,0 @@
-#!/bin/bash
-DIR="public"
-if [ -d "$DIR" ]; then
-    cd $DIR
-    aws s3 cp --recursive . s3://${BUCKET_NAME}
-else
-    echo "Error: ${DIR} not found. Deploy aborted."
-    exit 1
-fi
