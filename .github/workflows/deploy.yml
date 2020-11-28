@@ -28,3 +28,7 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_REGION: 'eu-central-1'
           SOURCE_DIR: 'public'
+          SITE_URL: ${{ secrets.SITE_URL }}
+          API_URL: ${{ secrets.API_URL }}
+          RECAPTCHA_SITE_KEY: ${{ secrets.RECAPTCHA_SITE_KEY }}
+          FEEDBACK_FORM_HANDLER_URL: ${{ secrets.FEEDBACK_FORM_HANDLER_URL }}
