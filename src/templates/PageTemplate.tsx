@@ -1,5 +1,6 @@
 import React from "react";
 import ReactMarkdown from "react-markdown";
+import gfm from "remark-gfm";
 import { graphql } from "gatsby";
 import Layout from "../components/Layout";
 import { SEO } from "../seo";
@@ -20,7 +21,10 @@ const PageTemplate: React.FC<PageTemplateProps> = ({ data, pageContext }) => (
       lang={pageContext.language}
       hideFromSearchEngine={pageContext.hideFromSearchEngine}
     />
-    <ReactMarkdown source={data.strapiPage.body[pageContext.language]} />
+    <ReactMarkdown // @ts-expect-error Works
+      plugins={[gfm]}
+      source={data.strapiPage.body[pageContext.language]}
+    />
   </Layout>
 );
 
