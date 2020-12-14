@@ -7,7 +7,7 @@ require("dotenv").config({
 module.exports = {
   siteMetadata: {
     title: `Matlu ry`,
-    description: `Helsingin yliopiston Matemaattis-luonnontieteellisten opiskelijajärjestöjen yhteistyöjärjestö`,
+    description: `Helsingin yliopiston Matemaattis-luonnontieteellisten opiskelijajärjestöjen yhteistyöjärjestö Matlu`,
     author: `Matlu ry`,
     siteUrl: process.env.SITE_URL,
     recaptchaSiteKey:

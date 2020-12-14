@@ -26,11 +26,15 @@ const EventsPageTemplate: React.FC<EventsPageTemplateProps> = ({
       {pageContext.language === "fi" ? "Tulevat tapahtumat" : "Upcoming events"}
     </h1>
     <SEO
+      lang={pageContext.language}
       title={data.strapiPage.Title[pageContext.language]}
       hideFromSearchEngine={pageContext.hideFromSearchEngine}
     />
     <CalendarEvents language={pageContext.language} showAll />
-    <ReactMarkdown source={data.strapiPage.body[pageContext.language]} />
+    <ReactMarkdown // @ts-expect-error Works
+      plugins={[gfm]}
+      source={data.strapiPage.body[pageContext.language]}
+    />
   </Layout>
 );
 

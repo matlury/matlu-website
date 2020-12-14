@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import React from "react";
 import { useStaticQuery, graphql } from "gatsby";
 import Img from "gatsby-image";

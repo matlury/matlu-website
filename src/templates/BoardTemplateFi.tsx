@@ -2,7 +2,11 @@ import React from "react";
 import { Link, graphql } from "gatsby";
 import Layout from "../components/Layout";
 import { SEO } from "../seo";
-import { BoardTemplateQuery, LocalizedTextFi, BoardPageContext } from "../utils";
+import {
+  BoardTemplateQuery,
+  LocalizedTextFi,
+  BoardPageContext,
+} from "../utils";
 
 interface BoardTemplateFiProps {
   data: BoardTemplateQuery<LocalizedTextFi>;
@@ -18,7 +22,7 @@ const BoardTemplateFi: React.FC<BoardTemplateFiProps> = ({
   return (
     <Layout language="fi" localizedLinks={pageContext.localizedLinks}>
       <SEO
-        title={"Hallitus " + board.year}
+        title={`Vuoden ${board.year} hallitus`}
         lang={pageContext.language}
         hideFromSearchEngine={pageContext.hideFromSearchEngine}
       />
@@ -30,10 +34,10 @@ const BoardTemplateFi: React.FC<BoardTemplateFiProps> = ({
       </p>
       <div className="board-members">
         {board.members !== null &&
-          [...board.members.sort((a, b) => a.id - b.id)].map(member => (
+          [...board.members.sort((a, b) => a.id - b.id)].map((member) => (
             <section
               className="board-member"
-              key={"board_member_" + member.name + "_" + member.id}
+              key={`board_${board.id}_member_${member.id}`}
             >
               <div className="member-picture"></div>
               <div className="member-name">
@@ -52,10 +56,10 @@ const BoardTemplateFi: React.FC<BoardTemplateFiProps> = ({
         <section>
           <h2>Virkailijat {board.year}</h2>
           <div className="officers">
-            {[...board.officers.sort((a, b) => a.id - b.id)].map(officer => (
+            {[...board.officers.sort((a, b) => a.id - b.id)].map((officer) => (
               <section
                 className="officer"
-                key={"officer_" + officer.name + "_" + officer.id}
+                key={`${officer.id}_officer_${officer.name}`}
               >
                 <div className="officer-picture"></div>
                 <div className="officer-name">
@@ -69,16 +73,16 @@ const BoardTemplateFi: React.FC<BoardTemplateFiProps> = ({
       )}
       {board.teams !== null &&
         board.teams.length > 0 &&
-        [...board.teams.sort((a, b) => a.id - b.id)].map(team => (
+        [...board.teams.sort((a, b) => a.id - b.id)].map((team) => (
           <section className="team" key={team.id}>
             <h2>{team.title.fi}</h2>
             <ul>
               {[
                 ...team.team_members
-                  .filter(member => member.name !== null)
+                  .filter((member) => member.name !== null)
                   .sort((a, b) => a.name.localeCompare(b.name)),
-              ].map(member => (
-                <li key={team + "_member_" + member.name}>{member.name}</li>
+              ].map((member) => (
+                <li key={`${team.id}_member_${member.id}`}>{member.name}</li>
               ))}
             </ul>
           </section>
@@ -87,7 +91,7 @@ const BoardTemplateFi: React.FC<BoardTemplateFiProps> = ({
         <section className="former-boards">
           <h2>Aiemmat ja muut hallitukset</h2>
           <ul>
-            {boardYears.map(boardYear => (
+            {boardYears.map((boardYear) => (
               <li key={`boardyear_${boardYear}_fi`}>
                 <Link
                   to={`/board/${boardYear}/`}

@@ -1,5 +1,6 @@
 import React from "react";
 import ReactMarkdown from "react-markdown";
+import gfm from "remark-gfm";
 import { graphql } from "gatsby";
 import Layout from "../components/Layout";
 import { SEO } from "../seo";
@@ -28,7 +29,10 @@ const ContactPageTemplate: React.FC<ContactPageTemplateProps> = ({
       hideFromSearchEngine={pageContext.hideFromSearchEngine}
     />
     <ContactForm lang={pageContext.language} />
-    <ReactMarkdown source={data.strapiPage.body[pageContext.language]} />
+    <ReactMarkdown // @ts-expect-error Works
+      plugins={[gfm]}
+      source={data.strapiPage.body[pageContext.language]}
+    />
   </Layout>
 );
 
