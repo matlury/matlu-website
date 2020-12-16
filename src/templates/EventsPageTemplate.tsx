@@ -1,5 +1,6 @@
 import React from "react";
 import ReactMarkdown from "react-markdown";
+import gfm from "remark-gfm";
 import { graphql } from "gatsby";
 import Layout from "../components/Layout";
 import { SEO } from "../seo";
