@@ -17,13 +17,11 @@ const ContactFormFi: React.FC<ContactFormFragmentProps> = ({
 }) => {
   const [verified, setVerified] = useState(false);
   const [loaded, setLoaded] = useState(false);
-  const [response, setResponse] = useState("");
   const onLoad = useCallback(() => {
     setLoaded(true);
   }, [setLoaded]);
   useEffect(() => {
     return () => {
-      setResponse("");
       setVerified(false);
     };
   }, []);
@@ -53,16 +51,12 @@ const ContactFormFi: React.FC<ContactFormFragmentProps> = ({
         <div className={styles.contactFormGroup}>
           <Reaptcha
             sitekey={String(process.env.GATSBY_RECAPTCHA_SITE_KEY)}
-            onVerify={(response) => {
+            onVerify={(_response) => {
               setVerified(true);
-              setResponse(response);
             }}
             onLoad={onLoad}
           />
         </div>
-        {response !== "" && (
-          <input type="hidden" name="g-recaptcha-response" value={response} />
-        )}
         <div className={styles.contactFormGroup}>
           <button type="submit" disabled={!loaded || !verified}>
             Lähetä
@@ -78,13 +72,11 @@ const ContactFormEn: React.FC<ContactFormFragmentProps> = ({
 }) => {
   const [verified, setVerified] = useState(false);
   const [loaded, setLoaded] = useState(false);
-  const [response, setResponse] = useState("");
   const onLoad = useCallback(() => {
     setLoaded(true);
   }, [setLoaded]);
   useEffect(() => {
     return () => {
-      setResponse("");
       setVerified(false);
     };
   }, []);
@@ -113,16 +105,12 @@ const ContactFormEn: React.FC<ContactFormFragmentProps> = ({
         <div className={styles.contactFormGroup}>
           <Reaptcha
             sitekey={String(process.env.GATSBY_RECAPTCHA_SITE_KEY)}
-            onVerify={(response) => {
+            onVerify={(_response) => {
               setVerified(true);
-              setResponse(response);
             }}
             onLoad={onLoad}
           />
         </div>
-        {response !== "" && (
-          <input type="hidden" name="g-recaptcha-response" value={response} />
-        )}
         <div className={styles.contactFormGroup}>
           <button type="submit" disabled={!loaded || !verified}>
             Send
