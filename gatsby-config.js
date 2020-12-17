@@ -10,9 +10,6 @@ module.exports = {
     description: `Helsingin yliopiston Matemaattis-luonnontieteellisten opiskelijajärjestöjen yhteistyöjärjestö Matlu`,
     author: `Matlu ry`,
     siteUrl: process.env.SITE_URL,
-    recaptchaSiteKey:
-      process.env.RECAPTCHA_SITE_KEY ||
-      "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI",
     feedbackFormHandler: process.env.FEEDBACK_FORM_HANDLER_URL || "",
   },
   plugins: [
