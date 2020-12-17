@@ -13,18 +13,15 @@ interface ContactFormFragmentProps {
 }
 
 const ContactFormFi: React.FC<ContactFormFragmentProps> = ({
-  reCaptchaSiteKey,
   feedbackFormHandler,
 }) => {
   const [verified, setVerified] = useState(false);
-  const [js, setJs] = useState(false);
   const [loaded, setLoaded] = useState(false);
   const [response, setResponse] = useState("");
   const onLoad = useCallback(() => {
     setLoaded(true);
   }, [setLoaded]);
   useEffect(() => {
-    setJs(true);
     return () => {
       setResponse("");
       setVerified(false);
@@ -38,67 +35,54 @@ const ContactFormFi: React.FC<ContactFormFragmentProps> = ({
         sähköpostitse. Voit halutessasi jättää viestiin yhteystietosi, jos
         haluat vastauksen yhteydenottoosi.
       </p>
-      {!js && (
-        <p>
-          <strong>
-            Selaimessasi täytyy olla JavaScript-tuki päällä, jotta voit lähettää
-            viestin.
-          </strong>
-        </p>
-      )}
-      {js && (
-        <form
-          action={feedbackFormHandler}
-          method="POST"
-          className={styles.contactForm}
-        >
-          <div className={styles.contactFormGroup}>
-            <label htmlFor="contactmsg">Viesti</label>
-            <textarea
-              id="contactmsg"
-              name="message"
-              cols={80}
-              rows={10}
-              placeholder="Kirjoita viestisi..."
-            />
-          </div>
-          <div className={styles.contactFormGroup}>
-            <Reaptcha
-              sitekey={reCaptchaSiteKey}
-              onVerify={(response) => {
-                setVerified(true);
-                setResponse(response);
-              }}
-              onLoad={onLoad}
-            />
-          </div>
-          {response !== "" && (
-            <input type="hidden" name="g-recaptcha-response" value={response} />
-          )}
-          <div className={styles.contactFormGroup}>
-            <button type="submit" disabled={!loaded || !verified}>
-              Lähetä
-            </button>
-          </div>
-        </form>
-      )}
+      <form
+        action={feedbackFormHandler}
+        method="POST"
+        className={styles.contactForm}
+      >
+        <div className={styles.contactFormGroup}>
+          <label htmlFor="contactmsg">Viesti</label>
+          <textarea
+            id="contactmsg"
+            name="message"
+            cols={80}
+            rows={10}
+            placeholder="Kirjoita viestisi..."
+          />
+        </div>
+        <div className={styles.contactFormGroup}>
+          <Reaptcha
+            sitekey={String(process.env.RECAPTCHA_SITE_KEY)}
+            onVerify={(response) => {
+              setVerified(true);
+              setResponse(response);
+            }}
+            onLoad={onLoad}
+          />
+        </div>
+        {response !== "" && (
+          <input type="hidden" name="g-recaptcha-response" value={response} />
+        )}
+        <div className={styles.contactFormGroup}>
+          <button type="submit" disabled={!loaded || !verified}>
+            Lähetä
+          </button>
+        </div>
+      </form>
     </section>
   );
 };
 
 const ContactFormEn: React.FC<ContactFormFragmentProps> = ({
-  reCaptchaSiteKey,
   feedbackFormHandler,
 }) => {
   const [verified, setVerified] = useState(false);
-  const [js, setJs] = useState(false);
   const [loaded, setLoaded] = useState(false);
   const [response, setResponse] = useState("");
   const onLoad = useCallback(() => {
     setLoaded(true);
   }, [setLoaded]);
   useEffect(() => {
-    setJs(true);
     return () => {
       setResponse("");
       setVerified(false);
@@ -112,46 +96,39 @@ const ContactFormEn: React.FC<ContactFormFragmentProps> = ({
         via email. Optionally, you can choose to leave your contact information,
         if you want an answer to your contact request.{" "}
       </p>
-      {!js && (
-        <p>
-          <strong>The form requires JavaScript support to be enabled.</strong>
-        </p>
-      )}
-      {js && (
-        <form
-          action={feedbackFormHandler}
-          method="POST"
-          className={styles.contactForm}
-        >
-          <div className={styles.contactFormGroup}>
-            <label htmlFor="contactmsg">Message</label>
-            <textarea
-              id="contactmsg"
-              cols={80}
-              rows={10}
-              placeholder="Write your message..."
-            />
-          </div>
-          <div className={styles.contactFormGroup}>
-            <Reaptcha
-              sitekey={reCaptchaSiteKey}
-              onVerify={(response) => {
-                setVerified(true);
-                setResponse(response);
-              }}
-              onLoad={onLoad}
-            />
-          </div>
-          {response !== "" && (
-            <input type="hidden" name="g-recaptcha-response" value={response} />
-          )}
-          <div className={styles.contactFormGroup}>
-            <button type="submit" disabled={!loaded || !verified}>
-              Send
-            </button>
-          </div>
-        </form>
-      )}
+      <form
+        action={feedbackFormHandler}
+        method="POST"
+        className={styles.contactForm}
+      >
+        <div className={styles.contactFormGroup}>
+          <label htmlFor="contactmsg">Message</label>
+          <textarea
+            id="contactmsg"
+            cols={80}
+            rows={10}
+            placeholder="Write your message..."
+          />
+        </div>
+        <div className={styles.contactFormGroup}>
+          <Reaptcha
+            sitekey={String(process.env.RECAPTCHA_SITE_KEY)}
+            onVerify={(response) => {
+              setVerified(true);
+              setResponse(response);
+            }}
+            onLoad={onLoad}
+          />
+        </div>
+        {response !== "" && (
+          <input type="hidden" name="g-recaptcha-response" value={response} />
+        )}
+        <div className={styles.contactFormGroup}>
+          <button type="submit" disabled={!loaded || !verified}>
+            Send
+          </button>
+        </div>
+      </form>
     </section>
   );
 };
@@ -171,7 +148,6 @@ const ContactForm: React.FC<ContactFormProps> = ({ lang }) => {
       query {
         site {
           siteMetadata {
-            recaptchaSiteKey
             feedbackFormHandler
           }
         }
