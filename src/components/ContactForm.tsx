@@ -52,7 +52,7 @@ const ContactFormFi: React.FC<ContactFormFragmentProps> = ({
         </div>
         <div className={styles.contactFormGroup}>
           <Reaptcha
-            sitekey={String(process.env.RECAPTCHA_SITE_KEY)}
+            sitekey={String(process.env.GATSBY_RECAPTCHA_SITE_KEY)}
             onVerify={(response) => {
               setVerified(true);
               setResponse(response);
@@ -112,7 +112,7 @@ const ContactFormEn: React.FC<ContactFormFragmentProps> = ({
         </div>
         <div className={styles.contactFormGroup}>
           <Reaptcha
-            sitekey={String(process.env.RECAPTCHA_SITE_KEY)}
+            sitekey={String(process.env.GATSBY_RECAPTCHA_SITE_KEY)}
             onVerify={(response) => {
               setVerified(true);
               setResponse(response);
