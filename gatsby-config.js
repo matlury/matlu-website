@@ -9,6 +9,7 @@ module.exports = {
     title: `Matlu ry`,
     description: `Helsingin yliopiston Matemaattis-luonnontieteellisten opiskelijajärjestöjen yhteistyöjärjestö Matlu`,
     author: `Matlu ry`,
+    recaptchaSiteKey: process.env.GATSBY_RECAPTCHA_SITE_KEY || "",
     siteUrl: process.env.SITE_URL,
     feedbackFormHandler: process.env.FEEDBACK_FORM_HANDLER_URL || "",
   },
