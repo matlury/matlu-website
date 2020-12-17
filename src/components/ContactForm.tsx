@@ -14,6 +14,7 @@ interface ContactFormFragmentProps {
 
 const ContactFormFi: React.FC<ContactFormFragmentProps> = ({
   feedbackFormHandler,
+  reCaptchaSiteKey
 }) => {
   const [verified, setVerified] = useState(false);
   const [loaded, setLoaded] = useState(false);
@@ -50,7 +51,7 @@ const ContactFormFi: React.FC<ContactFormFragmentProps> = ({
         </div>
         <div className={styles.contactFormGroup}>
           <Reaptcha
-            sitekey={String(process.env.GATSBY_RECAPTCHA_SITE_KEY)}
+            sitekey={String(reCaptchaSiteKey)}
             onVerify={(_response) => {
               setVerified(true);
             }}
@@ -69,6 +70,7 @@ const ContactFormFi: React.FC<ContactFormFragmentProps> = ({
 
 const ContactFormEn: React.FC<ContactFormFragmentProps> = ({
   feedbackFormHandler,
+  reCaptchaSiteKey
 }) => {
   const [verified, setVerified] = useState(false);
   const [loaded, setLoaded] = useState(false);
@@ -104,7 +106,7 @@ const ContactFormEn: React.FC<ContactFormFragmentProps> = ({
         </div>
         <div className={styles.contactFormGroup}>
           <Reaptcha
-            sitekey={String(process.env.GATSBY_RECAPTCHA_SITE_KEY)}
+            sitekey={String(reCaptchaSiteKey)}
             onVerify={(_response) => {
               setVerified(true);
             }}
@@ -136,6 +138,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ lang }) => {
       query {
         site {
           siteMetadata {
+            recaptchaSiteKey
             feedbackFormHandler
           }
         }
