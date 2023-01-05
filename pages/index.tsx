@@ -1,18 +1,19 @@
 import Layout from 'components/Layout'
 import { GetServerSideProps } from 'next'
 import Head from 'next/head'
+import ReactMarkdown from 'react-markdown'
+import gfm from 'remark-gfm'
 import { getLocale, LocaleName } from '../common/locale'
 import client from '../services/cms/apollo-client'
-import { parseMarkdown } from '../services/markdown'
 import { gql } from '../__generated__/gql'
 
 interface HomeProps {
     title: string
-    bodyHtml: string
+    bodyMarkdown: string
     locale: LocaleName
 }
 
-export default function Home({ title, bodyHtml, locale }: HomeProps) {
+export default function Home({ title, bodyMarkdown, locale }: HomeProps) {
     return (
         <>
             <Head>
@@ -24,7 +25,9 @@ export default function Home({ title, bodyHtml, locale }: HomeProps) {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <Layout locale={locale}>
-                <div dangerouslySetInnerHTML={{ __html: bodyHtml }} />
+                <ReactMarkdown remarkPlugins={[gfm]}>
+                    {bodyMarkdown}
+                </ReactMarkdown>
             </Layout>
         </>
     )
@@ -55,11 +58,10 @@ export const getServerSideProps: GetServerSideProps<HomeProps> = async ({
     const page = data?.pages?.[0]
     const title = page?.Title?.[localeCode] || 'Matlu ry'
     const bodyMarkdown = page?.body?.[localeCode] || ''
-    const bodyHtml = await parseMarkdown(bodyMarkdown)
     return {
         props: {
             title,
-            bodyHtml,
+            bodyMarkdown,
             locale: localeCode,
         },
     }
