@@ -1,5 +1,10 @@
 export type LocaleName = 'fi' | 'en'
 
+export const locales: Record<LocaleName, LocaleName> = {
+    fi: 'fi',
+    en: 'en',
+}
+
 const DEFAULT_LOCALE = 'fi'
 
 export const getLocale = (localeMaybe: string | undefined): LocaleName => {

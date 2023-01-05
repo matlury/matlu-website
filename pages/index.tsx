@@ -1,17 +1,18 @@
+import Layout from 'components/Layout'
 import { GetServerSideProps } from 'next'
 import Head from 'next/head'
-import { getLocale } from '../common/locale'
+import { getLocale, LocaleName } from '../common/locale'
 import client from '../services/cms/apollo-client'
 import { parseMarkdown } from '../services/markdown'
-import styles from '../styles/Home.module.css'
 import { gql } from '../__generated__/gql'
 
 interface HomeProps {
     title: string
     bodyHtml: string
+    locale: LocaleName
 }
 
-export default function Home({ title, bodyHtml }: HomeProps) {
+export default function Home({ title, bodyHtml, locale }: HomeProps) {
     return (
         <>
             <Head>
@@ -22,9 +23,9 @@ export default function Home({ title, bodyHtml }: HomeProps) {
                 />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <main className={styles.main}>
+            <Layout locale={locale}>
                 <div dangerouslySetInnerHTML={{ __html: bodyHtml }} />
-            </main>
+            </Layout>
         </>
     )
 }
@@ -59,6 +60,7 @@ export const getServerSideProps: GetServerSideProps<HomeProps> = async ({
         props: {
             title,
             bodyHtml,
+            locale: localeCode,
         },
     }
 }
