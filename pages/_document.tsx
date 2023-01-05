@@ -25,6 +25,7 @@ const Favicons = () => (
             href="/img/icon/safari-pinned-tab.svg"
             color="#5bbad5"
         />
+        <link rel="icon" href="/favicon.ico" />
         <meta name="msapplication-TileColor" content="#da532c" />
         <meta name="theme-color" content="#ffffff" />
     </>
