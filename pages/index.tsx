@@ -1,11 +1,12 @@
+import { getLocale, LocaleName } from 'common/locale'
 import Layout from 'components/Layout'
+import Title from 'components/Title'
 import { GetServerSideProps } from 'next'
 import Head from 'next/head'
 import ReactMarkdown from 'react-markdown'
 import gfm from 'remark-gfm'
-import { getLocale, LocaleName } from '../common/locale'
-import client from '../services/cms/apollo-client'
-import { gql } from '../__generated__/gql'
+import client from 'services/cms/apollo-client'
+import { gql } from '__generated__/gql'
 
 interface HomeProps {
     title: string
