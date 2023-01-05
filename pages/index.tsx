@@ -17,12 +17,7 @@ export default function Home({ title, bodyMarkdown, locale }: HomeProps) {
     return (
         <>
             <Head>
-                <title>{title}</title>
-                <meta
-                    name="viewport"
-                    content="width=device-width, initial-scale=1"
-                />
-                <link rel="icon" href="/favicon.ico" />
+                <Title title={title} />
             </Head>
             <Layout locale={locale}>
                 <ReactMarkdown remarkPlugins={[gfm]}>
