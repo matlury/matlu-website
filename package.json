@@ -11,7 +11,7 @@
         "build:schema": "graphql-codegen",
         "start": "next start",
         "lint": "next lint",
-        "format": "prettier --ignore-path .gitignore --write ."
+        "format": "prettier --write ."
     },
     "dependencies": {
         "@apollo/client": "3.7.3",
