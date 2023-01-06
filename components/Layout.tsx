@@ -1,5 +1,6 @@
 import { LocaleName } from 'common/locale'
 import Image from 'next/image'
+import Link from 'next/link'
 import MatluImage from 'public/img/matlu.png'
 import styles from 'styles/components/Layout.module.scss'
 import Footer from './Footer'
@@ -25,15 +26,17 @@ const Layout = ({
     return (
         <>
             <div className={styles.logoWrapper}>
-                <Image
-                    className={styles.matluLogo}
-                    alt="Matlu ry"
-                    src={MatluImage}
-                    placeholder="blur"
-                    width={160}
-                    height={80}
-                    quality={100}
-                />
+                <Link href="/">
+                    <Image
+                        className={styles.matluLogo}
+                        alt="Matlu ry"
+                        src={MatluImage}
+                        placeholder="blur"
+                        width={160}
+                        height={80}
+                        quality={100}
+                    />
+                </Link>
             </div>
             <Nav locale={locale} pages={navItems} />
             <div className={styles.wrapper}>

@@ -9,7 +9,7 @@
 
 body {
     font-family: var(--font-base, 'Open Sans'), 'sans-serif';
-    font-size: 15pt;
+    font-size: 16px;
 }
 
 ul,
@@ -29,28 +29,33 @@ a:hover {
 }
 
 h1 {
-    font-size: 2em;
-    margin: 0.67em 0;
+    font-size: 2.5rem;
+    margin: 1.675rem 0;
 }
 
 h2 {
-    font-size: 1.5em;
-    margin: 0.75em 0;
+    font-size: 1.875rem;
+    margin: 1.4rem 0;
 }
 
 h3 {
-    font-size: 1.17em;
-    margin: 0.83em 0;
+    font-size: 1.5rem;
+    margin: 1.2rem 0;
+}
+
+h4 {
+    font-size: 1.25rem;
+    margin: 1.05rem 0;
 }
 
 h5 {
-    font-size: 0.83em;
-    margin: 1.5em 0;
+    font-size: 1.25rem;
+    margin: 1.05rem 0;
 }
 
 h6 {
-    font-size: 0.75em;
-    margin: 1.67em 0;
+    font-size: 0.75rem;
+    margin: 0.9375rem 0;
 }
 
 h1,
@@ -74,7 +79,7 @@ h6 {
         display: inline-block;
         width: 30%;
         min-height: 50px;
-        line-height: 1.5em;
+        line-height: 1.5rem;
         margin: 4px 4px 4px 0;
         padding: 8px 0;
 
@@ -95,11 +100,6 @@ h6 {
         .member-title {
             width: 70%;
         }
-
-        .member-title,
-        .member-email {
-            font-size: 0.7em;
-        }
     }
 }
 
@@ -110,11 +110,10 @@ h6 {
 
 p {
     display: block;
-    margin-top: 1em;
-    margin-bottom: 1em;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
     text-align: justify;
-    font-size: 0.7em;
-    line-height: 1.8em;
+    line-height: 1.8rem;
 }
 
 main {
@@ -162,7 +161,7 @@ img[src*='#thumbnail_3x'] {
         display: inline-block;
         width: 30%;
         min-height: 50px;
-        line-height: 1.5em;
+        line-height: 1.5rem;
         margin: 4px 4px 4px 0;
         padding: 8px 0;
 
@@ -182,14 +181,12 @@ img[src*='#thumbnail_3x'] {
 
         .officer-title,
         .officer-email {
-            font-size: 0.7em;
             width: 70%;
         }
     }
 }
 
 ul li {
-    font-size: 0.7em;
     margin-top: 12px;
     margin-bottom: 12px;
 }
