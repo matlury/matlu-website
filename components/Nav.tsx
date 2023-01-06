@@ -1,24 +1,55 @@
 import cls from 'classnames'
-import { locales } from 'common/locale'
+import { LocaleName, locales } from 'common/locale'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import styles from 'styles/components/Nav.module.scss'
 
-interface LocalizedNavProps {
-    // navLinks: {
-    //     id: string
-    //     page: string
-    //     Ordering: number
-    //     Draft: boolean
-    //     Title: {
-    //         en: string
-    //         fi: string
-    //     }
-    // }[]
+export interface NavItem {
+    id: string
+    page: string
+    title: string
 }
 
-const Nav = ({}: LocalizedNavProps) => {
+interface NavProps {
+    pages: NavItem[]
+    locale: LocaleName
+}
+
+const ChangeLanguageButton = ({
+    currentLocale,
+}: {
+    currentLocale: LocaleName
+}) => {
     const router = useRouter()
+
+    return currentLocale === 'en' ? (
+        <Link
+            href={{
+                pathname: router.pathname,
+                query: router.query,
+            }}
+            locale={locales.fi}
+            className={styles.navLink}
+        >
+            suomeksi
+        </Link>
+    ) : (
+        <Link
+            href={{
+                pathname: router.pathname,
+                query: router.query,
+            }}
+            locale={locales.en}
+            className={styles.navLink}
+        >
+            In English
+        </Link>
+    )
+}
+
+const Nav = ({ pages, locale }: NavProps) => {
+    const router = useRouter()
+
     return (
         <nav className={styles.nav}>
             <Link
@@ -29,25 +60,17 @@ const Nav = ({}: LocalizedNavProps) => {
             >
                 Matlu
             </Link>
-            <Link
-                href="/board"
-                className={cls(styles.navLink, {
-                    'active-navlink': router.asPath === '/board',
-                })}
-            >
-                Board
-            </Link>
-            {/* {navLinks.map((navLink) => (
+            {pages.map((page) => (
                 <Link
-                    key={navLink.id}
-                    to={`/en/${navLink.page}/`}
-                    className={styles.navLink}
-                    activeClassName="active-navlink"
-                    partiallyActive={true}
+                    key={page.id}
+                    href={`/${page.page}`}
+                    className={cls(styles.navLink, {
+                        'active-navlink': router.asPath === `/${page.page}`,
+                    })}
                 >
-                    {navLink.Title.en}
+                    {page.title}
                 </Link>
-            ))} */}
+            ))}
             <a
                 className={styles.navLink}
                 href="https://ilotalo.matlu.fi"
@@ -56,16 +79,7 @@ const Nav = ({}: LocalizedNavProps) => {
             >
                 <i className="fas fa-external-link-alt"></i> Matlu Klusteri
             </a>
-            <Link
-                href={{
-                    pathname: router.pathname,
-                    query: router.query,
-                }}
-                locale={locales.fi}
-                className={styles.navLink}
-            >
-                Suomeksi
-            </Link>
+            <ChangeLanguageButton currentLocale={locale} />
         </nav>
     )
 }

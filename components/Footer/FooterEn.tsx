@@ -1,12 +1,16 @@
-import React from 'react'
-// import { MatluDocuments } from './Documents'
 import styles from 'styles/components/Footer.module.scss'
+import { FooterDocument } from './FooterDocument'
+import MatluDocuments from './MatluDocuments'
 
-export const FooterEn: React.FC = () => (
+interface Props {
+    documents: FooterDocument[]
+}
+
+export const FooterEn = ({ documents }: Props) => (
     <footer className={styles.appFooter}>
         <div className={styles.appFooterSection}>
             <h4>Documents</h4>
-            {/* <MatluDocuments language={'en'} /> */}
+            <MatluDocuments documents={documents} />
         </div>
         <div className={styles.appFooterSection}>
             <h4>Matlu in social media</h4>
