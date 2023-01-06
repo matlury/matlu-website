@@ -3,14 +3,25 @@ import Image from 'next/image'
 import MatluImage from 'public/img/matlu.png'
 import styles from 'styles/components/Layout.module.scss'
 import Footer from './Footer'
-import Nav from './Nav'
+import { FooterDocument } from './Footer/FooterDocument'
+import Nav, { NavItem } from './Nav'
 
-interface LayoutProps {
+export interface LayoutSSRProps {
     locale: LocaleName
+    navItems: NavItem[]
+    footerDocuments: FooterDocument[]
+}
+
+interface LayoutProps extends LayoutSSRProps {
     children: React.ReactNode
 }
 
-const Layout = ({ locale, children }: LayoutProps) => {
+const Layout = ({
+    locale,
+    navItems,
+    footerDocuments,
+    children,
+}: LayoutProps) => {
     return (
         <>
             <div className={styles.logoWrapper}>
@@ -24,10 +35,10 @@ const Layout = ({ locale, children }: LayoutProps) => {
                     quality={100}
                 />
             </div>
-            <Nav />
+            <Nav locale={locale} pages={navItems} />
             <div className={styles.wrapper}>
                 <main>{children}</main>
-                <Footer locale={locale} />
+                <Footer documents={footerDocuments} locale={locale} />
             </div>
         </>
     )

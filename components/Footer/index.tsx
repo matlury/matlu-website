@@ -1,14 +1,16 @@
 import { LocaleName } from 'common/locale'
-import React from 'react'
+import { FooterDocument } from './FooterDocument'
 import { FooterEn } from './FooterEn'
 import { FooterFi } from './FooterFi'
 
 interface FooterProps {
     locale: LocaleName
+    documents: FooterDocument[]
 }
 
-const Footer: React.FC<FooterProps> = ({ locale }) => {
-    return locale === 'fi' ? <FooterFi /> : <FooterEn />
+const Footer = ({ locale, documents }: FooterProps) => {
+    const Component = locale === 'fi' ? FooterFi : FooterEn
+    return <Component documents={documents} />
 }
 
 export default Footer

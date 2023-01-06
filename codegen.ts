@@ -4,7 +4,12 @@ const schemaUrl = process.env.CMS_GRAPHQL_URL || 'https://cms.matlu.fi/graphql'
 
 const config: CodegenConfig = {
     schema: schemaUrl,
-    documents: ['pages/**/*.{tsx,ts}', 'services/**/*.{tsx,ts}'],
+    documents: [
+        'common/**/*.{tsx,ts}',
+        'components/**/*.{tsx,ts}',
+        'pages/**/*.{tsx,ts}',
+        'services/**/*.{tsx,ts}',
+    ],
     generates: {
         './__generated__/': {
             preset: 'client',
