@@ -188,6 +188,12 @@ img[src*='#thumbnail_3x'] {
     }
 }
 
+ul li {
+    font-size: 0.7em;
+    margin-top: 12px;
+    margin-bottom: 12px;
+}
+
 .team {
     ul {
         padding-left: 0;
@@ -195,10 +201,7 @@ img[src*='#thumbnail_3x'] {
 
     ul li {
         list-style-type: none;
-        margin-top: 12px;
-        margin-bottom: 12px;
         padding-left: 0;
-        font-size: 0.7em;
 
         @include mobile {
             padding: 8px;
@@ -213,9 +216,6 @@ img[src*='#thumbnail_3x'] {
 
     ul li {
         list-style-type: none;
-        margin-top: 12px;
-        margin-bottom: 12px;
-        font-size: 0.7em;
 
         @include mobile {
             padding: 8px;
