@@ -1,6 +1,6 @@
 root = true
 
-[*.{js,jsx,ts,tsx,css,scss}]
+[*.{js,jsx,ts,tsx,css,scss,yml,yaml}]
 end_of_line = lf
 insert_final_newline = true
 indent_style = space
