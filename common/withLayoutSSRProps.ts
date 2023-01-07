@@ -38,42 +38,20 @@ const getFooterDocuments = (
     }))
 }
 
-type AddParameters<
-    TFunction extends (...args: any) => any,
-    TParameters extends [...args: any]
-> = (
-    ...args: [...Parameters<TFunction>, ...TParameters]
-) => ReturnType<TFunction>
-
-type PropsType = { [key: string]: any }
-
-// This HoC HoC takes care of returning early if the wrapped getServerSideProps
-// returned a 404 or a redirect, and passes its props to your HoC.
-export const makeGetServerSidePropsHoc =
-    <TWrappedProps extends PropsType, TMyProps extends PropsType>(
-        hocGetServerSideProps: AddParameters<
-            GetServerSideProps<TWrappedProps & TMyProps>,
-            [wrappedArgs: TWrappedProps]
-        >
-    ) =>
-    <TWrapped extends PropsType>(
-        wrappedGetServerSideProps: GetServerSideProps<TWrappedProps>
-    ): GetServerSideProps<TWrappedProps & TMyProps> =>
+export const withLayoutSSRProps =
+    <P extends { [key: string]: any }>(
+        pageGetServerSideProps: GetServerSideProps<P>
+    ): GetServerSideProps<P & LayoutSSRProps> =>
     async (ctx) => {
-        const returned = await wrappedGetServerSideProps(ctx)
+        const wrappedResponse = await pageGetServerSideProps(ctx)
         // You can return an object with `notFound` or `redirect` from
         // getServerSideProps(), which we need to handle separately.
-        if ('notFound' in returned || 'redirect' in returned) {
-            return returned
+        if ('notFound' in wrappedResponse || 'redirect' in wrappedResponse) {
+            return wrappedResponse
         }
 
-        // Apparently it's okay for props to be a Promise?
-        const wrappedProps = await returned.props
-        return hocGetServerSideProps(ctx, wrappedProps)
-    }
+        const wrappedProps = await wrappedResponse.props
 
-export const withLayoutSSRProps = makeGetServerSidePropsHoc(
-    async (ctx, wrappedProps) => {
         const { data } = await client.query({
             query: gql(`
                 query GetLayoutSSRData {
@@ -119,7 +97,6 @@ export const withLayoutSSRProps = makeGetServerSidePropsHoc(
                 latestBoardYear:
                     data.boardYears?.filter(notNullOrUndefined)[0]?.year ??
                     null,
-            } satisfies LayoutSSRProps,
+            },
         }
     }
-)
