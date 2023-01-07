@@ -5,13 +5,9 @@ import styles from 'styles/components/ContactForm.module.scss'
 
 interface LocalizedContactFormProps {
     reCaptchaSiteKey: string
-    feedbackFormHandler: string
 }
 
-const ContactFormFi = ({
-    feedbackFormHandler,
-    reCaptchaSiteKey,
-}: LocalizedContactFormProps) => {
+const ContactFormFi = ({ reCaptchaSiteKey }: LocalizedContactFormProps) => {
     const [verified, setVerified] = useState(false)
     const [loaded, setLoaded] = useState(false)
 
@@ -38,7 +34,7 @@ const ContactFormFi = ({
                 yhteystietosi, jos haluat vastauksen yhteydenottoosi.
             </p>
             <form
-                action={feedbackFormHandler}
+                action="/api/feedback"
                 method="POST"
                 className={styles.contactForm}
             >
@@ -69,10 +65,7 @@ const ContactFormFi = ({
     )
 }
 
-const ContactFormEn = ({
-    feedbackFormHandler,
-    reCaptchaSiteKey,
-}: LocalizedContactFormProps) => {
+const ContactFormEn = ({ reCaptchaSiteKey }: LocalizedContactFormProps) => {
     const [verified, setVerified] = useState(false)
     const [loaded, setLoaded] = useState(false)
 
@@ -100,7 +93,7 @@ const ContactFormEn = ({
                 request.{' '}
             </p>
             <form
-                action={feedbackFormHandler}
+                action="/api/feedback"
                 method="POST"
                 className={styles.contactForm}
             >
@@ -108,6 +101,7 @@ const ContactFormEn = ({
                     <label htmlFor="contactmsg">Message</label>
                     <textarea
                         id="contactmsg"
+                        name="message"
                         cols={80}
                         rows={10}
                         placeholder="Write your message..."

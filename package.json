@@ -4,7 +4,7 @@
     "private": true,
     "scripts": {
         "dev": "concurrently -c auto 'npm:dev:*'",
-        "dev:next": "next dev",
+        "dev:next": "NODE_OPTIONS=--inspect next dev",
         "dev:schema": "graphql-codegen -w",
         "build": "npm run build:schema && npm run build:next",
         "build:next": "next build",
@@ -15,6 +15,7 @@
     },
     "dependencies": {
         "@apollo/client": "3.7.3",
+        "@aws-sdk/client-ses": "^3.245.0",
         "@graphql-codegen/cli": "2.16.3",
         "@graphql-codegen/client-preset": "1.2.5",
         "@graphql-codegen/typescript": "2.8.7",
@@ -22,6 +23,7 @@
         "@types/node": "18.11.18",
         "@types/react": "18.0.26",
         "@types/react-dom": "18.0.10",
+        "axios": "^1.2.2",
         "classnames": "^2.3.2",
         "date-fns": "^2.29.3",
         "eslint": "8.31.0",

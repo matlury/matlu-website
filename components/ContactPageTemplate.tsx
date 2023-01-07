@@ -4,22 +4,16 @@ import PageTemplate, { PageTemplateProps } from './PageTemplate'
 
 export interface ContactPageTemplateProps extends PageTemplateProps {
     reCaptchaSiteKey: string
-    feedbackFormHandler: string
 }
 
 const ContactPageTemplate = ({
     locale,
     reCaptchaSiteKey,
-    feedbackFormHandler,
     ...props
 }: ContactPageTemplateProps & LayoutSSRProps) => {
     return (
         <PageTemplate locale={locale} {...props}>
-            <ContactForm
-                locale={locale}
-                feedbackFormHandler={feedbackFormHandler}
-                reCaptchaSiteKey={reCaptchaSiteKey}
-            />
+            <ContactForm locale={locale} reCaptchaSiteKey={reCaptchaSiteKey} />
         </PageTemplate>
     )
 }
