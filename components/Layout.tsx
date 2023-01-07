@@ -6,7 +6,7 @@ import styles from 'styles/components/Layout.module.scss'
 import Footer from './Footer'
 import { FooterDocument } from './Footer/FooterDocument'
 import Nav, { NavItem } from './Nav'
-import SEO, { SeoProps } from './SEO'
+import SEO, { SeoProps } from './Seo'
 
 export interface LayoutSSRProps {
     locale: LocaleName
