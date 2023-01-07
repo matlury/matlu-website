@@ -8,11 +8,12 @@ import { gql } from '__generated__'
 const noop = () => <></>
 export default noop
 
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getServerSideProps = gsspWithNonce(async () => {
     const { data } = await client.query({
         query: gql(`
             query GetBoardYears {
                 boardYears: boards(publicationState: LIVE, sort: "year:desc", where: { hidden_eq: false }) {
+                    id
                     year
                 }
             }
