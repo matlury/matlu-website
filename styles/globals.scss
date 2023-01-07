@@ -100,7 +100,12 @@ h6 {
 
         .member-title {
             width: 70%;
+            margin: 0;
         }
+    }
+
+    h4 {
+        margin: 0;
     }
 }
 
@@ -184,6 +189,14 @@ img[src*='#thumbnail_3x'] {
         .officer-email {
             width: 70%;
         }
+
+        .officer-title {
+            margin: 0;
+        }
+    }
+
+    h4 {
+        margin: 0;
     }
 }
 

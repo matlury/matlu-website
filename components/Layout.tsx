@@ -11,6 +11,7 @@ export interface LayoutSSRProps {
     locale: LocaleName
     navItems: NavItem[]
     footerDocuments: FooterDocument[]
+    latestBoardYear: number | null
 }
 
 interface LayoutProps extends LayoutSSRProps {
@@ -21,6 +22,7 @@ const Layout = ({
     locale,
     navItems,
     footerDocuments,
+    latestBoardYear,
     children,
 }: LayoutProps) => {
     return (
@@ -38,7 +40,11 @@ const Layout = ({
                     />
                 </Link>
             </div>
-            <Nav locale={locale} pages={navItems} />
+            <Nav
+                locale={locale}
+                pages={navItems}
+                latestBoardYear={latestBoardYear}
+            />
             <div className={styles.wrapper}>
                 <main>{children}</main>
                 <Footer documents={footerDocuments} locale={locale} />

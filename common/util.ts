@@ -1,14 +1,13 @@
-export const notNull = <T extends unknown>(o: T | null): o is T => o !== null
+export type NonNullableFields<T> = {
+    [P in keyof T]: NonNullable<T[P]>
+}
 
-export const ascendingBy =
-    <T extends { [key in K]: number | bigint }, K extends keyof T>(key: K) =>
+export const notNullOrUndefined = <T>(o: T | null | undefined): o is T =>
+    o !== null && o !== undefined
+
+export const ascendingByString =
+    <T>(value: (item: T) => string) =>
     (a: T, b: T) =>
-        a[key] - b[key]
+        value(a).localeCompare(value(b))
 
-export const omit =
-    <T extends object, K extends keyof T>(key: K) =>
-    (obj: T): Omit<T, K> => {
-        const shallowClone = { ...obj }
-        delete shallowClone[key]
-        return shallowClone
-    }
+export const formatTitle = (title: string) => `${title} | Matlu ry`
