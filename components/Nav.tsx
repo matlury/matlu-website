@@ -13,6 +13,7 @@ export interface NavItem {
 interface NavProps {
     pages: NavItem[]
     locale: LocaleName
+    latestBoardYear: number | null
 }
 
 const ChangeLanguageButton = ({
@@ -47,7 +48,7 @@ const ChangeLanguageButton = ({
     )
 }
 
-const Nav = ({ pages, locale }: NavProps) => {
+const Nav = ({ pages, latestBoardYear, locale }: NavProps) => {
     const router = useRouter()
 
     return (
@@ -60,6 +61,18 @@ const Nav = ({ pages, locale }: NavProps) => {
             >
                 Matlu
             </Link>
+            {latestBoardYear !== null && (
+                <Link
+                    href={`/board/${latestBoardYear}`}
+                    className={cls(styles.navLink, {
+                        'active-navlink':
+                            router.asPath === '/board' ||
+                            router.asPath.startsWith('/board/'),
+                    })}
+                >
+                    {locale === 'fi' ? 'Hallitus' : 'Board'}
+                </Link>
+            )}
             {pages.map((page) => (
                 <Link
                     key={page.id}

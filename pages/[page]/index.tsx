@@ -1,37 +1,12 @@
+import { HOME_PAGE_NAME } from 'common/constants'
 import { getLocale } from 'common/locale'
 import { withLayoutSSRProps } from 'common/withLayoutSSRProps'
-import Layout, { LayoutSSRProps } from 'components/Layout'
-import Title from 'components/Title'
-import Head from 'next/head'
+import PageTemplate, { PageProps } from 'components/PageTemplate'
 import type { ParsedUrlQuery } from 'querystring'
-import ReactMarkdown from 'react-markdown'
-import gfm from 'remark-gfm'
 import client from 'services/cms/apollo-client'
 import { gql } from '__generated__/gql'
 
-interface PageProps {
-    title: string
-    bodyMarkdown: string
-}
-
-export default function Home({
-    title,
-    bodyMarkdown,
-    ...layoutProps
-}: PageProps & LayoutSSRProps) {
-    return (
-        <>
-            <Head>
-                <Title title={title} />
-            </Head>
-            <Layout {...layoutProps}>
-                <ReactMarkdown remarkPlugins={[gfm]}>
-                    {bodyMarkdown}
-                </ReactMarkdown>
-            </Layout>
-        </>
-    )
-}
+export default PageTemplate
 
 const getPage = (params: ParsedUrlQuery | undefined) => {
     if (!params) return null
@@ -47,7 +22,7 @@ export const getServerSideProps = withLayoutSSRProps<PageProps>(
         const localeCode = getLocale(locale)
         const pageSlug = getPage(params)
 
-        if (!pageSlug) {
+        if (!pageSlug || pageSlug === HOME_PAGE_NAME) {
             return {
                 notFound: true,
             }
