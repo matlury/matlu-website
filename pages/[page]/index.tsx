@@ -143,7 +143,6 @@ export const getServerSideProps = withLayoutSSRProps<Props>(
                     type: 'contact',
                     title,
                     bodyMarkdown,
-                    feedbackFormHandler: siteMetadata.feedbackFormHandler,
                     reCaptchaSiteKey: siteMetadata.recaptchaSiteKey,
                     seo,
                 },
