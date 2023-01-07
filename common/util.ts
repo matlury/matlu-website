@@ -32,5 +32,3 @@ function omit<T extends object, K extends keyof T>(
 }
 
 export { omit }
-
-export const formatTitle = (title: string) => `${title} | Matlu ry`

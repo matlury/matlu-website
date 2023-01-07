@@ -1,6 +1,6 @@
 import cls from 'classnames'
-import { formatTitle, notNullOrUndefined } from 'common/util'
-import Head from 'next/head'
+import { notNullOrUndefined } from 'common/util'
+import HeadTitle from 'components/HeadTitle'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { BoardProps } from '.'
@@ -18,9 +18,7 @@ const BoardFi = ({ board, boardYears }: BoardProps) => {
 
     return (
         <>
-            <Head>
-                <title>{formatTitle(`Vuoden ${year} hallitus`)}</title>
-            </Head>
+            <HeadTitle title={`Vuoden ${year} hallitus`} />
             <h1>Hallitus {year}</h1>
             <p>
                 Sähköpostit pääsääntöisesti muotoa <b>etu.suku@helsinki.fi</b>.

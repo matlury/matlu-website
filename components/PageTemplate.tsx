@@ -1,9 +1,8 @@
-import { formatTitle } from 'common/util'
 import Layout, { LayoutSSRProps } from 'components/Layout'
-import Head from 'next/head'
 import { PropsWithChildren } from 'react'
 import ReactMarkdown from 'react-markdown'
 import gfm from 'remark-gfm'
+import HeadTitle from './HeadTitle'
 
 export interface PageTemplateProps {
     title: string
@@ -18,9 +17,7 @@ export default function PageTemplate({
 }: PropsWithChildren<PageTemplateProps & LayoutSSRProps>) {
     return (
         <>
-            <Head>
-                <title>{formatTitle(title)}</title>
-            </Head>
+            <HeadTitle title={title} />
             <Layout {...layoutProps}>
                 {children}
                 <ReactMarkdown remarkPlugins={[gfm]}>
