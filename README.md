@@ -1,3 +1,10 @@
+# matlu-website
+
+This is the matlu.fi website's repository.
+
+This repo contains the Next.js frontend which handles rendering the website itself, as well as sending the contact form emails.
+The data itself is stored in Strapi CMS, which the next.js server fetches data from.
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
