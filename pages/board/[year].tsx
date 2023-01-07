@@ -64,6 +64,7 @@ export const getServerSideProps = withLayoutSSRProps<BoardPageProps>(
                             name
                             email
                             role {
+                                id
                                 fi
                                 en
                             }
@@ -72,6 +73,7 @@ export const getServerSideProps = withLayoutSSRProps<BoardPageProps>(
                             id
                             name
                             role {
+                                id
                                 fi
                                 en
                             }
@@ -79,6 +81,7 @@ export const getServerSideProps = withLayoutSSRProps<BoardPageProps>(
                         teams {
                             id
                             title {
+                                id
                                 fi
                                 en
                             }

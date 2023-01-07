@@ -56,10 +56,12 @@ const fetchCalendarEvents = async () => {
                     hide_location
                     start_date
                     title {
+                        id
                         fi
                         en
                     }
                     location {
+                        id
                         en
                         fi
                     }
@@ -89,15 +91,19 @@ export const getServerSideProps = withLayoutSSRProps<Props>(
             query: gql(`
                 query GetPageByName($pageName: String!) {
                     pages(where: { page_eq: $pageName }, publicationState: LIVE) {
+                        id
                         Title {
+                            id
                             fi
                             en
                         }
                         body {
+                            id
                             fi: Fi
                             en: En
                         }
                         Description {
+                            id
                             fi
                             en
                         }
