@@ -37,7 +37,6 @@ const Layout = ({
             <div className={styles.logoWrapper}>
                 <Link href="/">
                     <Image
-                        className={styles.matluLogo}
                         alt="Matlu ry"
                         src={MatluImage}
                         placeholder="blur"
