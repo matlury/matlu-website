@@ -1,3 +1,4 @@
+import { gsspWithNonce } from '@next-safe/middleware/dist/document'
 import { getLocale } from 'common/locale'
 import { withLayoutSSRProps } from 'common/withLayoutSSRProps'
 import PageTemplate, { PageTemplateProps } from 'components/PageTemplate'
@@ -49,5 +50,5 @@ export const getServerSideProps = gsspWithNonce(
                 },
             },
         }
-    }
+    })
 )

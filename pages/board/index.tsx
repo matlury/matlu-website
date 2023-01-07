@@ -1,5 +1,5 @@
+import { gsspWithNonce } from '@next-safe/middleware/dist/document'
 import { notNullOrUndefined } from 'common/util'
-import { GetServerSideProps } from 'next'
 import client from 'services/cms/apollo-client'
 import { gql } from '__generated__'
 
@@ -51,4 +51,4 @@ export const getServerSideProps = gsspWithNonce(async () => {
             destination: `/board/${boardYears[0].year}`,
         },
     }
-}
+})

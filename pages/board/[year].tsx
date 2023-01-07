@@ -1,3 +1,4 @@
+import { gsspWithNonce } from '@next-safe/middleware/dist/document'
 import { notNullOrUndefined } from 'common/util'
 import { withLayoutSSRProps } from 'common/withLayoutSSRProps'
 import Board, { BoardType } from 'components/Board'
@@ -41,8 +42,8 @@ const parseYearParam = (params: ParsedUrlQuery | undefined) => {
     return year
 }
 
-export const getServerSideProps = withLayoutSSRProps<BoardPageProps>(
-    async ({ params }) => {
+export const getServerSideProps = gsspWithNonce(
+    withLayoutSSRProps<BoardPageProps>(async ({ params }) => {
         const year = parseYearParam(params)
         if (year === null) {
             return {
@@ -92,7 +93,7 @@ export const getServerSideProps = withLayoutSSRProps<BoardPageProps>(
                         }
                     }
                 }
-        `),
+            `),
             variables: {
                 year,
             },
@@ -117,5 +118,5 @@ export const getServerSideProps = withLayoutSSRProps<BoardPageProps>(
                 board,
             },
         }
-    }
+    })
 )

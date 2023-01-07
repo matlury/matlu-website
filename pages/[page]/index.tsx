@@ -1,3 +1,4 @@
+import { gsspWithNonce } from '@next-safe/middleware/dist/document'
 import { HOME_PAGE_NAME } from 'common/constants'
 import { getLocale } from 'common/locale'
 import siteMetadata from 'common/siteMetadata'
@@ -76,8 +77,8 @@ const fetchCalendarEvents = async () => {
     return (data.calendarEvents ?? []).filter(notNullOrUndefined)
 }
 
-export const getServerSideProps = withLayoutSSRProps<Props>(
-    async ({ params, locale }) => {
+export const getServerSideProps = gsspWithNonce(
+    withLayoutSSRProps<Props>(async ({ params, locale }) => {
         const localeCode = getLocale(locale)
         const pageSlug = getPage(params)
 
@@ -163,5 +164,5 @@ export const getServerSideProps = withLayoutSSRProps<Props>(
                 seo,
             },
         }
-    }
+    })
 )

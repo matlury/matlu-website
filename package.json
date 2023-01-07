@@ -19,6 +19,7 @@
         "@graphql-codegen/cli": "2.16.3",
         "@graphql-codegen/client-preset": "1.2.5",
         "@graphql-codegen/typescript": "2.8.7",
+        "@next-safe/middleware": "^0.10.0",
         "@next/font": "^13.1.1",
         "@types/node": "18.11.18",
         "@types/react": "18.0.26",
