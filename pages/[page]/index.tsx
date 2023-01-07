@@ -97,6 +97,11 @@ export const getServerSideProps = withLayoutSSRProps<Props>(
                             fi: Fi
                             en: En
                         }
+                        Description {
+                            fi
+                            en
+                        }
+                        HideFromSearchEngine
                     }
                 }
             `),
@@ -115,6 +120,11 @@ export const getServerSideProps = withLayoutSSRProps<Props>(
         const title = page.Title?.[localeCode] || 'Matlu ry'
         const bodyMarkdown = page.body?.[localeCode] || ''
 
+        const seo = {
+            description: page.Description?.[localeCode],
+            hideFromSearchEngine: !!page.HideFromSearchEngine,
+        }
+
         if (pageSlug === 'events') {
             const events = await fetchCalendarEvents()
             return {
@@ -123,6 +133,7 @@ export const getServerSideProps = withLayoutSSRProps<Props>(
                     title,
                     bodyMarkdown,
                     events,
+                    seo,
                 },
             }
         }
@@ -134,6 +145,7 @@ export const getServerSideProps = withLayoutSSRProps<Props>(
                     bodyMarkdown,
                     feedbackFormHandler: siteMetadata.feedbackFormHandler,
                     reCaptchaSiteKey: siteMetadata.recaptchaSiteKey,
+                    seo,
                 },
             }
         }
@@ -143,6 +155,7 @@ export const getServerSideProps = withLayoutSSRProps<Props>(
                 type: 'page',
                 title,
                 bodyMarkdown,
+                seo,
             },
         }
     }

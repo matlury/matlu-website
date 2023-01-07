@@ -3,6 +3,8 @@ import { GetServerSideProps } from 'next'
 import client from 'services/cms/apollo-client'
 import { gql } from '__generated__'
 
+// We only use this for a redirect but nextjs requires a component
+// so just pass a no-op
 const noop = () => <></>
 export default noop
 

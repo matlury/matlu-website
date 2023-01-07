@@ -1,5 +1,5 @@
-import { formatTitle } from 'common/util'
-import Head from 'next/head'
+import HeadTitle from 'components/HeadTitle'
+import SEO from 'components/SEO'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -11,9 +11,7 @@ const NotFoundPage = () => {
     if (router.locale === 'fi') {
         return (
             <>
-                <Head>
-                    <title>{formatTitle('Sivua ei löytynyt')}</title>
-                </Head>
+                <HeadTitle title="Sivua ei löytynyt" />
                 <div className={layoutStyles.logoWrapper}>
                     <Link href="/">
                         <Image
@@ -43,9 +41,8 @@ const NotFoundPage = () => {
 
     return (
         <>
-            <Head>
-                <title>{formatTitle('Not found')}</title>
-            </Head>
+            <HeadTitle title="Not found" />
+            <SEO hideFromSearchEngine />
             <div className={layoutStyles.logoWrapper}>
                 <Link href="/">
                     <Image
