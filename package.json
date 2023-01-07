@@ -4,7 +4,7 @@
     "private": true,
     "scripts": {
         "dev": "concurrently -c auto 'npm:dev:*'",
-        "dev:next": "NODE_OPTIONS=--inspect next dev",
+        "dev:next": "next dev",
         "dev:schema": "graphql-codegen -w",
         "build": "npm run build:schema && npm run build:next",
         "build:next": "next build",
