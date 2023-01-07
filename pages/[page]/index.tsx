@@ -1,7 +1,11 @@
 import { HOME_PAGE_NAME } from 'common/constants'
 import { getLocale } from 'common/locale'
+import siteMetadata from 'common/siteMetadata'
 import { notNullOrUndefined, omit } from 'common/util'
 import { withLayoutSSRProps } from 'common/withLayoutSSRProps'
+import ContactPageTemplate, {
+    ContactPageTemplateProps,
+} from 'components/ContactPageTemplate'
 import EventsPageTemplate, {
     EventsPageTemplateProps,
 } from 'components/EventsPageTemplate'
@@ -14,14 +18,18 @@ import { gql } from '__generated__/gql'
 
 type PageProps = PageTemplateProps & { type: 'page' }
 type EventsPageProps = EventsPageTemplateProps & { type: 'events' }
-type Props = PageProps | EventsPageProps
+type ContactPageProps = ContactPageTemplateProps & { type: 'contact' }
+type Props = PageProps | EventsPageProps | ContactPageProps
 
 const Page = (props: Props & LayoutSSRProps) => {
-    if (props.type === 'events') {
-        return <EventsPageTemplate {...omit('type', props)} />
+    switch (props.type) {
+        case 'events':
+            return <EventsPageTemplate {...omit('type', props)} />
+        case 'contact':
+            return <ContactPageTemplate {...omit('type', props)} />
+        default:
+            return <PageTemplate {...omit('type', props)} />
     }
-
-    return <PageTemplate {...omit('type', props)} />
 }
 
 export default Page
@@ -115,6 +123,17 @@ export const getServerSideProps = withLayoutSSRProps<Props>(
                     title,
                     bodyMarkdown,
                     events,
+                },
+            }
+        }
+        if (pageSlug === 'contact') {
+            return {
+                props: {
+                    type: 'contact',
+                    title,
+                    bodyMarkdown,
+                    feedbackFormHandler: siteMetadata.feedbackFormHandler,
+                    reCaptchaSiteKey: siteMetadata.recaptchaSiteKey,
                 },
             }
         }
