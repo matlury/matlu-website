@@ -1,3 +1,4 @@
+import { gsspWithNonce } from '@next-safe/middleware/dist/document'
 import { withLayoutSSRProps } from 'common/withLayoutSSRProps'
 import Layout, { LayoutSSRProps } from 'components/Layout'
 
@@ -40,11 +41,13 @@ const Ilotalo = ({ locale, ...layoutProps }: LayoutSSRProps) => (
 
 export default Ilotalo
 
-export const getServerSideProps = withLayoutSSRProps(async () => ({
-    props: {
-        seo: {
-            description: 'Matlu Klusterin varauskalenteri',
-            hideFromSearchEngine: true,
+export const getServerSideProps = gsspWithNonce(
+    withLayoutSSRProps(async () => ({
+        props: {
+            seo: {
+                description: 'Matlu Klusterin varauskalenteri',
+                hideFromSearchEngine: true,
+            },
         },
-    },
-}))
+    }))
+)
