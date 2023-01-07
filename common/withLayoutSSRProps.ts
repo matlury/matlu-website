@@ -63,6 +63,7 @@ export const withLayoutSSRProps =
                         id
                         page
                         Title {
+                            id
                             fi
                             en
                         }
@@ -70,14 +71,17 @@ export const withLayoutSSRProps =
                     documents(sort: "ordering", publicationState: LIVE) {
                         id
                         title {
+                            id
                             fi
                             en
                         }
                         file {
+                            id
                             url
                         }
                     }
                     boardYears: boards(publicationState: LIVE, sort: "year:desc", where: { hidden_eq: false }) {
+                        id
                         year
                     }
                 }

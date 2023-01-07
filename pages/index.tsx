@@ -6,23 +6,27 @@ import { gql } from '__generated__/gql'
 
 export default PageTemplate
 
-export const getServerSideProps = withLayoutSSRProps<PageTemplateProps>(
-    async ({ locale }) => {
+export const getServerSideProps = gsspWithNonce(
+    withLayoutSSRProps<PageTemplateProps>(async ({ locale }) => {
         const localeCode = getLocale(locale)
 
         const { data } = await client.query({
             query: gql(`
                 query GetHomePage {
                     pages(where: { page_eq: "home" }, publicationState: LIVE) {
+                        id
                         Title {
+                            id
                             fi
                             en
                         }
                         body {
+                            id
                             fi: Fi
                             en: En
                         }
                         Description {
+                            id
                             fi
                             en
                         }
