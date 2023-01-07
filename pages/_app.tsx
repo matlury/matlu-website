@@ -1,4 +1,5 @@
 import localFont from '@next/font/local'
+import siteMetadata from 'common/siteMetadata'
 import type { AppProps } from 'next/app'
 import Head from 'next/head'
 import '../styles/globals.scss'
@@ -62,6 +63,15 @@ export default function App({ Component, pageProps }: AppProps) {
                     name="viewport"
                     content="width=device-width, initial-scale=1"
                 />
+                <meta property="og:type" content="website" />
+                <meta name="twitter:card" content="summary" />
+                <meta name="twitter:creator" content={siteMetadata.author} />
+                {siteMetadata.googleSiteVerification && (
+                    <meta
+                        name="google-site-verification"
+                        content={siteMetadata.googleSiteVerification}
+                    />
+                )}
             </Head>
             <Component {...pageProps} />
         </>

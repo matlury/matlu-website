@@ -12,19 +12,24 @@ export const getServerSideProps = withLayoutSSRProps<PageTemplateProps>(
 
         const { data } = await client.query({
             query: gql(`
-            query GetHomePage {
-                pages(where: { page_eq: "home" }, publicationState: LIVE) {
-                    Title {
-                        fi
-                        en
-                    }
-                    body {
-                        fi: Fi
-                        en: En
+                query GetHomePage {
+                    pages(where: { page_eq: "home" }, publicationState: LIVE) {
+                        Title {
+                            fi
+                            en
+                        }
+                        body {
+                            fi: Fi
+                            en: En
+                        }
+                        Description {
+                            fi
+                            en
+                        }
+                        HideFromSearchEngine
                     }
                 }
-            }
-        `),
+            `),
         })
 
         const page = data?.pages?.[0]
@@ -34,6 +39,10 @@ export const getServerSideProps = withLayoutSSRProps<PageTemplateProps>(
             props: {
                 title,
                 bodyMarkdown,
+                seo: {
+                    description: page?.Description?.[localeCode],
+                    hideFromSearchEngine: !!page?.HideFromSearchEngine,
+                },
             },
         }
     }

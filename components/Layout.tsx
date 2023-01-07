@@ -6,12 +6,14 @@ import styles from 'styles/components/Layout.module.scss'
 import Footer from './Footer'
 import { FooterDocument } from './Footer/FooterDocument'
 import Nav, { NavItem } from './Nav'
+import SEO, { SeoProps } from './SEO'
 
 export interface LayoutSSRProps {
     locale: LocaleName
     navItems: NavItem[]
     footerDocuments: FooterDocument[]
     latestBoardYear: number | null
+    seo?: SeoProps
 }
 
 interface LayoutProps extends LayoutSSRProps {
@@ -24,9 +26,14 @@ const Layout = ({
     footerDocuments,
     latestBoardYear,
     children,
+    seo,
 }: LayoutProps) => {
     return (
         <>
+            <SEO
+                description={seo?.description}
+                hideFromSearchEngine={seo?.hideFromSearchEngine}
+            />
             <div className={styles.logoWrapper}>
                 <Link href="/">
                     <Image
