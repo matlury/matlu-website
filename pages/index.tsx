@@ -1,38 +1,12 @@
 import { getLocale } from 'common/locale'
 import { withLayoutSSRProps } from 'common/withLayoutSSRProps'
-import Layout, { LayoutSSRProps } from 'components/Layout'
-import Title from 'components/Title'
-import Head from 'next/head'
-import ReactMarkdown from 'react-markdown'
-import gfm from 'remark-gfm'
+import PageTemplate, { PageProps } from 'components/PageTemplate'
 import client from 'services/cms/apollo-client'
 import { gql } from '__generated__/gql'
 
-interface HomeProps {
-    title: string
-    bodyMarkdown: string
-}
+export default PageTemplate
 
-export default function Home({
-    title,
-    bodyMarkdown,
-    ...layoutProps
-}: HomeProps & LayoutSSRProps) {
-    return (
-        <>
-            <Head>
-                <Title title={title} />
-            </Head>
-            <Layout {...layoutProps}>
-                <ReactMarkdown remarkPlugins={[gfm]}>
-                    {bodyMarkdown}
-                </ReactMarkdown>
-            </Layout>
-        </>
-    )
-}
-
-export const getServerSideProps = withLayoutSSRProps<HomeProps>(
+export const getServerSideProps = withLayoutSSRProps<PageProps>(
     async ({ locale }) => {
         const localeCode = getLocale(locale)
 
