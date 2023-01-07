@@ -1,12 +1,12 @@
 import { getLocale } from 'common/locale'
 import { withLayoutSSRProps } from 'common/withLayoutSSRProps'
-import PageTemplate, { PageProps } from 'components/PageTemplate'
+import PageTemplate, { PageTemplateProps } from 'components/PageTemplate'
 import client from 'services/cms/apollo-client'
 import { gql } from '__generated__/gql'
 
 export default PageTemplate
 
-export const getServerSideProps = withLayoutSSRProps<PageProps>(
+export const getServerSideProps = withLayoutSSRProps<PageTemplateProps>(
     async ({ locale }) => {
         const localeCode = getLocale(locale)
 
