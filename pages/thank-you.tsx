@@ -1,3 +1,4 @@
+import { gsspWithNonce } from '@next-safe/middleware/dist/document'
 import { withLayoutSSRProps } from 'common/withLayoutSSRProps'
 import Layout, { LayoutSSRProps } from 'components/Layout'
 import Link from 'next/link'
@@ -22,11 +23,14 @@ const ThankYou = ({ locale, ...layoutProps }: LayoutSSRProps) => (
 
 export default ThankYou
 
-export const getServerSideProps = withLayoutSSRProps(async () => ({
-    props: {
-        seo: {
-            description: 'Kiitos yhteydenotostasi! / Thank you for contacting!',
-            hideFromSearchEngine: true,
+export const getServerSideProps = gsspWithNonce(
+    withLayoutSSRProps(async () => ({
+        props: {
+            seo: {
+                description:
+                    'Kiitos yhteydenotostasi! / Thank you for contacting!',
+                hideFromSearchEngine: true,
+            },
         },
-    },
-}))
+    }))
+)
