@@ -1,0 +1,235 @@
+@import './fontawesome.css';
+@import './vars';
+@import './breakpoints';
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-base, 'Open Sans'), 'sans-serif';
+    font-size: 16px;
+}
+
+ul,
+ol {
+    padding-left: 24px;
+}
+
+a,
+a:visited,
+a:active,
+a:hover {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+h1 {
+    font-size: 2.5rem;
+    margin: 1.675rem 0;
+}
+
+h2 {
+    font-size: 1.875rem;
+    margin: 1.4rem 0;
+}
+
+h3 {
+    font-size: 1.5rem;
+    margin: 1.2rem 0;
+}
+
+h4 {
+    font-size: 1.25rem;
+    margin: 1.05rem 0;
+}
+
+h5 {
+    font-size: 1.25rem;
+    margin: 1.05rem 0;
+}
+
+h6 {
+    font-size: 0.75rem;
+    margin: 0.9375rem 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-weight: 300;
+}
+
+.board-members {
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    align-content: flex-start;
+    flex-wrap: wrap;
+
+    .board-member {
+        text-align: left;
+        display: inline-block;
+        width: 30%;
+        min-height: 50px;
+        line-height: 1.5;
+        margin: 4px 4px 4px 0;
+        padding: 8px 0;
+
+        &:last-child {
+            margin-right: 0;
+        }
+
+        @include mobile {
+            width: 100%;
+            min-height: unset;
+            padding: 8px;
+
+            &:nth-child(even) {
+                background-color: #ececec;
+            }
+        }
+
+        .member-title {
+            width: 70%;
+            margin: 0;
+        }
+    }
+
+    h4 {
+        margin: 0;
+    }
+}
+
+.active-board,
+.active-navlink {
+    font-weight: bold;
+}
+
+p {
+    display: block;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    text-align: justify;
+    line-height: 1.8;
+}
+
+main {
+    @include mobile {
+        padding: 12px;
+    }
+
+    margin-bottom: 32px;
+}
+
+hr {
+    margin-top: 32px;
+    margin-bottom: 32px;
+}
+
+img[src*='#thumbnail'] {
+    height: 100px;
+    width: auto;
+}
+
+img[src*='#thumbnail_1_5x'] {
+    height: 150px;
+    width: auto;
+}
+
+img[src*='#thumbnail_2x'] {
+    height: 200px;
+    width: auto;
+}
+
+img[src*='#thumbnail_3x'] {
+    height: 300px;
+    width: auto;
+}
+
+.officers {
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    align-content: flex-start;
+    flex-wrap: wrap;
+
+    .officer {
+        text-align: left;
+        display: inline-block;
+        width: 30%;
+        min-height: 50px;
+        line-height: 1.5;
+        margin: 4px 4px 4px 0;
+        padding: 8px 0;
+
+        &:last-child {
+            margin-right: 0;
+        }
+
+        @include mobile {
+            width: 100%;
+            min-height: unset;
+            padding: 8px;
+
+            &:nth-child(even) {
+                background-color: #ececec;
+            }
+        }
+
+        .officer-title,
+        .officer-email {
+            width: 70%;
+        }
+
+        .officer-title {
+            margin: 0;
+        }
+    }
+
+    h4 {
+        margin: 0;
+    }
+}
+
+ul li {
+    margin-top: 12px;
+    margin-bottom: 12px;
+}
+
+.team {
+    ul {
+        padding-left: 0;
+    }
+
+    ul li {
+        list-style-type: none;
+        padding-left: 0;
+
+        @include mobile {
+            padding: 8px;
+        }
+    }
+}
+
+.former-boards {
+    ul {
+        padding-left: 0;
+    }
+
+    ul li {
+        list-style-type: none;
+
+        @include mobile {
+            padding: 8px;
+        }
+    }
+}
