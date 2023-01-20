@@ -32,6 +32,11 @@ FROM node:18-alpine AS runner
 
 WORKDIR /app
 
+EXPOSE 3000
+
+# Uncomment the following line to disable telemetry at run time
+ENV NEXT_TELEMETRY_DISABLED 1
+
 # Don't run production as root
 RUN adduser --system --uid 1001 nextjs
 USER nextjs
@@ -44,8 +49,5 @@ COPY --from=builder --chown=nextjs:0 /app/public ./public
 # https://nextjs.org/docs/advanced-features/output-file-tracing
 COPY --from=builder --chown=nextjs:0 /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:0 /app/.next/static ./.next/static
-
-# Uncomment the following line to disable telemetry at run time
-ENV NEXT_TELEMETRY_DISABLED 1
 
 CMD ["node", "server.js"]
