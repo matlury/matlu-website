@@ -5,7 +5,7 @@ FROM docker.io/library/node:18-alpine AS builder
 WORKDIR /app
 
 # Install dependencies based on the preferred package manager
-COPY -package.json package-lock.json* ./
+COPY package.json package-lock.json* ./
 # Omit --production flag for TypeScript devDependencies
 RUN npm ci
 
