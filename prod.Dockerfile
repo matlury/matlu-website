@@ -1,6 +1,6 @@
 # https://github.com/vercel/next.js/blob/ca5f265ab86dcb7efb5c6270ad642f0a239beee8/examples/with-docker-compose/next-app/prod.Dockerfile
 # Step 1. Rebuild the source code only when needed
-FROM node:18-alpine AS builder
+FROM docker.io/library/node:18-alpine AS builder
 
 WORKDIR /app
 
@@ -28,7 +28,7 @@ RUN npm run build
 # Note: It is not necessary to add an intermediate step that does a full copy of `node_modules` here
 
 # Step 2. Production image, copy all the files and run next
-FROM node:18-alpine AS runner
+FROM docker.io/library/node:18-alpine AS runner
 
 WORKDIR /app
 
