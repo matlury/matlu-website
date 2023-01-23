@@ -5,7 +5,7 @@ FROM node:18-alpine AS builder
 WORKDIR /app
 
 # Install dependencies based on the preferred package manager
-COPY -package.json package-lock.json* ./
+COPY package.json package-lock.json* ./
 # Omit --production flag for TypeScript devDependencies
 RUN npm ci
 
@@ -33,17 +33,16 @@ FROM node:18-alpine AS runner
 WORKDIR /app
 
 # Don't run production as root
+RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 USER nextjs
 
-# openshift randomizes uid but adds that user to gid=0, so chown files to gid 0
-# so the process has read rights
-COPY --from=builder --chown=nextjs:0 /app/public ./public
+COPY --from=builder /app/public ./public
 
 # Automatically leverage output traces to reduce image size
 # https://nextjs.org/docs/advanced-features/output-file-tracing
-COPY --from=builder --chown=nextjs:0 /app/.next/standalone ./
-COPY --from=builder --chown=nextjs:0 /app/.next/static ./.next/static
+COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
+COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
 # Uncomment the following line to disable telemetry at run time
 ENV NEXT_TELEMETRY_DISABLED 1
