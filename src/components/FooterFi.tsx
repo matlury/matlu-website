@@ -33,6 +33,6 @@ export const FooterFi: React.FC = () => (
         </li>
       </ul>
     </div>
-    <div className={styles.footerBottom}>&copy; 2020 Matlu ry</div>
+    <div className={styles.footerBottom}>&copy; 2024 Matlu ry</div>
   </footer>
 );
