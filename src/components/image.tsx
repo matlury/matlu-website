@@ -23,9 +23,9 @@ export const Image: React.FC<ImageProps> = ({imageName}) => {
   `);
   let filteredData = data
   if(imageName === "matlu") {
-    filteredData = data.placeholderImage.find((image: any) => image.relativePath === "matlu.png")
+    filteredData = data.find((image: any) => image.relativePath === "matlu.png")
   } else {
-    filteredData = data.placeholderImage.find((image: any) => image.relativePath === "loimu_varillinen.png")
+    filteredData = data.find((image: any) => image.relativePath === "loimu_varillinen.png")
   }
   return (
     <Img
