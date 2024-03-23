@@ -11,17 +11,17 @@ interface ImageProps {
 export const Image: React.FC<ImageProps> = ({imageName}) => {
   const data = useStaticQuery(graphql`
   query {
-    matluImage: file(relativePath: { eq: "matlu.png" }) {
+    matluImage: file(relativePath: { eq: "images/matlu.png" }) {
       childImageSharp {
-        fluid(maxWidth: 160) {
+        fluid(maxWidth: 160, quality: 100) {
           ...GatsbyImageSharpFluid
           presentationWidth
         }
       }
     }
-    loimuImage: file(relativePath: { eq: "loimu_varillinen.png" }) {
+    loimuImage: file(relativePath: { eq: "images/loimu_varillinen.png" }) {
       childImageSharp {
-        fluid(maxWidth: 160) {
+        fluid(maxWidth: 160, quality: 100) {
           ...GatsbyImageSharpFluid
           presentationWidth
         }
