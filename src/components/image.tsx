@@ -10,7 +10,7 @@ interface ImageProps {
 
 export const Image: React.FC<ImageProps> = ({imageName}) => {
   const data = useStaticQuery(graphql`
-    matluquery {
+    query {
       matlu: placeholderImage: file(relativePath: { eq: "matlu.png" }) {
         childImageSharp {
           fluid(maxWidth: 160) {
