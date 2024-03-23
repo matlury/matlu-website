@@ -13,7 +13,7 @@ export const Image: React.FC<ImageProps> = ({imageName}) => {
   query {
     matluImage: file(relativePath: { eq: "matlu.png" }) {
       childImageSharp {
-        fluid(maxWidth: 160, quality: 100) {
+        fluid(maxWidth: 160) {
           ...GatsbyImageSharpFluid
           presentationWidth
         }
@@ -21,7 +21,7 @@ export const Image: React.FC<ImageProps> = ({imageName}) => {
     }
     loimuImage: file(relativePath: { eq: "loimu_varillinen.png" }) {
       childImageSharp {
-        fluid(maxWidth: 160, quality: 100) {
+        fluid(maxWidth: 160) {
           ...GatsbyImageSharpFluid
           presentationWidth
         }
