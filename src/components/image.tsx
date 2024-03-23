@@ -35,7 +35,7 @@ if(imageName === "matlu") {
 } else {
   filteredData = data.loimuImage
   if(filteredData === null) {
-    <div>Image not found</div>
+    return <div>Image not found</div>
   }
 }
   return (
