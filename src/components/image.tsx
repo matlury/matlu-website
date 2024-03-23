@@ -37,9 +37,9 @@ export const Image: React.FC<ImageProps> = ({imageName}) => {
   }
   return (
     <Img
-      fluid={data.childImageSharp.fluid}
+      fluid={filteredData.childImageSharp.fluid}
       style={{
-        maxWidth: data.childImageSharp.fluid.presentationWidth,
+        maxWidth: filteredData.childImageSharp.fluid.presentationWidth,
       }}
     />
   );
