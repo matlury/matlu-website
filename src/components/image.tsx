@@ -11,38 +11,30 @@ interface ImageProps {
 export const Image: React.FC<ImageProps> = ({imageName}) => {
   const data = useStaticQuery(graphql`
   query {
-    matluImage: file(relativePath: { eq: "matlu.png" }) {
-      childImageSharp {
-        fluid(maxWidth: 160) {
-          ...GatsbyImageSharpFluid
-          presentationWidth
-        }
-      }
-    }
-    loimuImage: file(relativePath: { eq: "loimu_varillinen.png" }) {
-      childImageSharp {
-        fluid(maxWidth: 160) {
-          ...GatsbyImageSharpFluid
-          presentationWidth
+    file(filter: {relativePath: {in: ["matlu.png","loimu_varillinen.png"] }}) {
+      edges {
+        node {
+          id
+          fluid(maxWidth: 200, maxHeight: 200) {
+              ...GatsbyImageSharpFluid
+          }
         }
       }
     }
   }
 `);
-let filteredData = null
+let filteredData = data
 if(imageName === "matlu") {
-  filteredData = data.matluImage
+  filteredData = data.file.find(image => image.src.includes("matlu.png"))
 } else {
-  filteredData = data.loimuImage
-  if(filteredData === null) {
-    <div>Image not found</div>
-  }
+  filteredData = data.file.find(image => image.src.includes("loimu_varillinen.png"))
 }
+
   return (
     <Img
-    fluid={data.placeholderImage.childImageSharp.fluid}
+    fluid={filteredData.childImageSharp.fluid}
     style={{
-      maxWidth: data.placeholderImage.childImageSharp.fluid.presentationWidth,
+      maxWidth: filteredData.childImageSharp.fluid.presentationWidth,
     }}
   />
   );
