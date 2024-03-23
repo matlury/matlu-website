@@ -11,7 +11,7 @@ interface ImageProps {
 export const Image: React.FC<ImageProps> = ({imageName}) => {
   const data = useStaticQuery(graphql`
     query {
-      placeholderImage: file(relativePath: {filter: { name: { in: ["matlu.png","loimu_varillinen.png"] }}}) {
+      placeholderImage: file(relativePath: {filter: { in: ["matlu.png","loimu_varillinen.png"] }}) {
         childImageSharp {
           fluid(maxWidth: 160) {
             ...GatsbyImageSharpFluid
