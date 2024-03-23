@@ -7,7 +7,7 @@ import logoStyles from "./LogoWrapper.module.scss";
 import { Nav } from "./Nav";
 import { Language, LocalizedLink } from "../utils";
 import { Footer } from "./Footer";
-import MatluImage from "./image";
+import Image from "./image";
 
 interface LayoutProps {
   language: Language;
@@ -23,7 +23,7 @@ const Layout: React.FC<LayoutProps> = ({
   return (
     <>
       <div className={logoStyles.logoWrapper}>
-        <MatluImage />
+        <Image imageName="matlu.png"/>
       </div>
       <Nav language={language} localizedLinks={localizedLinks} />
       <div className={styles.wrapper}>

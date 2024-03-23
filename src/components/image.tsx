@@ -4,10 +4,14 @@ import React from "react";
 import { useStaticQuery, graphql } from "gatsby";
 import Img from "gatsby-image";
 
-export const MatluImage: React.FC = () => {
+interface ImageProps {
+  imageName: string;
+}
+
+export const Image: React.FC<ImageProps> = ({imageName}) => {
   const data = useStaticQuery(graphql`
-    matluquery {
-      placeholderImage: file(relativePath: { eq: "matlu.png" }) {
+    query {
+      placeholderImage: file(relativePath: { eq: "${imageName}" }) {
         childImageSharp {
           fluid(maxWidth: 160) {
             ...GatsbyImageSharpFluid
@@ -27,27 +31,4 @@ export const MatluImage: React.FC = () => {
   );
 };
 
-export const LoimuImage: React.FC = () => {
-  const data = useStaticQuery(graphql`
-    loimuquery {
-      placeholderImage: file(relativePath: { eq: "loimu_varillinen.png" }) {
-        childImageSharp {
-          fluid(maxWidth: 160) {
-            ...GatsbyImageSharpFluid
-            presentationWidth
-          }
-        }
-      }
-    }
-  `);
-  return (
-    <Img
-      fluid={data.placeholderImage.childImageSharp.fluid}
-      style={{
-        maxWidth: data.placeholderImage.childImageSharp.fluid.presentationWidth,
-      }}
-    />
-  );
-};
-
-export default MatluImage;
+export default Image;
