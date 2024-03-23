@@ -1,6 +1,8 @@
 import React from "react";
 import { MatluDocuments } from "./Documents";
 import styles from "./Footer.module.scss";
+import LoimuImage from "./image";
+
 
 export const FooterFi: React.FC = () => (
   <footer className={styles.appFooter}>
@@ -31,6 +33,12 @@ export const FooterFi: React.FC = () => (
             Instagram
           </a>
         </li>
+      </ul>
+    </div>
+    <div className={styles.appFooterSection}>
+      <h4>Sponsored by</h4>
+      <ul className={styles.matluSome}>
+        <LoimuImage></LoimuImage>
       </ul>
     </div>
     <div className={styles.footerBottom}>&copy; 2024 Matlu ry</div>

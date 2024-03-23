@@ -27,4 +27,27 @@ export const MatluImage: React.FC = () => {
   );
 };
 
+export const LoimuImage: React.FC = () => {
+  const data = useStaticQuery(graphql`
+    query {
+      placeholderImage: file(relativePath: { eq: "loimu_varillinen.png" }) {
+        childImageSharp {
+          fluid(maxWidth: 160) {
+            ...GatsbyImageSharpFluid
+            presentationWidth
+          }
+        }
+      }
+    }
+  `);
+  return (
+    <Img
+      fluid={data.placeholderImage.childImageSharp.fluid}
+      style={{
+        maxWidth: data.placeholderImage.childImageSharp.fluid.presentationWidth,
+      }}
+    />
+  );
+};
+
 export default MatluImage;
