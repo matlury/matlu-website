@@ -23,7 +23,7 @@ const Layout: React.FC<LayoutProps> = ({
   return (
     <>
       <div className={logoStyles.logoWrapper}>
-        <Image imageName="matlu.png"/>
+        <Image imageName="matlu"/>
       </div>
       <Nav language={language} localizedLinks={localizedLinks} />
       <div className={styles.wrapper}>
