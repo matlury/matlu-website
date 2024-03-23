@@ -6,7 +6,7 @@ import Img from "gatsby-image";
 
 export const MatluImage: React.FC = () => {
   const data = useStaticQuery(graphql`
-    query {
+    matluquery {
       placeholderImage: file(relativePath: { eq: "matlu.png" }) {
         childImageSharp {
           fluid(maxWidth: 160) {
@@ -29,7 +29,7 @@ export const MatluImage: React.FC = () => {
 
 export const LoimuImage: React.FC = () => {
   const data = useStaticQuery(graphql`
-    query {
+    loimuquery {
       placeholderImage: file(relativePath: { eq: "loimu_varillinen.png" }) {
         childImageSharp {
           fluid(maxWidth: 160) {
