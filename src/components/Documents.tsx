@@ -3,7 +3,7 @@
 import { graphql, useStaticQuery } from "gatsby";
 import React from "react";
 import { Language } from "../utils";
-import styles from "./Documents.module.scss";
+import * as styles from "./Documents.module.scss";
 
 interface Document {
   node: {
@@ -34,7 +34,7 @@ export const MatluDocuments: React.FC<Props> = ({ language }) => {
               en
             }
             file {
-              publicURL
+              url
             }
           }
         }

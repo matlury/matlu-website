@@ -53,12 +53,12 @@ export const query = graphql`
         data {
           En
         }
-      }
+      } 
       Fi {
         data {
           Fi
         }
-      }
+      } 
     }
   }
   }
