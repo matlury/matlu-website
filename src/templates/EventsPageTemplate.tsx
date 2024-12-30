@@ -32,7 +32,7 @@ const EventsPageTemplate: React.FC<EventsPageTemplateProps> = ({
       hideFromSearchEngine={pageContext.hideFromSearchEngine}
     />
     <CalendarEvents language={pageContext.language} showAll />
-    <ReactMarkdown // @ts-expect-error Works
+    <ReactMarkdown 
       plugins={[gfm]}
       source={data.strapiPage.body[pageContext.language]}
     />
@@ -43,15 +43,23 @@ export default EventsPageTemplate;
 
 export const query = graphql`
   query EventsPageTemplate($id: String) {
-    strapiPage(id: { eq: $id }) {
-      body {
-        fi: Fi
-        en: En
+      strapiPage(id: {eq: $id}) {
+    Title {
+      fi
+      en
+    }
+    body {
+      En {
+        data {
+          En
+        }
       }
-      Title {
-        fi
-        en
+      Fi {
+        data {
+          Fi
+        }
       }
     }
+  }
   }
 `;

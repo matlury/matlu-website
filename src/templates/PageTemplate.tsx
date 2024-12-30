@@ -21,7 +21,7 @@ const PageTemplate: React.FC<PageTemplateProps> = ({ data, pageContext }) => (
       lang={pageContext.language}
       hideFromSearchEngine={pageContext.hideFromSearchEngine}
     />
-    <ReactMarkdown // @ts-expect-error Works
+    <ReactMarkdown
       plugins={[gfm]}
       source={data.strapiPage.body[pageContext.language]}
     />
@@ -32,15 +32,23 @@ export default PageTemplate;
 
 export const query = graphql`
   query PageTemplate($id: String) {
-    strapiPage(id: { eq: $id }) {
-      body {
-        fi: Fi
-        en: En
+  strapiPage(id: {eq: $id}) {
+    Title {
+      fi
+      en
+    }
+    body {
+      En {
+        data {
+          En
+        }
       }
-      Title {
-        fi
-        en
+      Fi {
+        data {
+          Fi
+        }
       }
     }
+  }
   }
 `;

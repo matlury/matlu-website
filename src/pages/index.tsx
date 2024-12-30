@@ -51,17 +51,21 @@ export default FrontPageFi;
 
 export const query = graphql`
   query FrontPageFi {
-    strapiPage(page: { eq: "home" }) {
-      body {
-        fi: Fi
+   strapiPage(page: {eq: "home"}) {
+    body {
+      Fi {
+        data {
+          Fi
+        }
       }
-      Title {
-        fi
-      }
-      Description {
-        fi
-      }
-      HideFromSearchEngine
     }
+    Title {
+      fi
+    }
+    Description {
+      fi
+    }
+    HideFromSearchEngine
+  }
   }
 `;

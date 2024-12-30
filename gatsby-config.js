@@ -4,13 +4,20 @@ require("dotenv").config({
   path: `.env.${process.env.NODE_ENV}`,
 });
 
+const strapiConfig = {
+  version: 4, // Strapi version 4 or 5
+  apiURL: process.env.API_URL || "http://localhost:1337",
+  collectionTypes: [`board`, `page`, `calendar-event`, `document`],
+  singleTypes: [],
+};
+
 module.exports = {
   siteMetadata: {
     title: `Matlu ry`,
     description: `Helsingin yliopiston Matemaattis-luonnontieteellisten opiskelijajärjestöjen yhteistyöjärjestö Matlu`,
     author: `Matlu ry`,
-    recaptchaSiteKey: process.env.GATSBY_RECAPTCHA_SITE_KEY || "",
-    siteUrl: process.env.SITE_URL,
+    recaptchaSiteKey: process.env.GATSBY_RECAPTCHA_SITE_KEY || "",
+    siteUrl: process.env.SITE_URL || `localhost:${8000}`,
     feedbackFormHandler: process.env.FEEDBACK_FORM_HANDLER_URL || "",
   },
   plugins: [
@@ -41,11 +48,7 @@ module.exports = {
     },
     {
       resolve: `gatsby-source-strapi`,
-      options: {
-        apiURL: process.env.API_URL || "http://localhost:1337",
-        queryLimit: 100,
-        contentTypes: [`board`, `page`, `calendar-event`, `document`],
-      },
+      options: strapiConfig,
     },
     {
       resolve: `gatsby-plugin-recaptcha`,

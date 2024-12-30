@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import React from "react";
 import { useStaticQuery, graphql } from "gatsby";
-import Img from "gatsby-image";
+import {StaticImage} from "gatsby-plugin-image";
 
 interface ImageProps {
   imageName: string;
@@ -29,21 +29,19 @@ export const Image: React.FC<ImageProps> = ({imageName}) => {
     }
   }
 `);
-let filteredData = data.matluImage
+let filteredData = data.matluImage;
 if(imageName === "matlu") {
-  filteredData = data.matluImage
+  filteredData = data.matluImage;
 } else {
-  filteredData = data.loimuImage
+  filteredData = data.loimuImage;
   if(filteredData === null) {
-    return <div>Image not found</div>
+    return <div>Image not found</div>;
   }
 }
   return (
-    <Img
-    fluid={filteredData.childImageSharp.fluid}
-    style={{
-      maxWidth: filteredData.childImageSharp.fluid.presentationWidth,
-    }}
+    <StaticImage
+    src={filteredData.childImageSharp.fluid}
+    alt="A Gatsby astronaut"
   />
   );
 };
