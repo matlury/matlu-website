@@ -49,14 +49,14 @@ export const query = graphql`
       en
     }
     body {
-      En {
+      en: En {
         data {
-          En
+          en: En
         }
       } 
-      Fi {
+      fi: Fi {
         data {
-          Fi
+          fi: Fi
         }
       } 
     }

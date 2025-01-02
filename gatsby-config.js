@@ -18,12 +18,17 @@ module.exports = {
     description: `Helsingin yliopiston Matemaattis-luonnontieteellisten opiskelijajärjestöjen yhteistyöjärjestö Matlu`,
     author: `Matlu ry`,
     recaptchaSiteKey: process.env.GATSBY_RECAPTCHA_SITE_KEY || "",
-    siteUrl: process.env.SITE_URL || `localhost:${8000}`,
+    siteUrl: process.env.SITE_URL || "https://www.matlu.fi",
     feedbackFormHandler: process.env.FEEDBACK_FORM_HANDLER_URL || "",
   },
   plugins: [
     `gatsby-plugin-typescript`,
-    `gatsby-plugin-sitemap`,
+  {
+      resolve: `gatsby-plugin-sitemap`,
+      options: {
+        output: '/',
+      },
+    },
     `gatsby-plugin-sass`,
     "gatsby-plugin-postcss",
     `gatsby-plugin-react-helmet`,
