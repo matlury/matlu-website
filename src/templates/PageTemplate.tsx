@@ -11,7 +11,10 @@ interface PageTemplateProps {
   pageContext: PageTemplatePageContext;
 }
 
-const PageTemplate: React.FC<PageTemplateProps> = ({ data, pageContext }) => (
+const PageTemplate: React.FC<PageTemplateProps> = ({ data, pageContext }) => {
+  const body = data.strapiPage.body[pageContext.language].data[pageContext.language];
+
+  return(
   <Layout
     language={pageContext.language}
     localizedLinks={pageContext.localizedLinks}
@@ -23,11 +26,11 @@ const PageTemplate: React.FC<PageTemplateProps> = ({ data, pageContext }) => (
     />
     <ReactMarkdown
       plugins={[gfm]}
-      source={data.strapiPage.body[pageContext.language]}
+      source={body}
     />
   </Layout>
 );
-
+};
 export default PageTemplate;
 
 export const query = graphql`
@@ -38,14 +41,14 @@ export const query = graphql`
       en
     }
     body {
-      En {
+      en: En {
         data {
-          En
+          en: En
         }
       } 
-      Fi {
+      fi: Fi {
         data {
-          Fi
+          fi: Fi
         }
       }
     }

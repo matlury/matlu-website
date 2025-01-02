@@ -155,7 +155,7 @@ exports.createPages = async ({ graphql, actions }) => {
 };
 
 //Breaks frontpage but otherwise good
-
+/*
 exports.createSchemaCustomization = ({ actions }) => {
   const { createTypes } = actions;
   createTypes(`
@@ -194,3 +194,4 @@ exports.createSchemaCustomization = ({ actions }) => {
     }
   `);
 };
+*/

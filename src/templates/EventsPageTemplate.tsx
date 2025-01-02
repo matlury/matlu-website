@@ -34,7 +34,7 @@ const EventsPageTemplate: React.FC<EventsPageTemplateProps> = ({
     <CalendarEvents language={pageContext.language} showAll />
     <ReactMarkdown 
       plugins={[gfm]}
-      source={data.strapiPage.body[pageContext.language]}
+      source={data.strapiPage.body[pageContext.language].data[pageContext.language]}
     />
   </Layout>
 );

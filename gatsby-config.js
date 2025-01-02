@@ -9,6 +9,7 @@ const strapiConfig = {
   apiURL: process.env.API_URL || "http://localhost:1337",
   collectionTypes: [`board`, `page`, `calendar-event`, `document`],
   singleTypes: [],
+  accessToken: process.env.ACCESS_TOKEN || "",
 };
 
 module.exports = {
@@ -24,6 +25,7 @@ module.exports = {
     `gatsby-plugin-typescript`,
     `gatsby-plugin-sitemap`,
     `gatsby-plugin-sass`,
+    "gatsby-plugin-postcss",
     `gatsby-plugin-react-helmet`,
     "gatsby-plugin-image",
     {
@@ -33,8 +35,9 @@ module.exports = {
         path: `${__dirname}/src/images`,
       },
     },
-    `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
+    `gatsby-transformer-sharp`,
+    "gatsby-transformer-remark",
     {
       resolve: `gatsby-plugin-manifest`,
       options: {

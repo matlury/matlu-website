@@ -13,7 +13,7 @@ interface Document {
     };
     ordering: number;
     file: {
-      publicURL: string;
+      url: string;
     };
   };
 }
@@ -46,7 +46,7 @@ export const MatluDocuments: React.FC<Props> = ({ language }) => {
     <ul className={styles.documentLinks}>
       {documents.map((document) => (
         <li key={document.node.title[language]}>
-          <a href={document.node.file.publicURL} target="_blank" rel="noreferrer">
+          <a href={document.node.file.url} target="_blank" rel="noreferrer">
             {document.node.title[language]}
           </a>
         </li>

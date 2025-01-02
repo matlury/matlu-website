@@ -31,7 +31,7 @@ const ContactPageTemplate: React.FC<ContactPageTemplateProps> = ({
     <ContactForm lang={pageContext.language} />
     <ReactMarkdown
       plugins={[gfm]}
-      source={data.strapiPage.body[pageContext.language]}
+      source={data.strapiPage.body[pageContext.language].data[pageContext.language]}
     />
   </Layout>
 );

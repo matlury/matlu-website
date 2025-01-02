@@ -12,7 +12,9 @@ export type SEOQuery = {
 };
 export type PageTemplateQuery = {
   strapiPage: {
-    body: Record<Language, string>;
+    body: Record<Language, {
+      data: Record<Language, string>;
+    }>;
     Title: Record<Language, string>;
   };
 };
