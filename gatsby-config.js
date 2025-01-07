@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
-require('dotenv').config();
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config();  // Only load the .env file if not in production
+}
 
 const strapiConfig = {
   version: 4, // Strapi version 4 or 5
