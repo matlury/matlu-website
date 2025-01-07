@@ -23,7 +23,6 @@ WORKDIR /opt/app-root/src
 COPY --chown=1001:0 --from=build /opt/app-root/src ./
 
 # Set environment variables for production
-ENV NODE_ENV production
 ENV NODE_OPTIONS="--max-old-space-size=768"
 
 # Add metadata about the image
