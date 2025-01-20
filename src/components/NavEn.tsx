@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "gatsby";
-import styles from "./Nav.module.scss";
+import * as styles from "./Nav.module.scss";
 import { LocalizedLink } from "../utils";
 
 interface LocalizedNavProps {

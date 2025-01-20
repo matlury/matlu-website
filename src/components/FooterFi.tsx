@@ -1,6 +1,6 @@
 import React from "react";
 import { MatluDocuments } from "./Documents";
-import styles from "./Footer.module.scss";
+import * as styles from "./Footer.module.scss";
 import Image from "./image";
 
 

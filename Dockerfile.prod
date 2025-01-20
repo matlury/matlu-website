@@ -1,0 +1,41 @@
+# Build stage
+FROM registry.access.redhat.com/ubi8/nodejs-18 AS build
+
+# Set working directory for the build
+WORKDIR /opt/app-root/src
+
+# Copy package.json and package-lock.json first for efficient caching
+COPY package*.json ./
+
+# Install dependencies for production only and clean npm cache
+RUN npm ci --only=production && npm cache clean --force
+
+# Copy the rest of the application files
+COPY . .
+
+# Runtime stage
+FROM registry.access.redhat.com/ubi8/nodejs-18
+
+# Set working directory for the runtime stage
+WORKDIR /opt/app-root/src
+
+# Copy the built app from the build stage and set ownership in one layer
+COPY --chown=1001:0 --from=build /opt/app-root/src ./
+
+# Set environment variables for production
+ENV NODE_OPTIONS="--max-old-space-size=768"
+
+# Add metadata about the image
+LABEL org.opencontainers.image.authors="Matlu ry"
+
+# Ensure the application files have proper permissions for OpenShift
+RUN chmod -R g+rwX /opt/app-root/src
+
+# Ensure the application runs as non-root (good practice in containers)
+USER 1001
+
+# Expose the port your application runs on
+EXPOSE 8000
+
+# Set the default command to run the Gatsby development server (or another appropriate script for prod)
+CMD ["npm", "run", "develop"]

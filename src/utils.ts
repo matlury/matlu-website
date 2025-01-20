@@ -12,7 +12,9 @@ export type SEOQuery = {
 };
 export type PageTemplateQuery = {
   strapiPage: {
-    body: Record<Language, string>;
+    body: Record<Language, {
+      data: Record<Language, string>;
+    }>;
     Title: Record<Language, string>;
   };
 };
@@ -34,6 +36,22 @@ export type ContactPageTemplatePageContext = BasePageContext;
 
 export type LocalizedTextFi = Record<"id" | "fi", string>;
 export type LocalizedTextEn = Record<"id" | "en", string>;
+export type LocalizedRichTextFi = {
+  id: string;
+  fi: {
+    data: {
+      fi: string;
+    };
+  };
+};
+export type LocalizedRichTextEn = {
+  id: string;
+  en: {
+    data: {
+      en: string;
+    };
+  };
+};
 export type LocalizedText = Record<Language, string>;
 
 type BoardMember<T = LocalizedTextFi | LocalizedTextEn> = {
@@ -59,11 +77,11 @@ type Team<T = LocalizedTextFi | LocalizedTextEn> = {
   team_members: TeamMember[];
 };
 
-export type FrontPageQuery<T = LocalizedTextFi | LocalizedTextEn> = {
+export type FrontPageQuery<T extends [LocalizedTextFi, LocalizedRichTextFi] | [LocalizedTextEn, LocalizedRichTextEn]> = {
   strapiPage: {
-    body: T;
-    Title: T;
-    Description: T;
+    Title: T[0];
+    Description: T[0];
+    body: T[1];
     HideFromSearchEngine: boolean;
   } | null;
 };
