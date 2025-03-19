@@ -44,6 +44,7 @@ export const MatluDocuments: React.FC<Props> = ({ language }) => {
   const documents: Document[] = data.allStrapiDocument.edges;
   return (
     <ul className={styles.documentLinks}>
+    <a href="https://drive.google.com/drive/folders/1U1VwouP1PDeHaKRWgzN_K_g3Ge-o9Y2o?usp=sharing">Pöytäkirjat</a>
       {documents.map((document) => (
         <li key={document.node.title[language]}>
           <a href={document.node.file.publicURL} target="_blank" rel="noreferrer">
