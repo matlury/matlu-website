@@ -38,4 +38,4 @@ USER 1001
 EXPOSE 8000
 
 # Set the default command to run the Gatsby development server (or another appropriate script for prod)
-CMD ["npm", "run", "develop"]
+CMD ["npm", "run", "serve"]
