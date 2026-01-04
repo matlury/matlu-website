@@ -77,7 +77,7 @@ export const SEO: React.FC<SEOProps> = ({
         },
         {
           name: "google-site-verification",
-          content: "8Im5qjwtdRS1T2VZHEe8kf3UudgPq4ES7x-XeTGdy0U",
+          content: "-1keAnBhcxqqJbMzTrz5PVoeVhrzgFG6DFYklqFqMzs",
         },
         hideFromSearchEngine
           ? {
