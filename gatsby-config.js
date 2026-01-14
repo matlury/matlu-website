@@ -1,9 +1,7 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
-console.log(process.env.NODE_ENV); 
-if (process.env.NODE_ENV !== 'production') {
-  require('dotenv').config();  // Only load the .env file if not in production
-}
+require('dotenv').config();
+
 
 const strapiConfig = {
   version: 4, // Strapi version 4 or 5
@@ -24,7 +22,7 @@ module.exports = {
   },
   plugins: [
     `gatsby-plugin-typescript`,
-  {
+    {
       resolve: `gatsby-plugin-sitemap`,
       options: {
         output: '/',
