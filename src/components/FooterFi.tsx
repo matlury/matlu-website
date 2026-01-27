@@ -41,6 +41,6 @@ export const FooterFi: React.FC = () => (
         <Image imageName="loimu"/>
       </ul>
     </div>
-    <div className={styles.footerBottom}>&copy; 2024 Matlu ry</div>
+    <div className={styles.footerBottom}>&copy; 2025 Matlu ry</div>
   </footer>
 );

@@ -3,7 +3,7 @@ import { Helmet } from "react-helmet";
 import { useStaticQuery, graphql } from "gatsby";
 import { Language, SEOQuery } from "./utils";
 
-type MetaTag = 
+type MetaTag =
   | { name: string; content: string }
   | { property: string; content: string }
   | { name?: undefined; property?: undefined; content?: undefined };
@@ -85,9 +85,9 @@ export const SEO: React.FC<SEOProps> = ({
         },
         hideFromSearchEngine
           ? {
-              name: "robots",
-              content: "noindex,nofollow",
-            }
+            name: "robots",
+            content: "noindex,nofollow",
+          }
           : {},
       ].concat(meta || [])}
       link={[
