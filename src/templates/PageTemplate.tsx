@@ -34,11 +34,11 @@ const PageTemplate: React.FC<PageTemplateProps> = ({ data, pageContext }) => {
 export default PageTemplate;
 
 export const query = graphql`
-  query PageTemplate($id: String) {
-  strapiPage(id: {eq: $id}) {
-    Title {
-      fi
-      en
+  query($id: String!) {
+    strapiPage(documentId: { eq: $id }) {
+      Title {
+        fi
+        en
     }
     body {
       en: En {

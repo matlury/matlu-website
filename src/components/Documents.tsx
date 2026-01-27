@@ -28,7 +28,7 @@ export const MatluDocuments: React.FC<Props> = ({ language }) => {
       allStrapiDocument {
         edges {
           node {
-            id
+            documentId
             title {
               fi
               en

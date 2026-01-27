@@ -43,7 +43,7 @@ export default EventsPageTemplate;
 
 export const query = graphql`
   query EventsPageTemplate($id: String) {
-      strapiPage(id: {eq: $id}) {
+      strapiPage(documentId: {eq: $id}) {
     Title {
       fi
       en

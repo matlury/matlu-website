@@ -20,7 +20,7 @@ const CalendarEvents: React.FC<CalendarEventsProps> = ({
         filter: { hidden: { eq: false } }
       ) {
         nodes {
-          id
+          documentId
           event_link
           hide_location
           start_date
@@ -50,7 +50,7 @@ const CalendarEvents: React.FC<CalendarEventsProps> = ({
       {events.length > 0 &&
         events.map((evt) => (
           <CalendarEvent
-            key={evt.id}
+            key={evt.documentId}
             language={language}
             title={evt.title}
             hide_location={evt.hide_location}

@@ -39,10 +39,10 @@ const ContactPageTemplate: React.FC<ContactPageTemplateProps> = ({
 export default ContactPageTemplate;
 
 export const query = graphql`
-  query ContactPageTemplate($id: String) {
-      strapiPage(id: {eq: $id}) {
-    Title {
-      fi
+  query($id: String!) {
+    strapiPage(documentId: { eq: $id }) {
+      Title {
+        fi
       en
     }
     body {

@@ -4,7 +4,7 @@ require('dotenv').config();
 
 
 const strapiConfig = {
-  version: 4, // Strapi version 4 or 5
+  version: 5, // Strapi version 4 or 5
   apiURL: process.env.API_URL || "http://localhost:1337",
   collectionTypes: [`board`, `page`, `calendar-event`, `document`],
   singleTypes: [],
