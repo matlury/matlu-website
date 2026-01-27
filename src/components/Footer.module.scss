@@ -1,13 +1,14 @@
-@import "../mixins";
+@use "../vars";
+@use "../mixins";
 
 .appFooter {
-  background-color: $main-color;
+  background-color: vars.$main-color;
   color: white;
   display: grid;
   column-gap: 8px;
   grid-template-columns: repeat(3, 1fr);
 
-  @include mobile {
+  @include mixins.mobile {
     display: block;
   }
 }
@@ -23,12 +24,13 @@ ul.matluSome {
   line-height: 1.8em;
   font-size: 0.7em;
   list-style-type: none;
+
   a {
     color: white;
   }
 }
 
-@include mobile {
+@include mixins.mobile {
   .appFooterSection {
     padding: 12px;
   }

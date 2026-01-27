@@ -1,14 +1,14 @@
-@import "../vars";
-@import "../mixins";
+@use "../vars";
+@use "../mixins";
 
 .logoWrapper {
-  width: $app-width;
+  width: vars.$app-width;
   margin-top: 16px;
   margin-bottom: 16px;
   margin-left: auto;
   margin-right: auto;
 
-  @include mobile {
+  @include mixins.mobile {
     width: 100%;
     padding-left: 16px;
     padding-right: 16px;
@@ -22,7 +22,7 @@
   width: auto;
   margin: 16px 16px 16px 0;
 
-  @include mobile {
+  @include mixins.mobile {
     margin: 16px;
   }
 }

@@ -1,13 +1,13 @@
-@import "../vars";
-@import "../mixins";
+@use "../vars";
+@use "../mixins";
 
 .nav {
-  background-color: $main-color;
+  background-color: vars.$main-color;
   margin-left: auto;
   margin-right: auto;
-  width: $app-width;
+  width: vars.$app-width;
 
-  @include mobile {
+  @include mixins.mobile {
     width: 100%;
     margin-left: 0;
     margin-right: 0;
@@ -20,7 +20,7 @@
   position: sticky;
   top: 0;
 
-  @include mobile {
+  @include mixins.mobile {
     position: static;
     justify-content: left;
   }
@@ -30,7 +30,7 @@ a.navLink {
   margin: 12px;
   color: white;
 
-  @include mobile {
+  @include mixins.mobile {
     margin: 16px;
     display: block;
     width: 100%;
