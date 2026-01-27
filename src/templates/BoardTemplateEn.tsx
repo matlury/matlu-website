@@ -112,37 +112,36 @@ export default BoardTemplateEn;
 
 export const query = graphql`
   query BoardTemplateEn($id: String) {
-    strapiBoard(id: { eq: $id }) {
+    strapiBoard(id: {eq: $id}) {
+    id
+    year
+    members {
       id
-      year
-      members {
+      email
+      name
+      role {
+        en
         id
-        name
-        email
-        role {
-          id
-          en
-        }
-      }
-      officers {
-        id
-        name
-        role {
-          id
-          en
-        }
-      }
-      teams {
-        id
-        title {
-          id
-          en
-        }
-        team_members {
-          id
-          name
-        }
       }
     }
+    officers {
+      id
+      name
+      role {
+        en
+      }
+    }
+        teams {
+      id
+      title {
+        id
+        en
+      }
+      team_members {
+        id
+        name
+      }
+    }
+  }
   }
 `;

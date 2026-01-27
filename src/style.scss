@@ -1,5 +1,5 @@
-@import "vars";
-@import "mixins";
+@use "vars";
+@use "mixins";
 
 * {
   margin: 0;
@@ -82,7 +82,7 @@ h6 {
       margin-right: 0;
     }
 
-    @include mobile {
+    @include mixins.mobile {
       width: 100%;
       min-height: unset;
       padding: 8px;
@@ -118,7 +118,7 @@ p {
 }
 
 article {
-  @include mobile {
+  @include mixins.mobile {
     padding: 12px;
   }
 
@@ -170,7 +170,7 @@ img[src*="#thumbnail_3x"] {
       margin-right: 0;
     }
 
-    @include mobile {
+    @include mixins.mobile {
       width: 100%;
       min-height: unset;
       padding: 8px;
@@ -200,7 +200,7 @@ img[src*="#thumbnail_3x"] {
     padding-left: 0;
     font-size: 0.7em;
 
-    @include mobile {
+    @include mixins.mobile {
       padding: 8px;
     }
   }
@@ -217,7 +217,7 @@ img[src*="#thumbnail_3x"] {
     margin-bottom: 12px;
     font-size: 0.7em;
 
-    @include mobile {
+    @include mixins.mobile {
       padding: 8px;
     }
   }

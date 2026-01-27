@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
-import styles from "./ContactForm.module.scss";
+import * as styles from "./ContactForm.module.scss";
 import { Language } from "../utils";
 import { graphql, useStaticQuery } from "gatsby";
 import Reaptcha from "reaptcha";

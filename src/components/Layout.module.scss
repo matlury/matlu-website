@@ -1,18 +1,18 @@
-@import "../vars";
-@import "../mixins";
+@use "../vars";
+@use "../mixins";
 
 .wrapper {
-  width: $app-width;
+  width: vars.$app-width;
   margin-left: auto;
   margin-right: auto;
 
   article {
     a {
-      color: $main-color;
+      color: vars.$main-color;
     }
   }
 
-  @include mobile {
+  @include mixins.mobile {
     width: 100%;
   }
 }

@@ -1,51 +1,51 @@
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import React from "react";
 import { useStaticQuery, graphql } from "gatsby";
-import Img from "gatsby-image";
+import {GatsbyImage, getImage, IGatsbyImageData} from "gatsby-plugin-image";
 
 interface ImageProps {
   imageName: string;
 }
 
+type FileImage = {
+  childImageSharp: {
+    gatsbyImageData: IGatsbyImageData;
+  } | null;
+} | null;
+
+interface ImageQuery {
+  matluImage: FileImage;
+  loimuImage: FileImage;
+}
+
 export const Image: React.FC<ImageProps> = ({imageName}) => {
-  const data = useStaticQuery(graphql`
+  const data: ImageQuery = useStaticQuery(graphql`
   query {
     matluImage: file(relativePath: { eq: "matlu.png" }) {
-      childImageSharp {
-        fluid(maxWidth: 160) {
-          ...GatsbyImageSharpFluid
-          presentationWidth
+        childImageSharp {
+          gatsbyImageData(height: 80)
         }
       }
-    }
-    loimuImage: file(relativePath: { eq: "loimu_varillinen.png" }) {
-      childImageSharp {
-        fluid(maxWidth: 160) {
-          ...GatsbyImageSharpFluid
-          presentationWidth
+      loimuImage: file(relativePath: { eq: "loimu_varillinen.png" }) {
+        childImageSharp {
+          gatsbyImageData(height: 70)
         }
       }
-    }
   }
 `);
-let filteredData = data.matluImage
-if(imageName === "matlu") {
-  filteredData = data.matluImage
-} else {
-  filteredData = data.loimuImage
-  if(filteredData === null) {
-    return <div>Image not found</div>
+const imageData = imageName === "matlu" ? data.matluImage : data.loimuImage;
+
+  if (!imageData || !imageData.childImageSharp) {
+    return <div>Image not found</div>;
   }
-}
-  return (
-    <Img
-    fluid={filteredData.childImageSharp.fluid}
-    style={{
-      maxWidth: filteredData.childImageSharp.fluid.presentationWidth,
-    }}
-  />
-  );
+
+  const image = getImage(imageData.childImageSharp);
+
+  if (!image) {
+    return <div>Image not found</div>;
+  }
+
+  return <GatsbyImage image={image} alt={imageName} />;
+  
 };
 
 export default Image;

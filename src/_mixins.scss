@@ -1,25 +1,25 @@
-@import "vars";
+@use "vars";
 
 @mixin mobile {
-  @media (max-width: $tablet-breakpoint - 1) {
+  @media (max-width: #{vars.$tablet-breakpoint - 1}) {
     @content;
   }
 }
 
 @mixin tablet {
-  @media (min-width: $tablet-breakpoint) and (max-width: $desktop-breakpoint) {
+  @media (min-width: #{vars.$tablet-breakpoint}) and (max-width: #{vars.$desktop-breakpoint}) {
     @content;
   }
 }
 
 @mixin desktop {
-  @media (min-width: $desktop-breakpoint + 1) and (max-width: $big-desktop-breakpoint) {
+  @media (min-width: #{vars.$desktop-breakpoint + 1}) and (max-width: #{vars.$big-desktop-breakpoint}) {
     @content;
   }
 }
 
 @mixin bigDesktop {
-  @media (min-width: $big-desktop-breakpoint + 1) {
+  @media (min-width: #{vars.$big-desktop-breakpoint + 1}) {
     @content;
   }
 }

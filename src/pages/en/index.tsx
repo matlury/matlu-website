@@ -4,10 +4,10 @@ import Layout from "../../components/Layout";
 import { graphql } from "gatsby";
 import { SEO } from "../../seo";
 import ReactMarkdown from "react-markdown";
-import { FrontPageQuery, LocalizedTextEn } from "../../utils";
+import { FrontPageQuery, LocalizedRichTextEn, LocalizedTextEn } from "../../utils";
 
 interface FrontPageEnProps {
-  data: FrontPageQuery<LocalizedTextEn>;
+  data: FrontPageQuery<[LocalizedTextEn, LocalizedRichTextEn]>;
 }
 
 const FrontPageEn: React.FC<FrontPageEnProps> = ({ data }) => {
@@ -43,7 +43,7 @@ const FrontPageEn: React.FC<FrontPageEnProps> = ({ data }) => {
         lang="fi"
         hideFromSearchEngine={data.strapiPage.HideFromSearchEngine}
       />
-      <ReactMarkdown source={data.strapiPage.body.en} />
+      <ReactMarkdown>{data.strapiPage.body.en.data.en}</ReactMarkdown>
     </Layout>
   );
 };
@@ -52,17 +52,21 @@ export default FrontPageEn;
 
 export const query = graphql`
   query FrontPageEn {
-    strapiPage(page: { eq: "home" }) {
-      body {
-        en: En
-      }
-      Title {
-        en
-      }
-      Description {
-        en
-      }
-      HideFromSearchEngine
+  strapiPage(page: {eq: "home"}) {
+    HideFromSearchEngine
+    Title {
+      en
     }
+    Description {
+      en
+    }
+    body {
+      en: En {
+        data {
+          en: En
+        }
+      }
+    }
+  }
   }
 `;

@@ -46,7 +46,7 @@ exports.createPages = async ({ graphql, actions }) => {
    * Resolves page template based on the page identifier
    * @param {*} page
    */
-  const resolvePageTemplate = page => {
+  const resolvePageTemplate = (page) => {
     if (page === "contact") {
       return contactPageTemplate;
     }
@@ -153,3 +153,45 @@ exports.createPages = async ({ graphql, actions }) => {
     });
   });
 };
+
+//Breaks frontpage but otherwise good
+/*
+exports.createSchemaCustomization = ({ actions }) => {
+  const { createTypes } = actions;
+  createTypes(`
+    type StrapiDocument implements Node {
+      id: ID!
+      title: StrapiDocumentTitle
+      file: File
+    }
+    type StrapiDocumentTitle {
+      fi: String
+      en: String
+    }
+    type Body {
+      Fi: String
+      En: String
+      fi: String
+      en: String
+    }
+    type Title {
+      fi: String
+      en: String
+    }
+    type Description {
+      en: String
+      fi: String
+    }
+    type StrapiPage implements Node {
+      id: ID!
+      page: String
+      Draft: Boolean
+      HideFromSearchEngine: Boolean
+      body: Body
+      Title: Title
+      Description: Description
+      Ordering: Int
+    }
+  `);
+};
+*/
