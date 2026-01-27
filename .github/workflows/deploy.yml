@@ -12,11 +12,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
-      - name: Use Node.js 10
-        uses: actions/setup-node@v1
+        uses: actions/checkout@v4
+      - name: Use Node.js 20
+        uses: actions/setup-node@v4
         with:
-          node-version: 10.x
+          node-version: '20'
+          cache: 'npm'
       - name: Build
         run: |
           npm ci
@@ -35,3 +36,4 @@ jobs:
       API_URL: ${{ secrets.API_URL }}
       GATSBY_RECAPTCHA_SITE_KEY: ${{ secrets.RECAPTCHA_SITE_KEY }}
       FEEDBACK_FORM_HANDLER_URL: ${{ secrets.FEEDBACK_FORM_HANDLER_URL }}
+      ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
