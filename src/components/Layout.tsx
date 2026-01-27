@@ -1,5 +1,4 @@
 import React, { PropsWithChildren } from "react";
-import PropTypes from "prop-types";
 
 import "../style.scss";
 import * as styles from "./Layout.module.scss";
@@ -14,7 +13,7 @@ interface LayoutProps {
   localizedLinks: LocalizedLink;
 }
 
-const Layout:  React.FC<PropsWithChildren<LayoutProps>> = ({
+const Layout: React.FC<PropsWithChildren<LayoutProps>> = ({
   children,
   language,
   localizedLinks,
@@ -22,7 +21,7 @@ const Layout:  React.FC<PropsWithChildren<LayoutProps>> = ({
   return (
     <>
       <div className={logoStyles.logoWrapper}>
-        <Image imageName="matlu"/>
+        <Image imageName="matlu" />
       </div>
       <Nav language={language} localizedLinks={localizedLinks} />
       <div className={styles.wrapper}>
@@ -31,10 +30,6 @@ const Layout:  React.FC<PropsWithChildren<LayoutProps>> = ({
       </div>
     </>
   );
-};
-
-Layout.propTypes = {
-  children: PropTypes.node.isRequired,
 };
 
 export default Layout;
