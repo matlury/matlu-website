@@ -3,11 +3,15 @@ import { Helmet } from "react-helmet";
 import { useStaticQuery, graphql } from "gatsby";
 import { Language, SEOQuery } from "./utils";
 
+type MetaTag = 
+  | { name: string; content: string }
+  | { property: string; content: string }
+  | { name?: undefined; property?: undefined; content?: undefined };
+
 interface SEOProps {
   description?: string;
   lang: Language;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  meta?: any;
+  meta?: MetaTag[];
   title: string;
   hideFromSearchEngine: boolean;
 }
@@ -85,7 +89,7 @@ export const SEO: React.FC<SEOProps> = ({
               content: "noindex,nofollow",
             }
           : {},
-      ].concat(meta)}
+      ].concat(meta || [])}
       link={[
         {
           href:

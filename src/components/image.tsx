@@ -1,15 +1,24 @@
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import React from "react";
 import { useStaticQuery, graphql } from "gatsby";
-import {GatsbyImage, getImage} from "gatsby-plugin-image";
+import {GatsbyImage, getImage, IGatsbyImageData} from "gatsby-plugin-image";
 
 interface ImageProps {
   imageName: string;
 }
 
+type FileImage = {
+  childImageSharp: {
+    gatsbyImageData: IGatsbyImageData;
+  } | null;
+} | null;
+
+interface ImageQuery {
+  matluImage: FileImage;
+  loimuImage: FileImage;
+}
+
 export const Image: React.FC<ImageProps> = ({imageName}) => {
-  const data = useStaticQuery(graphql`
+  const data: ImageQuery = useStaticQuery(graphql`
   query {
     matluImage: file(relativePath: { eq: "matlu.png" }) {
         childImageSharp {

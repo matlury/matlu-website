@@ -107,3 +107,18 @@ export type NavQuery = {
     }>;
   };
 };
+
+export type CalendarEventData = {
+  id: string;
+  event_link: string;
+  hide_location: boolean;
+  start_date: string;
+  title: LocalizedText;
+  location: LocalizedText | null;
+};
+
+export type CalendarEventsQuery = {
+  allStrapiCalendarEvent: {
+    nodes: CalendarEventData[];
+  };
+};

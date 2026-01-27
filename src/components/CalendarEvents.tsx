@@ -1,9 +1,6 @@
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import React from "react";
 import { graphql, useStaticQuery } from "gatsby";
-import { Language } from "../utils";
+import { Language, CalendarEventsQuery } from "../utils";
 import CalendarEvent from "./CalendarEvent";
 import { compareAsc, parseISO } from "date-fns/esm";
 
@@ -16,7 +13,7 @@ const CalendarEvents: React.FC<CalendarEventsProps> = ({
   language,
   showAll = false,
 }) => {
-  const data = useStaticQuery(graphql`
+  const data: CalendarEventsQuery = useStaticQuery(graphql`
     query CalendarEventsQuery {
       allStrapiCalendarEvent(
         sort: { fields: start_date, order: ASC }
@@ -62,7 +59,7 @@ const CalendarEvents: React.FC<CalendarEventsProps> = ({
             event_link={evt.event_link}
           />
         ))}
-      {events.length == 0 &&
+      {events.length === 0 &&
         (language === "fi" ? "Ei tulevia tapahtumia." : "No upcoming events.")}
     </div>
   );
