@@ -1,8 +1,9 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import * as styles from "./ContactForm.module.scss";
 import { Language } from "../utils";
 import { graphql, useStaticQuery } from "gatsby";
-import Reaptcha from "reaptcha";
+import ReCAPTCHA from "react-google-recaptcha";
+
 interface ContactFormProps {
   lang: Language;
 }
@@ -14,18 +15,21 @@ interface ContactFormFragmentProps {
 
 const ContactFormFi: React.FC<ContactFormFragmentProps> = ({
   feedbackFormHandler,
-  reCaptchaSiteKey
+  reCaptchaSiteKey,
 }) => {
   const [verified, setVerified] = useState(false);
   const [loaded, setLoaded] = useState(false);
-  const onLoad = useCallback(() => {
-    setLoaded(true);
-  }, [setLoaded]);
+  const recaptchaRef = useRef<ReCAPTCHA>(null);
+
   useEffect(() => {
-    return () => {
-      setVerified(false);
-    };
-  }, []);
+    if (!reCaptchaSiteKey) {
+      setVerified(true);
+      setLoaded(true);
+    } else {
+      setLoaded(true);
+    }
+  }, [reCaptchaSiteKey]);
+
   return (
     <section>
       <h1>Yhteydenottolomake</h1>
@@ -49,15 +53,21 @@ const ContactFormFi: React.FC<ContactFormFragmentProps> = ({
             placeholder="Kirjoita viestisi..."
           />
         </div>
-        <div className={styles.contactFormGroup}>
-          <Reaptcha
-            sitekey={String(reCaptchaSiteKey)}
-            onVerify={(_response) => {
-              setVerified(true);
-            }}
-            onLoad={onLoad}
-          />
-        </div>
+        {reCaptchaSiteKey && (
+          <div className={styles.contactFormGroup}>
+            <ReCAPTCHA
+              ref={recaptchaRef}
+              sitekey={reCaptchaSiteKey}
+              onChange={(value) => {
+                if (value) {
+                  setVerified(true);
+                } else {
+                  setVerified(false);
+                }
+              }}
+            />
+          </div>
+        )}
         <div className={styles.contactFormGroup}>
           <button type="submit" disabled={!loaded || !verified}>
             Lähetä
@@ -70,18 +80,21 @@ const ContactFormFi: React.FC<ContactFormFragmentProps> = ({
 
 const ContactFormEn: React.FC<ContactFormFragmentProps> = ({
   feedbackFormHandler,
-  reCaptchaSiteKey
+  reCaptchaSiteKey,
 }) => {
   const [verified, setVerified] = useState(false);
   const [loaded, setLoaded] = useState(false);
-  const onLoad = useCallback(() => {
-    setLoaded(true);
-  }, [setLoaded]);
+  const recaptchaRef = useRef<ReCAPTCHA>(null);
+
   useEffect(() => {
-    return () => {
-      setVerified(false);
-    };
-  }, []);
+    if (!reCaptchaSiteKey) {
+      setVerified(true);
+      setLoaded(true);
+    } else {
+      setLoaded(true);
+    }
+  }, [reCaptchaSiteKey]);
+
   return (
     <section>
       <h1>Contact form</h1>
@@ -99,20 +112,27 @@ const ContactFormEn: React.FC<ContactFormFragmentProps> = ({
           <label htmlFor="contactmsg">Message</label>
           <textarea
             id="contactmsg"
+            name="message"
             cols={80}
             rows={10}
             placeholder="Write your message..."
           />
         </div>
-        <div className={styles.contactFormGroup}>
-          <Reaptcha
-            sitekey={String(reCaptchaSiteKey)}
-            onVerify={(_response) => {
-              setVerified(true);
-            }}
-            onLoad={onLoad}
-          />
-        </div>
+        {reCaptchaSiteKey && (
+          <div className={styles.contactFormGroup}>
+            <ReCAPTCHA
+              ref={recaptchaRef}
+              sitekey={reCaptchaSiteKey}
+              onChange={(value) => {
+                if (value) {
+                  setVerified(true);
+                } else {
+                  setVerified(false);
+                }
+              }}
+            />
+          </div>
+        )}
         <div className={styles.contactFormGroup}>
           <button type="submit" disabled={!loaded || !verified}>
             Send
@@ -133,30 +153,31 @@ interface ContactFormQuery {
 }
 
 const ContactForm: React.FC<ContactFormProps> = ({ lang }) => {
-  const qry: ContactFormQuery = useStaticQuery(
-    graphql`
-      query {
-        site {
-          siteMetadata {
-            recaptchaSiteKey
-            feedbackFormHandler
-          }
+  const qry: ContactFormQuery = useStaticQuery(graphql`
+    query {
+      site {
+        siteMetadata {
+          recaptchaSiteKey
+          feedbackFormHandler
         }
       }
-    `
-  );
+    }
+  `);
+  const siteMetadata = qry.site.siteMetadata;
+  const recaptchaKey = siteMetadata.recaptchaSiteKey;
+
   if (lang === "fi") {
     return (
       <ContactFormFi
-        reCaptchaSiteKey={qry.site.siteMetadata.recaptchaSiteKey}
-        feedbackFormHandler={qry.site.siteMetadata.feedbackFormHandler}
+        reCaptchaSiteKey={recaptchaKey}
+        feedbackFormHandler={siteMetadata.feedbackFormHandler}
       />
     );
   }
   return (
     <ContactFormEn
-      reCaptchaSiteKey={qry.site.siteMetadata.recaptchaSiteKey}
-      feedbackFormHandler={qry.site.siteMetadata.feedbackFormHandler}
+      reCaptchaSiteKey={recaptchaKey}
+      feedbackFormHandler={siteMetadata.feedbackFormHandler}
     />
   );
 };

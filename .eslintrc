@@ -16,11 +16,7 @@
     "jest": true
   },
   "rules": {
-    "@typescript-eslint/semi": [
-      "error"
-    ],
     "@typescript-eslint/no-explicit-any": 2,
-    "@typescript-eslint/camelcase": 0,
     "@typescript-eslint/explicit-function-return-type": 0,
     "@typescript-eslint/no-unused-vars": [
       "error",

@@ -1,17 +1,20 @@
 import React from "react";
 
 import Layout from "../../components/Layout";
-import { graphql } from "gatsby";
+import { graphql, PageProps } from "gatsby";
 import { SEO } from "../../seo";
 import ReactMarkdown from "react-markdown";
-import { FrontPageQuery, LocalizedRichTextEn, LocalizedTextEn } from "../../utils";
+import remarkGfm from "remark-gfm";
+import {
+  FrontPageQuery,
+  LocalizedRichTextEn,
+  LocalizedTextEn,
+} from "../../utils";
 
-interface FrontPageEnProps {
-  data: FrontPageQuery<[LocalizedTextEn, LocalizedRichTextEn]>;
-}
-
-const FrontPageEn: React.FC<FrontPageEnProps> = ({ data }) => {
-  if (data.strapiPage === null) {
+const FrontPageEn: React.FC<
+  PageProps<FrontPageQuery<[LocalizedTextEn, LocalizedRichTextEn]>>
+> = ({ data }) => {
+  if (!data.strapiPage) {
     return (
       <Layout
         language="en"
@@ -40,10 +43,12 @@ const FrontPageEn: React.FC<FrontPageEnProps> = ({ data }) => {
       <SEO
         title={data.strapiPage.Title.en}
         description={data.strapiPage.Description.en}
-        lang="fi"
+        lang="en"
         hideFromSearchEngine={data.strapiPage.HideFromSearchEngine}
       />
-      <ReactMarkdown>{data.strapiPage.body.en.data.en}</ReactMarkdown>
+      <ReactMarkdown remarkPlugins={[remarkGfm]}>
+        {data.strapiPage.body.En.data.En || ""}
+      </ReactMarkdown>
     </Layout>
   );
 };
@@ -52,21 +57,21 @@ export default FrontPageEn;
 
 export const query = graphql`
   query FrontPageEn {
-  strapiPage(page: {eq: "home"}) {
-    HideFromSearchEngine
-    Title {
-      en
-    }
-    Description {
-      en
-    }
-    body {
-      en: En {
-        data {
-          en: En
+    strapiPage(page: { eq: "home" }) {
+      HideFromSearchEngine
+      Title {
+        en
+      }
+      Description {
+        en
+      }
+      body {
+        En {
+          data {
+            En
+          }
         }
       }
     }
-  }
   }
 `;

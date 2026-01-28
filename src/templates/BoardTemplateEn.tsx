@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, graphql } from "gatsby";
+import { Link, graphql, PageProps } from "gatsby";
 import Layout from "../components/Layout";
 import { SEO } from "../seo";
 import {
@@ -8,15 +8,9 @@ import {
   BoardPageContext,
 } from "../utils";
 
-interface BoardTemplateEnProps {
-  data: BoardTemplateQuery<LocalizedTextEn>;
-  pageContext: BoardPageContext;
-}
-
-const BoardTemplateEn: React.FC<BoardTemplateEnProps> = ({
-  data,
-  pageContext,
-}) => {
+const BoardTemplateEn: React.FC<
+  PageProps<BoardTemplateQuery<LocalizedTextEn>, BoardPageContext>
+> = ({ data, pageContext }) => {
   const board = data.strapiBoard;
   const boardYears = pageContext.boardYears;
   return (
@@ -37,7 +31,7 @@ const BoardTemplateEn: React.FC<BoardTemplateEnProps> = ({
           [...board.members.sort((a, b) => a.id - b.id)].map((member) => (
             <section
               className="board-member"
-              key={`board_${board.id}_member_${member.id}`}
+              key={`board_${data.strapiBoard.id}_member_${member.id}`}
             >
               <div className="member-picture"></div>
               <div className="member-name">
@@ -111,37 +105,37 @@ const BoardTemplateEn: React.FC<BoardTemplateEnProps> = ({
 export default BoardTemplateEn;
 
 export const query = graphql`
-  query BoardTemplateEn($id: String) {
-    strapiBoard(id: {eq: $id}) {
-    id
-    year
-    members {
+  query BoardTemplateEn($documentId: String!) {
+    strapiBoard(documentId: { eq: $documentId }) {
       id
-      email
-      name
-      role {
-        en
+      year
+      members {
         id
+        email
+        name
+        role {
+          en
+          id
+        }
       }
-    }
-    officers {
-      id
-      name
-      role {
-        en
-      }
-    }
-        teams {
-      id
-      title {
-        id
-        en
-      }
-      team_members {
+      officers {
         id
         name
+        role {
+          en
+        }
+      }
+      teams {
+        id
+        title {
+          id
+          en
+        }
+        team_members {
+          id
+          name
+        }
       }
     }
-  }
   }
 `;

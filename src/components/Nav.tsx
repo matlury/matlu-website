@@ -14,13 +14,13 @@ export const Nav: React.FC<NavProps> = ({ language, localizedLinks }) => {
     query NavQuery {
       allStrapiPage(
         filter: { Draft: { eq: false }, page: { nin: ["home", "board"] } }
-        sort: { order: ASC, fields: Ordering }
+        sort: { Ordering: ASC }
       ) {
         nodes {
+          id
           Draft
           Ordering
           page
-          id
           Title {
             en
             fi

@@ -1,5 +1,5 @@
 # Use Node 14 as the base image
-FROM node:20-alpine
+FROM node:24-alpine
 
 # Install missing packages
 RUN apk add --no-cache util-linux

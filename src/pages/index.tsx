@@ -1,17 +1,16 @@
 import React from "react";
 
 import Layout from "../components/Layout";
-import { graphql } from "gatsby";
+import { graphql, PageProps } from "gatsby";
 import { SEO } from "../seo";
 import ReactMarkdown from "react-markdown";
-import {  FrontPageQuery, LocalizedRichTextFi, LocalizedTextFi } from "../utils";
+import remarkGfm from "remark-gfm";
+import { FrontPageQuery, LocalizedRichTextFi, LocalizedTextFi } from "../utils";
 
-interface FrontPageFiProps {
-  data: FrontPageQuery<[LocalizedTextFi, LocalizedRichTextFi]>;
-}
-
-const FrontPageFi: React.FC<FrontPageFiProps> = ({ data }) => {
-  if (data.strapiPage === null) {
+const FrontPageFi: React.FC<
+  PageProps<FrontPageQuery<[LocalizedTextFi, LocalizedRichTextFi]>>
+> = ({ data }) => {
+  if (!data.strapiPage) {
     return (
       <Layout
         language="fi"
@@ -28,7 +27,6 @@ const FrontPageFi: React.FC<FrontPageFiProps> = ({ data }) => {
       </Layout>
     );
   }
-  console.log(data.strapiPage);
   return (
     <Layout
       language="fi"
@@ -43,7 +41,9 @@ const FrontPageFi: React.FC<FrontPageFiProps> = ({ data }) => {
         lang="fi"
         hideFromSearchEngine={data.strapiPage.HideFromSearchEngine}
       />
-      <ReactMarkdown>{data.strapiPage.body.fi.data.fi}</ReactMarkdown>
+      <ReactMarkdown remarkPlugins={[remarkGfm]}>
+        {data.strapiPage.body.Fi.data.Fi || ""}
+      </ReactMarkdown>
     </Layout>
   );
 };
@@ -52,21 +52,21 @@ export default FrontPageFi;
 
 export const query = graphql`
   query FrontPageFi {
-  strapiPage(page: {eq: "home"}) {
-    HideFromSearchEngine
-    Title {
-      fi
-    }
-    Description {
-      fi
-    }
-    body {
-      fi: Fi {
-        data {
-          fi: Fi
+    strapiPage(page: { eq: "home" }) {
+      HideFromSearchEngine
+      Title {
+        fi
+      }
+      Description {
+        fi
+      }
+      body {
+        Fi {
+          data {
+            Fi
+          }
         }
       }
     }
-  }
   }
 `;

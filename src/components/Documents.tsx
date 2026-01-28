@@ -5,17 +5,16 @@ import React from "react";
 import { Language } from "../utils";
 import * as styles from "./Documents.module.scss";
 
-interface Document {
-  node: {
-    title: {
-      fi: string;
-      en: string;
-    };
-    ordering: number;
-    file: {
-      url: string;
-    };
+interface DocumentNode {
+  id: string;
+  documentId: string;
+  title: {
+    fi: string;
+    en: string;
   };
+  file: {
+    url: string;
+  } | null;
 }
 
 interface Props {
@@ -24,31 +23,34 @@ interface Props {
 
 export const MatluDocuments: React.FC<Props> = ({ language }) => {
   const data = useStaticQuery(graphql`
-    query MyQuery {
+    query DocumentsQuery {
       allStrapiDocument {
-        edges {
-          node {
-            id
-            title {
-              fi
-              en
-            }
-            file {
-              url
-            }
+        nodes {
+          id
+          documentId
+          title {
+            fi
+            en
+          }
+          file {
+            url
           }
         }
       }
     }
   `);
-  const documents: Document[] = data.allStrapiDocument.edges;
+
+  const nodes: DocumentNode[] = data.allStrapiDocument.nodes;
+
   return (
     <ul className={styles.documentLinks}>
-    <a href="https://drive.google.com/drive/folders/1U1VwouP1PDeHaKRWgzN_K_g3Ge-o9Y2o?usp=sharing">Pöytäkirjat</a>
-      {documents.map((document) => (
-        <li key={document.node.title[language]}>
-          <a href={document.node.file.url} target="_blank" rel="noreferrer">
-            {document.node.title[language]}
+      <a href="https://drive.google.com/drive/folders/1U1VwouP1PDeHaKRWgzN_K_g3Ge-o9Y2o?usp=sharing">
+        {language === "fi" ? "Pöytäkirjat" : "Minutes"}
+      </a>
+      {nodes.map((doc) => (
+        <li key={doc.documentId}>
+          <a href={doc.file?.url} target="_blank" rel="noreferrer">
+            {doc.title[language]}
           </a>
         </li>
       ))}

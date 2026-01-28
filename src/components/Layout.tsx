@@ -7,6 +7,7 @@ import { Nav } from "./Nav";
 import { Language, LocalizedLink } from "../utils";
 import { Footer } from "./Footer";
 import Image from "./image";
+import LivePreview from "./LivePreview";
 
 interface LayoutProps {
   language: Language;
@@ -20,6 +21,7 @@ const Layout: React.FC<PropsWithChildren<LayoutProps>> = ({
 }) => {
   return (
     <>
+      <LivePreview />
       <div className={logoStyles.logoWrapper}>
         <Image imageName="matlu" />
       </div>

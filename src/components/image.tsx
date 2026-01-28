@@ -1,6 +1,6 @@
 import React from "react";
 import { useStaticQuery, graphql } from "gatsby";
-import {GatsbyImage, getImage, IGatsbyImageData} from "gatsby-plugin-image";
+import { GatsbyImage, getImage, IGatsbyImageData } from "gatsby-plugin-image";
 
 interface ImageProps {
   imageName: string;
@@ -17,10 +17,10 @@ interface ImageQuery {
   loimuImage: FileImage;
 }
 
-export const Image: React.FC<ImageProps> = ({imageName}) => {
+export const Image: React.FC<ImageProps> = ({ imageName }) => {
   const data: ImageQuery = useStaticQuery(graphql`
-  query {
-    matluImage: file(relativePath: { eq: "matlu.png" }) {
+    query {
+      matluImage: file(relativePath: { eq: "matlu.png" }) {
         childImageSharp {
           gatsbyImageData(height: 80)
         }
@@ -30,9 +30,9 @@ export const Image: React.FC<ImageProps> = ({imageName}) => {
           gatsbyImageData(height: 70)
         }
       }
-  }
-`);
-const imageData = imageName === "matlu" ? data.matluImage : data.loimuImage;
+    }
+  `);
+  const imageData = imageName === "matlu" ? data.matluImage : data.loimuImage;
 
   if (!imageData || !imageData.childImageSharp) {
     return <div>Image not found</div>;
@@ -45,7 +45,6 @@ const imageData = imageName === "matlu" ? data.matluImage : data.loimuImage;
   }
 
   return <GatsbyImage image={image} alt={imageName} />;
-  
 };
 
 export default Image;

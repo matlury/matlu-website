@@ -38,17 +38,19 @@ export const NavFi: React.FC<LocalizedNavProps> = ({
       >
         Hallitus
       </Link>
-      {navLinks.map(navLink => (
-        <Link
-          key={navLink.id}
-          to={`/${navLink.page}/`}
-          className={styles.navLink}
-          activeClassName="active-navlink"
-          partiallyActive={true}
-        >
-          {navLink.Title.fi}
-        </Link>
-      ))}
+      {navLinks.map((navLink) => {
+        return (
+          <Link
+            key={navLink.id}
+            to={`/${navLink.page}/`}
+            className={styles.navLink}
+            activeClassName="active-navlink"
+            partiallyActive={true}
+          >
+            {navLink.Title.fi}
+          </Link>
+        )
+      })}
       <a
         className={styles.navLink}
         href="https://ilotalo.matlu.fi"

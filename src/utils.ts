@@ -12,14 +12,24 @@ export type SEOQuery = {
 };
 export type PageTemplateQuery = {
   strapiPage: {
-    body: Record<Language, {
-      data: Record<Language, string>;
-    }>;
+    body: {
+      En: {
+        data: {
+          En: string;
+        };
+      };
+      Fi: {
+        data: {
+          Fi: string;
+        };
+      };
+    };
     Title: Record<Language, string>;
   };
 };
 export type BasePageContext = {
   id: string;
+  documentId: string;
   language: Language;
   localizedLinks: LocalizedText;
   hideFromSearchEngine: boolean;
@@ -36,22 +46,22 @@ export type ContactPageTemplatePageContext = BasePageContext;
 
 export type LocalizedTextFi = Record<"id" | "fi", string>;
 export type LocalizedTextEn = Record<"id" | "en", string>;
+
 export type LocalizedRichTextFi = {
-  id: string;
-  fi: {
+  Fi: {
     data: {
-      fi: string;
+      Fi: string;
     };
   };
 };
 export type LocalizedRichTextEn = {
-  id: string;
-  en: {
+  En: {
     data: {
-      en: string;
+      En: string;
     };
   };
 };
+
 export type LocalizedText = Record<Language, string>;
 
 type BoardMember<T = LocalizedTextFi | LocalizedTextEn> = {
@@ -77,7 +87,11 @@ type Team<T = LocalizedTextFi | LocalizedTextEn> = {
   team_members: TeamMember[];
 };
 
-export type FrontPageQuery<T extends [LocalizedTextFi, LocalizedRichTextFi] | [LocalizedTextEn, LocalizedRichTextEn]> = {
+export type FrontPageQuery<
+  T extends
+    | [LocalizedTextFi, LocalizedRichTextFi]
+    | [LocalizedTextEn, LocalizedRichTextEn],
+> = {
   strapiPage: {
     Title: T[0];
     Description: T[0];
@@ -88,7 +102,7 @@ export type FrontPageQuery<T extends [LocalizedTextFi, LocalizedRichTextFi] | [L
 
 export type BoardTemplateQuery<T = LocalizedTextFi | LocalizedTextEn> = {
   strapiBoard: {
-    id: number;
+    id: string;
     year: number;
     members: BoardMember<T>[] | null;
     officers: Officer<T>[] | null;
@@ -110,6 +124,7 @@ export type NavQuery = {
 
 export type CalendarEventData = {
   id: string;
+  documentId: string;
   event_link: string;
   hide_location: boolean;
   start_date: string;
@@ -119,6 +134,6 @@ export type CalendarEventData = {
 
 export type CalendarEventsQuery = {
   allStrapiCalendarEvent: {
-    nodes: CalendarEventData[];
+    nodes: Array<CalendarEventData>;
   };
 };
