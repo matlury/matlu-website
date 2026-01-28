@@ -21,6 +21,14 @@ const ContactFormFi: React.FC<ContactFormFragmentProps> = ({
   const onLoad = useCallback(() => {
     setLoaded(true);
   }, [setLoaded]);
+
+  useEffect(() => {
+    if (!reCaptchaSiteKey) {
+      setVerified(true);
+      setLoaded(true);
+    }
+  }, [reCaptchaSiteKey]);
+
   useEffect(() => {
     return () => {
       setVerified(false);
@@ -49,15 +57,17 @@ const ContactFormFi: React.FC<ContactFormFragmentProps> = ({
             placeholder="Kirjoita viestisi..."
           />
         </div>
-        <div className={styles.contactFormGroup}>
-          <Reaptcha
-            sitekey={String(reCaptchaSiteKey)}
-            onVerify={(_response) => {
-              setVerified(true);
-            }}
-            onLoad={onLoad}
-          />
-        </div>
+        {reCaptchaSiteKey && (
+          <div className={styles.contactFormGroup}>
+            <Reaptcha
+              sitekey={reCaptchaSiteKey}
+              onVerify={(_response) => {
+                setVerified(true);
+              }}
+              onLoad={onLoad}
+            />
+          </div>
+        )}
         <div className={styles.contactFormGroup}>
           <button type="submit" disabled={!loaded || !verified}>
             Lähetä
@@ -77,6 +87,14 @@ const ContactFormEn: React.FC<ContactFormFragmentProps> = ({
   const onLoad = useCallback(() => {
     setLoaded(true);
   }, [setLoaded]);
+
+  useEffect(() => {
+    if (!reCaptchaSiteKey) {
+      setVerified(true);
+      setLoaded(true);
+    }
+  }, [reCaptchaSiteKey]);
+
   useEffect(() => {
     return () => {
       setVerified(false);
@@ -104,15 +122,17 @@ const ContactFormEn: React.FC<ContactFormFragmentProps> = ({
             placeholder="Write your message..."
           />
         </div>
-        <div className={styles.contactFormGroup}>
-          <Reaptcha
-            sitekey={String(reCaptchaSiteKey)}
-            onVerify={(_response) => {
-              setVerified(true);
-            }}
-            onLoad={onLoad}
-          />
-        </div>
+        {reCaptchaSiteKey && (
+          <div className={styles.contactFormGroup}>
+            <Reaptcha
+              sitekey={reCaptchaSiteKey}
+              onVerify={(_response) => {
+                setVerified(true);
+              }}
+              onLoad={onLoad}
+            />
+          </div>
+        )}
         <div className={styles.contactFormGroup}>
           <button type="submit" disabled={!loaded || !verified}>
             Send
@@ -143,18 +163,21 @@ const ContactForm: React.FC<ContactFormProps> = ({ lang }) => {
       }
     }
   `);
+  const siteMetadata = qry.site.siteMetadata;
+  const recaptchaKey = siteMetadata.recaptchaSiteKey;
+
   if (lang === "fi") {
     return (
       <ContactFormFi
-        reCaptchaSiteKey={qry.site.siteMetadata.recaptchaSiteKey}
-        feedbackFormHandler={qry.site.siteMetadata.feedbackFormHandler}
+        reCaptchaSiteKey={recaptchaKey}
+        feedbackFormHandler={siteMetadata.feedbackFormHandler}
       />
     );
   }
   return (
     <ContactFormEn
-      reCaptchaSiteKey={qry.site.siteMetadata.recaptchaSiteKey}
-      feedbackFormHandler={qry.site.siteMetadata.feedbackFormHandler}
+      reCaptchaSiteKey={recaptchaKey}
+      feedbackFormHandler={siteMetadata.feedbackFormHandler}
     />
   );
 };
