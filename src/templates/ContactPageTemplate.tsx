@@ -40,7 +40,7 @@ export default ContactPageTemplate;
 
 export const query = graphql`
   query($id: String!) {
-    strapiPage(documentId: { eq: $id }) {
+    strapiPage(id: { eq: $id }) {
       Title {
         fi
       en

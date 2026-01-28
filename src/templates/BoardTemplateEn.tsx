@@ -37,7 +37,7 @@ const BoardTemplateEn: React.FC<BoardTemplateEnProps> = ({
           [...board.members.sort((a, b) => a.id - b.id)].map((member) => (
             <section
               className="board-member"
-              key={`board_${board.documentId}_member_${member.id}`}
+              key={`board_${board.id}_member_${member.id}`}
             >
               <div className="member-picture"></div>
               <div className="member-name">
@@ -112,8 +112,8 @@ export default BoardTemplateEn;
 
 export const query = graphql`
   query BoardTemplateEn($id: String) {
-    strapiBoard(documentId: {eq: $id}) {
-    documentId
+    strapiBoard(id: {eq: $id}) {
+    id
     year
     members {
       id

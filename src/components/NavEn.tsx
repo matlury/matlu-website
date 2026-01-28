@@ -6,7 +6,7 @@ import { LocalizedLink } from "../utils";
 interface LocalizedNavProps {
   localizedLinks: LocalizedLink;
   navLinks: {
-    documentId: string;
+    id: string;
     page: string;
     Ordering: number;
     Draft: boolean;
@@ -40,7 +40,7 @@ export const NavEn: React.FC<LocalizedNavProps> = ({
       </Link>
       {navLinks.map(navLink => (
         <Link
-          key={navLink.documentId}
+          key={navLink.id}
           to={`/en/${navLink.page}/`}
           className={styles.navLink}
           activeClassName="active-navlink"

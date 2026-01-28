@@ -15,7 +15,7 @@ exports.createPages = async ({ graphql, actions }) => {
         ) {
           edges {
             node {
-              documentId
+              id
               page
               HideFromSearchEngine
             }
@@ -29,7 +29,7 @@ exports.createPages = async ({ graphql, actions }) => {
     throw result.errors;
   }
 
-  const pageData = result.data;
+  const pageData = result.data.allStrapiPage.edges;
 
   // Custom page templates
   const contactPageTemplate = require.resolve(
@@ -56,12 +56,12 @@ exports.createPages = async ({ graphql, actions }) => {
     return defaultPageTemplate;
   };
 
-  pageData.allStrapiPage.edges.forEach(({ node }, _index) => {
+  pageData.forEach(({ node }) => {
     createPage({
       path: `/${node.page}/`,
       component: resolvePageTemplate(node.page),
       context: {
-        id: node.documentId,
+        id: node.id,
         language: "fi",
         localizedLinks: { en: `/en/${node.page}/` },
         hideFromSearchEngine: node.HideFromSearchEngine,
@@ -71,7 +71,7 @@ exports.createPages = async ({ graphql, actions }) => {
       path: `/en/${node.page}/`,
       component: resolvePageTemplate(node.page),
       context: {
-        id: node.documentId,
+        id: node.id,
         language: "en",
         localizedLinks: { fi: `/${node.page}/` },
         hideFromSearchEngine: node.HideFromSearchEngine,
@@ -85,7 +85,7 @@ exports.createPages = async ({ graphql, actions }) => {
         allStrapiBoard(filter: { hidden: { eq: false } }) {
           edges {
             node {
-              documentId
+              id
               year
             }
           }
@@ -99,10 +99,11 @@ exports.createPages = async ({ graphql, actions }) => {
   }
 
   const boardData = result2.data;
+  /** @type {number[]} */
   const boardYears = boardData.allStrapiBoard.edges.map(({ node }) =>
     Number(node.year)
   );
-  const latestBoard = Math.max(...boardYears);
+  const latestBoard = boardYears.reduce((max, year) => (year > max ? year : max), 0);
 
   boardData.allStrapiBoard.edges.forEach(({ node }, _index) => {
     if (node.year === latestBoard) {
@@ -110,7 +111,7 @@ exports.createPages = async ({ graphql, actions }) => {
         path: `/board/`,
         component: require.resolve("./src/templates/BoardTemplateFi.tsx"),
         context: {
-          id: node.documentId,
+          id: node.id,
           boardYears,
           language: "fi",
           localizedLinks: { en: "/en/board/" },
@@ -121,7 +122,7 @@ exports.createPages = async ({ graphql, actions }) => {
         path: `/en/board/`,
         component: require.resolve("./src/templates/BoardTemplateEn.tsx"),
         context: {
-          id: node.documentId,
+          id: node.id,
           boardYears,
           language: "en",
           localizedLinks: { fi: "/board/" },
@@ -133,7 +134,7 @@ exports.createPages = async ({ graphql, actions }) => {
       path: `/board/${node.year}/`,
       component: require.resolve("./src/templates/BoardTemplateFi.tsx"),
       context: {
-        id: node.documentId,
+        id: node.id,
         boardYears,
         language: "fi",
         localizedLinks: { en: `/en/board/${node.year}/` },
@@ -144,7 +145,7 @@ exports.createPages = async ({ graphql, actions }) => {
       path: `/en/board/${node.year}/`,
       component: require.resolve("./src/templates/BoardTemplateEn.tsx"),
       context: {
-        id: node.documentId,
+        id: node.id,
         boardYears,
         language: "en",
         localizedLinks: { fi: `/board/${node.year}/` },

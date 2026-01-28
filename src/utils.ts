@@ -88,7 +88,7 @@ export type FrontPageQuery<T extends [LocalizedTextFi, LocalizedRichTextFi] | [L
 
 export type BoardTemplateQuery<T = LocalizedTextFi | LocalizedTextEn> = {
   strapiBoard: {
-    documentId: string;
+    id: string;
     year: number;
     members: BoardMember<T>[] | null;
     officers: Officer<T>[] | null;
@@ -99,7 +99,7 @@ export type BoardTemplateQuery<T = LocalizedTextFi | LocalizedTextEn> = {
 export type NavQuery = {
   allStrapiPage: {
     nodes: Array<{
-      documentId: string;
+      id: string;
       page: string;
       Ordering: number;
       Draft: boolean;
@@ -109,7 +109,7 @@ export type NavQuery = {
 };
 
 export type CalendarEventData = {
-  documentId: string;
+  id: string;
   event_link: string;
   hide_location: boolean;
   start_date: string;

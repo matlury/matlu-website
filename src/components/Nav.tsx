@@ -20,7 +20,7 @@ export const Nav: React.FC<NavProps> = ({ language, localizedLinks }) => {
           Draft
           Ordering
           page
-          documentId
+          id
           Title {
             en
             fi

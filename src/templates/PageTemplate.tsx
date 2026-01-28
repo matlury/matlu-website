@@ -14,28 +14,28 @@ interface PageTemplateProps {
 const PageTemplate: React.FC<PageTemplateProps> = ({ data, pageContext }) => {
   const body = data.strapiPage.body[pageContext.language].data[pageContext.language];
 
-  return(
-  <Layout
-    language={pageContext.language}
-    localizedLinks={pageContext.localizedLinks}
-  >
-    <SEO
-      title={data.strapiPage.Title[pageContext.language]}
-      lang={pageContext.language}
-      hideFromSearchEngine={pageContext.hideFromSearchEngine}
-    />
-    <ReactMarkdown
-      plugins={[gfm]}
-      source={body}
-    />
-  </Layout>
-);
+  return (
+    <Layout
+      language={pageContext.language}
+      localizedLinks={pageContext.localizedLinks}
+    >
+      <SEO
+        title={data.strapiPage.Title[pageContext.language]}
+        lang={pageContext.language}
+        hideFromSearchEngine={pageContext.hideFromSearchEngine}
+      />
+      <ReactMarkdown
+        plugins={[gfm]}
+        source={body}
+      />
+    </Layout>
+  );
 };
 export default PageTemplate;
 
 export const query = graphql`
   query($id: String!) {
-    strapiPage(documentId: { eq: $id }) {
+    strapiPage(id: { eq: $id }) {
       Title {
         fi
         en
