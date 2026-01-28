@@ -22,11 +22,11 @@ const Layout: React.FC<PropsWithChildren<LayoutProps>> = ({
   return (
     <>
       <LivePreview />
-      <div className={logoStyles.logoWrapper}>
+      <div className={(logoStyles as any).logoWrapper}>
         <Image imageName="matlu" />
       </div>
       <Nav language={language} localizedLinks={localizedLinks} />
-      <div className={styles.wrapper}>
+      <div className={(styles as any).wrapper}>
         <article>{children}</article>
         <Footer language={language} />
       </div>

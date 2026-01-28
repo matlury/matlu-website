@@ -10,7 +10,13 @@
 body {
   font-family: "Open Sans", sans-serif;
   font-size: 15pt;
+  background-color: #f4f4f4; /* Light gray for sides */
+}
+
+.wrapper {
   background-color: white;
+  min-height: 100vh;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
 }
 
 ul,
@@ -65,10 +71,8 @@ h6 {
 
 .board-members {
   display: flex;
-  flex-direction: row;
-  justify-content: left;
-  align-content: flex-start;
-  flex-wrap: wrap;
+  flex-flow: row wrap;
+  place-content: flex-start left;
 
   .board-member {
     text-align: left;
@@ -119,11 +123,11 @@ p {
 }
 
 article {
+  margin-bottom: 32px;
+
   @include mixins.mobile {
     padding: 12px;
   }
-
-  margin-bottom: 32px;
 }
 
 hr {
@@ -153,10 +157,8 @@ img[src*="#thumbnail_3x"] {
 
 .officers {
   display: flex;
-  flex-direction: row;
-  justify-content: left;
-  align-content: flex-start;
-  flex-wrap: wrap;
+  flex-flow: row wrap;
+  place-content: flex-start left;
 
   .officer {
     text-align: left;
