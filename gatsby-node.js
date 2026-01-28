@@ -17,6 +17,8 @@ exports.createPages = async ({ graphql, actions }) => {
         edges {
           node {
             id
+            strapi_id
+            strapi_document_id_or_regular_id
             attributes {
               page
               HideFromSearchEngine
@@ -65,6 +67,8 @@ exports.createPages = async ({ graphql, actions }) => {
       component: resolvePageTemplate(page),
       context: {
         id: node.id,
+        strapi_id: node.strapi_id,
+        documentId: node.strapi_document_id_or_regular_id,
         language: "fi",
         localizedLinks: { en: `/en/${page}/` },
         hideFromSearchEngine: HideFromSearchEngine,
@@ -75,6 +79,8 @@ exports.createPages = async ({ graphql, actions }) => {
       component: resolvePageTemplate(page),
       context: {
         id: node.id,
+        strapi_id: node.strapi_id,
+        documentId: node.strapi_document_id_or_regular_id,
         language: "en",
         localizedLinks: { fi: `/${page}/` },
         hideFromSearchEngine: HideFromSearchEngine,
@@ -88,6 +94,8 @@ exports.createPages = async ({ graphql, actions }) => {
         edges {
           node {
             id
+            strapi_id
+            strapi_document_id_or_regular_id
             attributes {
               year
             }
@@ -119,6 +127,8 @@ exports.createPages = async ({ graphql, actions }) => {
         component: require.resolve("./src/templates/BoardTemplateFi.tsx"),
         context: {
           id: node.id,
+          strapi_id: node.strapi_id,
+          documentId: node.strapi_document_id_or_regular_id,
           boardYears,
           language: "fi",
           localizedLinks: { en: "/en/board/" },
@@ -130,6 +140,8 @@ exports.createPages = async ({ graphql, actions }) => {
         component: require.resolve("./src/templates/BoardTemplateEn.tsx"),
         context: {
           id: node.id,
+          strapi_id: node.strapi_id,
+          documentId: node.strapi_document_id_or_regular_id,
           boardYears,
           language: "en",
           localizedLinks: { fi: "/board/" },
@@ -142,6 +154,8 @@ exports.createPages = async ({ graphql, actions }) => {
       component: require.resolve("./src/templates/BoardTemplateFi.tsx"),
       context: {
         id: node.id,
+        strapi_id: node.strapi_id,
+        documentId: node.strapi_document_id_or_regular_id,
         boardYears,
         language: "fi",
         localizedLinks: { en: `/en/board/${year}/` },
@@ -153,6 +167,8 @@ exports.createPages = async ({ graphql, actions }) => {
       component: require.resolve("./src/templates/BoardTemplateEn.tsx"),
       context: {
         id: node.id,
+        strapi_id: node.strapi_id,
+        documentId: node.strapi_document_id_or_regular_id,
         boardYears,
         language: "en",
         localizedLinks: { fi: `/board/${year}/` },

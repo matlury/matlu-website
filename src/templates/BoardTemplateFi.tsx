@@ -111,8 +111,8 @@ const BoardTemplateFi: React.FC<BoardTemplateFiProps> = ({
 export default BoardTemplateFi;
 
 export const query = graphql`
-  query BoardTemplateFi($id: String) {
-    strapiBoard(id: { eq: $id }) {
+  query BoardTemplateFi($documentId: Int!) {
+    strapiBoard(strapi_document_id_or_regular_id: { eq: $documentId }) {
       id
       attributes {
         year

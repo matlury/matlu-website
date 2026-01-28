@@ -23,6 +23,8 @@ export type PageTemplateQuery = {
 };
 export type BasePageContext = {
   id: string;
+  strapi_id: number;
+  documentId: number;
   language: Language;
   localizedLinks: LocalizedText;
   hideFromSearchEngine: boolean;

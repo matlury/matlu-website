@@ -46,8 +46,8 @@ const EventsPageTemplate: React.FC<EventsPageTemplateProps> = ({
 export default EventsPageTemplate;
 
 export const query = graphql`
-  query EventsPageTemplate($id: String) {
-    strapiPage(id: { eq: $id }) {
+  query EventsPageTemplate($documentId: Int!) {
+    strapiPage(strapi_document_id_or_regular_id: { eq: $documentId }) {
       attributes {
         Title {
           fi

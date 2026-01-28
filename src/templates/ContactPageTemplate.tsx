@@ -41,8 +41,8 @@ const ContactPageTemplate: React.FC<ContactPageTemplateProps> = ({
 export default ContactPageTemplate;
 
 export const query = graphql`
-  query ($id: String!) {
-    strapiPage(id: { eq: $id }) {
+  query ($documentId: Int!) {
+    strapiPage(strapi_document_id_or_regular_id: { eq: $documentId }) {
       attributes {
         Title {
           fi

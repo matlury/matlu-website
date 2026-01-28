@@ -111,8 +111,8 @@ const BoardTemplateEn: React.FC<BoardTemplateEnProps> = ({
 export default BoardTemplateEn;
 
 export const query = graphql`
-  query BoardTemplateEn($id: String) {
-    strapiBoard(id: { eq: $id }) {
+  query BoardTemplateEn($documentId: Int!) {
+    strapiBoard(strapi_document_id_or_regular_id: { eq: $documentId }) {
       id
       attributes {
         year
