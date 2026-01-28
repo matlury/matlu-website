@@ -2,6 +2,8 @@ import { MetadataRoute } from "next";
 import { fetchGraphQL } from "../lib/strapi";
 import { gql } from "@apollo/client";
 
+export const dynamic = "force-static";
+
 const SITE_URL = process.env.SITE_URL || "https://www.matlu.fi";
 
 interface PageData {

@@ -108,14 +108,14 @@ async function getAllBoardYears(): Promise<number[]> {
 
 export async function generateStaticParams() {
   const boardYears = await getAllBoardYears();
-  const params: Array<{ year?: string[] }> = [];
+  const params: Array<{ year: string[] }> = [];
 
   boardYears.forEach((year) => {
     params.push({ year: [String(year)] });
   });
 
-  // Add the latest board (no year in path)
-  params.push({});
+  // Add the latest board (empty array for optional catch-all root)
+  params.push({ year: [] });
 
   return params;
 }

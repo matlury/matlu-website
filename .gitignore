@@ -71,3 +71,4 @@ deploy-s3.sh
 
 # nextjs
 .next
+out
