@@ -1,26 +1,26 @@
 import React from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import { graphql } from "gatsby";
+import { graphql, PageProps } from "gatsby";
 import Layout from "../components/Layout";
 import { SEO } from "../seo";
 import CalendarEvents from "../components/CalendarEvents";
 import {
   EventsPageTemplateQuery,
   EventsPageTemplatePageContext,
+  LocalizedRichTextEn,
+  LocalizedRichTextFi,
 } from "../utils";
 
-interface EventsPageTemplateProps {
-  data: EventsPageTemplateQuery;
-  pageContext: EventsPageTemplatePageContext;
-}
-
-const EventsPageTemplate: React.FC<EventsPageTemplateProps> = ({
-  data,
-  pageContext,
-}) => {
+const EventsPageTemplate: React.FC<
+  PageProps<EventsPageTemplateQuery, EventsPageTemplatePageContext>
+> = ({ data, pageContext }) => {
   const langKey = pageContext.language === "en" ? "En" : "Fi";
-  const body = data.strapiPage.attributes.body[langKey];
+  const bodyData = data.strapiPage.body[langKey];
+  const body =
+    langKey === "En"
+      ? (bodyData as LocalizedRichTextEn["En"]).data.En
+      : (bodyData as LocalizedRichTextFi["Fi"]).data.Fi;
 
   return (
     <Layout
@@ -34,7 +34,7 @@ const EventsPageTemplate: React.FC<EventsPageTemplateProps> = ({
       </h1>
       <SEO
         lang={pageContext.language}
-        title={data.strapiPage.attributes.Title[pageContext.language]}
+        title={data.strapiPage.Title[pageContext.language]}
         hideFromSearchEngine={pageContext.hideFromSearchEngine}
       />
       <CalendarEvents language={pageContext.language} showAll />
@@ -46,16 +46,22 @@ const EventsPageTemplate: React.FC<EventsPageTemplateProps> = ({
 export default EventsPageTemplate;
 
 export const query = graphql`
-  query EventsPageTemplate($documentId: Int!) {
-    strapiPage(strapi_document_id_or_regular_id: { eq: $documentId }) {
-      attributes {
-        Title {
-          fi
-          en
+  query EventsPageTemplate($documentId: String!) {
+    strapiPage(documentId: { eq: $documentId }) {
+      Title {
+        fi
+        en
+      }
+      body {
+        En {
+          data {
+            En
+          }
         }
-        body {
-          En
-          Fi
+        Fi {
+          data {
+            Fi
+          }
         }
       }
     }

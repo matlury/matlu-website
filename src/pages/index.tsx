@@ -1,17 +1,15 @@
 import React from "react";
 
 import Layout from "../components/Layout";
-import { graphql } from "gatsby";
+import { graphql, PageProps } from "gatsby";
 import { SEO } from "../seo";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { FrontPageQuery, LocalizedRichTextFi, LocalizedTextFi } from "../utils";
 
-interface FrontPageFiProps {
-  data: FrontPageQuery<[LocalizedTextFi, LocalizedRichTextFi]>;
-}
-
-const FrontPageFi: React.FC<FrontPageFiProps> = ({ data }) => {
+const FrontPageFi: React.FC<
+  PageProps<FrontPageQuery<[LocalizedTextFi, LocalizedRichTextFi]>>
+> = ({ data }) => {
   if (!data.strapiPage) {
     return (
       <Layout
@@ -38,13 +36,13 @@ const FrontPageFi: React.FC<FrontPageFiProps> = ({ data }) => {
       }}
     >
       <SEO
-        title={data.strapiPage.attributes.Title.fi}
-        description={data.strapiPage.attributes.Description.fi}
+        title={data.strapiPage.Title.fi}
+        description={data.strapiPage.Description.fi}
         lang="fi"
-        hideFromSearchEngine={data.strapiPage.attributes.HideFromSearchEngine}
+        hideFromSearchEngine={data.strapiPage.HideFromSearchEngine}
       />
       <ReactMarkdown remarkPlugins={[remarkGfm]}>
-        {data.strapiPage.attributes.body.Fi || ""}
+        {data.strapiPage.body.Fi.data.Fi || ""}
       </ReactMarkdown>
     </Layout>
   );
@@ -54,17 +52,19 @@ export default FrontPageFi;
 
 export const query = graphql`
   query FrontPageFi {
-    strapiPage(attributes: { page: { eq: "home" } }) {
-      attributes {
-        HideFromSearchEngine
-        Title {
-          fi
-        }
-        Description {
-          fi
-        }
-        body {
-          Fi
+    strapiPage(page: { eq: "home" }) {
+      HideFromSearchEngine
+      Title {
+        fi
+      }
+      Description {
+        fi
+      }
+      body {
+        Fi {
+          data {
+            Fi
+          }
         }
       }
     }

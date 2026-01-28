@@ -1,26 +1,26 @@
 import React from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import { graphql } from "gatsby";
+import { graphql, PageProps } from "gatsby";
 import Layout from "../components/Layout";
 import { SEO } from "../seo";
 import ContactForm from "../components/ContactForm";
 import {
   ContactPageTemplateQuery,
   ContactPageTemplatePageContext,
+  LocalizedRichTextEn,
+  LocalizedRichTextFi,
 } from "../utils";
 
-interface ContactPageTemplateProps {
-  data: ContactPageTemplateQuery;
-  pageContext: ContactPageTemplatePageContext;
-}
-
-const ContactPageTemplate: React.FC<ContactPageTemplateProps> = ({
-  data,
-  pageContext,
-}) => {
+const ContactPageTemplate: React.FC<
+  PageProps<ContactPageTemplateQuery, ContactPageTemplatePageContext>
+> = ({ data, pageContext }) => {
   const langKey = pageContext.language === "en" ? "En" : "Fi";
-  const body = data.strapiPage.attributes.body[langKey];
+  const bodyData = data.strapiPage.body[langKey];
+  const body =
+    langKey === "En"
+      ? (bodyData as LocalizedRichTextEn["En"]).data.En
+      : (bodyData as LocalizedRichTextFi["Fi"]).data.Fi;
 
   return (
     <Layout
@@ -28,7 +28,7 @@ const ContactPageTemplate: React.FC<ContactPageTemplateProps> = ({
       localizedLinks={pageContext.localizedLinks}
     >
       <SEO
-        title={data.strapiPage.attributes.Title[pageContext.language]}
+        title={data.strapiPage.Title[pageContext.language]}
         lang={pageContext.language}
         hideFromSearchEngine={pageContext.hideFromSearchEngine}
       />
@@ -41,16 +41,22 @@ const ContactPageTemplate: React.FC<ContactPageTemplateProps> = ({
 export default ContactPageTemplate;
 
 export const query = graphql`
-  query ($documentId: Int!) {
-    strapiPage(strapi_document_id_or_regular_id: { eq: $documentId }) {
-      attributes {
-        Title {
-          fi
-          en
+  query ($documentId: String!) {
+    strapiPage(documentId: { eq: $documentId }) {
+      Title {
+        fi
+        en
+      }
+      body {
+        En {
+          data {
+            En
+          }
         }
-        body {
-          En
-          Fi
+        Fi {
+          data {
+            Fi
+          }
         }
       }
     }

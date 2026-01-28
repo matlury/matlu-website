@@ -7,19 +7,14 @@ import * as styles from "./Documents.module.scss";
 
 interface DocumentNode {
   id: string;
-  attributes: {
-    title: {
-      fi: string;
-      en: string;
-    };
-    file: {
-      data: {
-        attributes: {
-          url: string;
-        };
-      } | null;
-    } | null;
+  documentId: string;
+  title: {
+    fi: string;
+    en: string;
   };
+  file: {
+    url: string;
+  } | null;
 }
 
 interface Props {
@@ -32,18 +27,13 @@ export const MatluDocuments: React.FC<Props> = ({ language }) => {
       allStrapiDocument {
         nodes {
           id
-          attributes {
-            title {
-              fi
-              en
-            }
-            file {
-              data {
-                attributes {
-                  url
-                }
-              }
-            }
+          documentId
+          title {
+            fi
+            en
+          }
+          file {
+            url
           }
         }
       }
@@ -58,13 +48,9 @@ export const MatluDocuments: React.FC<Props> = ({ language }) => {
         {language === "fi" ? "Pöytäkirjat" : "Minutes"}
       </a>
       {nodes.map((doc) => (
-        <li key={doc.id}>
-          <a
-            href={doc.attributes.file?.data?.attributes?.url}
-            target="_blank"
-            rel="noreferrer"
-          >
-            {doc.attributes.title[language]}
+        <li key={doc.documentId}>
+          <a href={doc.file?.url} target="_blank" rel="noreferrer">
+            {doc.title[language]}
           </a>
         </li>
       ))}

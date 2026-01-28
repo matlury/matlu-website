@@ -1,16 +1,18 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
-/* eslint-disable @typescript-eslint/restrict-template-expressions */
-require("dotenv").config();
+import type { GatsbyConfig } from "gatsby";
+import * as dotenv from "dotenv";
+
+dotenv.config();
 
 const strapiConfig = {
-  version: 5, // Strapi version 4 or 5
+  version: 5,
+  v4CompatibilityMode: false,
   apiURL: process.env.API_URL || "http://localhost:1337",
   collectionTypes: [`board`, `page`, `calendar-event`, `document`],
   singleTypes: [],
   accessToken: process.env.ACCESS_TOKEN || "",
 };
 
-module.exports = {
+const config: GatsbyConfig = {
   trailingSlash: "always",
   siteMetadata: {
     title: `Matlu ry`,
@@ -68,3 +70,5 @@ module.exports = {
     `gatsby-plugin-catch-links`,
   ],
 };
+
+export default config;

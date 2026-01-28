@@ -12,19 +12,24 @@ export type SEOQuery = {
 };
 export type PageTemplateQuery = {
   strapiPage: {
-    attributes: {
-      body: {
-        En: string;
-        Fi: string;
+    body: {
+      En: {
+        data: {
+          En: string;
+        };
       };
-      Title: Record<Language, string>;
+      Fi: {
+        data: {
+          Fi: string;
+        };
+      };
     };
+    Title: Record<Language, string>;
   };
 };
 export type BasePageContext = {
   id: string;
-  strapi_id: number;
-  documentId: number;
+  documentId: string;
   language: Language;
   localizedLinks: LocalizedText;
   hideFromSearchEngine: boolean;
@@ -43,10 +48,18 @@ export type LocalizedTextFi = Record<"id" | "fi", string>;
 export type LocalizedTextEn = Record<"id" | "en", string>;
 
 export type LocalizedRichTextFi = {
-  Fi: string;
+  Fi: {
+    data: {
+      Fi: string;
+    };
+  };
 };
 export type LocalizedRichTextEn = {
-  En: string;
+  En: {
+    data: {
+      En: string;
+    };
+  };
 };
 
 export type LocalizedText = Record<Language, string>;
@@ -80,24 +93,20 @@ export type FrontPageQuery<
     | [LocalizedTextEn, LocalizedRichTextEn],
 > = {
   strapiPage: {
-    attributes: {
-      Title: T[0];
-      Description: T[0];
-      body: T[1];
-      HideFromSearchEngine: boolean;
-    };
+    Title: T[0];
+    Description: T[0];
+    body: T[1];
+    HideFromSearchEngine: boolean;
   } | null;
 };
 
 export type BoardTemplateQuery<T = LocalizedTextFi | LocalizedTextEn> = {
   strapiBoard: {
     id: string;
-    attributes: {
-      year: number;
-      members: BoardMember<T>[] | null;
-      officers: Officer<T>[] | null;
-      teams: Team<T>[] | null;
-    };
+    year: number;
+    members: BoardMember<T>[] | null;
+    officers: Officer<T>[] | null;
+    teams: Team<T>[] | null;
   };
 };
 
@@ -105,18 +114,17 @@ export type NavQuery = {
   allStrapiPage: {
     nodes: Array<{
       id: string;
-      attributes: {
-        page: string;
-        Ordering: number;
-        Draft: boolean;
-        Title: LocalizedText;
-      };
+      page: string;
+      Ordering: number;
+      Draft: boolean;
+      Title: LocalizedText;
     }>;
   };
 };
 
 export type CalendarEventData = {
   id: string;
+  documentId: string;
   event_link: string;
   hide_location: boolean;
   start_date: string;
@@ -126,9 +134,6 @@ export type CalendarEventData = {
 
 export type CalendarEventsQuery = {
   allStrapiCalendarEvent: {
-    nodes: Array<{
-      id: string;
-      attributes: Omit<CalendarEventData, "id">;
-    }>;
+    nodes: Array<CalendarEventData>;
   };
 };

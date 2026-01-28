@@ -1,19 +1,25 @@
 import React from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import { graphql } from "gatsby";
+import { graphql, PageProps } from "gatsby";
 import Layout from "../components/Layout";
 import { SEO } from "../seo";
-import { PageTemplateQuery, PageTemplatePageContext } from "../utils";
+import {
+  PageTemplateQuery,
+  PageTemplatePageContext,
+  LocalizedRichTextEn,
+  LocalizedRichTextFi,
+} from "../utils";
 
-interface PageTemplateProps {
-  data: PageTemplateQuery;
-  pageContext: PageTemplatePageContext;
-}
-
-const PageTemplate: React.FC<PageTemplateProps> = ({ data, pageContext }) => {
+const PageTemplate: React.FC<
+  PageProps<PageTemplateQuery, PageTemplatePageContext>
+> = ({ data, pageContext }) => {
   const langKey = pageContext.language === "en" ? "En" : "Fi";
-  const body = data.strapiPage.attributes.body[langKey];
+  const bodyData = data.strapiPage.body[langKey];
+  const body =
+    langKey === "En"
+      ? (bodyData as LocalizedRichTextEn["En"]).data.En
+      : (bodyData as LocalizedRichTextFi["Fi"]).data.Fi;
 
   return (
     <Layout
@@ -21,7 +27,7 @@ const PageTemplate: React.FC<PageTemplateProps> = ({ data, pageContext }) => {
       localizedLinks={pageContext.localizedLinks}
     >
       <SEO
-        title={data.strapiPage.attributes.Title[pageContext.language]}
+        title={data.strapiPage.Title[pageContext.language]}
         lang={pageContext.language}
         hideFromSearchEngine={pageContext.hideFromSearchEngine}
       />
@@ -32,16 +38,22 @@ const PageTemplate: React.FC<PageTemplateProps> = ({ data, pageContext }) => {
 export default PageTemplate;
 
 export const query = graphql`
-  query ($documentId: Int!) {
-    strapiPage(strapi_document_id_or_regular_id: { eq: $documentId }) {
-      attributes {
-        Title {
-          fi
-          en
+  query ($documentId: String!) {
+    strapiPage(documentId: { eq: $documentId }) {
+      Title {
+        fi
+        en
+      }
+      body {
+        En {
+          data {
+            En
+          }
         }
-        body {
-          En
-          Fi
+        Fi {
+          data {
+            Fi
+          }
         }
       }
     }

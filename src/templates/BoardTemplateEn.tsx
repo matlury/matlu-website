@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, graphql } from "gatsby";
+import { Link, graphql, PageProps } from "gatsby";
 import Layout from "../components/Layout";
 import { SEO } from "../seo";
 import {
@@ -8,16 +8,10 @@ import {
   BoardPageContext,
 } from "../utils";
 
-interface BoardTemplateEnProps {
-  data: BoardTemplateQuery<LocalizedTextEn>;
-  pageContext: BoardPageContext;
-}
-
-const BoardTemplateEn: React.FC<BoardTemplateEnProps> = ({
-  data,
-  pageContext,
-}) => {
-  const board = data.strapiBoard.attributes;
+const BoardTemplateEn: React.FC<
+  PageProps<BoardTemplateQuery<LocalizedTextEn>, BoardPageContext>
+> = ({ data, pageContext }) => {
+  const board = data.strapiBoard;
   const boardYears = pageContext.boardYears;
   return (
     <Layout language="en" localizedLinks={pageContext.localizedLinks}>
@@ -111,37 +105,35 @@ const BoardTemplateEn: React.FC<BoardTemplateEnProps> = ({
 export default BoardTemplateEn;
 
 export const query = graphql`
-  query BoardTemplateEn($documentId: Int!) {
-    strapiBoard(strapi_document_id_or_regular_id: { eq: $documentId }) {
+  query BoardTemplateEn($documentId: String!) {
+    strapiBoard(documentId: { eq: $documentId }) {
       id
-      attributes {
-        year
-        members {
+      year
+      members {
+        id
+        email
+        name
+        role {
+          en
           id
-          email
-          name
-          role {
-            en
-            id
-          }
         }
-        officers {
+      }
+      officers {
+        id
+        name
+        role {
+          en
+        }
+      }
+      teams {
+        id
+        title {
+          id
+          en
+        }
+        team_members {
           id
           name
-          role {
-            en
-          }
-        }
-        teams {
-          id
-          title {
-            id
-            en
-          }
-          team_members {
-            id
-            name
-          }
         }
       }
     }
