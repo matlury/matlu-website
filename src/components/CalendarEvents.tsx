@@ -13,33 +13,38 @@ const CalendarEvents: React.FC<CalendarEventsProps> = ({
   language,
   showAll = false,
 }) => {
-  const data: CalendarEventsQuery = useStaticQuery(graphql`query CalendarEventsQuery {
-  allStrapiCalendarEvent(sort: {attributes: {start_date: ASC}}, filter: {attributes: {hidden: {eq: false}}}) {
-    nodes {
-      id
-      attributes {
-        event_link
-        hide_location
-        start_date
-        title {
-          fi
-          en
-        }
-        location {
-          en
-          fi
+  const data: CalendarEventsQuery = useStaticQuery(graphql`
+    query CalendarEventsQuery {
+      allStrapiCalendarEvent(
+        sort: { attributes: { start_date: ASC } }
+        filter: { attributes: { hidden: { eq: false } } }
+      ) {
+        nodes {
+          id
+          attributes {
+            event_link
+            hide_location
+            start_date
+            title {
+              fi
+              en
+            }
+            location {
+              en
+              fi
+            }
+          }
         }
       }
     }
-  }
-}`);
-  const eventData = data.allStrapiCalendarEvent.nodes.map(node => ({
+  `);
+  const eventData = data.allStrapiCalendarEvent.nodes.map((node) => ({
     id: node.id,
-    ...node.attributes
+    ...node.attributes,
   }));
   let events = [
     ...eventData.filter(
-      (event) => compareAsc(parseISO(event.start_date), new Date()) >= 0
+      (event) => compareAsc(parseISO(event.start_date), new Date()) >= 0,
     ),
   ];
   if (!showAll) {

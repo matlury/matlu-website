@@ -4,6 +4,7 @@ import Layout from "../components/Layout";
 import { graphql } from "gatsby";
 import { SEO } from "../seo";
 import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 import { FrontPageQuery, LocalizedRichTextFi, LocalizedTextFi } from "../utils";
 
 interface FrontPageFiProps {
@@ -42,7 +43,9 @@ const FrontPageFi: React.FC<FrontPageFiProps> = ({ data }) => {
         lang="fi"
         hideFromSearchEngine={data.strapiPage.attributes.HideFromSearchEngine}
       />
-      <ReactMarkdown>{data.strapiPage.attributes.body.Fi}</ReactMarkdown>
+      <ReactMarkdown remarkPlugins={[remarkGfm]}>
+        {data.strapiPage.attributes.body.Fi || ""}
+      </ReactMarkdown>
     </Layout>
   );
 };

@@ -23,19 +23,17 @@ export const SEO: React.FC<SEOProps> = ({
   title,
   hideFromSearchEngine,
 }) => {
-  const { site }: SEOQuery = useStaticQuery(
-    graphql`
-      query {
-        site {
-          siteMetadata {
-            title
-            description
-            author
-          }
+  const { site }: SEOQuery = useStaticQuery(graphql`
+    query {
+      site {
+        siteMetadata {
+          title
+          description
+          author
         }
       }
-    `
-  );
+    }
+  `);
 
   const metaDescription = description || site.siteMetadata.description;
 
@@ -94,19 +92,18 @@ export const SEO: React.FC<SEOProps> = ({
         },
         ...(hideFromSearchEngine
           ? [
-            {
-              key: `robots`,
-              name: "robots",
-              content: "noindex,nofollow",
-            },
-          ]
+              {
+                key: `robots`,
+                name: "robots",
+                content: "noindex,nofollow",
+              },
+            ]
           : []),
       ].concat((meta || []).map((m, i) => ({ ...m, key: `meta-${i}` })))}
       link={[
         {
           key: "google-fonts",
-          href:
-            "https://fonts.googleapis.com/css?family=Open+Sans:300,400,700&display=swap",
+          href: "https://fonts.googleapis.com/css?family=Open+Sans:300,400,700&display=swap",
           rel: "stylesheet",
         },
         {

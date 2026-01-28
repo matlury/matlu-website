@@ -3,7 +3,6 @@ import { MatluDocuments } from "./Documents";
 import * as styles from "./Footer.module.scss";
 import Image from "./image";
 
-
 export const FooterFi: React.FC = () => (
   <footer className={styles.appFooter}>
     <div className={styles.appFooterSection}>
@@ -38,7 +37,7 @@ export const FooterFi: React.FC = () => (
     <div className={styles.appFooterSection}>
       <h4>Sponsored by</h4>
       <ul className={styles.matluSome}>
-        <Image imageName="loimu"/>
+        <Image imageName="loimu" />
       </ul>
     </div>
     <div className={styles.footerBottom}>&copy; 2025 Matlu ry</div>

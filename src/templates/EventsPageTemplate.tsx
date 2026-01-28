@@ -1,6 +1,6 @@
 import React from "react";
 import ReactMarkdown from "react-markdown";
-import gfm from "remark-gfm";
+import remarkGfm from "remark-gfm";
 import { graphql } from "gatsby";
 import Layout from "../components/Layout";
 import { SEO } from "../seo";
@@ -38,7 +38,7 @@ const EventsPageTemplate: React.FC<EventsPageTemplateProps> = ({
         hideFromSearchEngine={pageContext.hideFromSearchEngine}
       />
       <CalendarEvents language={pageContext.language} showAll />
-      <ReactMarkdown plugins={[gfm]} source={body} />
+      <ReactMarkdown remarkPlugins={[remarkGfm]}>{body || ""}</ReactMarkdown>
     </Layout>
   );
 };

@@ -22,7 +22,7 @@ describe(`CalendarEvent`, () => {
           en: loc,
           fi: loc,
         }}
-      />
+      />,
     );
 
     const titleFi = getByText(title_fi);

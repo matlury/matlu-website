@@ -30,9 +30,9 @@ You need to update your package.json to use the latest version of Gatsby.
 package.json
 Copypackage.json: copy code to clipboard
 {
-  "dependencies": {
-    "gatsby": "^5.0.0"
-  }
+"dependencies": {
+"gatsby": "^5.0.0"
+}
 }
 Or run
 
@@ -48,10 +48,10 @@ You need to update your package.json to use the latest version of react and reac
 package.json
 Copypackage.json: copy code to clipboard
 {
-  "dependencies": {
-    "react": "^18.0.0",
-    "react-dom": "^18.0.0"
-  }
+"dependencies": {
+"react": "^18.0.0",
+"react-dom": "^18.0.0"
+}
 }
 Or run
 
@@ -62,20 +62,22 @@ Please note: If you use npm 7 or higher you’ll want to use the --legacy-peer-d
 Copycopy code to clipboard
 npm install react@latest react-dom@latest --legacy-peer-deps
 Update Gatsby related packages
-Update your package.json to use the latest version for all Gatsby related packages. You should upgrade any package name that starts with gatsby-*. Note that this only applies to plugins managed in the gatsbyjs/gatsby repository. All packages we manage received a major version bump. Community plugins may not be upgraded yet so please check their repository for the current status.
+Update your package.json to use the latest version for all Gatsby related packages. You should upgrade any package name that starts with gatsby-\*. Note that this only applies to plugins managed in the gatsbyjs/gatsby repository. All packages we manage received a major version bump. Community plugins may not be upgraded yet so please check their repository for the current status.
 
 For example, if you have gatsby-plugin-image installed in your project, update that package to use the latest version:
 
 package.json
 Copypackage.json: copy code to clipboard
 {
-  "dependencies": {
--   "gatsby-plugin-image": "^2.0.0"
-+   "gatsby-plugin-image": "^3.0.0"
+"dependencies": {
+
+- "gatsby-plugin-image": "^2.0.0"
+
+* "gatsby-plugin-image": "^3.0.0"
   }
-}
-Updating community plugins
-Using community plugins, you might see warnings like these in your terminal:
+  }
+  Updating community plugins
+  Using community plugins, you might see warnings like these in your terminal:
 
 Copycopy code to clipboard
 warning Plugin gatsby-plugin-acme is not compatible with your gatsby version 5.0.0 - It requires gatsby@^4.10.0
@@ -124,21 +126,21 @@ Before:
 
 Copycopy code to clipboard
 {
-  allMarkdownRemark(sort: { fields: [frontmatter___date], order: DESC }) {
-    nodes {
-      ...fields
-    }
-  }
+allMarkdownRemark(sort: { fields: [frontmatter___date], order: DESC }) {
+nodes {
+...fields
+}
+}
 }
 After:
 
 Copycopy code to clipboard
 {
-  allMarkdownRemark(sort: { frontmatter: { date: DESC } }) {
-    nodes {
-      ...fields
-    }
-  }
+allMarkdownRemark(sort: { frontmatter: { date: DESC } }) {
+nodes {
+...fields
+}
+}
 }
 Aggregation:
 
@@ -146,17 +148,17 @@ Before:
 
 Copycopy code to clipboard
 {
-  allMarkdownRemark {
-    distinct(field: frontmatter___category)
-  }
+allMarkdownRemark {
+distinct(field: frontmatter\_\_\_category)
+}
 }
 After:
 
 Copycopy code to clipboard
 {
-  allMarkdownRemark {
-    distinct(field: { frontmatter: { category: SELECT } })
-  }
+allMarkdownRemark {
+distinct(field: { frontmatter: { category: SELECT } })
+}
 }
 trailingSlash is set to always
 In Gatsby 4 the default for the trailingSlash option was set to legacy. With Gatsby 5 the legacy option was removed and the new default is always. This means that every URL will have a trailing slash. You can configure this option in your gatsby-config file. We recommend that you explicitly define your desired trailingSlash behavior. This change will also impact your redirects so make sure that everything is consistent.
@@ -164,25 +166,27 @@ In Gatsby 4 the default for the trailingSlash option was set to legacy. With Gat
 gatsby-config.js
 Copygatsby-config.js: copy code to clipboard
 module.exports = {
-  trailingSlash: `always`,
+trailingSlash: `always`,
 }
 Removal of useNavigate hook
 We updated our @gatsbyjs/reach-router fork to be compatible with React 18 and React server components. While doing that we removed the useNavigate hook. Please use navigate instead:
 
 Copycopy code to clipboard
-- import { useNavigate } from "@gatsbyjs/reach-router"
-+ import { navigate } from "gatsby"
-Removal of obsolete flags and environment variables
-Throughout the lifecycles of Gatsby 3 & 4 we introduced a couple of feature flags to incrementally ship features to Gatsby. In Gatsby 5 we removed all feature flags and environment variables that are enabled by default. You should remove these flags from your gatsby-config as they don’t have an effect anymore (you can’t enable or disable them):
 
-QUERY_ON_DEMAND
+- import { useNavigate } from "@gatsbyjs/reach-router"
+
+* import { navigate } from "gatsby"
+  Removal of obsolete flags and environment variables
+  Throughout the lifecycles of Gatsby 3 & 4 we introduced a couple of feature flags to incrementally ship features to Gatsby. In Gatsby 5 we removed all feature flags and environment variables that are enabled by default. You should remove these flags from your gatsby-config as they don’t have an effect anymore (you can’t enable or disable them):
+
+QUERY*ON_DEMAND
 LAZY_IMAGES
 PRESERVE_WEBPACK_CACHE
 DEV_WEBPACK_CACHE
 LMDB_STORE
 PARALLEL_QUERY_RUNNING
 GRAPHQL_TYPEGEN (can be enabled through gatsby-config)
-Each of these feature flags had a corresponding environment variable (in the format of process.env.GATSBY_EXPERIMENTAL_%FLAG-NAME%). These environment variables were also removed and don’t have any effect anymore.
+Each of these feature flags had a corresponding environment variable (in the format of process.env.GATSBY_EXPERIMENTAL*%FLAG-NAME%). These environment variables were also removed and don’t have any effect anymore.
 
 shouldOnCreateNode is stable
 The previously unstable API unstable_shouldOnCreateNode was renamed to shouldOnCreateNode. It’s considered a stable API now. The functionality is identical, so only a rename will be required.
@@ -228,10 +232,9 @@ import React from "react"
 import { StaticQuery, graphql } from "gatsby"
 
 export default function Title() {
-  return (
-    <StaticQuery
-      query={graphql`
-        query {
+return (
+<StaticQuery
+query={graphql`         query {
           site {
             siteMetadata {
               title
@@ -239,9 +242,9 @@ export default function Title() {
           }
         }
       `}
-      render={data => <h1>{data.site.siteMetadata.title}</h1>}
-    />
-  )
+render={data => <h1>{data.site.siteMetadata.title}</h1>}
+/>
+)
 }
 After:
 
@@ -250,8 +253,7 @@ import React from "react"
 import { useStaticQuery, graphql } from "gatsby"
 
 export default function Title() {
-  const data = useStaticQuery(graphql`
-    query {
+const data = useStaticQuery(graphql`     query {
       site {
         siteMetadata {
           title
@@ -260,7 +262,7 @@ export default function Title() {
     }
   `)
 
-  return <h1>{data.site.siteMetadata.title}</h1>
+return <h1>{data.site.siteMetadata.title}</h1>
 }
 Page props will be unified in browser and server environments
 React 18 introduced stricter hydration errors, thrown when your server-rendered JSX and client-rendered JSX does not match.
@@ -274,13 +276,13 @@ const { location, params, data, pageContext, serverData } = props
 Effective changes in v6 will include:
 
 Remove pageResources prop currently only available in browser context (it’s an internal data structure)
-Remove * prop currently only available in server context (in favor of location prop)
+Remove \* prop currently only available in server context (in favor of location prop)
 Remove path prop that currently differs in server and browser context (in favor of location prop)
 Remove uri prop in favor of location prop
 The location prop will remain different in the browser and server context due to the router offering more properties in the browser context from window.location.
 
-___NODE convention is deprecated
-In the v3 to v4 release notes we mentioned that the ___NODE convention is deprecated. This is still the case for Gatsby 5 since we didn’t get to migrate all important plugins to the new syntax. So this syntax will continue to work in Gatsby 5, but we urge you to migrate to the @link directive. Get more information.
+***NODE convention is deprecated
+In the v3 to v4 release notes we mentioned that the ***NODE convention is deprecated. This is still the case for Gatsby 5 since we didn’t get to migrate all important plugins to the new syntax. So this syntax will continue to work in Gatsby 5, but we urge you to migrate to the @link directive. Get more information.
 
 For plugin maintainers
 In most cases, you won’t have to do anything to be v5 compatible. But one thing you can do to be certain your plugin won’t throw any warnings or errors is to set the proper peer dependencies.
@@ -292,29 +294,33 @@ gatsby should be included under peerDependencies of your plugin and it should sp
 package.json
 Copypackage.json: copy code to clipboard
 {
-  "peerDependencies": {
--   "gatsby": "^4.0.0",
-+   "gatsby": "^5.0.0",
+"peerDependencies": {
+
+- "gatsby": "^4.0.0",
+
+* "gatsby": "^5.0.0",
   }
-}
-If your plugin supports both versions:
+  }
+  If your plugin supports both versions:
 
 package.json
 Copypackage.json: copy code to clipboard
 {
-  "peerDependencies": {
--   "gatsby": "^4.0.0",
-+   "gatsby": "^4.0.0 || ^5.0.0",
+"peerDependencies": {
+
+- "gatsby": "^4.0.0",
+
+* "gatsby": "^4.0.0 || ^5.0.0",
   }
-}
-If you defined the engines key you’ll also need to update the minimum version:
+  }
+  If you defined the engines key you’ll also need to update the minimum version:
 
 package.json
 Copypackage.json: copy code to clipboard
 {
-  "engines": {
-    "node": ">=18.0.0"
-  }
+"engines": {
+"node": ">=18.0.0"
+}
 }
 Known issues
 This section is a work in progress and will be expanded when necessary. It’s a list of known issues you might run into while upgrading Gatsby to v5 and how to solve them.
@@ -326,10 +332,10 @@ Since we updated the internal graphql dependency to v16 you might run into a pro
 
 Copycopy code to clipboard
 Cannot create as TypeComposer the following value:
-  GraphQLScalarType({ name: "Date", description: "A date string, such as 2007-12-03, compliant with the
- ISO 8601 standard for representation of dates and times using the Gregorian calendar.",
+GraphQLScalarType({ name: "Date", description: "A date string, such as 2007-12-03, compliant with the
+ISO 8601 standard for representation of dates and times using the Gregorian calendar.",
 specifiedByURL: undefined, serialize: [function String], parseValue: [function String], parseLiteral:
-[function parseLiteral], extensions: {  }, astNode: undefined, extensionASTNodes: [] }).
+[function parseLiteral], extensions: { }, astNode: undefined, extensionASTNodes: [] }).
 This error (or any other similar errors) happens when you have multiple versions of graphql installed in your project. You can check this manually by running:
 
 Copycopy code to clipboard

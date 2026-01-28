@@ -75,7 +75,7 @@ type Team<T = LocalizedTextFi | LocalizedTextEn> = {
 export type FrontPageQuery<
   T extends
     | [LocalizedTextFi, LocalizedRichTextFi]
-    | [LocalizedTextEn, LocalizedRichTextEn]
+    | [LocalizedTextEn, LocalizedRichTextEn],
 > = {
   strapiPage: {
     attributes: {

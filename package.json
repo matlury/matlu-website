@@ -28,10 +28,10 @@
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
     "react-helmet": "^6.1.0",
-    "react-markdown": "^5.0.3",
+    "react-markdown": "^10.1.0",
     "react-recaptcha": "^2.3.10",
     "reaptcha": "^1.12.1",
-    "remark-gfm": "^1.0.0",
+    "remark-gfm": "^4.0.1",
     "sass": "^1.97.3"
   },
   "devDependencies": {
@@ -55,6 +55,7 @@
     "eslint-plugin-standard": "^4.1.0",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^26.6.3",
+    "prettier": "^3.8.1",
     "react-test-renderer": "^18.3.1",
     "stylelint": "^13.8.0",
     "stylelint-config-standard": "^20.0.0",
@@ -69,7 +70,7 @@
   "scripts": {
     "build": "gatsby build",
     "develop": "gatsby develop",
-    "format": "prettier --write \"**/*.{js,jsx,json,md}\"",
+    "format": "prettier --write \"**/*.{js,jsx,json,md,ts,tsx}\"",
     "start": "npm run develop",
     "serve": "gatsby serve",
     "clean": "gatsby clean",

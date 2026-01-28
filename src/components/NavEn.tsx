@@ -38,7 +38,7 @@ export const NavEn: React.FC<LocalizedNavProps> = ({
       >
         Board
       </Link>
-      {navLinks.map(navLink => (
+      {navLinks.map((navLink) => (
         <Link
           key={navLink.id}
           to={`/en/${navLink.page}/`}

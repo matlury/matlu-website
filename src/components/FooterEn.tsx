@@ -35,7 +35,7 @@ export const FooterEn: React.FC = () => (
     <div className={styles.appFooterSection}>
       <h4>Sponsored by</h4>
       <ul className={styles.matluSome}>
-        <Image imageName="loimu"/>
+        <Image imageName="loimu" />
       </ul>
     </div>
     <div className={styles.footerBottom}>&copy; 2025 Matlu ry</div>

@@ -14,7 +14,7 @@ interface ContactFormFragmentProps {
 
 const ContactFormFi: React.FC<ContactFormFragmentProps> = ({
   feedbackFormHandler,
-  reCaptchaSiteKey
+  reCaptchaSiteKey,
 }) => {
   const [verified, setVerified] = useState(false);
   const [loaded, setLoaded] = useState(false);
@@ -70,7 +70,7 @@ const ContactFormFi: React.FC<ContactFormFragmentProps> = ({
 
 const ContactFormEn: React.FC<ContactFormFragmentProps> = ({
   feedbackFormHandler,
-  reCaptchaSiteKey
+  reCaptchaSiteKey,
 }) => {
   const [verified, setVerified] = useState(false);
   const [loaded, setLoaded] = useState(false);
@@ -133,18 +133,16 @@ interface ContactFormQuery {
 }
 
 const ContactForm: React.FC<ContactFormProps> = ({ lang }) => {
-  const qry: ContactFormQuery = useStaticQuery(
-    graphql`
-      query {
-        site {
-          siteMetadata {
-            recaptchaSiteKey
-            feedbackFormHandler
-          }
+  const qry: ContactFormQuery = useStaticQuery(graphql`
+    query {
+      site {
+        siteMetadata {
+          recaptchaSiteKey
+          feedbackFormHandler
         }
       }
-    `
-  );
+    }
+  `);
   if (lang === "fi") {
     return (
       <ContactFormFi

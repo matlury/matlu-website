@@ -7,27 +7,25 @@ exports.onPostBuild = ({ reporter }) => {
 };
 exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions;
-  const result = await graphql(
-    `
-      query {
-        allStrapiPage(
-          filter: {
-            attributes: { Draft: { eq: false }, page: { nin: ["home", "board"] } }
-          }
-        ) {
-          edges {
-            node {
-              id
-              attributes {
-                page
-                HideFromSearchEngine
-              }
+  const result = await graphql(`
+    query {
+      allStrapiPage(
+        filter: {
+          attributes: { Draft: { eq: false }, page: { nin: ["home", "board"] } }
+        }
+      ) {
+        edges {
+          node {
+            id
+            attributes {
+              page
+              HideFromSearchEngine
             }
           }
         }
       }
-    `
-  );
+    }
+  `);
 
   if (result.errors) {
     throw result.errors;
@@ -37,13 +35,13 @@ exports.createPages = async ({ graphql, actions }) => {
 
   // Custom page templates
   const contactPageTemplate = require.resolve(
-    "./src/templates/ContactPageTemplate.tsx"
+    "./src/templates/ContactPageTemplate.tsx",
   );
   const eventsPageTemplate = require.resolve(
-    "./src/templates/EventsPageTemplate.tsx"
+    "./src/templates/EventsPageTemplate.tsx",
   );
   const defaultPageTemplate = require.resolve(
-    "./src/templates/PageTemplate.tsx"
+    "./src/templates/PageTemplate.tsx",
   );
 
   /**
@@ -84,35 +82,33 @@ exports.createPages = async ({ graphql, actions }) => {
     });
   });
 
-  const result2 = await graphql(
-    `
-      query {
-        allStrapiBoard(filter: { attributes: { hidden: { eq: false } } }) {
-          edges {
-            node {
-              id
-              attributes {
-                year
-              }
+  const result2 = await graphql(`
+    query {
+      allStrapiBoard(filter: { attributes: { hidden: { eq: false } } }) {
+        edges {
+          node {
+            id
+            attributes {
+              year
             }
           }
         }
       }
-    `
-  );
+    }
+  `);
 
   if (result2.errors) {
     throw result2.errors;
   }
-
   const boardData = result2.data;
+
   /** @type {number[]} */
   const boardYears = boardData.allStrapiBoard.edges.map(({ node }) =>
-    Number(node.attributes.year)
+    Number(node.attributes.year),
   );
   const latestBoard = boardYears.reduce(
     (max, year) => (year > max ? year : max),
-    0
+    0,
   );
 
   boardData.allStrapiBoard.edges.forEach(({ node }, _index) => {
@@ -165,45 +161,3 @@ exports.createPages = async ({ graphql, actions }) => {
     });
   });
 };
-
-//Breaks frontpage but otherwise good
-/*
-exports.createSchemaCustomization = ({ actions }) => {
-  const { createTypes } = actions;
-  createTypes(`
-    type StrapiDocument implements Node {
-      documentId: ID!
-      title: StrapiDocumentTitle
-      file: File
-    }
-    type StrapiDocumentTitle {
-      fi: String
-      en: String
-    }
-    type Body {
-      Fi: String
-      En: String
-      fi: String
-      en: String
-    }
-    type Title {
-      fi: String
-      en: String
-    }
-    type Description {
-      en: String
-      fi: String
-    }
-    type StrapiPage implements Node {
-      documentId: ID!
-      page: String
-      Draft: Boolean
-      HideFromSearchEngine: Boolean
-      body: Body
-      Title: Title
-      Description: Description
-      Ordering: Int
-    }
-  `);
-};
-*/

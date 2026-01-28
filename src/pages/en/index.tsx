@@ -4,6 +4,7 @@ import Layout from "../../components/Layout";
 import { graphql } from "gatsby";
 import { SEO } from "../../seo";
 import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 import {
   FrontPageQuery,
   LocalizedRichTextEn,
@@ -47,7 +48,9 @@ const FrontPageEn: React.FC<FrontPageEnProps> = ({ data }) => {
         lang="en"
         hideFromSearchEngine={data.strapiPage.attributes.HideFromSearchEngine}
       />
-      <ReactMarkdown>{data.strapiPage.attributes.body.En}</ReactMarkdown>
+      <ReactMarkdown remarkPlugins={[remarkGfm]}>
+        {data.strapiPage.attributes.body.En || ""}
+      </ReactMarkdown>
     </Layout>
   );
 };

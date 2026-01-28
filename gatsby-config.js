@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
-require('dotenv').config();
-
+require("dotenv").config();
 
 const strapiConfig = {
   version: 5, // Strapi version 4 or 5
@@ -26,7 +25,7 @@ module.exports = {
     {
       resolve: `gatsby-plugin-sitemap`,
       options: {
-        output: '/',
+        output: "/",
       },
     },
     `gatsby-plugin-sass`,

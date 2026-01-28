@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useEffect } from "react";
 
-type StrapiMessage = 
-  | { type: 'strapiUpdate' }
-  | { type: 'strapiScript'; payload: { script: string } };
+type StrapiMessage =
+  | { type: "strapiUpdate" }
+  | { type: "strapiScript"; payload: { script: string } };
 
 const LivePreview: React.FC = () => {
   useEffect(() => {
@@ -17,26 +17,26 @@ const LivePreview: React.FC = () => {
         return;
       }
 
-      if (typeof data === 'object' && data !== null && 'type' in data) {
+      if (typeof data === "object" && data !== null && "type" in data) {
         const strapiData = data as StrapiMessage;
 
-        if (strapiData.type === 'strapiUpdate') {
+        if (strapiData.type === "strapiUpdate") {
           window.location.reload();
-        } else if (strapiData.type === 'strapiScript') {
-          const script = window.document.createElement('script');
+        } else if (strapiData.type === "strapiScript") {
+          const script = window.document.createElement("script");
           script.textContent = strapiData.payload.script;
           window.document.head.appendChild(script);
         }
       }
     };
 
-    window.addEventListener('message', handleMessage);
+    window.addEventListener("message", handleMessage);
 
     // Let Strapi know we're ready to receive the script
-    window.parent?.postMessage({ type: 'previewReady' }, '*');
+    window.parent?.postMessage({ type: "previewReady" }, "*");
 
     return () => {
-      window.removeEventListener('message', handleMessage);
+      window.removeEventListener("message", handleMessage);
     };
   }, []);
 
