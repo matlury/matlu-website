@@ -1,8 +1,9 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import * as styles from "./ContactForm.module.scss";
 import { Language } from "../utils";
 import { graphql, useStaticQuery } from "gatsby";
-import Reaptcha from "reaptcha";
+import ReCAPTCHA from "react-google-recaptcha";
+
 interface ContactFormProps {
   lang: Language;
 }
@@ -18,22 +19,17 @@ const ContactFormFi: React.FC<ContactFormFragmentProps> = ({
 }) => {
   const [verified, setVerified] = useState(false);
   const [loaded, setLoaded] = useState(false);
-  const onLoad = useCallback(() => {
-    setLoaded(true);
-  }, [setLoaded]);
+  const recaptchaRef = useRef<ReCAPTCHA>(null);
 
   useEffect(() => {
     if (!reCaptchaSiteKey) {
       setVerified(true);
       setLoaded(true);
+    } else {
+      setLoaded(true);
     }
   }, [reCaptchaSiteKey]);
 
-  useEffect(() => {
-    return () => {
-      setVerified(false);
-    };
-  }, []);
   return (
     <section>
       <h1>Yhteydenottolomake</h1>
@@ -59,12 +55,16 @@ const ContactFormFi: React.FC<ContactFormFragmentProps> = ({
         </div>
         {reCaptchaSiteKey && (
           <div className={styles.contactFormGroup}>
-            <Reaptcha
+            <ReCAPTCHA
+              ref={recaptchaRef}
               sitekey={reCaptchaSiteKey}
-              onVerify={(_response) => {
-                setVerified(true);
+              onChange={(value) => {
+                if (value) {
+                  setVerified(true);
+                } else {
+                  setVerified(false);
+                }
               }}
-              onLoad={onLoad}
             />
           </div>
         )}
@@ -84,22 +84,17 @@ const ContactFormEn: React.FC<ContactFormFragmentProps> = ({
 }) => {
   const [verified, setVerified] = useState(false);
   const [loaded, setLoaded] = useState(false);
-  const onLoad = useCallback(() => {
-    setLoaded(true);
-  }, [setLoaded]);
+  const recaptchaRef = useRef<ReCAPTCHA>(null);
 
   useEffect(() => {
     if (!reCaptchaSiteKey) {
       setVerified(true);
       setLoaded(true);
+    } else {
+      setLoaded(true);
     }
   }, [reCaptchaSiteKey]);
 
-  useEffect(() => {
-    return () => {
-      setVerified(false);
-    };
-  }, []);
   return (
     <section>
       <h1>Contact form</h1>
@@ -117,6 +112,7 @@ const ContactFormEn: React.FC<ContactFormFragmentProps> = ({
           <label htmlFor="contactmsg">Message</label>
           <textarea
             id="contactmsg"
+            name="message"
             cols={80}
             rows={10}
             placeholder="Write your message..."
@@ -124,12 +120,16 @@ const ContactFormEn: React.FC<ContactFormFragmentProps> = ({
         </div>
         {reCaptchaSiteKey && (
           <div className={styles.contactFormGroup}>
-            <Reaptcha
+            <ReCAPTCHA
+              ref={recaptchaRef}
               sitekey={reCaptchaSiteKey}
-              onVerify={(_response) => {
-                setVerified(true);
+              onChange={(value) => {
+                if (value) {
+                  setVerified(true);
+                } else {
+                  setVerified(false);
+                }
               }}
-              onLoad={onLoad}
             />
           </div>
         )}
