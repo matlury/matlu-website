@@ -11,13 +11,17 @@ exports.createPages = async ({ graphql, actions }) => {
     `
       query {
         allStrapiPage(
-          filter: { Draft: { eq: false }, page: { nin: ["home", "board"] } }
+          filter: {
+            attributes: { Draft: { eq: false }, page: { nin: ["home", "board"] } }
+          }
         ) {
           edges {
             node {
               id
-              page
-              HideFromSearchEngine
+              attributes {
+                page
+                HideFromSearchEngine
+              }
             }
           }
         }
@@ -57,24 +61,25 @@ exports.createPages = async ({ graphql, actions }) => {
   };
 
   pageData.forEach(({ node }) => {
+    const { page, HideFromSearchEngine } = node.attributes;
     createPage({
-      path: `/${node.page}/`,
-      component: resolvePageTemplate(node.page),
+      path: `/${page}/`,
+      component: resolvePageTemplate(page),
       context: {
         id: node.id,
         language: "fi",
-        localizedLinks: { en: `/en/${node.page}/` },
-        hideFromSearchEngine: node.HideFromSearchEngine,
+        localizedLinks: { en: `/en/${page}/` },
+        hideFromSearchEngine: HideFromSearchEngine,
       },
     });
     createPage({
-      path: `/en/${node.page}/`,
-      component: resolvePageTemplate(node.page),
+      path: `/en/${page}/`,
+      component: resolvePageTemplate(page),
       context: {
         id: node.id,
         language: "en",
-        localizedLinks: { fi: `/${node.page}/` },
-        hideFromSearchEngine: node.HideFromSearchEngine,
+        localizedLinks: { fi: `/${page}/` },
+        hideFromSearchEngine: HideFromSearchEngine,
       },
     });
   });
@@ -82,11 +87,13 @@ exports.createPages = async ({ graphql, actions }) => {
   const result2 = await graphql(
     `
       query {
-        allStrapiBoard(filter: { hidden: { eq: false } }) {
+        allStrapiBoard(filter: { attributes: { hidden: { eq: false } } }) {
           edges {
             node {
               id
-              year
+              attributes {
+                year
+              }
             }
           }
         }
@@ -101,12 +108,16 @@ exports.createPages = async ({ graphql, actions }) => {
   const boardData = result2.data;
   /** @type {number[]} */
   const boardYears = boardData.allStrapiBoard.edges.map(({ node }) =>
-    Number(node.year)
+    Number(node.attributes.year)
   );
-  const latestBoard = boardYears.reduce((max, year) => (year > max ? year : max), 0);
+  const latestBoard = boardYears.reduce(
+    (max, year) => (year > max ? year : max),
+    0
+  );
 
   boardData.allStrapiBoard.edges.forEach(({ node }, _index) => {
-    if (node.year === latestBoard) {
+    const { year } = node.attributes;
+    if (year === latestBoard) {
       createPage({
         path: `/board/`,
         component: require.resolve("./src/templates/BoardTemplateFi.tsx"),
@@ -131,24 +142,24 @@ exports.createPages = async ({ graphql, actions }) => {
       });
     }
     createPage({
-      path: `/board/${node.year}/`,
+      path: `/board/${year}/`,
       component: require.resolve("./src/templates/BoardTemplateFi.tsx"),
       context: {
         id: node.id,
         boardYears,
         language: "fi",
-        localizedLinks: { en: `/en/board/${node.year}/` },
+        localizedLinks: { en: `/en/board/${year}/` },
         hideFromSearchEngine: false,
       },
     });
     createPage({
-      path: `/en/board/${node.year}/`,
+      path: `/en/board/${year}/`,
       component: require.resolve("./src/templates/BoardTemplateEn.tsx"),
       context: {
         id: node.id,
         boardYears,
         language: "en",
-        localizedLinks: { fi: `/board/${node.year}/` },
+        localizedLinks: { fi: `/board/${year}/` },
         hideFromSearchEngine: false,
       },
     });

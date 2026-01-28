@@ -17,7 +17,7 @@ const BoardTemplateEn: React.FC<BoardTemplateEnProps> = ({
   data,
   pageContext,
 }) => {
-  const board = data.strapiBoard;
+  const board = data.strapiBoard.attributes;
   const boardYears = pageContext.boardYears;
   return (
     <Layout language="en" localizedLinks={pageContext.localizedLinks}>
@@ -37,7 +37,7 @@ const BoardTemplateEn: React.FC<BoardTemplateEnProps> = ({
           [...board.members.sort((a, b) => a.id - b.id)].map((member) => (
             <section
               className="board-member"
-              key={`board_${board.id}_member_${member.id}`}
+              key={`board_${data.strapiBoard.id}_member_${member.id}`}
             >
               <div className="member-picture"></div>
               <div className="member-name">
@@ -112,36 +112,38 @@ export default BoardTemplateEn;
 
 export const query = graphql`
   query BoardTemplateEn($id: String) {
-    strapiBoard(id: {eq: $id}) {
-    id
-    year
-    members {
+    strapiBoard(id: { eq: $id }) {
       id
-      email
-      name
-      role {
-        en
-        id
-      }
-    }
-    officers {
-      id
-      name
-      role {
-        en
-      }
-    }
+      attributes {
+        year
+        members {
+          id
+          email
+          name
+          role {
+            en
+            id
+          }
+        }
+        officers {
+          id
+          name
+          role {
+            en
+          }
+        }
         teams {
-      id
-      title {
-        id
-        en
-      }
-      team_members {
-        id
-        name
+          id
+          title {
+            id
+            en
+          }
+          team_members {
+            id
+            name
+          }
+        }
       }
     }
-  }
   }
 `;

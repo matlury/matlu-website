@@ -5,7 +5,6 @@ export default function handler(
   res: GatsbyFunctionResponse
 ) {
   const { secret, url, status } = req.query
-  console.log(process.env.PREVIEW_SECRET)
   if (secret !== process.env.PREVIEW_SECRET) {
     return res.status(401).send("Invalid token")
   }

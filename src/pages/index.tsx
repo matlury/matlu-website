@@ -4,14 +4,14 @@ import Layout from "../components/Layout";
 import { graphql } from "gatsby";
 import { SEO } from "../seo";
 import ReactMarkdown from "react-markdown";
-import {  FrontPageQuery, LocalizedRichTextFi, LocalizedTextFi } from "../utils";
+import { FrontPageQuery, LocalizedRichTextFi, LocalizedTextFi } from "../utils";
 
 interface FrontPageFiProps {
   data: FrontPageQuery<[LocalizedTextFi, LocalizedRichTextFi]>;
 }
 
 const FrontPageFi: React.FC<FrontPageFiProps> = ({ data }) => {
-  if (data.strapiPage === null) {
+  if (!data.strapiPage) {
     return (
       <Layout
         language="fi"
@@ -28,7 +28,6 @@ const FrontPageFi: React.FC<FrontPageFiProps> = ({ data }) => {
       </Layout>
     );
   }
-  console.log(data.strapiPage);
   return (
     <Layout
       language="fi"
@@ -38,12 +37,12 @@ const FrontPageFi: React.FC<FrontPageFiProps> = ({ data }) => {
       }}
     >
       <SEO
-        title={data.strapiPage.Title.fi}
-        description={data.strapiPage.Description.fi}
+        title={data.strapiPage.attributes.Title.fi}
+        description={data.strapiPage.attributes.Description.fi}
         lang="fi"
-        hideFromSearchEngine={data.strapiPage.HideFromSearchEngine}
+        hideFromSearchEngine={data.strapiPage.attributes.HideFromSearchEngine}
       />
-      <ReactMarkdown>{data.strapiPage.body.fi.data.fi}</ReactMarkdown>
+      <ReactMarkdown>{data.strapiPage.attributes.body.Fi}</ReactMarkdown>
     </Layout>
   );
 };
@@ -52,21 +51,19 @@ export default FrontPageFi;
 
 export const query = graphql`
   query FrontPageFi {
-  strapiPage(page: {eq: "home"}) {
-    HideFromSearchEngine
-    Title {
-      fi
-    }
-    Description {
-      fi
-    }
-    body {
-      fi: Fi {
-        data {
-          fi: Fi
+    strapiPage(attributes: { page: { eq: "home" } }) {
+      attributes {
+        HideFromSearchEngine
+        Title {
+          fi
+        }
+        Description {
+          fi
+        }
+        body {
+          Fi
         }
       }
     }
-  }
   }
 `;

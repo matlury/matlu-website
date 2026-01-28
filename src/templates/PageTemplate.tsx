@@ -12,7 +12,8 @@ interface PageTemplateProps {
 }
 
 const PageTemplate: React.FC<PageTemplateProps> = ({ data, pageContext }) => {
-  const body = data.strapiPage.body[pageContext.language].data[pageContext.language];
+  const langKey = pageContext.language === "en" ? "En" : "Fi";
+  const body = data.strapiPage.attributes.body[langKey];
 
   return (
     <Layout
@@ -20,38 +21,29 @@ const PageTemplate: React.FC<PageTemplateProps> = ({ data, pageContext }) => {
       localizedLinks={pageContext.localizedLinks}
     >
       <SEO
-        title={data.strapiPage.Title[pageContext.language]}
+        title={data.strapiPage.attributes.Title[pageContext.language]}
         lang={pageContext.language}
         hideFromSearchEngine={pageContext.hideFromSearchEngine}
       />
-      <ReactMarkdown
-        plugins={[gfm]}
-        source={body}
-      />
+      <ReactMarkdown plugins={[gfm]} source={body} />
     </Layout>
   );
 };
 export default PageTemplate;
 
 export const query = graphql`
-  query($id: String!) {
+  query ($id: String!) {
     strapiPage(id: { eq: $id }) {
-      Title {
-        fi
-        en
-    }
-    body {
-      en: En {
-        data {
-          en: En
+      attributes {
+        Title {
+          fi
+          en
         }
-      } 
-      fi: Fi {
-        data {
-          fi: Fi
+        body {
+          En
+          Fi
         }
       }
     }
-  }
   }
 `;

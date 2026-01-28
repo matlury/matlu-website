@@ -18,48 +18,46 @@ interface EventsPageTemplateProps {
 const EventsPageTemplate: React.FC<EventsPageTemplateProps> = ({
   data,
   pageContext,
-}) => (
-  <Layout
-    language={pageContext.language}
-    localizedLinks={pageContext.localizedLinks}
-  >
-    <h1>
-      {pageContext.language === "fi" ? "Tulevat tapahtumat" : "Upcoming events"}
-    </h1>
-    <SEO
-      lang={pageContext.language}
-      title={data.strapiPage.Title[pageContext.language]}
-      hideFromSearchEngine={pageContext.hideFromSearchEngine}
-    />
-    <CalendarEvents language={pageContext.language} showAll />
-    <ReactMarkdown
-      plugins={[gfm]}
-      source={data.strapiPage.body[pageContext.language].data[pageContext.language]}
-    />
-  </Layout>
-);
+}) => {
+  const langKey = pageContext.language === "en" ? "En" : "Fi";
+  const body = data.strapiPage.attributes.body[langKey];
+
+  return (
+    <Layout
+      language={pageContext.language}
+      localizedLinks={pageContext.localizedLinks}
+    >
+      <h1>
+        {pageContext.language === "fi"
+          ? "Tulevat tapahtumat"
+          : "Upcoming events"}
+      </h1>
+      <SEO
+        lang={pageContext.language}
+        title={data.strapiPage.attributes.Title[pageContext.language]}
+        hideFromSearchEngine={pageContext.hideFromSearchEngine}
+      />
+      <CalendarEvents language={pageContext.language} showAll />
+      <ReactMarkdown plugins={[gfm]} source={body} />
+    </Layout>
+  );
+};
 
 export default EventsPageTemplate;
 
 export const query = graphql`
   query EventsPageTemplate($id: String) {
-      strapiPage(id: {eq: $id}) {
-    Title {
-      fi
-      en
-    }
-    body {
-      en: En {
-        data {
-          en: En
+    strapiPage(id: { eq: $id }) {
+      attributes {
+        Title {
+          fi
+          en
         }
-      } 
-      fi: Fi {
-        data {
-          fi: Fi
+        body {
+          En
+          Fi
         }
-      } 
+      }
     }
-  }
   }
 `;

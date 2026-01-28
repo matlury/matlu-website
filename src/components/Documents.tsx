@@ -7,13 +7,19 @@ import * as styles from "./Documents.module.scss";
 
 interface Document {
   node: {
-    title: {
-      fi: string;
-      en: string;
-    };
-    ordering: number;
-    file: {
-      url: string;
+    id: string;
+    attributes: {
+      title: {
+        fi: string;
+        en: string;
+      };
+      file: {
+        data: {
+          attributes: {
+            url: string;
+          };
+        };
+      };
     };
   };
 }
@@ -29,12 +35,18 @@ export const MatluDocuments: React.FC<Props> = ({ language }) => {
         edges {
           node {
             id
-            title {
-              fi
-              en
-            }
-            file {
-              url
+            attributes {
+              title {
+                fi
+                en
+              }
+              file {
+                data {
+                  attributes {
+                    url
+                  }
+                }
+              }
             }
           }
         }
@@ -45,13 +57,17 @@ export const MatluDocuments: React.FC<Props> = ({ language }) => {
   return (
     <ul className={styles.documentLinks}>
       <a href="https://drive.google.com/drive/folders/1U1VwouP1PDeHaKRWgzN_K_g3Ge-o9Y2o?usp=sharing">Pöytäkirjat</a>
-      {documents.map((document) => (
-        <li key={document.node.title[language]}>
-          <a href={document.node.file.url} target="_blank" rel="noreferrer">
-            {document.node.title[language]}
-          </a>
-        </li>
-      ))}
+        {data.allStrapiDocument.nodes.map((doc: Document) => (
+          <li key={doc.id}>
+            <a
+              href={doc.attributes.file?.data?.attributes?.url}
+              target="_blank"
+              rel="noreferrer"
+            >
+              {doc.attributes.Title}
+            </a>
+          </li>
+        ))}
     </ul>
   );
 };

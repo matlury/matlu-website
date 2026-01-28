@@ -18,45 +18,41 @@ interface ContactPageTemplateProps {
 const ContactPageTemplate: React.FC<ContactPageTemplateProps> = ({
   data,
   pageContext,
-}) => (
-  <Layout
-    language={pageContext.language}
-    localizedLinks={pageContext.localizedLinks}
-  >
-    <SEO
-      title={data.strapiPage.Title[pageContext.language]}
-      lang={pageContext.language}
-      hideFromSearchEngine={pageContext.hideFromSearchEngine}
-    />
-    <ContactForm lang={pageContext.language} />
-    <ReactMarkdown
-      plugins={[gfm]}
-      source={data.strapiPage.body[pageContext.language].data[pageContext.language]}
-    />
-  </Layout>
-);
+}) => {
+  const langKey = pageContext.language === "en" ? "En" : "Fi";
+  const body = data.strapiPage.attributes.body[langKey];
+
+  return (
+    <Layout
+      language={pageContext.language}
+      localizedLinks={pageContext.localizedLinks}
+    >
+      <SEO
+        title={data.strapiPage.attributes.Title[pageContext.language]}
+        lang={pageContext.language}
+        hideFromSearchEngine={pageContext.hideFromSearchEngine}
+      />
+      <ContactForm lang={pageContext.language} />
+      <ReactMarkdown plugins={[gfm]} source={body} />
+    </Layout>
+  );
+};
 
 export default ContactPageTemplate;
 
 export const query = graphql`
-  query($id: String!) {
+  query ($id: String!) {
     strapiPage(id: { eq: $id }) {
-      Title {
-        fi
-      en
-    }
-    body {
-      en: En {
-        data {
-          en: En
+      attributes {
+        Title {
+          fi
+          en
         }
-      } 
-      fi: Fi {
-        data {
-          fi: Fi
+        body {
+          En
+          Fi
         }
       }
     }
-  }
   }
 `;

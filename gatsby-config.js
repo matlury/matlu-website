@@ -12,6 +12,7 @@ const strapiConfig = {
 };
 
 module.exports = {
+  trailingSlash: "always",
   siteMetadata: {
     title: `Matlu ry`,
     description: `Helsingin yliopiston Matemaattis-luonnontieteellisten opiskelijajärjestöjen yhteistyöjärjestö Matlu`,
