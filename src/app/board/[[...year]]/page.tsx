@@ -7,25 +7,25 @@ import { gql } from "@apollo/client";
 import { MainLayout } from "../../../components/MainLayout";
 
 interface BoardMember {
-  documentId: string;
+  id: string;
   name: string;
   email: string | null;
   role: { fi: string; en: string };
 }
 
 interface Officer {
-  documentId: string;
+  id: string;
   name: string;
   role: { fi: string; en: string };
 }
 
 interface TeamMember {
-  documentId: string;
+  id: string;
   name: string;
 }
 
 interface Team {
-  documentId: string;
+  id: string;
   title: { fi: string; en: string };
   team_members: TeamMember[];
 }
@@ -52,7 +52,7 @@ const BOARD_QUERY = gql`
       documentId
       year
       members {
-        documentId
+        id
         email
         name
         role {
@@ -61,7 +61,7 @@ const BOARD_QUERY = gql`
         }
       }
       officers {
-        documentId
+        id
         name
         role {
           fi
@@ -69,13 +69,13 @@ const BOARD_QUERY = gql`
         }
       }
       teams {
-        documentId
+        id
         title {
           fi
           en
         }
         team_members {
-          documentId
+          id
           name
         }
       }
@@ -164,7 +164,10 @@ export default async function BoardPage({
 
   if (!board || !board.documentId) {
     return (
-      <MainLayout lang={lang} localizedLinks={{ fi: "/board/", en: "/en/board/" }}>
+      <MainLayout
+        lang={lang}
+        localizedLinks={{ fi: "/board/", en: "/en/board/" }}
+      >
         <div>Hallitusta ei löytynyt</div>
       </MainLayout>
     );
@@ -187,11 +190,11 @@ export default async function BoardPage({
       <div className="board-members">
         {board.members !== null &&
           [...(board.members || [])]
-            .sort((a, b) => (a.documentId || "").localeCompare(b.documentId || ""))
+            .sort((a, b) => (a.id || "").localeCompare(b.id || ""))
             .map((member) => (
               <section
                 className="board-member"
-                key={`board_${board.documentId}_member_${member.documentId}`}
+                key={`board_${board.documentId}_member_${member.id}`}
               >
                 <div className="member-picture"></div>
                 <div className="member-name">
@@ -206,41 +209,44 @@ export default async function BoardPage({
               </section>
             ))}
       </div>
-      {board.officers !== null &&
-        (board.officers || []).length > 0 && (
-          <section>
-            <h2>Virkailijat {board.year}</h2>
-            <div className="officers">
-              {[...(board.officers || [])]
-                .sort((a, b) => (a.documentId || "").localeCompare(b.documentId || ""))
-                .map((officer) => (
-                  <section
-                    className="officer"
-                    key={`${officer.documentId}_officer_${officer.name}`}
-                  >
-                    <div className="officer-picture"></div>
-                    <div className="officer-name">
-                      <h4>{officer.name}</h4>
-                    </div>
-                    <div className="officer-title">{(officer.role as any)[lang]}</div>
-                  </section>
-                ))}
-            </div>
-          </section>
-        )}
+      {board.officers !== null && (board.officers || []).length > 0 && (
+        <section>
+          <h2>Virkailijat {board.year}</h2>
+          <div className="officers">
+            {[...(board.officers || [])]
+              .sort((a, b) => (a.id || "").localeCompare(b.id || ""))
+              .map((officer) => (
+                <section
+                  className="officer"
+                  key={`${officer.id}_officer_${officer.name}`}
+                >
+                  <div className="officer-picture"></div>
+                  <div className="officer-name">
+                    <h4>{officer.name}</h4>
+                  </div>
+                  <div className="officer-title">
+                    {(officer.role as any)[lang]}
+                  </div>
+                </section>
+              ))}
+          </div>
+        </section>
+      )}
       {board.teams !== null &&
         (board.teams || []).length > 0 &&
         [...(board.teams || [])]
-          .sort((a, b) => (board.documentId || "").localeCompare(board.documentId || ""))
+          .sort((a, b) => (a.id || "").localeCompare(b.id || ""))
           .map((team) => (
-            <section className="team" key={team.documentId}>
+            <section className="team" key={team.id}>
               <h2>{(team.title as any)[lang]}</h2>
               <ul>
                 {[...(team.team_members || [])]
                   .filter((member) => member.name !== null)
                   .sort((a, b) => (a.name || "").localeCompare(b.name || ""))
                   .map((member) => (
-                    <li key={`${team.documentId}_member_${member.documentId}`}>{member.name}</li>
+                    <li key={`${team.id}_member_${member.id}`}>
+                      {member.name}
+                    </li>
                   ))}
               </ul>
             </section>
@@ -251,11 +257,7 @@ export default async function BoardPage({
           <ul>
             {boardYears.map((boardYear) => (
               <li key={`boardyear_${boardYear}_fi`}>
-                <Link
-                  href={`/board/${boardYear}/`}
-                >
-                  {boardYear}
-                </Link>
+                <Link href={`/board/${boardYear}/`}>{boardYear}</Link>
               </li>
             ))}
           </ul>

@@ -3,7 +3,6 @@ import Image from "./image";
 import { Language } from "../utils";
 import { MatluDocuments } from "./Documents";
 
-
 interface LocalizedFooterProps {
   language: Language;
 }
@@ -45,6 +44,8 @@ export const FooterFi: React.FC<LocalizedFooterProps> = ({ language }) => (
         <Image imageName="loimu" />
       </ul>
     </div>
-    <div className={styles.footerBottom}>&copy; {new Date().getFullYear()} Matlu ry</div>
+    <div className={styles.footerBottom}>
+      &copy; {new Date().getFullYear()} Matlu ry
+    </div>
   </footer>
 );

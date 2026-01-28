@@ -19,12 +19,27 @@ interface LocalizedNavProps {
   }[];
 }
 
-const NavLink = ({ href, children, partiallyActive = false, className = styles.navLink }: { href: string, children: React.ReactNode, partiallyActive?: boolean, className?: string }) => {
+const NavLink = ({
+  href,
+  children,
+  partiallyActive = false,
+  className = styles.navLink,
+}: {
+  href: string;
+  children: React.ReactNode;
+  partiallyActive?: boolean;
+  className?: string;
+}) => {
   const pathname = usePathname();
-  const isActive = partiallyActive ? pathname.startsWith(href) : pathname === href;
+  const isActive = partiallyActive
+    ? pathname.startsWith(href)
+    : pathname === href;
 
   return (
-    <Link href={href} className={`${className} ${isActive ? "active-navlink" : ""}`}>
+    <Link
+      href={href}
+      className={`${className} ${isActive ? "active-navlink" : ""}`}
+    >
       {children}
     </Link>
   );
@@ -36,9 +51,7 @@ export const NavEn: React.FC<LocalizedNavProps> = ({
 }) => {
   return (
     <nav className={styles.nav}>
-      <NavLink href={`/en/`}>
-        Matlu
-      </NavLink>
+      <NavLink href={`/en/`}>Matlu</NavLink>
       <NavLink href={`/en/board/`} partiallyActive={true}>
         Board
       </NavLink>
@@ -59,7 +72,10 @@ export const NavEn: React.FC<LocalizedNavProps> = ({
       >
         <i className="fas fa-external-link-alt"></i> Matlu Klusteri
       </a>
-      <Link href={localizedLinks.fi.replace(/^\/en/, "") || "/"} className={styles.navLink}>
+      <Link
+        href={localizedLinks.fi.replace(/^\/en/, "") || "/"}
+        className={styles.navLink}
+      >
         Suomeksi
       </Link>
     </nav>

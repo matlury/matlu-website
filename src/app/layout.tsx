@@ -1,6 +1,13 @@
 import React from "react";
 import "../style.scss"; // Global styles
 import { Metadata, Viewport } from "next";
+import { Open_Sans } from "next/font/google";
+
+const openSans = Open_Sans({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-open-sans",
+});
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -35,18 +42,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="fi">
+    <html lang="fi" className={openSans.variable}>
       <head>
-        <link
-          key="google-fonts"
-          href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700&display=swap"
-          rel="stylesheet"
-        />
         <link key="all-css" href="/css/all.css" rel="stylesheet" />
       </head>
-      <body>
-        {children}
-      </body>
+      <body className={openSans.className}>{children}</body>
     </html>
   );
 }

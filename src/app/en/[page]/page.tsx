@@ -51,7 +51,9 @@ const DYNAMIC_PAGE_QUERY = gql`
 
 const ALL_PAGES_QUERY = gql`
   query AllPagesQuery {
-    pages(filters: { Draft: { eq: false }, page: { notIn: ["home", "board"] } }) {
+    pages(
+      filters: { Draft: { eq: false }, page: { notIn: ["home", "board"] } }
+    ) {
       documentId
       page
     }
@@ -101,9 +103,14 @@ export async function generateMetadata({
   return {
     title: `${title} | Matlu ry`,
     description: description,
-    robots: page.HideFromSearchEngine
-      ? "noindex, nofollow"
-      : "index, follow",
+    alternates: {
+      canonical: `/en/${pageSlug}`,
+      languages: {
+        fi: `/${pageSlug}`,
+        en: `/en/${pageSlug}`,
+      },
+    },
+    robots: page.HideFromSearchEngine ? "noindex, nofollow" : "index, follow",
     openGraph: {
       title: title,
       description: description,
@@ -146,9 +153,7 @@ export default async function DynamicPage({
 
   return (
     <MainLayout lang={lang} localizedLinks={localizedLinks}>
-      {isEventsPage && (
-        <h1>Upcoming events</h1>
-      )}
+      {isEventsPage && <h1>Upcoming events</h1>}
       {isEventsPage && <CalendarEvents language={lang} showAll />}
       {isContactPage && <ContactForm lang={lang} />}
       <ReactMarkdown remarkPlugins={[remarkGfm]}>{body}</ReactMarkdown>

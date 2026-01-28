@@ -13,7 +13,12 @@ interface MainLayoutProps {
   localizedLinks?: LocalizedLink;
 }
 
-export const MainLayout = ({ children, lang, hideNav = false, localizedLinks }: MainLayoutProps) => {
+export const MainLayout = ({
+  children,
+  lang,
+  hideNav = false,
+  localizedLinks,
+}: MainLayoutProps) => {
   const defaultLocalizedLinks = localizedLinks || {
     fi: "/",
     en: "/en/",
@@ -24,7 +29,9 @@ export const MainLayout = ({ children, lang, hideNav = false, localizedLinks }: 
       <div className={logoStyles.logoWrapper}>
         <Image imageName="matlu" />
       </div>
-      {!hideNav && <Nav language={lang} localizedLinks={defaultLocalizedLinks} />}
+      {!hideNav && (
+        <Nav language={lang} localizedLinks={defaultLocalizedLinks} />
+      )}
       <div className={styles.wrapper}>
         <article>{children}</article>
         <Footer language={lang} />

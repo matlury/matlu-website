@@ -1,8 +1,18 @@
-import { ApolloClient, InMemoryCache, HttpLink, NormalizedCacheObject, DocumentNode, ApolloQueryResult } from "@apollo/client";
+import {
+  ApolloClient,
+  InMemoryCache,
+  HttpLink,
+  NormalizedCacheObject,
+  DocumentNode,
+  ApolloQueryResult,
+} from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
 import { onError } from "@apollo/client/link/error";
 
-const STRAPI_URL = (process.env.API_URL || "http://localhost:1337").replace(/\/$/, "");
+const STRAPI_URL = (process.env.API_URL || "http://localhost:1337").replace(
+  /\/$/,
+  "",
+);
 const STRAPI_GRAPHQL_URL = `${STRAPI_URL}/graphql`;
 const STRAPI_TOKEN = process.env.ACCESS_TOKEN;
 
@@ -38,7 +48,10 @@ const client = new ApolloClient({
   ssrMode: typeof window === "undefined", // Set to true for SSR
 });
 
-export async function fetchGraphQL<T>(query: DocumentNode, variables?: Record<string, any>) {
+export async function fetchGraphQL<T>(
+  query: DocumentNode,
+  variables?: Record<string, any>,
+) {
   return client.query<T>({
     query,
     variables,

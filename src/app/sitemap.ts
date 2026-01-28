@@ -82,9 +82,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ]);
 
   // Special handling for the main board page (latest)
-  const latestBoard = (boardsResult.data?.boards || []).find(
-    (b) => !b.hidden,
-  );
+  const latestBoard = (boardsResult.data?.boards || []).find((b) => !b.hidden);
 
   const mainBoardPages = latestBoard
     ? [

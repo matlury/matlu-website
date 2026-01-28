@@ -42,6 +42,8 @@ export const FooterEn: React.FC<LocalizedFooterProps> = ({ language }) => (
         <Image imageName="loimu" />
       </ul>
     </div>
-    <div className={styles.footerBottom}>&copy; {new Date().getFullYear()} Matlu ry</div>
+    <div className={styles.footerBottom}>
+      &copy; {new Date().getFullYear()} Matlu ry
+    </div>
   </footer>
 );

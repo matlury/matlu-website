@@ -9,8 +9,10 @@ interface ContactFormProps {
   lang: Language;
 }
 
-const RECAPTCHA_SITE_KEY = process.env.NEXT_PUBLIC_GATSBY_RECAPTCHA_SITE_KEY || "";
-const FEEDBACK_FORM_HANDLER = process.env.NEXT_PUBLIC_FEEDBACK_FORM_HANDLER_URL || "";
+const RECAPTCHA_SITE_KEY =
+  process.env.NEXT_PUBLIC_GATSBY_RECAPTCHA_SITE_KEY || "";
+const FEEDBACK_FORM_HANDLER =
+  process.env.NEXT_PUBLIC_FEEDBACK_FORM_HANDLER_URL || "";
 
 export const ContactForm: React.FC<ContactFormProps> = ({ lang }) => {
   const [verified, setVerified] = useState(false);
@@ -40,9 +42,9 @@ export const ContactForm: React.FC<ContactFormProps> = ({ lang }) => {
           </>
         ) : (
           <>
-            The contact form is anonymous, and will be sent to the board of Matlu
-            via email. Optionally, you can choose to leave your contact information,
-            if you want an answer to your contact request.
+            The contact form is anonymous, and will be sent to the board of
+            Matlu via email. Optionally, you can choose to leave your contact
+            information, if you want an answer to your contact request.
           </>
         )}
       </p>
@@ -58,7 +60,9 @@ export const ContactForm: React.FC<ContactFormProps> = ({ lang }) => {
             name="message"
             cols={80}
             rows={10}
-            placeholder={isFi ? "Kirjoita viestisi..." : "Write your message..."}
+            placeholder={
+              isFi ? "Kirjoita viestisi..." : "Write your message..."
+            }
           />
         </div>
         {RECAPTCHA_SITE_KEY && (

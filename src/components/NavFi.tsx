@@ -19,12 +19,27 @@ interface LocalizedNavProps {
   }[];
 }
 
-const NavLink = ({ href, children, partiallyActive = false, className = styles.navLink }: { href: string, children: React.ReactNode, partiallyActive?: boolean, className?: string }) => {
+const NavLink = ({
+  href,
+  children,
+  partiallyActive = false,
+  className = styles.navLink,
+}: {
+  href: string;
+  children: React.ReactNode;
+  partiallyActive?: boolean;
+  className?: string;
+}) => {
   const pathname = usePathname();
-  const isActive = partiallyActive ? pathname.startsWith(href) : pathname === href;
+  const isActive = partiallyActive
+    ? pathname.startsWith(href)
+    : pathname === href;
 
   return (
-    <Link href={href} className={`${className} ${isActive ? "active-navlink" : ""}`}>
+    <Link
+      href={href}
+      className={`${className} ${isActive ? "active-navlink" : ""}`}
+    >
       {children}
     </Link>
   );
@@ -36,9 +51,7 @@ export const NavFi: React.FC<LocalizedNavProps> = ({
 }) => {
   return (
     <nav className={styles.nav}>
-      <NavLink href={`/`}>
-        Matlu
-      </NavLink>
+      <NavLink href={`/`}>Matlu</NavLink>
       <NavLink href={`/board/`} partiallyActive={true}>
         Hallitus
       </NavLink>
@@ -51,7 +64,7 @@ export const NavFi: React.FC<LocalizedNavProps> = ({
           >
             {navLink.Title.fi}
           </NavLink>
-        )
+        );
       })}
       <a
         className={styles.navLink}
@@ -61,7 +74,14 @@ export const NavFi: React.FC<LocalizedNavProps> = ({
       >
         <i className="fas fa-external-link-alt"></i> Matlu Klusteri
       </a>
-      <Link href={localizedLinks.en.startsWith("/en") ? localizedLinks.en : `/en${localizedLinks.en === "/" ? "/" : localizedLinks.en}`} className={styles.navLink}>
+      <Link
+        href={
+          localizedLinks.en.startsWith("/en")
+            ? localizedLinks.en
+            : `/en${localizedLinks.en === "/" ? "/" : localizedLinks.en}`
+        }
+        className={styles.navLink}
+      >
         In english
       </Link>
     </nav>

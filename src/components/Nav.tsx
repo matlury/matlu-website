@@ -24,7 +24,10 @@ interface NavQueryResult {
 
 const NAV_QUERY = gql`
   query NavQuery {
-    pages(filters: { Draft: { eq: false }, page: { notIn: ["home", "board"] } }, sort: "Ordering:asc") {
+    pages(
+      filters: { Draft: { eq: false }, page: { notIn: ["home", "board"] } }
+      sort: "Ordering:asc"
+    ) {
       documentId
       page
       Ordering

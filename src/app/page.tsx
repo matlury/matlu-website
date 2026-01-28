@@ -69,9 +69,14 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     title: `${title} | Matlu ry`,
     description: description,
-    robots: page.HideFromSearchEngine
-      ? "noindex, nofollow"
-      : "index, follow",
+    alternates: {
+      canonical: "/",
+      languages: {
+        fi: "/",
+        en: "/en",
+      },
+    },
+    robots: page.HideFromSearchEngine ? "noindex, nofollow" : "index, follow",
     openGraph: {
       title: title,
       description: description,

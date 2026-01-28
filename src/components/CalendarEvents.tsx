@@ -55,7 +55,12 @@ const CalendarEvents = async ({
     CALENDAR_EVENTS_QUERY,
   );
 
-  if (!data?.calendarEvents) return <div>{language === "fi" ? "Ei tulevia tapahtumia." : "No upcoming events."}</div>;
+  if (!data?.calendarEvents)
+    return (
+      <div>
+        {language === "fi" ? "Ei tulevia tapahtumia." : "No upcoming events."}
+      </div>
+    );
 
   const allEvents = data.calendarEvents.map((node) => ({
     id: node.documentId,

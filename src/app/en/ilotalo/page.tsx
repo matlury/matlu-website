@@ -29,7 +29,11 @@ export default function IlotaloPage() {
       <h1>Matlu Klusteri booking calendar</h1>
       <p>
         Go to Matlu Klusteri booking calendar from this link:{" "}
-        <Link href="https://ilotalo.matlu.fi" target="_blank" rel="noopener noreferrer">
+        <Link
+          href="https://ilotalo.matlu.fi"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           https://ilotalo.matlu.fi
         </Link>
         .
