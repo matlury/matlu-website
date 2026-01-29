@@ -65,5 +65,8 @@
     "matlu",
     "matlufi"
   ],
-  "license": "MIT"
+  "license": "MIT",
+  "engines": {
+    "node": ">=20.9.0 <25"
+  }
 }
