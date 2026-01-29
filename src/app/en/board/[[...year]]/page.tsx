@@ -1,9 +1,8 @@
 import React from "react";
 import Link from "next/link";
-import { fetchGraphQL } from "../../../../lib/strapi";
+import { fetchStrapi } from "../../../../lib/strapi";
 import { Language } from "../../../../utils";
 import { Metadata } from "next";
-import { gql } from "@apollo/client";
 import { MainLayout } from "../../../../components/MainLayout";
 
 interface BoardMember {
@@ -40,70 +39,35 @@ interface BoardNode {
 }
 
 interface BoardQueryResult {
-  boards: BoardNode[];
+  data: BoardNode[];
+  meta: any;
 }
 
-const BOARD_QUERY = gql`
-  query BoardQuery($year: Int) {
-    boards(
-      filters: { hidden: { eq: false }, year: { eq: $year } }
-      sort: "year:desc"
-    ) {
-      documentId
-      year
-      members {
-        id
-        email
-        name
-        role {
-          fi
-          en
-        }
-      }
-      officers {
-        id
-        name
-        role {
-          fi
-          en
-        }
-      }
-      teams {
-        id
-        title {
-          fi
-          en
-        }
-        team_members {
-          id
-          name
-        }
-      }
-      hidden
-    }
-  }
-`;
+const ALL_BOARD_YEARS_QUERY = {
+  filters: { hidden: { $eq: false } },
+  sort: "year:desc",
+  fields: ["documentId", "year"]
+};
 
-const ALL_BOARD_YEARS_QUERY = gql`
-  query AllBoardYearsQuery {
-    boards(filters: { hidden: { eq: false } }, sort: "year:desc") {
-      documentId
-      year
-    }
-  }
-`;
-
-async function getBoardData(year?: number) {
-  const variables = year ? { year } : {};
-  const { data } = await fetchGraphQL<BoardQueryResult>(BOARD_QUERY, variables);
-  if (!data?.boards || data.boards.length === 0) return null;
-  return data.boards[0];
+async function getBoardData(_year?: number) {
+  // For testing purposes, fetch only 2026 board
+  const filters: any = { hidden: { $eq: false }, year: { $eq: 2026 } };
+  const queryParams = {
+    filters,
+    sort: "year:desc",
+    populate: "*"
+  };
+  const result = await fetchStrapi<BoardQueryResult>("boards", queryParams);
+  console.log("getBoardData (en) result:", JSON.stringify(result, null, 2));
+  if (!result?.data || result.data.length === 0) return null;
+  return result.data[0];
 }
 
 async function getAllBoardYears(): Promise<number[]> {
-  const { data } = await fetchGraphQL<BoardQueryResult>(ALL_BOARD_YEARS_QUERY);
-  if (!data?.boards) return [];
-  return data.boards.map((board) => board.year);
+  const result = await fetchStrapi<BoardQueryResult>("boards", ALL_BOARD_YEARS_QUERY);
+  console.log("getAllBoardYears (en) result:", JSON.stringify(result, null, 2));
+  if (!result?.data) return [];
+  return result.data.map((board: BoardNode) => board.year);
 }
 
 export async function generateStaticParams() {
@@ -190,7 +154,7 @@ export default async function BoardPage({
       <div className="board-members">
         {board.members !== null &&
           [...(board.members || [])]
-            .sort((a, b) => (a.id || "").localeCompare(b.id || ""))
+            .sort((a, b) => String(a.id || "").localeCompare(String(b.id || "")))
             .map((member) => (
               <section
                 className="board-member"
@@ -214,7 +178,7 @@ export default async function BoardPage({
           <h2>Officials of {board.year}</h2>
           <div className="officers">
             {[...(board.officers || [])]
-              .sort((a, b) => (a.id || "").localeCompare(b.id || ""))
+              .sort((a, b) => String(a.id || "").localeCompare(String(b.id || "")))
               .map((officer) => (
                 <section
                   className="officer"
@@ -235,7 +199,7 @@ export default async function BoardPage({
       {board.teams !== null &&
         (board.teams || []).length > 0 &&
         [...(board.teams || [])]
-          .sort((a, b) => (a.id || "").localeCompare(b.id || ""))
+          .sort((a, b) => String(a.id || "").localeCompare(String(b.id || "")))
           .map((team) => (
             <section className="team" key={team.id}>
               <h2>{(team.title as any)[lang]}</h2>

@@ -39,6 +39,7 @@ const NavLink = ({
     <Link
       href={href}
       className={`${className} ${isActive ? "active-navlink" : ""}`}
+      prefetch={false}
     >
       {children}
     </Link>

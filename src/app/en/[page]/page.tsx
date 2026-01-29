@@ -1,12 +1,10 @@
 import React from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import { fetchGraphQL } from "../../../lib/strapi";
-import { Language } from "../../../utils";
+import { fetchStrapi } from "../../../lib/strapi";
 import { Metadata } from "next";
 import CalendarEvents from "../../../components/CalendarEvents";
 import ContactForm from "../../../components/ContactForm";
-import { gql } from "@apollo/client";
 import { MainLayout } from "../../../components/MainLayout";
 
 interface PageData {
@@ -23,58 +21,31 @@ interface PageData {
 }
 
 interface DynamicPageQueryResult {
-  pages: PageData[];
+  data: PageData[];
+  meta: any;
 }
 
-const DYNAMIC_PAGE_QUERY = gql`
-  query DynamicPageQuery($pageSlug: String!) {
-    pages(filters: { page: { eq: $pageSlug }, Draft: { eq: false } }) {
-      documentId
-      page
-      Title {
-        fi
-        en
-      }
-      Description {
-        fi
-        en
-      }
-      body {
-        Fi
-        En
-      }
-      HideFromSearchEngine
-      Draft
-    }
-  }
-`;
-
-const ALL_PAGES_QUERY = gql`
-  query AllPagesQuery {
-    pages(
-      filters: { Draft: { eq: false }, page: { notIn: ["home", "board"] } }
-    ) {
-      documentId
-      page
-    }
-  }
-`;
+const ALL_PAGES_QUERY = {
+  filters: { Draft: { $eq: false }, page: { $notIn: ["home", "board"] } },
+  fields: ["documentId", "page"]
+};
 
 async function getPageData(pageSlug: string) {
-  const { data } = await fetchGraphQL<DynamicPageQueryResult>(
-    DYNAMIC_PAGE_QUERY,
-    { pageSlug },
-  );
-  if (!data?.pages || data.pages.length === 0) return null;
-  return data.pages[0];
+  const queryParams = {
+    filters: { page: { $eq: pageSlug }, Draft: { $eq: false } },
+    populate: "*"
+  };
+  const result = await fetchStrapi<DynamicPageQueryResult>("pages", queryParams);
+  if (!result?.data || result.data.length === 0) return null;
+  return result.data[0];
 }
 
 export async function generateStaticParams() {
-  const { data } = await fetchGraphQL<DynamicPageQueryResult>(ALL_PAGES_QUERY);
+  const result = await fetchStrapi<DynamicPageQueryResult>("pages", ALL_PAGES_QUERY);
 
   const params: Array<{ page: string }> = [];
-  if (data?.pages) {
-    data.pages.forEach((page) => {
+  if (result?.data) {
+    result.data.forEach((page: PageData) => {
       if (page.page) {
         params.push({ page: page.page });
       }
