@@ -134,6 +134,9 @@ const DynamicPage = async ({ params }: DynamicPageProps) => {
       {isEventsPage && <CalendarEvents language={lang} showAll />}
       {isContactPage && <ContactForm lang={lang} />}
       <ReactMarkdown remarkPlugins={[remarkGfm]}>{body}</ReactMarkdown>
+
     </MainLayout>
   );
 };
+
+export default DynamicPage;
