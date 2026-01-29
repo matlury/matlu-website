@@ -52,7 +52,7 @@
     "eslint-plugin-react": "^7.21.5",
     "eslint-plugin-standard": "^4.1.0",
     "identity-obj-proxy": "^3.0.0",
-    "jest": "^26.6.3",
+    "jest": "^30.2.0",
     "prettier": "^3.8.1",
     "react-test-renderer": "^19.2.4",
     "sass-embedded": "^1.97.3",
