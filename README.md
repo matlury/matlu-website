@@ -3,6 +3,7 @@
 This is the official website for Matlu ry, built with Next.js, TypeScript, and Strapi CMS.
 
 ## Table of Contents
+
 - [Features](#features)
 - [Getting Started](#getting-started)
 - [Development](#development)
@@ -16,6 +17,7 @@ This is the official website for Matlu ry, built with Next.js, TypeScript, and S
 ---
 
 ## Features
+
 - Next.js App Router (app/ directory)
 - TypeScript throughout the codebase
 - Static export (`output: "export"` in next.config.ts)
@@ -28,25 +30,31 @@ This is the official website for Matlu ry, built with Next.js, TypeScript, and S
 ## Getting Started
 
 ### Prerequisites
+
 - Node.js 20.9+
 - npm 9+
 
 ### Install dependencies
+
 ```bash
 npm install
 ```
 
 ### Configure Environment Variables
+
 Create a `.env.local` file in the project root:
+
 ```
 SITE_URL=http://localhost:3000
 STRAPI_URL=http://localhost:1337
 ```
+
 Adjust these as needed for your environment.
 
 ## Development
 
 Start the development server:
+
 ```bash
 npm run dev
 ```
@@ -58,14 +66,17 @@ npm run dev
 ## Static Export
 
 To generate a static export (for Netlify, GitHub Pages, etc):
+
 ```bash
 npm run build
 ```
+
 The output will be in the `out/` directory.
 
 ## Testing
 
 Run all tests:
+
 ```bash
 npm test
 ```
@@ -74,15 +85,19 @@ npm test
 - TypeScript is fully supported in tests
 
 ## Environment Variables
+
 - `SITE_URL`: The base URL for sitemap and canonical links
 - `STRAPI_URL`: The base URL for Strapi API (REST/GraphQL)
 
 ## Image Optimization
+
 - Next.js image optimization is configured for both local and production Strapi uploads
 - Update `next.config.ts` to add your production Strapi URL when deploying
 
 ## Deployment
+
 - The site is designed for static hosting (current hosting donee in S3 bucket)
 
 ## License
+
 MIT

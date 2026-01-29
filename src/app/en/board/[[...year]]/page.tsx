@@ -51,7 +51,7 @@ interface BoardQueryResult {
 const ALL_BOARD_YEARS_QUERY = {
   filters: { hidden: { $eq: false } },
   sort: "year:desc",
-  fields: ["documentId", "year"]
+  fields: ["documentId", "year"],
 };
 
 interface StrapiFilters {
@@ -61,11 +61,14 @@ interface StrapiFilters {
 
 async function getBoardData(_year?: number) {
   // For testing purposes, fetch only 2026 board
-  const filters: StrapiFilters = { hidden: { $eq: false }, year: { $eq: 2026 } };
+  const filters: StrapiFilters = {
+    hidden: { $eq: false },
+    year: { $eq: 2026 },
+  };
   const queryParams = {
     filters,
     sort: "year:desc",
-    populate: "*"
+    populate: "*",
   };
   const result = await fetchStrapi<BoardQueryResult>("boards", queryParams);
   console.log("getBoardData (en) result:", JSON.stringify(result, null, 2));
@@ -74,7 +77,10 @@ async function getBoardData(_year?: number) {
 }
 
 async function getAllBoardYears(): Promise<number[]> {
-  const result = await fetchStrapi<BoardQueryResult>("boards", ALL_BOARD_YEARS_QUERY);
+  const result = await fetchStrapi<BoardQueryResult>(
+    "boards",
+    ALL_BOARD_YEARS_QUERY,
+  );
   console.log("getAllBoardYears (en) result:", JSON.stringify(result, null, 2));
   if (!result?.data) return [];
   return result.data.map((board: BoardNode) => board.year);
@@ -163,7 +169,9 @@ export default async function BoardPage({
       <div className="board-members">
         {board.members !== null &&
           [...(board.members || [])]
-            .sort((a, b) => String(a.id || "").localeCompare(String(b.id || "")))
+            .sort((a, b) =>
+              String(a.id || "").localeCompare(String(b.id || "")),
+            )
             .map((member) => (
               <section
                 className="board-member"
@@ -187,7 +195,9 @@ export default async function BoardPage({
           <h2>Officials of {board.year}</h2>
           <div className="officers">
             {[...(board.officers || [])]
-              .sort((a, b) => String(a.id || "").localeCompare(String(b.id || "")))
+              .sort((a, b) =>
+                String(a.id || "").localeCompare(String(b.id || "")),
+              )
               .map((officer) => (
                 <section
                   className="officer"
@@ -197,9 +207,7 @@ export default async function BoardPage({
                   <div className="officer-name">
                     <h4>{officer.name}</h4>
                   </div>
-                  <div className="officer-title">
-                    {officer.role.en}
-                  </div>
+                  <div className="officer-title">{officer.role.en}</div>
                 </section>
               ))}
           </div>

@@ -88,19 +88,19 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const mainBoardPages = latestBoard
     ? [
-      {
-        url: `${SITE_URL}/fi/board`,
-        lastModified: new Date(),
-        changeFrequency: "weekly" as const,
-        priority: 0.8,
-      },
-      {
-        url: `${SITE_URL}/en/board`,
-        lastModified: new Date(),
-        changeFrequency: "weekly" as const,
-        priority: 0.8,
-      },
-    ]
+        {
+          url: `${SITE_URL}/fi/board`,
+          lastModified: new Date(),
+          changeFrequency: "weekly" as const,
+          priority: 0.8,
+        },
+        {
+          url: `${SITE_URL}/en/board`,
+          lastModified: new Date(),
+          changeFrequency: "weekly" as const,
+          priority: 0.8,
+        },
+      ]
     : [];
 
   return [

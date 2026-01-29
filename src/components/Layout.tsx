@@ -1,8 +1,8 @@
 import React, { PropsWithChildren } from "react";
 
 import "../style.scss";
-import * as styles from "./Layout.module.scss";
-import * as logoStyles from "./LogoWrapper.module.scss";
+import styles from "./Layout.module.scss";
+import logoStyles from "./LogoWrapper.module.scss";
 import { Nav } from "./Nav";
 import { Language, LocalizedLink } from "../utils";
 import { Footer } from "./Footer";
@@ -22,11 +22,11 @@ const Layout: React.FC<PropsWithChildren<LayoutProps>> = ({
   return (
     <>
       <LivePreview />
-      <div className={(logoStyles as any).logoWrapper}>
+      <div className={logoStyles.logoWrapper}>
         <Image imageName="matlu" />
       </div>
       <Nav language={language} localizedLinks={localizedLinks} />
-      <div className={(styles as any).wrapper}>
+      <div className={styles.wrapper}>
         <article>{children}</article>
         <Footer language={language} />
       </div>

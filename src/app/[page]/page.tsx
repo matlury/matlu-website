@@ -27,21 +27,27 @@ interface DynamicPageQueryResult {
 
 const ALL_PAGES_QUERY = {
   filters: { Draft: { $eq: false }, page: { $notIn: ["home", "board"] } },
-  fields: ["documentId", "page"]
+  fields: ["documentId", "page"],
 };
 
 async function getPageData(pageSlug: string) {
   const queryParams = {
     filters: { page: { $eq: pageSlug }, Draft: { $eq: false } },
-    populate: "*"
+    populate: "*",
   };
-  const result = await fetchStrapi<DynamicPageQueryResult>("pages", queryParams);
+  const result = await fetchStrapi<DynamicPageQueryResult>(
+    "pages",
+    queryParams,
+  );
   if (!result?.data || result.data.length === 0) return null;
   return result.data[0];
 }
 
 export async function generateStaticParams() {
-  const result = await fetchStrapi<DynamicPageQueryResult>("pages", ALL_PAGES_QUERY);
+  const result = await fetchStrapi<DynamicPageQueryResult>(
+    "pages",
+    ALL_PAGES_QUERY,
+  );
 
   const params: Array<{ page: string }> = [];
   if (result?.data) {
@@ -58,10 +64,10 @@ export async function generateStaticParams() {
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ page: string }>;
+  params: { page: string };
 }): Promise<Metadata> {
   const lang = "fi";
-  const { page: pageSlug } = await params;
+  const { page: pageSlug } = params;
   const page = await getPageData(pageSlug);
 
   if (!page) {
@@ -95,13 +101,13 @@ export async function generateMetadata({
   };
 }
 
-export default async function DynamicPage({
-  params,
-}: {
-  params: Promise<{ page: string }>;
-}) {
+interface DynamicPageProps {
+  params: { page: string };
+}
+
+const DynamicPage = async ({ params }: DynamicPageProps) => {
   const lang = "fi";
-  const { page: pageSlug } = await params;
+  const { page: pageSlug } = params;
   const page = await getPageData(pageSlug);
 
   if (!page) {
@@ -130,4 +136,4 @@ export default async function DynamicPage({
       <ReactMarkdown remarkPlugins={[remarkGfm]}>{body}</ReactMarkdown>
     </MainLayout>
   );
-}
+};

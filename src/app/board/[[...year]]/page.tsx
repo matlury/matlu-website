@@ -52,7 +52,7 @@ interface BoardQueryResult {
 const ALL_BOARD_YEARS_QUERY = {
   filters: { hidden: { $eq: false } },
   sort: "year:desc",
-  fields: ["documentId", "year"]
+  fields: ["documentId", "year"],
 };
 
 interface StrapiFilters {
@@ -63,11 +63,14 @@ interface StrapiFilters {
 
 async function getBoardData(_year?: number) {
   // For testing purposes, fetch only 2026 board
-  const filters: StrapiFilters = { hidden: { $eq: false }, year: { $eq: 2026 } };
+  const filters: StrapiFilters = {
+    hidden: { $eq: false },
+    year: { $eq: 2026 },
+  };
   const queryParams = {
     filters,
     sort: "year:desc",
-    populate: "*"
+    populate: "*",
   };
   const result = await fetchStrapi<BoardQueryResult>("boards", queryParams);
   if (!result?.data || result.data.length === 0) return null;
@@ -75,7 +78,10 @@ async function getBoardData(_year?: number) {
 }
 
 async function getAllBoardYears(): Promise<number[]> {
-  const result = await fetchStrapi<BoardQueryResult>("boards", ALL_BOARD_YEARS_QUERY);
+  const result = await fetchStrapi<BoardQueryResult>(
+    "boards",
+    ALL_BOARD_YEARS_QUERY,
+  );
   if (!result?.data) return [];
   return result.data.map((board: BoardNode) => board.year);
 }
@@ -160,65 +166,62 @@ export default async function BoardPage({
       />
       <div className="board-members">
         {board.members !== null &&
-          [...(board.members || [])]
-            .map((member) => (
-              <section
-                className="board-member"
-                key={`board_${board.documentId}_member_${member.id}`}
-              >
-                <div className="member-picture"></div>
-                <div className="member-name">
-                  <h4>{member.name}</h4>
+          [...(board.members || [])].map((member) => (
+            <section
+              className="board-member"
+              key={`board_${board.documentId}_member_${member.id}`}
+            >
+              <div className="member-picture"></div>
+              <div className="member-name">
+                <h4>{member.name}</h4>
+              </div>
+              <div className="member-title">
+                {(member.role as { fi: string; en: string }).fi}
+              </div>
+              {member.email !== null && (
+                <div className="member-email">
+                  <a href={"mailto:" + member.email}>{member.email}</a>
                 </div>
-                <div className="member-title">{(member.role as { fi: string; en: string }).fi}</div>
-                {member.email !== null && (
-                  <div className="member-email">
-                    <a href={"mailto:" + member.email}>{member.email}</a>
-                  </div>
-                )}
-              </section>
-            ))}
+              )}
+            </section>
+          ))}
       </div>
       {board.officers !== null && (board.officers || []).length > 0 && (
         <section>
           <h2>Virkailijat {board.year}</h2>
           <div className="officers">
-            {[...(board.officers || [])]
-              .map((officer) => (
-                <section
-                  className="officer"
-                  key={`${officer.id}_officer_${officer.name}`}
-                >
-                  <div className="officer-picture"></div>
-                  <div className="officer-name">
-                    <h4>{officer.name}</h4>
-                  </div>
-                  <div className="officer-title">
-                    {(officer.role as { fi: string; en: string }).fi}
-                  </div>
-                </section>
-              ))}
+            {[...(board.officers || [])].map((officer) => (
+              <section
+                className="officer"
+                key={`${officer.id}_officer_${officer.name}`}
+              >
+                <div className="officer-picture"></div>
+                <div className="officer-name">
+                  <h4>{officer.name}</h4>
+                </div>
+                <div className="officer-title">
+                  {(officer.role as { fi: string; en: string }).fi}
+                </div>
+              </section>
+            ))}
           </div>
         </section>
       )}
       {board.teams !== null &&
         (board.teams || []).length > 0 &&
-        [...(board.teams || [])]
-          .map((team) => (
-            <section className="team" key={team.id}>
-              <h2>{(team.title as { fi: string; en: string }).fi}</h2>
-              <ul>
-                {[...(team.team_members || [])]
-                  .filter((member) => member.name !== null)
-                  .sort((a, b) => (a.name || "").localeCompare(b.name || ""))
-                  .map((member) => (
-                    <li key={`${team.id}_member_${member.id}`}>
-                      {member.name}
-                    </li>
-                  ))}
-              </ul>
-            </section>
-          ))}
+        [...(board.teams || [])].map((team) => (
+          <section className="team" key={team.id}>
+            <h2>{(team.title as { fi: string; en: string }).fi}</h2>
+            <ul>
+              {[...(team.team_members || [])]
+                .filter((member) => member.name !== null)
+                .sort((a, b) => (a.name || "").localeCompare(b.name || ""))
+                .map((member) => (
+                  <li key={`${team.id}_member_${member.id}`}>{member.name}</li>
+                ))}
+            </ul>
+          </section>
+        ))}
       {boardYears.length > 0 && (
         <section className="former-boards">
           <h2>Aiemmat ja muut hallitukset</h2>

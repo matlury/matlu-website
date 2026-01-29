@@ -11,6 +11,7 @@ const STRAPI_URL = (process.env.API_URL || "http://localhost:1337").replace(
   /\/$/,
   "",
 );
+/* global fetch */
 const STRAPI_GRAPHQL_URL = `${STRAPI_URL}/graphql`;
 const STRAPI_TOKEN = process.env.ACCESS_TOKEN;
 
@@ -43,7 +44,7 @@ export async function fetchGraphQL<T>(
     variables,
     // This ensures Apollo doesn't store data in its own memory cache,
     // letting Next.js handle the caching/revalidation via fetch.
-    fetchPolicy: 'no-cache',
+    fetchPolicy: "no-cache",
   });
 }
 
@@ -71,9 +72,11 @@ export async function fetchStrapi<T>(
 
   if (!response.ok) {
     console.error(response.statusText);
-    throw new Error(`An error occurred while fetching from Strapi: ${response.statusText}`);
+    throw new Error(
+      `An error occurred while fetching from Strapi: ${response.statusText}`,
+    );
   }
 
-  const data = await response.json() as T;
+  const data = (await response.json()) as T;
   return data;
 }

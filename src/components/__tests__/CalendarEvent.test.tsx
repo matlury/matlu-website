@@ -1,3 +1,5 @@
+/* global jest, describe, it, expect */
+/* global describe, it, expect */
 import React from "react";
 import { render } from "@testing-library/react";
 import CalendarEvent from "../CalendarEvent";
