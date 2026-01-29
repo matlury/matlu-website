@@ -1,9 +1,8 @@
 import React from "react";
-import { Language } from "../../../utils";
 import { Metadata } from "next";
 import { MainLayout } from "../../../components/MainLayout";
 
-export async function generateMetadata(): Promise<Metadata> {
+export function generateMetadata(): Metadata {
   const title = "Thank you for contacting!";
 
   return {

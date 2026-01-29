@@ -55,13 +55,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       {
         url: `${SITE_URL}/fi/${p.page}`,
         lastModified: new Date(),
-        changeFrequency: "weekly" as "weekly",
+        changeFrequency: "weekly" as const,
         priority: 0.7,
       },
       {
         url: `${SITE_URL}/en/${p.page}`,
         lastModified: new Date(),
-        changeFrequency: "weekly" as "weekly",
+        changeFrequency: "weekly" as const,
         priority: 0.7,
       },
     ]);
@@ -72,13 +72,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       {
         url: `${SITE_URL}/fi/board/${b.year}`,
         lastModified: new Date(),
-        changeFrequency: "monthly" as "monthly",
+        changeFrequency: "monthly" as const,
         priority: 0.5,
       },
       {
         url: `${SITE_URL}/en/board/${b.year}`,
         lastModified: new Date(),
-        changeFrequency: "monthly" as "monthly",
+        changeFrequency: "monthly" as const,
         priority: 0.5,
       },
     ]);
@@ -88,32 +88,32 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const mainBoardPages = latestBoard
     ? [
-        {
-          url: `${SITE_URL}/fi/board`,
-          lastModified: new Date(),
-          changeFrequency: "weekly" as "weekly",
-          priority: 0.8,
-        },
-        {
-          url: `${SITE_URL}/en/board`,
-          lastModified: new Date(),
-          changeFrequency: "weekly" as "weekly",
-          priority: 0.8,
-        },
-      ]
+      {
+        url: `${SITE_URL}/fi/board`,
+        lastModified: new Date(),
+        changeFrequency: "weekly" as const,
+        priority: 0.8,
+      },
+      {
+        url: `${SITE_URL}/en/board`,
+        lastModified: new Date(),
+        changeFrequency: "weekly" as const,
+        priority: 0.8,
+      },
+    ]
     : [];
 
   return [
     {
       url: `${SITE_URL}/fi`,
       lastModified: new Date(),
-      changeFrequency: "yearly" as "yearly",
+      changeFrequency: "yearly" as const,
       priority: 1,
     },
     {
       url: `${SITE_URL}/en`,
       lastModified: new Date(),
-      changeFrequency: "yearly" as "yearly",
+      changeFrequency: "yearly" as const,
       priority: 1,
     },
     ...pages,
@@ -122,13 +122,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     {
       url: `${SITE_URL}/fi/ilotalo`,
       lastModified: new Date(),
-      changeFrequency: "monthly" as "monthly",
+      changeFrequency: "monthly" as const,
       priority: 0.3,
     },
     {
       url: `${SITE_URL}/en/ilotalo`,
       lastModified: new Date(),
-      changeFrequency: "monthly" as "monthly",
+      changeFrequency: "monthly" as const,
       priority: 0.3,
     },
     // Thank you page and 404 are hidden from search engines, so not included

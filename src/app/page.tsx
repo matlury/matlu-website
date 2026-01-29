@@ -1,8 +1,6 @@
-import React from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { fetchGraphQL } from "../lib/strapi";
-import { Language } from "../utils";
 import { Metadata } from "next";
 import { gql } from "@apollo/client";
 import { MainLayout } from "../components/MainLayout";

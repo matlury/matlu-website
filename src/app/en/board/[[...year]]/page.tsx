@@ -1,7 +1,5 @@
-import React from "react";
 import Link from "next/link";
 import { fetchStrapi } from "../../../../lib/strapi";
-import { Language } from "../../../../utils";
 import { Metadata } from "next";
 import { MainLayout } from "../../../../components/MainLayout";
 
@@ -40,7 +38,14 @@ interface BoardNode {
 
 interface BoardQueryResult {
   data: BoardNode[];
-  meta: any;
+  meta: {
+    pagination?: {
+      page: number;
+      pageSize: number;
+      pageCount: number;
+      total: number;
+    };
+  };
 }
 
 const ALL_BOARD_YEARS_QUERY = {
@@ -49,9 +54,14 @@ const ALL_BOARD_YEARS_QUERY = {
   fields: ["documentId", "year"]
 };
 
+interface StrapiFilters {
+  hidden?: { $eq: boolean };
+  year?: { $eq: number };
+}
+
 async function getBoardData(_year?: number) {
   // For testing purposes, fetch only 2026 board
-  const filters: any = { hidden: { $eq: false }, year: { $eq: 2026 } };
+  const filters: StrapiFilters = { hidden: { $eq: false }, year: { $eq: 2026 } };
   const queryParams = {
     filters,
     sort: "year:desc",
@@ -89,7 +99,6 @@ export async function generateMetadata({
 }: {
   params: Promise<{ year?: string[] }>;
 }): Promise<Metadata> {
-  const lang = "en";
   const { year } = await params;
   const targetYear = year ? Number(year[0]) : undefined;
   const board = await getBoardData(targetYear);
@@ -164,7 +173,7 @@ export default async function BoardPage({
                 <div className="member-name">
                   <h4>{member.name}</h4>
                 </div>
-                <div className="member-title">{(member.role as any)[lang]}</div>
+                <div className="member-title">{member.role.en}</div>
                 {member.email !== null && (
                   <div className="member-email">
                     <a href={"mailto:" + member.email}>{member.email}</a>
@@ -189,7 +198,7 @@ export default async function BoardPage({
                     <h4>{officer.name}</h4>
                   </div>
                   <div className="officer-title">
-                    {(officer.role as any)[lang]}
+                    {officer.role.en}
                   </div>
                 </section>
               ))}
@@ -202,7 +211,7 @@ export default async function BoardPage({
           .sort((a, b) => String(a.id || "").localeCompare(String(b.id || "")))
           .map((team) => (
             <section className="team" key={team.id}>
-              <h2>{(team.title as any)[lang]}</h2>
+              <h2>{team.title.en}</h2>
               <ul>
                 {[...(team.team_members || [])]
                   .filter((member) => member.name !== null)

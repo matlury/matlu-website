@@ -1,11 +1,9 @@
 import React from "react";
-import { Language } from "../../../utils";
 import { Metadata } from "next";
 import Link from "next/link";
 import { MainLayout } from "../../../components/MainLayout";
 
-export async function generateMetadata(): Promise<Metadata> {
-  const lang = "en";
+export function generateMetadata(): Metadata {
   const title = "Booking Calendar";
   const description = "Matlu Klusteri booking calendar";
 
