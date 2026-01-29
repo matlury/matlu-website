@@ -71,7 +71,6 @@ async function getBoardData(_year?: number) {
     populate: "*",
   };
   const result = await fetchStrapi<BoardQueryResult>("boards", queryParams);
-  console.log("getBoardData (en) result:", JSON.stringify(result, null, 2));
   if (!result?.data || result.data.length === 0) return null;
   return result.data[0];
 }
@@ -81,7 +80,6 @@ async function getAllBoardYears(): Promise<number[]> {
     "boards",
     ALL_BOARD_YEARS_QUERY,
   );
-  console.log("getAllBoardYears (en) result:", JSON.stringify(result, null, 2));
   if (!result?.data) return [];
   return result.data.map((board: BoardNode) => board.year);
 }

@@ -64,10 +64,10 @@ export async function generateStaticParams() {
 export async function generateMetadata({
   params,
 }: {
-  params: { page: string };
+  params: Promise<{ page: string }>;
 }): Promise<Metadata> {
   const lang = "fi";
-  const { page: pageSlug } = params;
+  const { page: pageSlug } = await params;
   const page = await getPageData(pageSlug);
 
   if (!page) {
@@ -102,12 +102,12 @@ export async function generateMetadata({
 }
 
 interface DynamicPageProps {
-  params: { page: string };
+  params: Promise<{ page: string }>;
 }
 
 const DynamicPage = async ({ params }: DynamicPageProps) => {
   const lang = "fi";
-  const { page: pageSlug } = params;
+  const { page: pageSlug } = await params;
   const page = await getPageData(pageSlug);
 
   if (!page) {
