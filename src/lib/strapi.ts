@@ -11,7 +11,6 @@ const STRAPI_URL = (process.env.API_URL || "http://localhost:1337").replace(
   /\/$/,
   "",
 );
-console.log("Using Strapi URL:", STRAPI_URL);
 const STRAPI_GRAPHQL_URL = `${STRAPI_URL}/graphql`;
 const STRAPI_TOKEN = process.env.ACCESS_TOKEN;
 
