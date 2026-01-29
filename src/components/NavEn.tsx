@@ -1,6 +1,8 @@
-import React from "react";
-import { Link } from "gatsby";
-import * as styles from "./Nav.module.scss";
+"use client";
+
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import styles from "./Nav.module.scss";
 import { LocalizedLink } from "../utils";
 
 interface LocalizedNavProps {
@@ -17,37 +19,50 @@ interface LocalizedNavProps {
   }[];
 }
 
+const NavLink = ({
+  href,
+  children,
+  partiallyActive = false,
+  className = styles.navLink,
+}: {
+  href: string;
+  children: React.ReactNode;
+  partiallyActive?: boolean;
+  className?: string;
+}) => {
+  const pathname = usePathname();
+  const isActive = partiallyActive
+    ? pathname.startsWith(href)
+    : pathname === href;
+
+  return (
+    <Link
+      href={href}
+      className={`${className} ${isActive ? "active-navlink" : ""}`}
+    >
+      {children}
+    </Link>
+  );
+};
+
 export const NavEn: React.FC<LocalizedNavProps> = ({
   navLinks,
   localizedLinks,
 }) => {
   return (
     <nav className={styles.nav}>
-      <Link
-        to={`/en/`}
-        className={styles.navLink}
-        activeClassName="active-navlink"
-      >
-        Matlu
-      </Link>
-      <Link
-        to={`/en/board/`}
-        className={styles.navLink}
-        activeClassName="active-navlink"
-        partiallyActive={true}
-      >
+      <NavLink href={`/en/`}>Matlu</NavLink>
+      <NavLink href={`/en/board/`} partiallyActive={true}>
         Board
-      </Link>
+      </NavLink>
       {navLinks.map((navLink) => (
-        <Link
+        <NavLink
           key={navLink.id}
-          to={`/en/${navLink.page}/`}
-          className={styles.navLink}
-          activeClassName="active-navlink"
+          href={`/en/${navLink.page}/`}
           partiallyActive={true}
         >
           {navLink.Title.en}
-        </Link>
+        </NavLink>
       ))}
       <a
         className={styles.navLink}
@@ -57,7 +72,10 @@ export const NavEn: React.FC<LocalizedNavProps> = ({
       >
         <i className="fas fa-external-link-alt"></i> Matlu Klusteri
       </a>
-      <Link to={localizedLinks.fi} className={styles.navLink}>
+      <Link
+        href={localizedLinks.fi.replace(/^\/en/, "") || "/"}
+        className={styles.navLink}
+      >
         Suomeksi
       </Link>
     </nav>

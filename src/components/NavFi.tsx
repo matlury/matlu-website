@@ -1,6 +1,8 @@
-import React from "react";
-import { Link } from "gatsby";
-import * as styles from "./Nav.module.scss";
+"use client";
+
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import styles from "./Nav.module.scss";
 import { LocalizedLink } from "../utils";
 
 interface LocalizedNavProps {
@@ -17,39 +19,53 @@ interface LocalizedNavProps {
   }[];
 }
 
+const NavLink = ({
+  href,
+  children,
+  partiallyActive = false,
+  className = styles.navLink,
+}: {
+  href: string;
+  children: React.ReactNode;
+  partiallyActive?: boolean;
+  className?: string;
+}) => {
+  const pathname = usePathname();
+  const isActive = partiallyActive
+    ? pathname.startsWith(href)
+    : pathname === href;
+
+  return (
+    <Link
+      href={href}
+      className={`${className} ${isActive ? "active-navlink" : ""}`}
+      prefetch={false}
+    >
+      {children}
+    </Link>
+  );
+};
+
 export const NavFi: React.FC<LocalizedNavProps> = ({
   navLinks,
   localizedLinks,
 }) => {
   return (
     <nav className={styles.nav}>
-      <Link
-        to={`/`}
-        className={styles.navLink}
-        activeClassName="active-navlink"
-      >
-        Matlu
-      </Link>
-      <Link
-        to={`/board/`}
-        className={styles.navLink}
-        activeClassName="active-navlink"
-        partiallyActive={true}
-      >
+      <NavLink href={`/`}>Matlu</NavLink>
+      <NavLink href={`/board/`} partiallyActive={true}>
         Hallitus
-      </Link>
+      </NavLink>
       {navLinks.map((navLink) => {
         return (
-          <Link
+          <NavLink
             key={navLink.id}
-            to={`/${navLink.page}/`}
-            className={styles.navLink}
-            activeClassName="active-navlink"
+            href={`/${navLink.page}/`}
             partiallyActive={true}
           >
             {navLink.Title.fi}
-          </Link>
-        )
+          </NavLink>
+        );
       })}
       <a
         className={styles.navLink}
@@ -59,7 +75,14 @@ export const NavFi: React.FC<LocalizedNavProps> = ({
       >
         <i className="fas fa-external-link-alt"></i> Matlu Klusteri
       </a>
-      <Link to={localizedLinks.en} className={styles.navLink}>
+      <Link
+        href={
+          localizedLinks.en.startsWith("/en")
+            ? localizedLinks.en
+            : `/en${localizedLinks.en === "/" ? "/" : localizedLinks.en}`
+        }
+        className={styles.navLink}
+      >
         In english
       </Link>
     </nav>

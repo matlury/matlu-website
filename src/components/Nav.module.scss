@@ -6,19 +6,21 @@
   margin-left: auto;
   margin-right: auto;
   width: vars.$app-width;
-
-  @include mixins.mobile {
-    width: 100%;
-    margin-left: 0;
-    margin-right: 0;
-  }
-
   font-size: 0.8em;
   display: flex;
   justify-content: space-evenly;
   flex-wrap: wrap;
   position: sticky;
   top: 0;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  z-index: 100;
+
+  @include mixins.mobile {
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+    box-shadow: none;
+  }
 
   @include mixins.mobile {
     position: static;
@@ -29,13 +31,12 @@
 a.navLink {
   margin: 12px;
   color: white;
+  min-height: 16px;
+  display: inline-block;
 
   @include mixins.mobile {
     margin: 16px;
     display: block;
     width: 100%;
   }
-
-  min-height: 16px;
-  display: inline-block;
 }

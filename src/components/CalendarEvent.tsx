@@ -1,9 +1,8 @@
-import React from "react";
-import { format, parseISO } from "date-fns/esm";
-import fi from "date-fns/esm/locale/fi";
-import enUS from "date-fns/esm/locale/en-US";
+import { format, parseISO } from "date-fns";
+import { fi, enUS } from "date-fns/locale";
 import { Language } from "../utils";
-import * as styles from "./CalendarEvent.module.scss";
+import styles from "./CalendarEvent.module.scss";
+
 interface EventProps {
   title: Record<Language, string>;
   hide_location: boolean;

@@ -7,9 +7,15 @@
   display: grid;
   column-gap: 8px;
   grid-template-columns: repeat(3, 1fr);
+  padding-left: 28px; /* 40px - 12px padding from sections */
+  padding-right: 28px;
+  padding-top: 20px;
+  padding-bottom: 20px;
 
   @include mixins.mobile {
     display: block;
+    padding-left: 8px; /* 20px - 12px */
+    padding-right: 8px;
   }
 }
 

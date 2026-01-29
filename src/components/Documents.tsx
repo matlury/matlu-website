@@ -1,12 +1,9 @@
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import { graphql, useStaticQuery } from "gatsby";
-import React from "react";
 import { Language } from "../utils";
-import * as styles from "./Documents.module.scss";
+import styles from "./Documents.module.scss";
+import { fetchGraphQL } from "../lib/strapi";
+import { gql } from "@apollo/client";
 
 interface DocumentNode {
-  id: string;
   documentId: string;
   title: {
     fi: string;
@@ -17,30 +14,46 @@ interface DocumentNode {
   } | null;
 }
 
+interface DocumentsQueryResult {
+  documents: Array<{
+    documentId: string;
+    title: {
+      fi: string;
+      en: string;
+    };
+    file: {
+      url: string;
+    } | null;
+  }>;
+}
+
+const DOCUMENTS_QUERY = gql`
+  query DocumentsQuery {
+    documents {
+      documentId
+      title {
+        fi
+        en
+      }
+      file {
+        url
+      }
+    }
+  }
+`;
+
 interface Props {
   language: Language;
 }
 
-export const MatluDocuments: React.FC<Props> = ({ language }) => {
-  const data = useStaticQuery(graphql`
-    query DocumentsQuery {
-      allStrapiDocument {
-        nodes {
-          id
-          documentId
-          title {
-            fi
-            en
-          }
-          file {
-            url
-          }
-        }
-      }
-    }
-  `);
+export const MatluDocuments: React.FC<Props> = async ({ language }) => {
+  const { data } = await fetchGraphQL<DocumentsQueryResult>(DOCUMENTS_QUERY);
 
-  const nodes: DocumentNode[] = data.allStrapiDocument.nodes;
+  const nodes: DocumentNode[] = (data?.documents || []).map((node) => ({
+    documentId: node.documentId,
+    title: node.title,
+    file: node.file ? { url: node.file.url } : null,
+  }));
 
   return (
     <ul className={styles.documentLinks}>

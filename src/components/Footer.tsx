@@ -1,4 +1,3 @@
-import React from "react";
 import { Language } from "../utils";
 import { FooterFi } from "./FooterFi";
 import { FooterEn } from "./FooterEn";
@@ -7,9 +6,9 @@ interface FooterProps {
   language: Language;
 }
 
-export const Footer: React.FC<FooterProps> = ({ language }) => {
+export const Footer = ({ language }: FooterProps) => {
   if (language === "fi") {
-    return <FooterFi />;
+    return <FooterFi language={language} />;
   }
-  return <FooterEn />;
+  return <FooterEn language={language} />;
 };

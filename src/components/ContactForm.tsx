@@ -1,63 +1,75 @@
+"use client";
+
 import React, { useEffect, useState, useRef } from "react";
-import * as styles from "./ContactForm.module.scss";
+import styles from "./ContactForm.module.scss";
 import { Language } from "../utils";
-import { graphql, useStaticQuery } from "gatsby";
 import ReCAPTCHA from "react-google-recaptcha";
 
 interface ContactFormProps {
   lang: Language;
 }
 
-interface ContactFormFragmentProps {
-  reCaptchaSiteKey: string;
-  feedbackFormHandler: string;
-}
+const RECAPTCHA_SITE_KEY =
+  process.env.NEXT_PUBLIC_GATSBY_RECAPTCHA_SITE_KEY || "";
+const FEEDBACK_FORM_HANDLER =
+  process.env.NEXT_PUBLIC_FEEDBACK_FORM_HANDLER_URL || "";
 
-const ContactFormFi: React.FC<ContactFormFragmentProps> = ({
-  feedbackFormHandler,
-  reCaptchaSiteKey,
-}) => {
+export const ContactForm: React.FC<ContactFormProps> = ({ lang }) => {
   const [verified, setVerified] = useState(false);
   const [loaded, setLoaded] = useState(false);
   const recaptchaRef = useRef<ReCAPTCHA>(null);
 
   useEffect(() => {
-    if (!reCaptchaSiteKey) {
+    if (!RECAPTCHA_SITE_KEY) {
       setVerified(true);
       setLoaded(true);
     } else {
       setLoaded(true);
     }
-  }, [reCaptchaSiteKey]);
+  }, []);
+
+  const isFi = lang === "fi";
 
   return (
     <section>
-      <h1>Yhteydenottolomake</h1>
+      <h1>{isFi ? "Yhteydenottolomake" : "Contact form"}</h1>
       <p>
-        Yhteydenottolomake on anonyymi, ja välitetään Matlun hallitukselle
-        sähköpostitse. Voit halutessasi jättää viestiin yhteystietosi, jos
-        haluat vastauksen yhteydenottoosi.
+        {isFi ? (
+          <>
+            Yhteydenottolomake on anonyymi, ja välitetään Matlun hallitukselle
+            sähköpostitse. Voit halutessasi jättää viestiin yhteystietosi, jos
+            haluat vastauksen yhteydenottoosi.
+          </>
+        ) : (
+          <>
+            The contact form is anonymous, and will be sent to the board of
+            Matlu via email. Optionally, you can choose to leave your contact
+            information, if you want an answer to your contact request.
+          </>
+        )}
       </p>
       <form
-        action={feedbackFormHandler}
+        action={FEEDBACK_FORM_HANDLER}
         method="POST"
         className={styles.contactForm}
       >
         <div className={styles.contactFormGroup}>
-          <label htmlFor="contactmsg">Viesti</label>
+          <label htmlFor="contactmsg">{isFi ? "Viesti" : "Message"}</label>
           <textarea
             id="contactmsg"
             name="message"
             cols={80}
             rows={10}
-            placeholder="Kirjoita viestisi..."
+            placeholder={
+              isFi ? "Kirjoita viestisi..." : "Write your message..."
+            }
           />
         </div>
-        {reCaptchaSiteKey && (
+        {RECAPTCHA_SITE_KEY && (
           <div className={styles.contactFormGroup}>
             <ReCAPTCHA
               ref={recaptchaRef}
-              sitekey={reCaptchaSiteKey}
+              sitekey={RECAPTCHA_SITE_KEY}
               onChange={(value) => {
                 if (value) {
                   setVerified(true);
@@ -70,115 +82,11 @@ const ContactFormFi: React.FC<ContactFormFragmentProps> = ({
         )}
         <div className={styles.contactFormGroup}>
           <button type="submit" disabled={!loaded || !verified}>
-            Lähetä
+            {isFi ? "Lähetä" : "Send"}
           </button>
         </div>
       </form>
     </section>
-  );
-};
-
-const ContactFormEn: React.FC<ContactFormFragmentProps> = ({
-  feedbackFormHandler,
-  reCaptchaSiteKey,
-}) => {
-  const [verified, setVerified] = useState(false);
-  const [loaded, setLoaded] = useState(false);
-  const recaptchaRef = useRef<ReCAPTCHA>(null);
-
-  useEffect(() => {
-    if (!reCaptchaSiteKey) {
-      setVerified(true);
-      setLoaded(true);
-    } else {
-      setLoaded(true);
-    }
-  }, [reCaptchaSiteKey]);
-
-  return (
-    <section>
-      <h1>Contact form</h1>
-      <p>
-        The contact form is anonymous, and will be sent to the board of Matlu
-        via email. Optionally, you can choose to leave your contact information,
-        if you want an answer to your contact request.{" "}
-      </p>
-      <form
-        action={feedbackFormHandler}
-        method="POST"
-        className={styles.contactForm}
-      >
-        <div className={styles.contactFormGroup}>
-          <label htmlFor="contactmsg">Message</label>
-          <textarea
-            id="contactmsg"
-            name="message"
-            cols={80}
-            rows={10}
-            placeholder="Write your message..."
-          />
-        </div>
-        {reCaptchaSiteKey && (
-          <div className={styles.contactFormGroup}>
-            <ReCAPTCHA
-              ref={recaptchaRef}
-              sitekey={reCaptchaSiteKey}
-              onChange={(value) => {
-                if (value) {
-                  setVerified(true);
-                } else {
-                  setVerified(false);
-                }
-              }}
-            />
-          </div>
-        )}
-        <div className={styles.contactFormGroup}>
-          <button type="submit" disabled={!loaded || !verified}>
-            Send
-          </button>
-        </div>
-      </form>
-    </section>
-  );
-};
-
-interface ContactFormQuery {
-  site: {
-    siteMetadata: {
-      recaptchaSiteKey: string;
-      feedbackFormHandler: string;
-    };
-  };
-}
-
-const ContactForm: React.FC<ContactFormProps> = ({ lang }) => {
-  const qry: ContactFormQuery = useStaticQuery(graphql`
-    query {
-      site {
-        siteMetadata {
-          recaptchaSiteKey
-          feedbackFormHandler
-        }
-      }
-    }
-  `);
-  const siteMetadata = qry.site.siteMetadata;
-  const recaptchaKey = siteMetadata.recaptchaSiteKey;
-
-  if (lang === "fi") {
-    return (
-      <ContactFormFi
-        reCaptchaSiteKey={recaptchaKey}
-        feedbackFormHandler={siteMetadata.feedbackFormHandler}
-      />
-    );
-  }
-  return (
-    <ContactFormEn
-      reCaptchaSiteKey={recaptchaKey}
-      feedbackFormHandler={siteMetadata.feedbackFormHandler}
-    />
   );
 };
 

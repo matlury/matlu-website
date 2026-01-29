@@ -5,8 +5,15 @@
   width: vars.$app-width;
   margin-left: auto;
   margin-right: auto;
+  background-color: white;
+  min-height: 100vh;
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  margin-bottom: 40px;
+  overflow: hidden; /* Ensure footer background doesn't bleed out of rounded corners */
 
   article {
+    padding: 20px;
     a {
       color: vars.$main-color;
     }
@@ -14,5 +21,9 @@
 
   @include mixins.mobile {
     width: 100%;
+    box-shadow: none;
+    article {
+      padding: 20px;
+    }
   }
 }

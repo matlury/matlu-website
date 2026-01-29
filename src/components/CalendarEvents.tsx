@@ -1,50 +1,85 @@
-import React from "react";
-import { graphql, useStaticQuery } from "gatsby";
-import { Language, CalendarEventsQuery } from "../utils";
+import { Language } from "../utils";
 import CalendarEvent from "./CalendarEvent";
-import { compareAsc, parseISO } from "date-fns/esm";
+import { compareAsc, parseISO } from "date-fns";
+import { fetchGraphQL } from "../lib/strapi";
+import { gql } from "@apollo/client";
 
 interface CalendarEventsProps {
   language: Language;
   showAll?: boolean;
 }
 
-const CalendarEvents: React.FC<CalendarEventsProps> = ({
+interface CalendarEventsQueryResult {
+  calendarEvents: Array<{
+    documentId: string;
+    event_link: string;
+    hide_location: boolean;
+    start_date: string;
+    title: {
+      fi: string;
+      en: string;
+    };
+    location: {
+      en: string;
+      fi: string;
+    } | null;
+    hidden: boolean;
+  }>;
+}
+
+const CALENDAR_EVENTS_QUERY = gql`
+  query CalendarEventsQuery {
+    calendarEvents(filters: { hidden: { eq: false } }, sort: "start_date:asc") {
+      documentId
+      event_link
+      hide_location
+      start_date
+      title {
+        fi
+        en
+      }
+      location {
+        fi
+        en
+      }
+      hidden
+    }
+  }
+`;
+
+const CalendarEvents = async ({
   language,
   showAll = false,
-}) => {
-  const data: CalendarEventsQuery = useStaticQuery(graphql`
-    query CalendarEventsQuery {
-      allStrapiCalendarEvent(
-        sort: { start_date: ASC }
-        filter: { hidden: { eq: false } }
-      ) {
-        nodes {
-          id
-          documentId
-          event_link
-          hide_location
-          start_date
-          title {
-            fi
-            en
-          }
-          location {
-            en
-            fi
-          }
-        }
-      }
-    }
-  `);
-  let events = [
-    ...data.allStrapiCalendarEvent.nodes.filter(
-      (event) => compareAsc(parseISO(event.start_date), new Date()) >= 0,
-    ),
-  ];
+}: CalendarEventsProps) => {
+  const { data } = await fetchGraphQL<CalendarEventsQueryResult>(
+    CALENDAR_EVENTS_QUERY,
+  );
+
+  if (!data?.calendarEvents)
+    return (
+      <div>
+        {language === "fi" ? "Ei tulevia tapahtumia." : "No upcoming events."}
+      </div>
+    );
+
+  const allEvents = data.calendarEvents.map((node) => ({
+    id: node.documentId,
+    documentId: node.documentId,
+    event_link: node.event_link,
+    hide_location: node.hide_location,
+    start_date: node.start_date,
+    title: node.title,
+    location: node.location,
+  }));
+
+  let events = allEvents.filter(
+    (event) => compareAsc(parseISO(event.start_date), new Date()) >= 0,
+  );
+
   if (!showAll) {
-    events = [...events.slice(0, 2)];
+    events = events.slice(0, 2);
   }
+
   return (
     <div>
       {events.length > 0 &&

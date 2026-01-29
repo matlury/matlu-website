@@ -11,6 +11,7 @@
   margin-bottom: 8px;
   display: flex;
   flex-direction: column;
+  border-left: 3px solid vars.$main-color;
 
   .event-title {
     font-size: 1.1em;
@@ -20,6 +21,4 @@
   .event-location {
     font-size: 0.8em;
   }
-
-  border-left: 3px solid vars.$main-color;
 }

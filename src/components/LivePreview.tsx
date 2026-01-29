@@ -10,7 +10,6 @@ const LivePreview: React.FC = () => {
       const origin = event.origin;
       const data = event.data as unknown;
 
-      // In Gatsby, GATSBY_ prefixed env vars are available client-side
       const strapiUrl = process.env.API_URL || "http://localhost:1337";
 
       if (origin !== strapiUrl) {

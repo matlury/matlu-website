@@ -1,35 +1,56 @@
-import React from "react";
-import { Language, LocalizedText, NavQuery } from "../utils";
+import { Language, LocalizedText } from "../utils";
 import { NavFi } from "./NavFi";
 import { NavEn } from "./NavEn";
-import { graphql, useStaticQuery } from "gatsby";
+import { fetchGraphQL } from "../lib/strapi";
+import { gql } from "@apollo/client";
 
 interface NavProps {
   language: Language;
   localizedLinks: LocalizedText;
 }
 
-export const Nav: React.FC<NavProps> = ({ language, localizedLinks }) => {
-  const qry: NavQuery = useStaticQuery(graphql`
-    query NavQuery {
-      allStrapiPage(
-        filter: { Draft: { eq: false }, page: { nin: ["home", "board"] } }
-        sort: { Ordering: ASC }
-      ) {
-        nodes {
-          id
-          Draft
-          Ordering
-          page
-          Title {
-            en
-            fi
-          }
-        }
+interface NavQueryResult {
+  pages: Array<{
+    documentId: string;
+    page: string;
+    Ordering: number;
+    Draft: boolean;
+    Title: {
+      en: string;
+      fi: string;
+    };
+  }>;
+}
+
+const NAV_QUERY = gql`
+  query NavQuery {
+    pages(
+      filters: { Draft: { eq: false }, page: { notIn: ["home", "board"] } }
+      sort: "Ordering:asc"
+    ) {
+      documentId
+      page
+      Ordering
+      Draft
+      Title {
+        en
+        fi
       }
     }
-  `);
-  const links = qry.allStrapiPage.nodes;
+  }
+`;
+
+export const Nav = async ({ language, localizedLinks }: NavProps) => {
+  const { data } = await fetchGraphQL<NavQueryResult>(NAV_QUERY);
+
+  const links = (data?.pages || []).map((node) => ({
+    id: node.documentId,
+    Draft: node.Draft,
+    Ordering: node.Ordering,
+    page: node.page,
+    Title: node.Title,
+  }));
+
   if (language === "fi") {
     return <NavFi navLinks={links} localizedLinks={localizedLinks} />;
   }
