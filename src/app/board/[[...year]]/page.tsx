@@ -70,14 +70,12 @@ async function getBoardData(_year?: number) {
     populate: "*"
   };
   const result = await fetchStrapi<BoardQueryResult>("boards", queryParams);
-  console.log("getBoardData result:", JSON.stringify(result, null, 2));
   if (!result?.data || result.data.length === 0) return null;
   return result.data[0];
 }
 
 async function getAllBoardYears(): Promise<number[]> {
   const result = await fetchStrapi<BoardQueryResult>("boards", ALL_BOARD_YEARS_QUERY);
-  console.log("getAllBoardYears result:", JSON.stringify(result, null, 2));
   if (!result?.data) return [];
   return result.data.map((board: BoardNode) => board.year);
 }
@@ -135,7 +133,6 @@ export default async function BoardPage({
 
   const board = await getBoardData(targetYear);
   const boardYears = await getAllBoardYears();
-
   if (!board || !board.documentId) {
     return (
       <MainLayout
@@ -164,7 +161,6 @@ export default async function BoardPage({
       <div className="board-members">
         {board.members !== null &&
           [...(board.members || [])]
-            .sort((a, b) => String(a.id || "").localeCompare(String(b.id || "")))
             .map((member) => (
               <section
                 className="board-member"
@@ -188,7 +184,6 @@ export default async function BoardPage({
           <h2>Virkailijat {board.year}</h2>
           <div className="officers">
             {[...(board.officers || [])]
-              .sort((a, b) => String(a.id || "").localeCompare(String(b.id || "")))
               .map((officer) => (
                 <section
                   className="officer"
@@ -209,7 +204,6 @@ export default async function BoardPage({
       {board.teams !== null &&
         (board.teams || []).length > 0 &&
         [...(board.teams || [])]
-          .sort((a, b) => String(a.id || "").localeCompare(String(b.id || "")))
           .map((team) => (
             <section className="team" key={team.id}>
               <h2>{(team.title as { fi: string; en: string }).fi}</h2>
