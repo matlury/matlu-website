@@ -15,7 +15,6 @@ const nextConfig: NextConfig = {
         port: "1337",
         pathname: "/uploads/**",
       },
-      // Add production Strapi URL here when available
     ],
   },
 };
