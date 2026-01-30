@@ -67,6 +67,11 @@
     "matlu",
     "matlufi"
   ],
+  "browserslist": [
+    "last 2 versions",
+    "not dead",
+    "not ie 11"
+  ],
   "license": "MIT",
   "engines": {
     "node": ">=20.9.0 <25"
