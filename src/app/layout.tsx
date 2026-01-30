@@ -2,6 +2,7 @@ import React from "react";
 import "../style.scss"; // Global styles
 import { Metadata, Viewport } from "next";
 import { Open_Sans } from "next/font/google";
+import ExternalStyles from "@/components/ExternalStyles";
 
 const openSans = Open_Sans({
   subsets: ["latin"],
@@ -66,19 +67,7 @@ export default function RootLayout({
           type="font/woff2"
           crossOrigin="anonymous"
         />
-        <link
-          key="all-css"
-          href="/css/all.css"
-          rel="stylesheet"
-          media="print"
-          onLoad={(e) => {
-            const target = e.currentTarget;
-            target.media = "all";
-          }}
-        />
-        <noscript>
-          <link rel="stylesheet" href="/css/all.css" />
-        </noscript>
+        <ExternalStyles />
       </head>
       <body className={openSans.className}>{children}</body>
     </html>
