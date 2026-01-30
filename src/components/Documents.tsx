@@ -57,9 +57,11 @@ export const MatluDocuments: React.FC<Props> = async ({ language }) => {
 
   return (
     <ul className={styles.documentLinks}>
-      <a href="https://drive.google.com/drive/folders/1U1VwouP1PDeHaKRWgzN_K_g3Ge-o9Y2o?usp=sharing">
-        {language === "fi" ? "Pöytäkirjat" : "Minutes"}
-      </a>
+      <li>
+        <a href="https://drive.google.com/drive/folders/1U1VwouP1PDeHaKRWgzN_K_g3Ge-o9Y2o?usp=sharing">
+          {language === "fi" ? "Pöytäkirjat" : "Minutes"}
+        </a>
+      </li>
       {nodes.map((doc) => (
         <li key={doc.documentId}>
           <a href={doc.file?.url} target="_blank" rel="noreferrer">

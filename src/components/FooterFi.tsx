@@ -41,7 +41,9 @@ export const FooterFi: React.FC<LocalizedFooterProps> = ({ language }) => (
     <div className={styles.appFooterSection}>
       <h4>Sponsored by</h4>
       <ul className={styles.matluSome}>
-        <Image imageName="loimu" />
+        <li>
+          <Image imageName="loimu" />
+        </li>
       </ul>
     </div>
     <div className={styles.footerBottom}>
