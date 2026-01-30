@@ -66,7 +66,19 @@ export default function RootLayout({
           type="font/woff2"
           crossOrigin="anonymous"
         />
-        <link key="all-css" href="/css/all.css" rel="stylesheet" />
+        <link
+          key="all-css"
+          href="/css/all.css"
+          rel="stylesheet"
+          media="print"
+          onLoad={(e) => {
+            const target = e.currentTarget;
+            target.media = "all";
+          }}
+        />
+        <noscript>
+          <link rel="stylesheet" href="/css/all.css" />
+        </noscript>
       </head>
       <body className={openSans.className}>{children}</body>
     </html>

@@ -7,7 +7,7 @@
   "type": "module",
   "scripts": {
     "dev": "next dev -p 8000",
-    "build": "next build",
+    "build": "next build && node optimize-images.mjs",
     "start": "echo \"Error: Use 'npm run serve' to test the static build locally.\" && exit 1",
     "serve": "npx serve@latest out",
     "lint": "eslint .",
@@ -56,6 +56,7 @@
     "prettier": "^3.8.1",
     "react-test-renderer": "^19.2.4",
     "sass-embedded": "^1.97.3",
+    "sharp": "^0.34.5",
     "stylelint": "^17.0.0",
     "stylelint-config-standard": "^40.0.0",
     "stylelint-config-standard-scss": "^17.0.0",
