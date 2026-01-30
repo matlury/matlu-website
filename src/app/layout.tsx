@@ -45,14 +45,6 @@ export default function RootLayout({
   return (
     <html lang="fi" className={openSans.variable}>
       <head>
-        {process.env.API_URL && (
-          <>
-            <link rel="preconnect" href={process.env.API_URL} />
-            <link rel="dns-prefetch" href={process.env.API_URL} />
-          </>
-        )}
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
           rel="preload"
           href="/webfonts/fa-solid-900.woff2"
