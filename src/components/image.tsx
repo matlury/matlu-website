@@ -14,6 +14,7 @@ export const Image: React.FC<ImageProps> = ({ imageName }) => {
       src={image}
       alt={imageName}
       height={imageName === "matlu" ? 80 : 70}
+      priority={imageName === "matlu"}
       style={{
         width: "auto",
         height: imageName === "matlu" ? "80px" : "70px",
