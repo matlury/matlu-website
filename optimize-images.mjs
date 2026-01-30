@@ -14,13 +14,16 @@ async function optimize() {
         const buffer = await fs.readFile(filePath);
         const metadata = await sharp(buffer).metadata();
 
-        // If the image is the logo (based on the Lighthouse report size) or just generally huge
-        if (metadata.width > 800) {
-          console.log(`Optimizing ${file} (${metadata.width}x${metadata.height})`);
+        // If the image is the logo or just generally oversized
+        const isLogo = file.includes('matlu');
+        const targetWidth = isLogo ? 300 : 600;
+
+        if (metadata.width > targetWidth) {
+          console.log(`Optimizing ${file} (${metadata.width}x${metadata.height}) to width ${targetWidth}`);
           
           await sharp(buffer)
-            .resize(800, null, { withoutEnlargement: true }) // Limit to 800px width
-            .png({ quality: 80, palette: true }) // Compress PNG
+            .resize(targetWidth, null, { withoutEnlargement: true })
+            .png({ quality: 75, palette: true, compressionLevel: 9 })
             .toFile(filePath + '.tmp');
           
           await fs.rename(filePath + '.tmp', filePath);
