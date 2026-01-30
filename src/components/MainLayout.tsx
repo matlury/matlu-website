@@ -33,7 +33,9 @@ export const MainLayout = ({
         <Nav language={lang} localizedLinks={defaultLocalizedLinks} />
       )}
       <div className={styles.wrapper}>
-        <article>{children}</article>
+        <main>
+          <article>{children}</article>
+        </main>
         <Footer language={lang} />
       </div>
     </>
