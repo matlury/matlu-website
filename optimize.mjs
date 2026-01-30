@@ -21,7 +21,7 @@ async function main() {
 
     // Run optimizations in parallel
     await Promise.all([
-      run('npx', ['cleancss', '-o', 'out/css/all.css', 'public/css/all.css'], 'CSS Minification'),
+      run('npx', ['cleancss', '-O2', '-o', 'out/css/all.css', 'public/css/all.css'], 'CSS Minification'),
       run('node', ['optimize-images.mjs'], 'Image Optimization')
     ]);
 

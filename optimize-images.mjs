@@ -15,15 +15,20 @@ async function optimize() {
         const metadata = await sharp(buffer).metadata();
 
         // If the image is the logo or just generally oversized
-        const isLogo = file.includes('matlu');
-        const targetWidth = isLogo ? 300 : 600;
+        const isLogo = file.toLowerCase().includes('matlu');
+        const targetWidth = isLogo ? 560 : 800; // 560px is exactly 2x the 280px display width
 
-        if (metadata.width > targetWidth) {
-          console.log(`Optimizing ${file} (${metadata.width}x${metadata.height}) to width ${targetWidth}`);
+        if (metadata.width > targetWidth || isLogo) {
+          console.log(`Optimizing ${file} (${metadata.width}x${metadata.height}) -> Target width: ${targetWidth}`);
           
           await sharp(buffer)
             .resize(targetWidth, null, { withoutEnlargement: true })
-            .png({ quality: 75, palette: true, compressionLevel: 9 })
+            .png({ 
+              quality: 70, 
+              palette: true, 
+              compressionLevel: 9,
+              effort: 10 
+            })
             .toFile(filePath + '.tmp');
           
           await fs.rename(filePath + '.tmp', filePath);
