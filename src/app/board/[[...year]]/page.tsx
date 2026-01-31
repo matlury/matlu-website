@@ -61,12 +61,13 @@ interface StrapiFilters {
   };
 }
 
-async function getBoardData(_year?: number) {
-  // For testing purposes, fetch only 2026 board
+async function getBoardData(year?: number) {
   const filters: StrapiFilters = {
     hidden: { $eq: false },
-    year: { $eq: 2026 },
   };
+  if (year) {
+    filters.year = { $eq: year };
+  }
   const queryParams = {
     filters,
     sort: "year:desc",
