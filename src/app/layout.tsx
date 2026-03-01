@@ -20,6 +20,10 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "/",
   },
+  icons: {
+    icon: "/logos/matlu.png",
+    apple: "/logos/matlu.png",
+  },
   openGraph: {
     type: "website",
     siteName: "Matlu ry",
