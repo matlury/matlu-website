@@ -1,20 +1,21 @@
 import React from "react";
 import Link from "next/link";
-import { fetchStrapi } from "../../../lib/strapi";
+import { fetchGraphQL } from "../../../lib/strapi";
 import { Metadata } from "next";
+import { gql } from "@apollo/client";
 import { MainLayout } from "../../../components/MainLayout";
 
 interface BoardMember {
   id: string;
   name: string;
   email: string | null;
-  role: { fi: string; en: string };
+  role: string;
 }
 
 interface Officer {
   id: string;
   name: string;
-  role: { fi: string; en: string };
+  role: string;
 }
 
 interface TeamMember {
@@ -24,7 +25,7 @@ interface TeamMember {
 
 interface Team {
   id: string;
-  title: { fi: string; en: string };
+  title: string;
   team_members: TeamMember[];
 }
 
@@ -37,58 +38,90 @@ interface BoardNode {
   hidden: boolean;
 }
 
-interface BoardQueryResult {
-  data: BoardNode[];
-  meta: {
-    pagination: {
-      page: number;
-      pageSize: number;
-      pageCount: number;
-      total: number;
-    };
-  };
+interface BoardsQueryResult {
+  boards: BoardNode[];
 }
 
-const ALL_BOARD_YEARS_QUERY = {
-  filters: { hidden: { $eq: false } },
-  sort: "year:desc",
-  fields: ["documentId", "year"],
-};
-
-interface StrapiFilters {
-  [key: string]: {
-    $eq?: boolean | number;
-  };
+function getLocalesToTry(lang: string): string[] {
+  return lang === "fi" ? ["fi", "en"] : [lang, "fi"];
 }
 
-async function getBoardData(year?: number) {
-  const filters: StrapiFilters = {
-    hidden: { $eq: false },
-  };
-  if (year) {
-    filters.year = { $eq: year };
+const BOARD_BY_YEAR_QUERY = gql`
+  query BoardByYear($year: Int, $locale: I18NLocaleCode) {
+    boards(filters: { year: { eq: $year }, hidden: { eq: false } }, locale: $locale) {
+      documentId
+      year
+      hidden
+      members {
+        id
+        name
+        email
+        role
+      }
+      officers {
+        id
+        name
+        role
+      }
+      teams {
+        id
+        title
+        team_members {
+          id
+          name
+        }
+      }
+    }
   }
-  const queryParams = {
-    filters,
-    sort: "year:desc",
-    populate: "*",
-  };
-  const result = await fetchStrapi<BoardQueryResult>("boards", queryParams);
-  if (!result?.data || result.data.length === 0) return null;
-  return result.data[0];
+`;
+
+const ALL_BOARD_YEARS_QUERY = gql`
+  query AllBoardYears($locale: I18NLocaleCode) {
+    boards(filters: { hidden: { eq: false } }, sort: "year:desc", locale: $locale) {
+      documentId
+      year
+    }
+  }
+`;
+
+async function getBoardData(year?: number, lang: string = "fi") {
+  // If no year, first get all years to find the latest
+  if (!year) {
+    const years = await getAllBoardYears(lang);
+    if (years.length === 0) return null;
+    year = years[0];
+  }
+
+  for (const locale of getLocalesToTry(lang)) {
+    const { data } = await fetchGraphQL<BoardsQueryResult>(BOARD_BY_YEAR_QUERY, {
+      year,
+      locale,
+    });
+
+    if (data?.boards && data.boards.length > 0) {
+      return data.boards[0];
+    }
+  }
+
+  return null;
 }
 
-async function getAllBoardYears(): Promise<number[]> {
-  const result = await fetchStrapi<BoardQueryResult>(
-    "boards",
-    ALL_BOARD_YEARS_QUERY,
-  );
-  if (!result?.data) return [];
-  return result.data.map((board: BoardNode) => board.year);
+async function getAllBoardYears(lang: string = "fi"): Promise<number[]> {
+  for (const locale of getLocalesToTry(lang)) {
+    const { data } = await fetchGraphQL<BoardsQueryResult>(ALL_BOARD_YEARS_QUERY, {
+      locale,
+    });
+
+    if (data?.boards && data.boards.length > 0) {
+      return data.boards.map((board) => board.year);
+    }
+  }
+
+  return [];
 }
 
 export async function generateStaticParams() {
-  const boardYears = await getAllBoardYears();
+  const boardYears = await getAllBoardYears("fi");
   const params: Array<{ year: string[] }> = [];
 
   boardYears.forEach((year) => {
@@ -108,7 +141,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { year } = await params;
   const targetYear = year ? Number(year[0]) : undefined;
-  const board = await getBoardData(targetYear);
+  const board = await getBoardData(targetYear, "fi");
 
   if (!board) {
     return { title: "Hallitusta ei löytynyt | Matlu ry" };
@@ -135,15 +168,17 @@ export default async function BoardPage({
 }: {
   params: Promise<{ year?: string[] }>;
 }) {
-  const { year } = await params;
-  const targetYear = year ? Number(year[0]) : undefined;
+  const lang = "fi";
+  const { year: yearParam } = await params;
+  const targetYear = yearParam ? Number(yearParam[0]) : undefined;
 
-  const board = await getBoardData(targetYear);
-  const boardYears = await getAllBoardYears();
+  const board = await getBoardData(targetYear, lang);
+  const boardYears = await getAllBoardYears(lang);
+
   if (!board || !board.documentId) {
     return (
       <MainLayout
-        lang="fi"
+        lang={lang}
         localizedLinks={{ fi: "/board/", en: "/en/board/" }}
       >
         <div>Hallitusta ei löytynyt</div>
@@ -158,7 +193,7 @@ export default async function BoardPage({
   };
 
   return (
-    <MainLayout lang="fi" localizedLinks={localizedLinks}>
+    <MainLayout lang={lang} localizedLinks={localizedLinks}>
       <h1>Hallitus {board.year}</h1>
       <p
         dangerouslySetInnerHTML={{
@@ -166,32 +201,29 @@ export default async function BoardPage({
         }}
       />
       <div className="board-members">
-        {board.members !== null &&
-          [...(board.members || [])].map((member) => (
-            <section
-              className="board-member"
-              key={`board_${board.documentId}_member_${member.id}`}
-            >
-              <div className="member-picture"></div>
-              <div className="member-name">
-                <h4>{member.name}</h4>
+        {(board.members || []).map((member) => (
+          <section
+            className="board-member"
+            key={`board_${board.documentId}_member_${member.id}`}
+          >
+            <div className="member-picture"></div>
+            <div className="member-name">
+              <h4>{member.name}</h4>
+            </div>
+            <div className="member-title">{member.role}</div>
+            {member.email && (
+              <div className="member-email">
+                <a href={"mailto:" + member.email}>{member.email}</a>
               </div>
-              <div className="member-title">
-                {(member.role as { fi: string; en: string }).fi}
-              </div>
-              {member.email !== null && (
-                <div className="member-email">
-                  <a href={"mailto:" + member.email}>{member.email}</a>
-                </div>
-              )}
-            </section>
-          ))}
+            )}
+          </section>
+        ))}
       </div>
-      {board.officers !== null && (board.officers || []).length > 0 && (
+      {board.officers && board.officers.length > 0 && (
         <section>
           <h2>Virkailijat {board.year}</h2>
           <div className="officers">
-            {[...(board.officers || [])].map((officer) => (
+            {board.officers.map((officer) => (
               <section
                 className="officer"
                 key={`${officer.id}_officer_${officer.name}`}
@@ -200,21 +232,19 @@ export default async function BoardPage({
                 <div className="officer-name">
                   <h4>{officer.name}</h4>
                 </div>
-                <div className="officer-title">
-                  {(officer.role as { fi: string; en: string }).fi}
-                </div>
+                <div className="officer-title">{officer.role}</div>
               </section>
             ))}
           </div>
         </section>
       )}
-      {board.teams !== null &&
-        (board.teams || []).length > 0 &&
-        [...(board.teams || [])].map((team) => (
+      {board.teams &&
+        board.teams.length > 0 &&
+        board.teams.map((team) => (
           <section className="team" key={team.id}>
-            <h2>{(team.title as { fi: string; en: string }).fi}</h2>
+            <h2>{team.title}</h2>
             <ul>
-              {[...(team.team_members || [])]
+              {(team.team_members || [])
                 .filter((member) => member.name !== null)
                 .sort((a, b) => (a.name || "").localeCompare(b.name || ""))
                 .map((member) => (

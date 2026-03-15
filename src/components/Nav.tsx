@@ -15,33 +15,28 @@ interface NavQueryResult {
     page: string;
     Ordering: number;
     Draft: boolean;
-    Title: {
-      en: string;
-      fi: string;
-    };
+    Title: string;
   }>;
 }
 
 const NAV_QUERY = gql`
-  query NavQuery {
+  query NavQuery($locale: I18NLocaleCode) {
     pages(
       filters: { Draft: { eq: false }, page: { notIn: ["home", "board"] } }
       sort: "Ordering:asc"
+      locale: $locale
     ) {
       documentId
       page
       Ordering
       Draft
-      Title {
-        en
-        fi
-      }
+      Title
     }
   }
 `;
 
 export const Nav = async ({ language, localizedLinks }: NavProps) => {
-  const { data } = await fetchGraphQL<NavQueryResult>(NAV_QUERY);
+  const { data } = await fetchGraphQL<NavQueryResult>(NAV_QUERY, { locale: language });
 
   const links = (data?.pages || []).map((node) => ({
     id: node.documentId,
