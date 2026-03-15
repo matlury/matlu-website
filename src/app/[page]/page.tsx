@@ -10,9 +10,12 @@ import { MainLayout } from "../../components/MainLayout";
 interface PageData {
   documentId: string;
   page: string;
-  Title: string;
-  Description: string;
-  body: string;
+  Title: { fi: string; en: string };
+  Description: { fi: string; en: string };
+  body: {
+    Fi: string;
+    En: string;
+  };
   HideFromSearchEngine: boolean;
   Draft: boolean;
 }
@@ -25,13 +28,11 @@ interface DynamicPageQueryResult {
 const ALL_PAGES_QUERY = {
   filters: { Draft: { $eq: false }, page: { $notIn: ["home", "board"] } },
   fields: ["documentId", "page"],
-  locale: "fi",
 };
 
-async function getPageData(pageSlug: string, lang: string = "fi") {
+async function getPageData(pageSlug: string) {
   const queryParams = {
     filters: { page: { $eq: pageSlug }, Draft: { $eq: false } },
-    locale: lang,
     populate: "*",
   };
   const result = await fetchStrapi<DynamicPageQueryResult>(
@@ -67,14 +68,14 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const lang = "fi";
   const { page: pageSlug } = await params;
-  const page = await getPageData(pageSlug, lang);
+  const page = await getPageData(pageSlug);
 
   if (!page) {
     return { title: "Sivua ei löytynyt | Matlu ry" };
   }
 
-  const title = page.Title;
-  const description = page.Description || "";
+  const title = page.Title[lang];
+  const description = page.Description ? page.Description[lang] : "";
 
   return {
     title: `${title} | Matlu ry`,
@@ -107,7 +108,7 @@ interface DynamicPageProps {
 const DynamicPage = async ({ params }: DynamicPageProps) => {
   const lang = "fi";
   const { page: pageSlug } = await params;
-  const page = await getPageData(pageSlug, lang);
+  const page = await getPageData(pageSlug);
 
   if (!page) {
     return (
@@ -117,7 +118,7 @@ const DynamicPage = async ({ params }: DynamicPageProps) => {
     );
   }
 
-  const body = page.body || "";
+  const body = page.body.Fi || "";
 
   const isEventsPage = pageSlug === "events";
   const isContactPage = pageSlug === "contact";

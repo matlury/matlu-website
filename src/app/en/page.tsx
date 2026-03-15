@@ -8,9 +8,12 @@ import { MainLayout } from "../../components/MainLayout";
 interface PageData {
   documentId: string;
   page: string;
-  Title: string;
-  Description: string;
-  body: string;
+  Title: { fi: string; en: string };
+  Description: { fi: string; en: string };
+  body: {
+    Fi: string;
+    En: string;
+  };
   HideFromSearchEngine: boolean;
   Draft: boolean;
 }
@@ -20,28 +23,37 @@ interface HomePageQueryResult {
 }
 
 const HOME_PAGE_QUERY = gql`
-  query HomePageQuery($locale: I18NLocaleCode) {
-    pages(filters: { page: { eq: "home" }, Draft: { eq: false } }, locale: $locale) {
+  query HomePageQuery {
+    pages(filters: { page: { eq: "home" }, Draft: { eq: false } }) {
       documentId
       page
-      Title
-      Description
-      body
+      Title {
+        fi
+        en
+      }
+      Description {
+        fi
+        en
+      }
+      body {
+        Fi
+        En
+      }
       HideFromSearchEngine
       Draft
     }
   }
 `;
 
-async function getHomePageData(lang: string = "en") {
-  const { data } = await fetchGraphQL<HomePageQueryResult>(HOME_PAGE_QUERY, { locale: lang });
+async function getHomePageData() {
+  const { data } = await fetchGraphQL<HomePageQueryResult>(HOME_PAGE_QUERY);
   if (!data?.pages || data.pages.length === 0) return null;
   return data.pages[0];
 }
 
 export async function generateMetadata(): Promise<Metadata> {
   const lang = "en";
-  const page = await getHomePageData(lang);
+  const page = await getHomePageData();
 
   if (!page) {
     return {
@@ -49,8 +61,8 @@ export async function generateMetadata(): Promise<Metadata> {
     };
   }
 
-  const title = page.Title;
-  const description = page.Description;
+  const title = page.Title[lang];
+  const description = page.Description[lang];
 
   return {
     title: `${title} | Matlu ry`,
@@ -82,7 +94,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function HomePage() {
   const lang = "en";
-  const page = await getHomePageData(lang);
+  const page = await getHomePageData();
 
   if (!page) {
     return (
@@ -95,7 +107,7 @@ export default async function HomePage() {
     );
   }
 
-  const body = page.body || "";
+  const body = page.body.En || "";
 
   const localizedLinks = {
     fi: "/",

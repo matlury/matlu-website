@@ -10,9 +10,12 @@ import { MainLayout } from "../../../components/MainLayout";
 interface PageData {
   documentId: string;
   page: string;
-  Title: string;
-  Description: string;
-  body: string;
+  Title: { fi: string; en: string };
+  Description: { fi: string; en: string };
+  body: {
+    Fi: string;
+    En: string;
+  };
   HideFromSearchEngine: boolean;
   Draft: boolean;
 }
@@ -32,13 +35,11 @@ interface DynamicPageQueryResult {
 const ALL_PAGES_QUERY = {
   filters: { Draft: { $eq: false }, page: { $notIn: ["home", "board"] } },
   fields: ["documentId", "page"],
-  locale: "en",
 };
 
-async function getPageData(pageSlug: string, lang: string = "en") {
+async function getPageData(pageSlug: string) {
   const queryParams = {
     filters: { page: { $eq: pageSlug }, Draft: { $eq: false } },
-    locale: lang,
     populate: "*",
   };
   const result = await fetchStrapi<DynamicPageQueryResult>(
@@ -74,14 +75,14 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const lang = "en";
   const { page: pageSlug } = await params;
-  const page = await getPageData(pageSlug, lang);
+  const page = await getPageData(pageSlug);
 
   if (!page) {
     return { title: "Page Not Found | Matlu ry" };
   }
 
-  const title = page.Title;
-  const description = page.Description || "";
+  const title = page.Title[lang];
+  const description = page.Description ? page.Description[lang] : "";
 
   return {
     title: `${title} | Matlu ry`,
@@ -114,7 +115,7 @@ export default async function DynamicPage({
 }) {
   const lang = "en";
   const { page: pageSlug } = await params;
-  const page = await getPageData(pageSlug, lang);
+  const page = await getPageData(pageSlug);
 
   if (!page) {
     return (
@@ -124,7 +125,7 @@ export default async function DynamicPage({
     );
   }
 
-  const body = page.body || "";
+  const body = page.body.En || "";
 
   const isEventsPage = pageSlug === "events";
   const isContactPage = pageSlug === "contact";

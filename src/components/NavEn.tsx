@@ -12,7 +12,10 @@ interface LocalizedNavProps {
     page: string;
     Ordering: number;
     Draft: boolean;
-    Title: string;
+    Title: {
+      en: string;
+      fi: string;
+    };
   }[];
 }
 
@@ -58,7 +61,7 @@ export const NavEn: React.FC<LocalizedNavProps> = ({
           href={`/en/${navLink.page}/`}
           partiallyActive={true}
         >
-          {navLink.Title}
+          {navLink.Title.en}
         </NavLink>
       ))}
       <a

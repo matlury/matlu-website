@@ -39,14 +39,9 @@ export async function fetchGraphQL<T>(
   query: DocumentNode,
   variables?: Record<string, unknown>,
 ) {
-  const mergedVariables = {
-    locale: "fi", // Default locale
-    ...variables,
-  };
-
   return client.query<T>({
     query,
-    variables: mergedVariables,
+    variables,
     // This ensures Apollo doesn't store data in its own memory cache,
     // letting Next.js handle the caching/revalidation via fetch.
     fetchPolicy: "no-cache",
@@ -56,16 +51,10 @@ export async function fetchGraphQL<T>(
 // Keep the old fetchStrapi for now, but mark it for removal or refactor
 export async function fetchStrapi<T>(
   path: string,
-  urlParamsObject: Record<string, any> = {},
+  urlParamsObject: Record<string, unknown> = {},
   options: RequestInit = {},
 ): Promise<T> {
-  // Ensure locale is set, defaulting to 'fi'
-  const params = {
-    locale: "fi",
-    ...urlParamsObject,
-  };
-
-  const queryString = qs.stringify(params, {
+  const queryString = qs.stringify(urlParamsObject, {
     encodeValuesOnly: true, // prettify URL
   });
 
