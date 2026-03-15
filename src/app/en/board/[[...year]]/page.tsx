@@ -1,7 +1,8 @@
 import Link from "next/link";
-import { fetchStrapi } from "../../../../lib/strapi";
+import { fetchGraphQL } from "../../../../lib/strapi";
 import { Metadata } from "next";
 import { MainLayout } from "../../../../components/MainLayout";
+import { gql } from "@apollo/client";
 
 interface BoardMember {
   id: string;
@@ -37,52 +38,115 @@ interface BoardNode {
 }
 
 interface BoardQueryResult {
-  data: BoardNode[];
-  meta: {
-    pagination?: {
-      page: number;
-      pageSize: number;
-      pageCount: number;
-      total: number;
-    };
-  };
+  boards: BoardNode[];
 }
 
-const ALL_BOARD_YEARS_QUERY = {
-  filters: { hidden: { $eq: false } },
-  sort: "year:desc",
-  fields: ["documentId", "year"],
-};
+const BOARD_QUERY = gql`
+  query BoardQuery($year: Int) {
+    boards(filters: { hidden: { eq: false }, year: { eq: $year } }, sort: "year:desc") {
+      documentId
+      year
+      hidden
+      members(pagination: { page: 1, pageSize: 100 }) {
+        id
+        name
+        email
+        role {
+          fi
+          en
+        }
+      }
+      officers(pagination: { page: 1, pageSize: 100 }) {
+        id
+        name
+        role {
+          fi
+          en
+        }
+      }
+      teams(pagination: { page: 1, pageSize: 100 }) {
+        id
+        title {
+          fi
+          en
+        }
+        team_members(pagination: { page: 1, pageSize: 100 }) {
+          id
+          name
+        }
+      }
+    }
+  }
+`;
 
-interface StrapiFilters {
-  hidden?: { $eq: boolean };
-  year?: { $eq: number };
+const LATEST_BOARD_QUERY = gql`
+  query LatestBoardQuery {
+    boards(filters: { hidden: { eq: false } }, sort: "year:desc") {
+      documentId
+      year
+      hidden
+      members(pagination: { page: 1, pageSize: 100 }) {
+        id
+        name
+        email
+        role {
+          fi
+          en
+        }
+      }
+      officers(pagination: { page: 1, pageSize: 100 }) {
+        id
+        name
+        role {
+          fi
+          en
+        }
+      }
+      teams(pagination: { page: 1, pageSize: 100 }) {
+        id
+        title {
+          fi
+          en
+        }
+        team_members(pagination: { page: 1, pageSize: 100 }) {
+          id
+          name
+        }
+      }
+    }
+  }
+`;
+
+const ALL_BOARD_YEARS_QUERY = gql`
+  query AllBoardYearsQuery {
+    boards(filters: { hidden: { eq: false } }, sort: "year:desc") {
+      year
+    }
+  }
+`;
+
+interface BoardYearsQueryResult {
+  boards: Array<{ year: number }>;
 }
 
 async function getBoardData(year?: number) {
-  const filters: StrapiFilters = {
-    hidden: { $eq: false },
-  };
-  if (year) {
-    filters.year = { $eq: year };
+  if (year !== undefined) {
+    const { data } = await fetchGraphQL<BoardQueryResult>(BOARD_QUERY, { year });
+    if (!data?.boards || data.boards.length === 0) return null;
+    return data.boards[0];
   }
-  const queryParams = {
-    filters,
-    sort: "year:desc",
-    populate: "*",
-  };
-  const result = await fetchStrapi<BoardQueryResult>("boards", queryParams);
-  if (!result?.data || result.data.length === 0) return null;
-  return result.data[0];
+
+  const { data } = await fetchGraphQL<BoardQueryResult>(LATEST_BOARD_QUERY);
+  if (!data?.boards || data.boards.length === 0) return null;
+  return data.boards[0];
 }
 
 async function getAllBoardYears(): Promise<number[]> {
-  const result = await fetchStrapi<BoardQueryResult>(
-    "boards",
+  const { data } = await fetchGraphQL<BoardYearsQueryResult>(
     ALL_BOARD_YEARS_QUERY,
   );
-  if (!result?.data) return [];
-  return result.data.map((board: BoardNode) => board.year);
+  if (!data?.boards) return [];
+  return data.boards.map((board) => board.year);
 }
 
 export async function generateStaticParams() {
@@ -137,8 +201,10 @@ export default async function BoardPage({
   const { year } = await params;
   const targetYear = year ? Number(year[0]) : undefined;
 
-  const board = await getBoardData(targetYear);
-  const boardYears = await getAllBoardYears();
+  const [board, boardYears] = await Promise.all([
+    getBoardData(targetYear),
+    getAllBoardYears(),
+  ]);
 
   if (!board || !board.documentId) {
     return (
@@ -156,6 +222,7 @@ export default async function BoardPage({
     fi: `/board/${currentYearPath}`,
     en: `/en/board/${currentYearPath}`,
   };
+  const otherBoardYears = boardYears.filter((boardYear) => boardYear !== board.year);
 
   return (
     <MainLayout lang={lang} localizedLinks={localizedLinks}>
@@ -231,11 +298,11 @@ export default async function BoardPage({
               </ul>
             </section>
           ))}
-      {boardYears.length > 0 && (
+      {otherBoardYears.length > 0 && (
         <section className="former-boards">
           <h2>Former and other boards</h2>
           <ul>
-            {boardYears.map((boardYear) => (
+            {otherBoardYears.map((boardYear) => (
               <li key={`boardyear_${boardYear}_en`}>
                 <Link href={`/en/board/${boardYear}/`}>{boardYear}</Link>
               </li>

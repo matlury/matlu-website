@@ -7,10 +7,24 @@
   margin-right: auto;
   background-color: white;
   min-height: 100vh;
+  display: flex;
+  flex-direction: column;
   box-shadow: 0 0 40px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   margin-bottom: 40px;
   overflow: hidden; /* Ensure footer background doesn't bleed out of rounded corners */
+
+  main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+  
+    >article,
+    main>article {
+      flex: 1;
+    }
+
 
   article {
     padding: 20px;
@@ -27,3 +41,4 @@
     }
   }
 }
+
