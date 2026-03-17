@@ -1,7 +1,5 @@
 "use client";
 
-import loimuImage from "../images/loimu_varillinen.png";
-import matluImage from "../images/matlu.png";
 import { Marquee } from "@/components/ui/marquee";
 
 export interface FooterLogo {
@@ -11,33 +9,20 @@ export interface FooterLogo {
   src: string;
 }
 
-const fallbackLogos: FooterLogo[] = [
-  {
-    id: "loimu",
-    name: "Loimu",
-    href: "https://www.loimu.fi/",
-    src: loimuImage.src,
-  },
-  {
-    id: "matlu",
-    name: "Matlu",
-    href: "https://www.matlu.fi/",
-    src: matluImage.src,
-  },
-];
-
 interface MemberLogosMarqueeProps {
   logos?: FooterLogo[];
 }
 
 export default function MemberLogosMarquee({ logos = [] }: MemberLogosMarqueeProps) {
-  const items = logos.length > 0 ? logos : fallbackLogos;
+  if (logos.length === 0) {
+    return null;
+  }
 
   return (
     <div className="relative overflow-hidden">
       <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-gradient-to-r from-brand-600 to-transparent" />
       <Marquee pauseOnHover duration={28} gap={28}>
-        {items.map((logo) => (
+        {logos.map((logo) => (
           <a
             key={logo.id}
             href={logo.href}
