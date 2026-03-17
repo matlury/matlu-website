@@ -131,23 +131,35 @@ interface BoardYearsQueryResult {
 }
 
 async function getBoardData(year?: number) {
-  if (year !== undefined) {
-    const { data } = await fetchGraphQL<BoardQueryResult>(BOARD_QUERY, { year });
+  try {
+    if (year !== undefined) {
+      const { data } = await fetchGraphQL<BoardQueryResult>(BOARD_QUERY, {
+        year,
+      });
+      if (!data?.boards || data.boards.length === 0) return null;
+      return data.boards[0];
+    }
+
+    const { data } = await fetchGraphQL<BoardQueryResult>(LATEST_BOARD_QUERY);
     if (!data?.boards || data.boards.length === 0) return null;
     return data.boards[0];
+  } catch (error) {
+    console.error("Failed to fetch board data", error);
+    return null;
   }
-
-  const { data } = await fetchGraphQL<BoardQueryResult>(LATEST_BOARD_QUERY);
-  if (!data?.boards || data.boards.length === 0) return null;
-  return data.boards[0];
 }
 
 async function getAllBoardYears(): Promise<number[]> {
-  const { data } = await fetchGraphQL<BoardYearsQueryResult>(
-    ALL_BOARD_YEARS_QUERY,
-  );
-  if (!data?.boards) return [];
-  return data.boards.map((board) => board.year);
+  try {
+    const { data } = await fetchGraphQL<BoardYearsQueryResult>(
+      ALL_BOARD_YEARS_QUERY,
+    );
+    if (!data?.boards) return [];
+    return data.boards.map((board) => board.year);
+  } catch (error) {
+    console.error("Failed to fetch board years", error);
+    return [];
+  }
 }
 
 export async function generateStaticParams() {

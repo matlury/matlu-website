@@ -3,6 +3,7 @@ export type Styles = {
   appFooterSection: string;
   calendarEvents: string;
   footerBottom: string;
+  footerMarquee: string;
   matluSome: string;
 };
 

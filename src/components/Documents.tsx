@@ -1,7 +1,7 @@
 import { Language } from "../utils";
-import styles from "./Documents.module.scss";
 import { fetchGraphQL } from "../lib/strapi";
 import { gql } from "@apollo/client";
+import styles from "./Documents.module.scss";
 
 interface DocumentNode {
   documentId: string;

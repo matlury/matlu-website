@@ -2,8 +2,8 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import styles from "./Nav.module.scss";
 import { LocalizedLink } from "../utils";
+import styles from "./Nav.module.scss";
 
 interface LocalizedNavProps {
   localizedLinks: LocalizedLink;
@@ -23,7 +23,7 @@ const NavLink = ({
   href,
   children,
   partiallyActive = false,
-  className = styles.navLink,
+  className,
 }: {
   href: string;
   children: React.ReactNode;
@@ -38,7 +38,7 @@ const NavLink = ({
   return (
     <Link
       href={href}
-      className={`${className} ${isActive ? "active-navlink" : ""}`}
+      className={`${styles.navLink} ${isActive ? styles.navLinkActive : ""} ${className || ""}`}
     >
       {children}
     </Link>

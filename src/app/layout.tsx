@@ -1,8 +1,12 @@
 import React from "react";
 import "../style.scss"; // Global styles
+import "./globals.css";
 import { Metadata, Viewport } from "next";
-import { Open_Sans } from "next/font/google";
+import { Open_Sans, Geist } from "next/font/google";
 import ExternalStyles from "@/components/ExternalStyles";
+import { cn } from "@/lib/utils";
+
+const geist = Geist({subsets:['latin'],variable:'--font-sans'});
 
 const openSans = Open_Sans({
   subsets: ["latin"],
@@ -47,7 +51,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="fi" className={openSans.variable}>
+    <html lang="fi" className={cn("font-sans", geist.variable)}>
       <head>
         <link
           rel="preload"
@@ -65,7 +69,9 @@ export default function RootLayout({
         />
         <ExternalStyles />
       </head>
-      <body className={openSans.className}>{children}</body>
+      <body className={openSans.className}>
+        {children}
+      </body>
     </html>
   );
 }

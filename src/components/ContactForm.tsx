@@ -1,9 +1,9 @@
 "use client";
 
 import React, { useEffect, useState, useRef } from "react";
-import styles from "./ContactForm.module.scss";
 import { Language } from "../utils";
 import ReCAPTCHA from "react-google-recaptcha";
+import styles from "./ContactForm.module.scss";
 
 interface ContactFormProps {
   lang: Language;
@@ -81,7 +81,10 @@ export const ContactForm: React.FC<ContactFormProps> = ({ lang }) => {
           </div>
         )}
         <div className={styles.contactFormGroup}>
-          <button type="submit" disabled={!loaded || !verified}>
+          <button
+            type="submit"
+            disabled={!loaded || !verified}
+          >
             {isFi ? "Lähetä" : "Send"}
           </button>
         </div>

@@ -1,5 +1,6 @@
 export type Styles = {
   nav: string;
+  navLinkActive: string;
   navLink: string;
 };
 

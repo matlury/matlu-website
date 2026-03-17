@@ -22,8 +22,12 @@ interface PageData {
 
 interface DynamicPageQueryResult {
   data: PageData[];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   meta: any;
 }
+
+type DynamicPageParams = { page: string };
+type DynamicPageParamsInput = Promise<DynamicPageParams> | DynamicPageParams;
 
 const ALL_PAGES_QUERY = {
   filters: { Draft: { $eq: false }, page: { $notIn: ["home", "board"] } },
@@ -31,40 +35,50 @@ const ALL_PAGES_QUERY = {
 };
 
 async function getPageData(pageSlug: string) {
-  const queryParams = {
-    filters: { page: { $eq: pageSlug }, Draft: { $eq: false } },
-    populate: "*",
-  };
-  const result = await fetchStrapi<DynamicPageQueryResult>(
-    "pages",
-    queryParams,
-  );
-  if (!result?.data || result.data.length === 0) return null;
-  return result.data[0];
+  try {
+    const queryParams = {
+      filters: { page: { $eq: pageSlug }, Draft: { $eq: false } },
+      populate: "*",
+    };
+    const result = await fetchStrapi<DynamicPageQueryResult>(
+      "pages",
+      queryParams,
+    );
+    if (!result?.data || result.data.length === 0) return null;
+    return result.data[0];
+  } catch (error) {
+    console.error(`Failed to fetch page data for slug: ${pageSlug}`, error);
+    return null;
+  }
 }
 
 export async function generateStaticParams() {
-  const result = await fetchStrapi<DynamicPageQueryResult>(
-    "pages",
-    ALL_PAGES_QUERY,
-  );
+  try {
+    const result = await fetchStrapi<DynamicPageQueryResult>(
+      "pages",
+      ALL_PAGES_QUERY,
+    );
 
-  const params: Array<{ page: string }> = [];
-  if (result?.data) {
-    result.data.forEach((page: PageData) => {
-      if (page.page) {
-        params.push({ page: page.page });
-      }
-    });
+    const params: Array<{ page: string }> = [];
+    if (result?.data) {
+      result.data.forEach((page: PageData) => {
+        if (page.page) {
+          params.push({ page: page.page });
+        }
+      });
+    }
+
+    return params;
+  } catch (error) {
+    console.error("Failed to generate static params for /[page]", error);
+    return [];
   }
-
-  return params;
 }
 
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ page: string }>;
+  params: DynamicPageParamsInput;
 }): Promise<Metadata> {
   const lang = "fi";
   const { page: pageSlug } = await params;
@@ -102,10 +116,10 @@ export async function generateMetadata({
 }
 
 interface DynamicPageProps {
-  params: Promise<{ page: string }>;
+  params: DynamicPageParamsInput;
 }
 
-const DynamicPage = async ({ params }: DynamicPageProps) => {
+export default async function DynamicPage({ params }: DynamicPageProps) {
   const lang = "fi";
   const { page: pageSlug } = await params;
   const page = await getPageData(pageSlug);
@@ -137,6 +151,4 @@ const DynamicPage = async ({ params }: DynamicPageProps) => {
 
     </MainLayout>
   );
-};
-
-export default DynamicPage;
+}

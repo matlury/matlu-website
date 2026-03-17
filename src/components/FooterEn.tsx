@@ -2,12 +2,14 @@ import { MatluDocuments } from "./Documents";
 import styles from "./Footer.module.scss";
 import Image from "./image";
 import { Language } from "../utils";
+import MemberLogosMarquee, { FooterLogo } from "./MemberLogosMarquee";
 
 interface LocalizedFooterProps {
   language: Language;
+  logos: FooterLogo[];
 }
 
-export const FooterEn: React.FC<LocalizedFooterProps> = ({ language }) => (
+export const FooterEn: React.FC<LocalizedFooterProps> = ({ language, logos }) => (
   <footer className={styles.appFooter}>
     <div className={styles.appFooterSection}>
       <h4>Documents</h4>
@@ -43,6 +45,9 @@ export const FooterEn: React.FC<LocalizedFooterProps> = ({ language }) => (
           <Image imageName="loimu" />
         </li>
       </ul>
+    </div>
+    <div className={styles.footerMarquee}>
+      <MemberLogosMarquee logos={logos} />
     </div>
     <div className={styles.footerBottom}>
       &copy; {new Date().getFullYear()} Matlu ry

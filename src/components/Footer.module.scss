@@ -54,3 +54,9 @@ ul.matluSome {
   text-align: center;
   font-size: 0.75em;
 }
+
+.footerMarquee {
+  grid-column: 1 / 4;
+  width: 100%;
+  padding: 6px 12px 16px;
+}

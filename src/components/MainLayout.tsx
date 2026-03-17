@@ -1,10 +1,10 @@
 import React from "react";
-import styles from "./Layout.module.scss";
-import logoStyles from "./LogoWrapper.module.scss";
 import { Nav } from "./Nav";
 import { Footer } from "./Footer";
 import Image from "./image";
 import { Language, LocalizedLink } from "../utils";
+import styles from "./Layout.module.scss";
+import logoStyles from "./LogoWrapper.module.scss";
 
 interface MainLayoutProps {
   children: React.ReactNode;
