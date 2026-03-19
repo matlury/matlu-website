@@ -1,4 +1,6 @@
 import { type ComponentPropsWithoutRef } from "react";
+import { Box } from "@chakra-ui/react";
+import { keyframes } from "@emotion/react";
 
 interface MarqueeProps extends ComponentPropsWithoutRef<"div"> {
   /**
@@ -52,37 +54,49 @@ export function Marquee({
   gap = 16,
   ...props
 }: MarqueeProps) {
+  const marqueeHorizontal = keyframes`
+    from { transform: translateX(0); }
+    to { transform: translateX(calc(-100% - var(--gap))); }
+  `;
+
+  const marqueeVertical = keyframes`
+    from { transform: translateY(0); }
+    to { transform: translateY(calc(-100% - var(--gap))); }
+  `;
+
   const marqueeStyle = {
     "--duration": `${duration}s`,
     "--gap": `${gap}px`,
   } as React.CSSProperties;
 
-  const rootClassName = [
-    "group flex gap-[var(--gap)] overflow-hidden p-2",
-    vertical ? "flex-col" : "flex-row",
-    className,
-  ]
-    .filter(Boolean)
-    .join(" ");
-
-  const itemClassName = [
-    "flex shrink-0 justify-around gap-[var(--gap)]",
-    vertical ? "animate-marquee-vertical flex-col" : "animate-marquee flex-row",
-    pauseOnHover ? "group-hover:[animation-play-state:paused]" : "",
-    reverse ? "[animation-direction:reverse]" : "",
-  ]
-    .filter(Boolean)
-    .join(" ");
-
   return (
-    <div {...props} className={rootClassName} style={marqueeStyle}>
+    <Box
+      {...props}
+      className={className}
+      style={marqueeStyle}
+      display="flex"
+      flexDirection={vertical ? "column" : "row"}
+      gap="var(--gap)"
+      overflow="hidden"
+      p={2}
+    >
       {Array(repeat)
         .fill(0)
         .map((_, i) => (
-          <div key={i} className={itemClassName}>
+          <Box
+            key={i}
+            display="flex"
+            flexDirection={vertical ? "column" : "row"}
+            flexShrink={0}
+            justifyContent="space-around"
+            gap="var(--gap)"
+            animation={`${vertical ? marqueeVertical : marqueeHorizontal} var(--duration, 40s) linear infinite`}
+            animationDirection={reverse ? "reverse" : "normal"}
+            _hover={pauseOnHover ? { animationPlayState: "paused" } : undefined}
+          >
             {children}
-          </div>
+          </Box>
         ))}
-    </div>
+    </Box>
   );
 }

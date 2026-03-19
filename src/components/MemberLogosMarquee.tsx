@@ -1,5 +1,6 @@
 "use client";
 
+import { Box } from "@chakra-ui/react";
 import { Marquee } from "@/components/ui/marquee";
 
 export interface FooterLogo {
@@ -19,8 +20,17 @@ export default function MemberLogosMarquee({ logos = [] }: MemberLogosMarqueePro
   }
 
   return (
-    <div className="relative overflow-hidden">
-      <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-gradient-to-r from-brand-600 to-transparent" />
+    <Box position="relative" overflow="hidden">
+      <Box
+        pointerEvents="none"
+        position="absolute"
+        top={0}
+        bottom={0}
+        left={0}
+        zIndex={10}
+        width="64px"
+        bgGradient="linear(to-r, #0149bc, transparent)"
+      />
       <Marquee pauseOnHover duration={28} gap={28}>
         {logos.map((logo) => (
           <a
@@ -29,7 +39,7 @@ export default function MemberLogosMarquee({ logos = [] }: MemberLogosMarqueePro
             target="_blank"
             rel="noopener noreferrer"
             aria-label={logo.name}
-            className="inline-flex items-center"
+            style={{ display: "inline-flex", alignItems: "center" }}
           >
             <img
               src={logo.src}
@@ -40,7 +50,16 @@ export default function MemberLogosMarquee({ logos = [] }: MemberLogosMarqueePro
           </a>
         ))}
       </Marquee>
-      <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-gradient-to-l from-brand-600 to-transparent" />
-    </div>
+      <Box
+        pointerEvents="none"
+        position="absolute"
+        top={0}
+        bottom={0}
+        right={0}
+        zIndex={10}
+        width="64px"
+        bgGradient="linear(to-l, #0149bc, transparent)"
+      />
+    </Box>
   );
 }

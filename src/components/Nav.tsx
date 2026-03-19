@@ -41,7 +41,13 @@ const NAV_QUERY = gql`
 `;
 
 export const Nav = async ({ language, localizedLinks }: NavProps) => {
-  const { data } = await fetchGraphQL<NavQueryResult>(NAV_QUERY);
+  let data;
+  try {
+    const response = await fetchGraphQL<NavQueryResult>(NAV_QUERY);
+    data = response.data;
+  } catch (err) {
+    console.error("Failed to load navigation links", err);
+  }
 
   const links = (data?.pages || []).map((node) => ({
     id: node.documentId,

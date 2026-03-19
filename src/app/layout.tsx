@@ -1,12 +1,13 @@
 import React from "react";
 import "../style.scss"; // Global styles
 import "./globals.css";
+import "leaflet/dist/leaflet.css";
 import { Metadata, Viewport } from "next";
 import { Open_Sans, Geist } from "next/font/google";
 import ExternalStyles from "@/components/ExternalStyles";
-import { cn } from "@/lib/utils";
+import ChakraProvider from "@/components/ChakraProvider";
 
-const geist = Geist({subsets:['latin'],variable:'--font-sans'});
+const geist = Geist({ subsets: ['latin'], variable: '--font-sans' });
 
 const openSans = Open_Sans({
   subsets: ["latin"],
@@ -25,8 +26,17 @@ export const metadata: Metadata = {
     canonical: "/",
   },
   icons: {
-    icon: "/logos/matlu.png",
-    apple: "/logos/matlu.png",
+    icon: [
+      { url: "/logos/favicon-96x96.png", sizes: "96x96", type: "image/png" },
+      { url: "/logos/favicon.svg", type: "image/svg+xml" },
+      { url: "/logos/favicon.ico" }
+    ],
+    shortcut: "/logos/favicon.ico",
+    apple: { url: "/logos/apple-touch-icon.png", sizes: "180x180" },
+  },
+  manifest: "/logos/site.webmanifest",
+  appleWebApp: {
+    title: "Matlu",
   },
   openGraph: {
     type: "website",
@@ -45,13 +55,16 @@ export const metadata: Metadata = {
   },
 };
 
+import EmotionRegistry from "@/lib/emotion-registry";
+import StyledComponentsRegistry from "@/lib/registry";
+
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   return (
-    <html lang="fi" className={cn("font-sans", geist.variable)}>
+    <html lang="fi" className={`${geist.variable} font-sans`} suppressHydrationWarning>
       <head>
         <link
           rel="preload"
@@ -70,7 +83,11 @@ export default function RootLayout({
         <ExternalStyles />
       </head>
       <body className={openSans.className}>
-        {children}
+        <EmotionRegistry>
+          <StyledComponentsRegistry>
+            <ChakraProvider>{children}</ChakraProvider>
+          </StyledComponentsRegistry>
+        </EmotionRegistry>
       </body>
     </html>
   );

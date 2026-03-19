@@ -1,9 +1,12 @@
 export type Styles = {
-  eventLocation: string;
-  eventTime: string;
+  calendarContainer: string;
+  detailItem: string;
+  eventCard: string;
+  eventContent: string;
+  eventDetails: string;
+  eventHeader: string;
   eventTitle: string;
-  matluEvent: string;
-  matluEvents: string;
+  mapAction: string;
 };
 
 export type ClassNames = keyof Styles;

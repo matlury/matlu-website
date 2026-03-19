@@ -11,6 +11,7 @@ This is the official website for Matlu ry, built with Next.js, TypeScript, and S
 - [Testing](#testing)
 - [Environment Variables](#environment-variables)
 - [Image Optimization](#image-optimization)
+- [Event Request Flow](#event-request-flow)
 - [Deployment](#deployment)
 - [License](#license)
 
@@ -93,6 +94,31 @@ npm test
 
 - Next.js image optimization is configured for both local and production Strapi uploads
 - Update `next.config.ts` to add your production Strapi URL when deploying
+
+## Event Request Flow
+
+Public users can submit event additions from the events page. The flow is:
+
+1. Open the "Add event" dialog on `/events` or `/en/events`.
+2. Fill event details (name, times, titles, optional location text, optional link, optional descriptions).
+3. Optionally set exact location coordinates:
+	- Click on the embedded map picker (react-leaflet), or
+	- Enter latitude/longitude manually.
+4. Optionally use location autocomplete suggestions. Suggestions are fetched from Strapi endpoint:
+	- `GET /api/event-locations/suggestions`
+	- This list is a separate location index and only contains entries indexed from approved requests.
+5. Submit to:
+	- `POST /api/event-requests/submit`
+6. After approval in CMS, the event appears in website listings.
+7. If approved event has coordinates, event cards can show a click-to-open map dialog (to avoid cluttering the main event list).
+
+Notes:
+
+- The website supports two location modes:
+  - Location text only
+  - Location text + coordinates
+- Leaflet CSS is loaded in app layout for map rendering.
+- Coordinates are optional and validated before submit.
 
 ## Deployment
 

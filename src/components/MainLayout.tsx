@@ -1,10 +1,9 @@
 import React from "react";
 import { Nav } from "./Nav";
 import { Footer } from "./Footer";
-import Image from "./image";
 import { Language, LocalizedLink } from "../utils";
+import MatluLogo from "./MatluLogo";
 import styles from "./Layout.module.scss";
-import logoStyles from "./LogoWrapper.module.scss";
 
 interface MainLayoutProps {
   children: React.ReactNode;
@@ -26,9 +25,7 @@ export const MainLayout = ({
 
   return (
     <>
-      <div className={logoStyles.logoWrapper}>
-        <Image imageName="matlu" />
-      </div>
+      <MatluLogo />
       {!hideNav && (
         <Nav language={lang} localizedLinks={defaultLocalizedLinks} />
       )}

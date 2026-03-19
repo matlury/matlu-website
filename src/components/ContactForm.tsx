@@ -1,20 +1,19 @@
 "use client";
 
 import React, { useEffect, useState, useRef } from "react";
-import { Language } from "../utils";
 import ReCAPTCHA from "react-google-recaptcha";
-import styles from "./ContactForm.module.scss";
+import styled from "styled-components";
+import { Language } from "../utils";
+import { TextareaInput } from "./ui/TextareaInput";
+import { CONTACT_TEXT } from "@/locales/contact";
+import { API_ENDPOINTS, RECAPTCHA_SITE_KEY } from "@/api";
 
 interface ContactFormProps {
   lang: Language;
 }
 
-const RECAPTCHA_SITE_KEY =
-  process.env.NEXT_PUBLIC_GATSBY_RECAPTCHA_SITE_KEY || "";
-const FEEDBACK_FORM_HANDLER =
-  process.env.NEXT_PUBLIC_FEEDBACK_FORM_HANDLER_URL || "";
-
 export const ContactForm: React.FC<ContactFormProps> = ({ lang }) => {
+  const t = CONTACT_TEXT[lang];
   const [verified, setVerified] = useState(false);
   const [loaded, setLoaded] = useState(false);
   const recaptchaRef = useRef<ReCAPTCHA>(null);
@@ -28,69 +27,103 @@ export const ContactForm: React.FC<ContactFormProps> = ({ lang }) => {
     }
   }, []);
 
-  const isFi = lang === "fi";
-
   return (
-    <section>
-      <h1>{isFi ? "Yhteydenottolomake" : "Contact form"}</h1>
-      <p>
-        {isFi ? (
-          <>
-            Yhteydenottolomake on anonyymi, ja välitetään Matlun hallitukselle
-            sähköpostitse. Voit halutessasi jättää viestiin yhteystietosi, jos
-            haluat vastauksen yhteydenottoosi.
-          </>
-        ) : (
-          <>
-            The contact form is anonymous, and will be sent to the board of
-            Matlu via email. Optionally, you can choose to leave your contact
-            information, if you want an answer to your contact request.
-          </>
-        )}
-      </p>
-      <form
-        action={FEEDBACK_FORM_HANDLER}
+    <Section>
+      <Title>{t.title}</Title>
+      <Description>{t.description}</Description>
+
+      <Form
+        action={API_ENDPOINTS.FEEDBACK_FORM_HANDLER}
         method="POST"
-        className={styles.contactForm}
       >
-        <div className={styles.contactFormGroup}>
-          <label htmlFor="contactmsg">{isFi ? "Viesti" : "Message"}</label>
-          <textarea
-            id="contactmsg"
-            name="message"
-            cols={80}
-            rows={10}
-            placeholder={
-              isFi ? "Kirjoita viestisi..." : "Write your message..."
-            }
-          />
-        </div>
+        <TextareaInput
+          id="contactmsg"
+          name="message"
+          label={t.messageLabel}
+          placeholder={t.messagePlaceholder}
+          rows={10}
+          required
+        />
+
         {RECAPTCHA_SITE_KEY && (
-          <div className={styles.contactFormGroup}>
+          <RecaptchaWrapper>
             <ReCAPTCHA
               ref={recaptchaRef}
               sitekey={RECAPTCHA_SITE_KEY}
               onChange={(value) => {
-                if (value) {
-                  setVerified(true);
-                } else {
-                  setVerified(false);
-                }
+                setVerified(!!value);
               }}
             />
-          </div>
+          </RecaptchaWrapper>
         )}
-        <div className={styles.contactFormGroup}>
-          <button
-            type="submit"
-            disabled={!loaded || !verified}
-          >
-            {isFi ? "Lähetä" : "Send"}
-          </button>
-        </div>
-      </form>
-    </section>
+
+        <SubmitButton
+          type="submit"
+          disabled={!loaded || !verified}
+        >
+          {t.send}
+        </SubmitButton>
+      </Form>
+    </Section>
   );
 };
+
+const Section = styled.section`
+  max-width: 800px;
+`;
+
+const Title = styled.h1`
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: #0f172a;
+`;
+
+const Description = styled.p`
+  margin-bottom: 2rem;
+  line-height: 1.6;
+  color: #475569;
+`;
+
+const Form = styled.form`
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  max-width: 600px;
+`;
+
+const RecaptchaWrapper = styled.div`
+  margin: 0.5rem 0;
+`;
+
+const SubmitButton = styled.button`
+  background-color: #0149bc;
+  color: white;
+  border: 0;
+  border-radius: 6px;
+  font-weight: 700;
+  height: 48px;
+  padding: 0 2rem;
+  font-size: 1rem;
+  width: fit-content;
+  transition: all 0.2s;
+
+  &:hover:not(:disabled) {
+    cursor: pointer;
+    background-color: #003a96;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(1, 73, 188, 0.2);
+  }
+
+  &:active:not(:disabled) {
+    transform: translateY(0);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background-color: #94a3b8;
+  }
+`;
 
 export default ContactForm;

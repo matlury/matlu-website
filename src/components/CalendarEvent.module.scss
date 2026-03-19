@@ -1,24 +1,112 @@
+@use "sass:color";
 @use "../vars";
 
-.matlu-events {
-  list-style-type: none;
-}
-
-.matlu-event {
-  min-height: 50px;
-  padding-left: 8px;
-  margin-top: 8px;
-  margin-bottom: 8px;
+.calendarContainer {
   display: flex;
   flex-direction: column;
-  border-left: 3px solid vars.$main-color;
+  gap: 1.25rem;
+  margin: 1.5rem 0;
+}
 
-  .event-title {
-    font-size: 1.1em;
+.eventCard {
+  background: #ffffff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+  border: 1px solid #e2e8f0;
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s ease;
+  display: flex;
+  position: relative;
+
+  &::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 6px;
+    background: linear-gradient(to bottom, vars.$main-color, color.adjust(vars.$main-color, $lightness: -15%));
   }
 
-  .event-time,
-  .event-location {
-    font-size: 0.8em;
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    border-color: vars.$main-color;
+  }
+}
+
+.eventContent {
+  padding: 1.25rem 1.5rem;
+  padding-left: 2rem;
+  width: 100%;
+}
+
+.eventHeader {
+  margin-bottom: 0.75rem;
+}
+
+.eventTitle {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #1e293b;
+  line-height: 1.3;
+
+  a {
+    color: inherit;
+    text-decoration: none;
+    transition: color 0.15s ease;
+
+    &:hover {
+      color: vars.$main-color;
+    }
+  }
+}
+
+.eventDetails {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem 1.5rem;
+  margin-top: 0.5rem;
+}
+
+.detailItem {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  color: #64748b;
+
+  svg {
+    color: vars.$main-color;
+    flex-shrink: 0;
+  }
+}
+
+.mapAction {
+  margin-top: 1rem;
+
+  button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 0.875rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #475569;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+
+    &:hover {
+      background: #f1f5f9;
+      border-color: #cbd5e1;
+      color: #1e293b;
+    }
+
+    svg {
+      color: vars.$main-color;
+    }
   }
 }

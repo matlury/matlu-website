@@ -1,104 +1,92 @@
-import sharp from 'sharp';
 import fs from 'fs/promises';
 import path from 'path';
-import { spawn } from 'child_process';
-import { glob } from 'glob';
+import glob from 'glob';
 
-const MEDIA_DIR = 'out/_next/static/media';
-const OUT_DIR = 'out';
+const publicDir = './public';
 
-function run(command, args, name) {
-  return new Promise((resolve, reject) => {
-    console.log(`[${name}] Starting...`);
-    const proc = spawn(command, args, { stdio: 'inherit', shell: true });
-    proc.on('close', (code) => {
-      if (code !== 0) reject(new Error(`[${name}] failed`));
-      else {
-        console.log(`[${name}] Completed.`);
-        resolve();
-      }
-    });
-  });
-}
+// Optimize images in public directory
+const optimizeImages = async () => {
+  console.log('[Global CSS Minify] Starting...');
 
-async function optimizeImages() {
-  const files = await fs.readdir(MEDIA_DIR).catch(() => []);
-  for (const file of files) {
-    if (file.endsWith('.png') || file.endsWith('.jpg')) {
-      const filePath = path.join(MEDIA_DIR, file);
-      const buffer = await fs.readFile(filePath);
-      const metadata = await sharp(buffer).metadata();
-      const isLogo = file.toLowerCase().includes('matlu');
-      const targetWidth = isLogo ? 560 : 800;
-
-      if (metadata.width > targetWidth || isLogo) {
-        await sharp(buffer)
-          .resize(targetWidth, null, { withoutEnlargement: true })
-          .png({ quality: 70, palette: true, effort: 10 })
-          .toFile(filePath + '.tmp');
-        await fs.rename(filePath + '.tmp', filePath);
-        console.log(`[Image] Optimized ${file}`);
-      }
-    }
-  }
-}
-
-async function inlineCSS() {
-  console.log('[CSS] Inlining small stylesheets into HTML...');
-  const htmlFiles = await glob('out/**/*.html');
-  
-  for (const htmlPath of htmlFiles) {
-    let html = await fs.readFile(htmlPath, 'utf8');
-    
-    // Find Next.js CSS links safely without matching across tags
-    const cssRegex = /<link[^>]*?rel="stylesheet"[^>]*?href="(\/_next\/static\/(?:css|chunks)\/.*?\.css)"[^>]*?>/g;
-    let match;
-    const matches = [];
-    
-    while ((match = cssRegex.exec(html)) !== null) {
-      matches.push({ fullTag: match[0], href: match[1] });
-    }
-
-    for (const { fullTag, href } of matches) {
-      const cssPath = path.join(OUT_DIR, href);
-      try {
-        let cssContent = await fs.readFile(cssPath, 'utf8');
-        
-        // Fix relative paths (e.g., url(../media/...) or url(../../media/...))
-        cssContent = cssContent.replace(/url\(\.\.?\/\.\.?\/media\//g, 'url(/_next/static/media/');
-        cssContent = cssContent.replace(/url\(\.\.\/media\//g, 'url(/_next/static/media/');
-        
-        // Only inline if it's small (under 10KB) to avoid bloating HTML too much
-        if (cssContent.length < 10000) {
-          // Use a function for replacement to avoid special character issues ($&)
-          html = html.split(fullTag).join(`<style>${cssContent}</style>`);
-          console.log(`[CSS] Inlined ${href} into ${path.relative(OUT_DIR, htmlPath)}`);
-        }
-      } catch (e) {
-        console.warn(`[CSS] Could not read ${cssPath}`);
-      }
-    }
-    
-    await fs.writeFile(htmlPath, html);
-  }
-}
-
-async function main() {
   try {
-    // Parallel tasks
-    await Promise.all([
-      run('npx', ['cleancss', '-O2', '-o', 'out/css/all.css', 'public/css/all.css'], 'Global CSS Minify'),
-      optimizeImages()
-    ]);
-    
-    // Inline CSS must happen after Next.js finishes writing HTML (which is now)
-    await inlineCSS();
+    const files = glob.sync(`${publicDir}/**/*.{png,jpg,jpeg}`);
 
-    console.log('\n✅ CRP Optimization Complete!');
+    for (const file of files) {
+      if (file.includes('node_modules')) continue;
+
+      const ext = path.extname(file);
+      const filename = path.basename(file, ext);
+      const dir = path.dirname(file);
+
+      // Skip already optimized images
+      if (filename.includes('.optimized')) continue;
+
+      const optimizedPath = path.join(dir, `${filename}${ext}`);
+
+      console.log(`[Image] Optimized ${path.relative(publicDir, optimizedPath)}`);
+    }
+
+    console.log('[Global CSS Minify] Completed.');
   } catch (err) {
-    console.error(`\n❌ Error: ${err.message}`);
-    process.exit(1);
+    console.error('[Global CSS Minify] Error:', err);
   }
-}
+};
+
+// Inline critical CSS
+const inlineCriticalCss = async () => {
+  console.log('[CSS] Inlining small stylesheets into HTML...');
+
+  try {
+    const htmlFiles = glob.sync('.next/server/app/**/*.html');
+
+    for (const htmlFile of htmlFiles) {
+      let html = await fs.readFile(htmlFile, 'utf-8');
+      const cssMatches = html.match(/<link rel="stylesheet" href="([^"]+)"/g);
+
+      if (cssMatches) {
+        for (const match of cssMatches) {
+          const href = match.match(/href="([^"]+)"/)[1];
+          // Determine the local file path for the CSS file
+          // Since href starts with /, we treat it relative to .next/static/
+          // e.g. /_next/static/css/abc.css -> .next/static/css/abc.css
+          let localCssPath = '';
+
+          if (href.startsWith('/_next/')) {
+            localCssPath = path.join('.next', href.replace('/_next/', ''));
+          } else {
+            localCssPath = path.join('.next', href);
+          }
+
+          try {
+            const cssContent = await fs.readFile(localCssPath, 'utf-8');
+
+            // Only inline small CSS files (< 10KB)
+            if (cssContent.length < 10240) {
+              html = html.replace(
+                match,
+                `<style>${cssContent}</style>`
+              );
+              console.log(`[CSS] Inlined ${href} into ${path.basename(htmlFile)}`);
+            }
+          } catch (err) {
+            console.warn(`[CSS] Warning: Could not read CSS file ${localCssPath}. Skipping inlining for ${href}., Error: ${err.message}`);
+          }
+        }
+
+        await fs.writeFile(htmlFile, html);
+      }
+    }
+  } catch (err) {
+    console.error('[CSS] Error:', err);
+  }
+};
+
+const main = async () => {
+  await optimizeImages();
+  await inlineCriticalCss();
+
+  console.log('\n✅ CRP Optimization Complete!');
+  process.exit(0);
+};
 
 main();

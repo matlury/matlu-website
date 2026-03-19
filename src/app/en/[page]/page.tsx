@@ -5,6 +5,7 @@ import { fetchStrapi } from "../../../lib/strapi";
 import { Metadata } from "next";
 import CalendarEvents from "../../../components/CalendarEvents";
 import ContactForm from "../../../components/ContactForm";
+import EventRequestForm from "../../../components/EventRequestForm";
 import { MainLayout } from "../../../components/MainLayout";
 
 interface PageData {
@@ -152,6 +153,7 @@ export default async function DynamicPage({
     <MainLayout lang={lang} localizedLinks={localizedLinks}>
       {isEventsPage && <h1>Upcoming events</h1>}
       {isEventsPage && <CalendarEvents language={lang} showAll />}
+      {isEventsPage && <EventRequestForm lang={lang} />}
       {isContactPage && <ContactForm lang={lang} />}
       <ReactMarkdown remarkPlugins={[remarkGfm]}>{body}</ReactMarkdown>
     </MainLayout>

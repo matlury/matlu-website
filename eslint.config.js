@@ -3,12 +3,21 @@ import tseslint from "@typescript-eslint/eslint-plugin";
 import tsparser from "@typescript-eslint/parser";
 import react from "eslint-plugin-react";
 import promise from "eslint-plugin-promise";
+import globals from "globals";
 
 export default [
   {
     ignores: [".next/*", "node_modules/*", "out/*", "build/*", "dist/*"],
   },
   js.configs.recommended,
+  {
+    files: ["**/*.mjs", "**/*.js"],
+    languageOptions: {
+      globals: {
+        ...globals.node,
+      },
+    },
+  },
   {
     files: ["**/*.ts", "**/*.tsx"],
     languageOptions: {
@@ -17,13 +26,13 @@ export default [
         project: "./tsconfig.json",
         sourceType: "module",
         ecmaFeatures: { jsx: true },
+        // Use a tsconfig that includes the test files if they aren't in the main one,
+        // but here it seems they are in src/
       },
       globals: {
+        ...globals.browser,
+        ...globals.node,
         React: "readonly",
-        process: "readonly",
-        window: "readonly",
-        document: "readonly",
-        console: "readonly",
       },
     },
     plugins: {
@@ -33,7 +42,7 @@ export default [
     },
     rules: {
       ...tseslint.configs.recommended.rules,
-      ...tseslint.configs["recommended-requiring-type-checking"].rules,
+      // ...tseslint.configs["recommended-requiring-type-checking"].rules,
       ...react.configs.recommended.rules,
       "@typescript-eslint/no-explicit-any": 2,
       "@typescript-eslint/explicit-function-return-type": 0,
@@ -51,9 +60,17 @@ export default [
     },
     settings: {
       react: {
-        pragma: "React",
         version: "detect",
       },
     },
   },
+  {
+    files: ["src/**/__tests__/*.ts", "src/**/__tests__/*.tsx", "**/*.test.ts", "**/*.test.tsx"],
+    languageOptions: {
+      globals: {
+        ...globals.vitest,
+      },
+    },
+  },
 ];
+

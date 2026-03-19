@@ -7,11 +7,10 @@ import {
 import { setContext } from "@apollo/client/link/context";
 import qs from "qs";
 
-const STRAPI_URL = (process.env.API_URL || "http://localhost:1337").replace(
+const STRAPI_URL = (process.env.API_URL || "http://127.0.0.1:1337").replace(
   /\/$/,
   "",
 );
-/* global fetch */
 const STRAPI_GRAPHQL_URL = `${STRAPI_URL}/graphql`;
 const STRAPI_TOKEN = process.env.ACCESS_TOKEN;
 
@@ -47,13 +46,13 @@ function extractErrorDetails(error: unknown) {
       stack: error.stack,
       cause: maybeCause
         ? {
-            code: typeof maybeCause.code === "string" ? maybeCause.code : undefined,
-            errno: typeof maybeCause.errno === "number" ? maybeCause.errno : undefined,
-            syscall:
-              typeof maybeCause.syscall === "string"
-                ? maybeCause.syscall
-                : undefined,
-          }
+          code: typeof maybeCause.code === "string" ? maybeCause.code : undefined,
+          errno: typeof maybeCause.errno === "number" ? maybeCause.errno : undefined,
+          syscall:
+            typeof maybeCause.syscall === "string"
+              ? maybeCause.syscall
+              : undefined,
+        }
         : undefined,
     };
   }

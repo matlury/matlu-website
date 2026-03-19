@@ -5,6 +5,7 @@ import { fetchStrapi } from "../../lib/strapi";
 import { Metadata } from "next";
 import CalendarEvents from "../../components/CalendarEvents";
 import ContactForm from "../../components/ContactForm";
+import EventRequestForm from "../../components/EventRequestForm";
 import { MainLayout } from "../../components/MainLayout";
 
 interface PageData {
@@ -20,10 +21,29 @@ interface PageData {
   Draft: boolean;
 }
 
+interface LocationSuggestion {
+  documentId: string;
+  label_fi: string;
+  label_en: string;
+  latitude: number | null;
+  longitude: number | null;
+}
+
+interface TitleSuggestion {
+  fi: string;
+  en: string;
+}
+
 interface DynamicPageQueryResult {
   data: PageData[];
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  meta: any;
+  meta: {
+    pagination?: {
+      page: number;
+      pageSize: number;
+      pageCount: number;
+      total: number;
+    };
+  };
 }
 
 type DynamicPageParams = { page: string };
@@ -137,6 +157,23 @@ export default async function DynamicPage({ params }: DynamicPageProps) {
   const isEventsPage = pageSlug === "events";
   const isContactPage = pageSlug === "contact";
 
+  let locationSuggestions: LocationSuggestion[] = [];
+  let titleSuggestions: TitleSuggestion[] = [];
+
+  if (isEventsPage) {
+    try {
+      // Fetch suggestions server-side during build using the token-authenticated fetchStrapi
+      const [locRes, titleRes] = await Promise.all([
+        fetchStrapi<{ data: LocationSuggestion[] }>("event-requests/suggestions"),
+        fetchStrapi<{ data: TitleSuggestion[] }>("event-requests/title-suggestions")
+      ]);
+      locationSuggestions = locRes.data || [];
+      titleSuggestions = titleRes.data || [];
+    } catch (error) {
+      console.error("Failed to fetch event suggestions during build", error);
+    }
+  }
+
   const localizedLinks = {
     fi: `/${pageSlug}/`,
     en: `/en/${pageSlug}/`,
@@ -146,9 +183,15 @@ export default async function DynamicPage({ params }: DynamicPageProps) {
     <MainLayout lang={lang} localizedLinks={localizedLinks}>
       {isEventsPage && <h1>Tulevat tapahtumat</h1>}
       {isEventsPage && <CalendarEvents language={lang} showAll />}
+      {isEventsPage && (
+        <EventRequestForm
+          lang={lang}
+          initialLocationSuggestions={locationSuggestions}
+          initialTitleSuggestions={titleSuggestions}
+        />
+      )}
       {isContactPage && <ContactForm lang={lang} />}
       <ReactMarkdown remarkPlugins={[remarkGfm]}>{body}</ReactMarkdown>
-
     </MainLayout>
   );
 }

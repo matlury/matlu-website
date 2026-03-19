@@ -1,7 +1,7 @@
 export type Styles = {
   nav: string;
-  navLinkActive: string;
   navLink: string;
+  navLinkActive: string;
 };
 
 export type ClassNames = keyof Styles;

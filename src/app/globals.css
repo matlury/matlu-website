@@ -1,6 +1,3 @@
-@tailwind components;
-@tailwind utilities;
-
 :root {
   --radius: 0.625rem;
 }
@@ -24,11 +21,3 @@
     transform: translateY(calc(-100% - var(--gap)));
   }
 }
-
-.animate-marquee {
-  animation: marquee var(--duration, 40s) linear infinite;
-}
-
-.animate-marquee-vertical {
-  animation: marquee-vertical var(--duration, 40s) linear infinite;
-  }

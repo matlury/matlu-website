@@ -1,5 +1,4 @@
-/* global describe, it, expect */
-import { fetchStrapi } from "../strapi";
+import { fetchStrapi } from "../../lib/strapi";
 
 type BoardResponse = {
   data: Array<{
