@@ -11,7 +11,8 @@ vi.mock('axios');
 // Mock reCAPTCHA
 vi.mock('react-google-recaptcha', () => {
   return {
-    default: React.forwardRef((props: any, ref: any) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    default: React.forwardRef(function MockRecaptcha(_props: unknown, ref: React.Ref<any>) {
       React.useImperativeHandle(ref, () => ({
         getValue: () => 'test-recaptcha-token',
         reset: () => {},
