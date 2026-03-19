@@ -1,6 +1,6 @@
 import fs from 'fs/promises';
 import path from 'path';
-import glob from 'glob';
+import { globSync } from 'glob';
 
 const publicDir = './public';
 
@@ -9,7 +9,7 @@ const optimizeImages = async () => {
   console.log('[Global CSS Minify] Starting...');
 
   try {
-    const files = glob.sync(`${publicDir}/**/*.{png,jpg,jpeg}`);
+    const files = globSync(`${publicDir}/**/*.{png,jpg,jpeg}`);
 
     for (const file of files) {
       if (file.includes('node_modules')) continue;
@@ -37,7 +37,7 @@ const inlineCriticalCss = async () => {
   console.log('[CSS] Inlining small stylesheets into HTML...');
 
   try {
-    const htmlFiles = glob.sync('.next/server/app/**/*.html');
+    const htmlFiles = globSync('.next/server/app/**/*.html');
 
     for (const htmlFile of htmlFiles) {
       let html = await fs.readFile(htmlFile, 'utf-8');
