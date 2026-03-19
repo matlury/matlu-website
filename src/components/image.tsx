@@ -4,9 +4,10 @@ import loimuImage from "../images/loimu_varillinen.png";
 
 interface ImageProps {
   imageName: string;
+  className?: string;
 }
 
-export const Image: React.FC<ImageProps> = ({ imageName }) => {
+export const Image: React.FC<ImageProps> = ({ imageName, className }) => {
   const image = imageName === "matlu" ? matluImage : loimuImage;
 
   return (
@@ -15,9 +16,10 @@ export const Image: React.FC<ImageProps> = ({ imageName }) => {
       alt={imageName}
       height={imageName === "matlu" ? 80 : 70}
       priority={imageName === "matlu"}
+      className={className}
       style={{
         width: "auto",
-        height: imageName === "matlu" ? "80px" : "70px",
+        height: className ? undefined : (imageName === "matlu" ? "80px" : "70px"),
       }}
     />
   );

@@ -1,17 +1,23 @@
 @use "../vars";
 @use "../mixins";
 
+.container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
 .wrapper {
   width: vars.$app-width;
   margin-left: auto;
   margin-right: auto;
   background-color: white;
-  min-height: 100vh;
+  flex: 1;
   display: flex;
   flex-direction: column;
   box-shadow: 0 0 40px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
-  margin-bottom: 40px;
+  border-radius: 8px 8px 0 0; // Rounded top, flat bottom
+  margin-bottom: 0;
   overflow: hidden; /* Ensure footer background doesn't bleed out of rounded corners */
 
   main {
@@ -36,6 +42,7 @@
   @include mixins.mobile {
     width: 100%;
     box-shadow: none;
+    border-radius: 0;
     article {
       padding: 20px;
     }

@@ -8,39 +8,161 @@
   width: vars.$app-width;
   font-size: 0.8em;
   display: flex;
-  justify-content: space-evenly;
-  flex-wrap: wrap;
+  flex-direction: column; // Always column to support the two-row layout on desktop
   position: sticky;
   top: 0;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   z-index: 100;
 
   @include mixins.mobile {
+    flex-direction: column;
     width: 100%;
     margin-left: 0;
     margin-right: 0;
     box-shadow: none;
+    position: static;
   }
 
+  &.isOpen {
+    .navMenu {
+      @include mixins.mobile {
+        display: flex;
+      }
+    }
+  }
+}
+
+.navTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 4px 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+
   @include mixins.mobile {
-    position: static;
-    justify-content: left;
+    padding: 0 16px;
+    border-bottom: none;
+  }
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  padding: 8px 0;
+  text-decoration: none;
+
+  .brandLogo {
+    height: 48px;
+    width: auto;
+    display: block;
+
+    @include mixins.mobile {
+      height: 32px;
+    }
+  }
+
+  &.navLink {
+    margin: 0;
+  }
+
+  &.navLinkActive {
+    border-bottom: none;
+    font-weight: normal;
+  }
+}
+
+.navUtilities {
+  display: flex;
+  align-items: center;
+
+  @include mixins.mobile {
+    display: none; // Hidden in the top row on mobile, they should be in navMenu for mobile
+  }
+
+  a.navLink {
+    font-size: 0.85em;
+    opacity: 0.8;
+    margin: 0 10px;
+    padding: 4px 8px;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+      text-decoration: none;
+    }
+  }
+}
+
+.toggle {
+  display: none;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 8px;
+
+  @include mixins.mobile {
+    display: block;
+  }
+}
+
+.navMenu {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center; // Center main links on desktop
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.1); // Slightly darker for the main link area
+
+  @include mixins.mobile {
+    display: none; // Hidden by default on mobile
+    flex-direction: column;
+    width: 100%;
+    background-color: vars.$main-color;
+    padding-bottom: 16px;
+    justify-content: flex-start;
   }
 }
 
 a.navLink {
-  margin: 12px;
+  margin: 8px 12px;
   color: white;
   min-height: 16px;
   display: inline-block;
+  text-decoration: none;
+  transition: opacity 0.2s;
+
+  &:hover {
+    opacity: 0.8;
+  }
 
   @include mixins.mobile {
-    margin: 16px;
+    margin: 8px 16px;
     display: block;
-    width: 100%;
+    width: calc(100% - 32px);
+    opacity: 1 !important;
+  }
+}
+
+.navUtilitiesMobile {
+  display: none;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  margin-top: 8px;
+  padding-top: 8px;
+
+  @include mixins.mobile {
+    display: block;
   }
 }
 
 .navLinkActive {
   font-weight: bold;
+  border-bottom: 2px solid white;
+
+  @include mixins.mobile {
+    border-bottom: none;
+    background-color: rgba(255, 255, 255, 0.1);
+  }
 }

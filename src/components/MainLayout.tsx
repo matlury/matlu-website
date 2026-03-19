@@ -2,7 +2,6 @@ import React from "react";
 import { Nav } from "./Nav";
 import { Footer } from "./Footer";
 import { Language, LocalizedLink } from "../utils";
-import MatluLogo from "./MatluLogo";
 import styles from "./Layout.module.scss";
 
 interface MainLayoutProps {
@@ -24,8 +23,7 @@ export const MainLayout = ({
   };
 
   return (
-    <>
-      <MatluLogo />
+    <div className={styles.container}>
       {!hideNav && (
         <Nav language={lang} localizedLinks={defaultLocalizedLinks} />
       )}
@@ -35,6 +33,6 @@ export const MainLayout = ({
         </main>
         <Footer language={lang} />
       </div>
-    </>
+    </div>
   );
 };
