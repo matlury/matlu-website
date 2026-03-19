@@ -239,6 +239,12 @@ export default function EventRequestForm({
       return;
     }
 
+    if (startDate && endDate && new Date(endDate) < new Date(startDate)) {
+      setStatus("error");
+      setMessage(t.endDateBeforeStart);
+      return;
+    }
+
     if ((latitude === null) !== (longitude === null)) {
       setStatus("error");
       setMessage(t.coordinatesPairRequired);
@@ -259,6 +265,12 @@ export default function EventRequestForm({
     const recaptchaToken = RECAPTCHA_SITE_KEY
       ? recaptchaRef.current?.getValue() || ""
       : "";
+
+    if (RECAPTCHA_SITE_KEY && !recaptchaToken) {
+      setStatus("error");
+      setMessage(t.recaptchaRequired);
+      return;
+    }
 
     const payload = {
       organizer_name: getFormString(formData, "organizer_name"),
@@ -311,10 +323,13 @@ export default function EventRequestForm({
     } catch (error) {
       let errorMessage: string;
       if (axios.isAxiosError(error)) {
-        if (typeof error.response?.data === "string") {
-          errorMessage = error.response.data;
-        } else if (error.response?.data) {
-          errorMessage = JSON.stringify(error.response.data);
+        const data = error.response?.data;
+        if (data?.error?.message) {
+          errorMessage = data.error.message;
+        } else if (typeof data === "string") {
+          errorMessage = data;
+        } else if (data) {
+          errorMessage = JSON.stringify(data);
         } else {
           errorMessage = error.message;
         }
@@ -326,7 +341,7 @@ export default function EventRequestForm({
         message: errorMessage,
       });
       setStatus("error");
-      setMessage(t.error);
+      setMessage(errorMessage || t.error);
       setToastNotice({
         type: "error",
         title: t.submitFailedToast,

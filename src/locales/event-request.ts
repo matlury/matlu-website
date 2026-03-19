@@ -30,6 +30,8 @@ export const TEXT = {
         sending: "Lähetetään...",
         success: "Pyyntö lähetetty. Kiitos!",
         error: "Lähetys epäonnistui. Yritä hetken kuluttua uudelleen.",
+        endDateBeforeStart: "Päättymisaika ei voi olla ennen alkamisaikaa.",
+        recaptchaRequired: "Vahvista, että et ole robotti.",
         required: "Pakollinen",
         adminReviewNote:
             "Lisäys tarkistetaan ensin ylläpitäjän toimesta ennen kuin se julkaistaan tapahtumissa.",
@@ -78,6 +80,8 @@ export const TEXT = {
         sending: "Submitting...",
         success: "Request submitted. Thank you!",
         error: "Submit failed. Please try again shortly.",
+        endDateBeforeStart: "End date cannot be before start date.",
+        recaptchaRequired: "Please verify that you are not a robot.",
         required: "Required",
         adminReviewNote:
             "Your event will be reviewed by an admin before it appears in the events list.",
