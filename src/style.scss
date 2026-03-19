@@ -178,7 +178,8 @@ article {
       display: block;
       margin: 0 auto;
       max-width: 100%;
-      height: auto;
+      height: auto !important; // Prevents squishing by prioritizing aspect ratio
+      max-height: 100px;
       transition: transform 0.2s ease-in-out;
 
       &:hover {
@@ -194,6 +195,10 @@ article {
       
       th, td {
         padding: 12px;
+      }
+
+      img {
+        max-height: 60px; // Smaller images on mobile to save space
       }
     }
   }
