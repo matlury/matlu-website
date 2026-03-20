@@ -4,7 +4,7 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import dynamic from "next/dynamic";
 import ReCAPTCHA from "react-google-recaptcha";
-import { Button as ChakraButton, Text, HStack, Box, Input as ChakraInput, InputGroup } from "@chakra-ui/react";
+import { Button as ChakraButton, Text, HStack, Box, Input as ChakraInput, InputGroup, Popover, useDisclosure } from "@chakra-ui/react";
 import { FaEuroSign } from "react-icons/fa";
 import axios from "axios";
 import styled from "styled-components";
@@ -24,6 +24,7 @@ import { FieldGroup } from "@/components/ui/field";
 import { TextInput } from "@/components/ui/TextInput";
 import { TextareaInput } from "@/components/ui/TextareaInput";
 import { TEXT } from "@/locales/event-request";
+
 import { API_ENDPOINTS, RECAPTCHA_SITE_KEY } from "@/api";
 
 type Status = "idle" | "submitting" | "success" | "error";
@@ -108,17 +109,6 @@ function parseOptionalCoordinate(value: string): number | null {
   return Number.isFinite(parsed) ? parsed : Number.NaN;
 }
 
-import {
-  PopoverRoot,
-  PopoverTrigger,
-  PopoverContent,
-  PopoverHeader,
-  PopoverBody,
-  PopoverFooter,
-  PopoverArrow,
-  PopoverTitle,
-} from "@/components/ui/popover";
-
 export default function EventRequestForm({
   lang,
   initialLocationSuggestions = [],
@@ -132,7 +122,7 @@ export default function EventRequestForm({
   const [message, setMessage] = useState("");
   const [toastNotice, setToastNotice] = useState<ToastNotice | null>(null);
   const [isOpen, setIsOpen] = useState(false);
-  const [isPopoverOpen, setIsPopoverOpen] = useState(false);
+  const { onClose: onPopoverClose } = useDisclosure();
   const [locationSearchInput, setLocationSearchInput] = useState("");
   const [titleFiBlurred, setTitleFiBlurred] = useState(false);
   const [titleSuggestions] = useState<TitleSuggestion[]>(initialTitleSuggestions);
@@ -355,22 +345,40 @@ export default function EventRequestForm({
   };
 
   function handleConfirmSubmit() {
-    setIsPopoverOpen(false);
+    onPopoverClose();
     void form.handleSubmit();
   }
 
   const bubbleText = lang === "fi" ? "Lisää tapahtuma" : "Add an event";
 
   return (
-    <form.Subscribe selector={(state) => [state.values.latitude, state.values.longitude, state.values.title_fi, state.values.title_en]}>
+    <form.Subscribe selector={(state) => [state.values.latitude, state.values.longitude, state.values.title_fi]}>
       {([latitudeVal, longitudeVal, titleFiVal]) => {
-        const latitudeValue = parseOptionalCoordinate(latitudeVal);
-        const longitudeValue = parseOptionalCoordinate(longitudeVal);
+        const [debouncedCoords, setDebouncedCoords] = useState({ lat: latitudeVal, lon: longitudeVal });
+        useEffect(() => {
+          const handler = setTimeout(() => {
+            setDebouncedCoords({ lat: latitudeVal, lon: longitudeVal });
+          }, 500);
+          return () => clearTimeout(handler);
+        }, [latitudeVal, longitudeVal]);
+
+        const latitudeValue = parseOptionalCoordinate(debouncedCoords.lat);
+        const longitudeValue = parseOptionalCoordinate(debouncedCoords.lon);
         const mapLatitude = Number.isFinite(latitudeValue) ? (latitudeValue as number) : undefined;
         const mapLongitude = Number.isFinite(longitudeValue) ? (longitudeValue as number) : undefined;
         const titleDatalistId = `event-title-suggestions-${lang}`;
         const showEnglishTitle = titleFiBlurred || titleFiVal.trim().length > 0;
-
+        const mapComponent = useMemo(() => (
+          <LeafletLocationMap
+            latitude={mapLatitude}
+            longitude={mapLongitude}
+            onSelect={(lat, lon) => {
+              form.setFieldValue("latitude", formatCoordinate(lat));
+              form.setFieldValue("longitude", formatCoordinate(lon));
+            }}
+            zoom={13}
+          />
+        ), [mapLatitude, mapLongitude]);
         return (
           <>
             {toastNotice &&
@@ -784,15 +792,7 @@ export default function EventRequestForm({
                         <p style={{ fontSize: "0.875rem", color: "#475569", margin: 0, marginBottom: "0.75rem" }}>{t.mapLocationHint}</p>
                         <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
                           <div style={{ overflow: "hidden", borderRadius: "6px", border: "1px solid #e2e8f0", width: "100%" }}>
-                            <LeafletLocationMap
-                              latitude={mapLatitude}
-                              longitude={mapLongitude}
-                              onSelect={(lat, lon) => {
-                                form.setFieldValue("latitude", formatCoordinate(lat));
-                                form.setFieldValue("longitude", formatCoordinate(lon));
-                              }}
-                              zoom={13}
-                            />
+                            {mapComponent}
                           </div>
                           <form.Subscribe selector={(state) => [state.values.latitude, state.values.longitude]}>
                             {([latVal, lonVal]) => (
@@ -870,46 +870,50 @@ export default function EventRequestForm({
                     <section id="section-submit" style={{ display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "flex-end", gap: "0.75rem", padding: "1rem 0" }}>
                       {message && <p style={{ fontSize: "0.875rem", fontWeight: 600, color: "#334155", margin: 0, background: "rgba(255,255,255,0.8)", padding: "0.25rem 0.5rem", borderRadius: "4px" }}>{message}</p>}
 
-                      <PopoverRoot open={isPopoverOpen} onOpenChange={(e) => setIsPopoverOpen(e.open)}>
-                        <PopoverTrigger asChild>
+                      <Popover.Root>
+                        <Popover.Trigger asChild>
                           <Button
                             type="button"
                             disabled={status === "submitting"}
-                            onClick={() => setIsPopoverOpen(true)}
                             style={{ background: "#0149bc", color: "#ffffff", height: "2.5rem", borderRadius: "8px", padding: "0 1.5rem", fontWeight: 600, fontSize: "0.875rem" }}
                           >
                             {status === "submitting" ? t.sending : t.submit}
                           </Button>
-                        </PopoverTrigger>
-                        <PopoverContent style={{ borderRadius: "12px", padding: "1rem", border: "1px solid #e2e8f0", boxShadow: "0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04)" }}>
-                          <PopoverArrow />
-                          <PopoverHeader border="0" padding="0" marginBottom="0.5rem">
-                            <PopoverTitle fontWeight="700" color="#0f172a">{t.confirmTitle}</PopoverTitle>
-                          </PopoverHeader>
-                          <PopoverBody padding="0" marginBottom="1rem" fontSize="0.875rem" color="#475569">
-                            {t.confirmQuestion}
-                          </PopoverBody>
-                          <PopoverFooter border="0" padding="0" display="flex" justifyContent="flex-end" gap="0.5rem">
-                            <Button
-                              size="sm"
-                              variant="ghost"
-                              onClick={() => setIsPopoverOpen(false)}
-                              style={{ color: "#64748b" }}
-                            >
-                              {t.cancel}
-                            </Button>
-                            <Button
-                              size="sm"
-                              style={{ background: "#0149bc", color: "#fff" }}
-                              onClick={() => {
-                                void handleConfirmSubmit();
-                              }}
-                            >
-                              {t.confirmAction}
-                            </Button>
-                          </PopoverFooter>
-                        </PopoverContent>
-                      </PopoverRoot>
+                        </Popover.Trigger>
+                        <Popover.Positioner>
+                          <Popover.Content borderRadius="12px" p={4} border="1px solid #e2e8f0" boxShadow="0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04)">
+                            <Popover.CloseTrigger />
+                            <Popover.Arrow>
+                              <Popover.ArrowTip />
+                            </Popover.Arrow>
+                            <Popover.Body>
+                              <Popover.Title>{t.confirmTitle}</Popover.Title>
+                              <p style={{ fontSize: "0.875rem", color: "#475569", marginBottom: "1rem", textAlign: "left", lineHeight: "1.5" }}>{t.confirmQuestion}</p>                              <div style={{ display: "flex", justifyContent: "flex-end", gap: "0.5rem" }}>
+                                <Button
+                                  size="sm"
+                                  variant="ghost"
+                                  onClick={() => {
+                                    onPopoverClose();
+                                  }}
+                                  style={{ color: "#64748b", padding: "0 1rem" }}
+                                >
+                                  {t.cancel}
+                                </Button>
+                                <Button
+                                  size="sm"
+                                  style={{ background: "#0149bc", color: "#fff", padding: "0 1rem" }}
+                                  onClick={() => {
+                                    onPopoverClose();
+                                    handleConfirmSubmit();
+                                  }}
+                                >
+                                  {t.confirmAction}
+                                </Button>
+                              </div>
+                            </Popover.Body>
+                          </Popover.Content>
+                        </Popover.Positioner>
+                      </Popover.Root>
                     </section>
                   </form>
                 </div>
