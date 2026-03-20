@@ -23,6 +23,7 @@
     "@chakra-ui/react": "^3.28.1",
     "@emotion/cache": "^11.14.0",
     "@emotion/react": "^11.14.0",
+    "@tanstack/react-form": "^1.28.5",
     "@types/styled-components": "^5.1.36",
     "autoprefixer": "^10.4.27",
     "axios": "^1.13.6",
