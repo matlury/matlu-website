@@ -23,10 +23,26 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.SITE_URL || "https://www.matlu.fi"),
   title: {
-    default: "Matlu ry",
+    default: "Matlu ry | Matemaattis-luonnontieteelliset opiskelijajärjestöt",
     template: "%s | Matlu ry",
   },
-  description: "Matlu ry on Helsingin yliopiston matemaattis-luonnontieteellisen tiedekunnan opiskelijajärjestöjen yhteistyöjärjestö.",
+  description: "Matlu ry on Helsingin yliopiston matemaattis-luonnontieteellisen tiedekunnan opiskelijajärjestöjen edunvalvonta- ja yhteistyöjärjestö.",
+  applicationName: "Matlu ry",
+  authors: [{ name: "Matlu ry", url: "https://www.matlu.fi" }],
+  generator: "Next.js",
+  keywords: [
+    "Matlu",
+    "Helsingin yliopisto",
+    "Matemaattis-luonnontieteellinen tiedekunta",
+    "tiedekuntajärjestö",
+    "Kumpula",
+    "matemaattiset",
+    "luonnontieteelliset",
+    "edunvalvonta",
+    "ainejärjestöt",
+    "Onkalo"
+  ],
+  category: "organization",
   alternates: {
     canonical: "/",
   },

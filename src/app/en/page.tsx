@@ -123,6 +123,16 @@ export async function generateMetadata(): Promise<Metadata> {
     verification: {
       google: "-1keAnBhcxqqJbMzTrz5PVoeVhrzgFG6DFYklqFqMzs",
     },
+    keywords: [
+      "Matlu",
+      "University of Helsinki",
+      "faculty organization",
+      "science students",
+      "Faculty of Science",
+      "Kumpula",
+      "advocacy",
+      "subject organizations",
+    ],
   };
 }
 
