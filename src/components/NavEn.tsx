@@ -12,7 +12,9 @@ import {
   DrawerBody,
   DrawerHeader,
   DrawerTrigger,
+  DrawerCloseTrigger,
 } from "@/components/ui/drawer";
+import { CloseButton } from "@chakra-ui/react";
 
 interface LocalizedNavProps {
   localizedLinks: LocalizedLink;
@@ -118,7 +120,7 @@ export const NavEn: React.FC<LocalizedNavProps> = ({
           </Link>
         </div>
 
-        <DrawerRoot open={open} onOpenChange={(e) => setOpen(e.open)}>
+        <DrawerRoot open={open} onOpenChange={(e) => setOpen(e.open)} size="xs">
           <DrawerTrigger asChild>
             <button
               className={styles.toggle}
@@ -128,12 +130,33 @@ export const NavEn: React.FC<LocalizedNavProps> = ({
               <i className={open ? "fas fa-times" : "fas fa-bars"}></i>
             </button>
           </DrawerTrigger>
-          <DrawerContent backgroundColor="var(--main-color)" showCloseButton={true}>
-            <DrawerHeader borderBottomWidth="1px" borderColor="rgba(255,255,255,0.1)">
-              <div className={styles.brand}>
+          <DrawerContent backgroundColor="var(--main-color)">
+            <DrawerHeader
+              borderBottomWidth="1px"
+              borderColor="rgba(255,255,255,0.1)"
+              display="flex"
+              alignItems="center"
+              justifyContent="space-between"
+              padding="0"
+              height="60px"
+              px="1rem"
+            >
+              <div className={styles.brand} style={{ padding: 0, margin: 0, height: "100%", display: "flex", alignItems: "center" }}>
                 <Image imageName="matlu" className={styles.brandLogo} />
-                <span className={styles.brandText}>Matlu ry</span>
+                <span className={styles.brandText} style={{ lineHeight: 1 }}>Matlu ry</span>
               </div>
+              <DrawerCloseTrigger asChild>
+                <CloseButton
+                  size="md"
+                  color="white"
+                  variant="ghost"
+                  _hover={{ bg: "rgba(255,255,255,0.1)" }}
+                  margin="0"
+                  position="relative"
+                  right="auto"
+                  top="auto"
+                />
+              </DrawerCloseTrigger>
             </DrawerHeader>
             <DrawerBody padding="0">
               <div className={styles.navMenuMobile}>

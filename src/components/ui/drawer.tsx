@@ -15,25 +15,15 @@ export const DrawerActionTrigger = ChakraDrawer.ActionTrigger;
 
 export const DrawerContent = React.forwardRef<
   HTMLDivElement,
-  ChakraDrawer.ContentProps & { portalled?: boolean; showCloseButton?: boolean }
+  ChakraDrawer.ContentProps & { portalled?: boolean }
 >(function DrawerContent(props, ref) {
-  const { children, portalled = true, showCloseButton, ...rest } = props;
+  const { children, portalled = true, ...rest } = props;
   return (
     <Portal disabled={!portalled}>
       <ChakraDrawer.Backdrop />
       <ChakraDrawer.Positioner>
         <ChakraDrawer.Content ref={ref} {...rest}>
           {children}
-          {showCloseButton && (
-            <ChakraDrawer.CloseTrigger
-              asChild
-              position="absolute"
-              top="2"
-              right="2"
-            >
-              <CloseButton />
-            </ChakraDrawer.CloseTrigger>
-          )}
         </ChakraDrawer.Content>
       </ChakraDrawer.Positioner>
     </Portal>
