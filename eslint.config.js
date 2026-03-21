@@ -4,6 +4,7 @@ import tsparser from "@typescript-eslint/parser";
 import react from "eslint-plugin-react";
 import promise from "eslint-plugin-promise";
 import globals from "globals";
+import jsxA11y from "eslint-plugin-jsx-a11y";
 
 export default [
   {
@@ -39,11 +40,13 @@ export default [
       "@typescript-eslint": tseslint,
       react,
       promise,
+      "jsx-a11y": jsxA11y,
     },
     rules: {
       ...tseslint.configs.recommended.rules,
       // ...tseslint.configs["recommended-requiring-type-checking"].rules,
       ...react.configs.recommended.rules,
+      ...jsxA11y.configs.recommended.rules,
       "@typescript-eslint/no-explicit-any": 2,
       "@typescript-eslint/explicit-function-return-type": 0,
       "@typescript-eslint/no-unused-vars": [

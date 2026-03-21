@@ -63,6 +63,7 @@
     "clean-css-cli": "^5.6.3",
     "eslint": "^9.39.2",
     "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jsx-a11y": "^6.10.2",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^7.2.1",
     "eslint-plugin-react": "^7.21.5",
@@ -80,7 +81,8 @@
     "typed-scss-modules": "^8.1.1",
     "typescript": "^5.9.3",
     "vite-tsconfig-paths": "^6.1.1",
-    "vitest": "^4.1.0"
+    "vitest": "^4.1.0",
+    "vitest-axe": "^0.1.0"
   },
   "keywords": [
     "matlu",
