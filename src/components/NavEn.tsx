@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { FaExternalLinkAlt } from "react-icons/fa";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { LocalizedLink } from "../utils";
@@ -92,7 +93,9 @@ export const NavEn: React.FC<LocalizedNavProps> = ({
         onClick={() => setOpen(false)}
         className={styles.navLink}
       >
-        Kumpulan Potentiaali
+        <span style={{ whiteSpace: "nowrap", display: "inline-flex", alignItems: "center" }}>
+          Kumpulan Potentiaali <FaExternalLinkAlt style={{ marginLeft: 4, fontSize: "0.9em", verticalAlign: "middle" }} />
+        </span>
       </NavLink>
     </>
   );
@@ -110,7 +113,9 @@ export const NavEn: React.FC<LocalizedNavProps> = ({
             target="_blank"
             rel="noopener noreferrer"
           >
-            Matlu Klusteri
+            <span style={{ whiteSpace: "nowrap", display: "inline-flex", alignItems: "center" }}>
+              Matlu Klusteri <FaExternalLinkAlt style={{ marginLeft: 4, fontSize: "0.9em", verticalAlign: "middle" }} />
+            </span>
           </a>
           <Link
             href={localizedLinks.fi.replace(/^\/en/, "") || "/"}
@@ -164,7 +169,9 @@ export const NavEn: React.FC<LocalizedNavProps> = ({
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    Matlu Klusteri
+                    <span style={{ whiteSpace: "nowrap", display: "inline-flex", alignItems: "center" }}>
+                      Matlu Klusteri <FaExternalLinkAlt style={{ marginLeft: 4, fontSize: "0.9em", verticalAlign: "middle" }} />
+                    </span>
                   </a>
                   <Link
                     href={localizedLinks.fi.replace(/^\/en/, "") || "/"}
