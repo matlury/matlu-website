@@ -58,3 +58,17 @@ h3 {
     transform: translateY(calc(-100% - var(--gap)));
   }
 }
+
+/* Ensure Leaflet map controls and panes are below sticky UI */
+.leaflet-control {
+  z-index: 0 !important;
+}
+
+.leaflet-pane {
+  z-index: 0 !important;
+}
+
+.leaflet-top,
+.leaflet-bottom {
+  z-index: 0 !important;
+}

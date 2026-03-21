@@ -696,6 +696,37 @@ export default function EventRequestForm({
                       </FieldGroup>
                     </section>
 
+                    <section id="section-details">
+                      <FieldGroup style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(240px,1fr))", gap: "1.25rem" }}>
+                        <form.Field name="description_fi">
+                          {(field) => (
+                            <TextareaInput
+                              id={field.name}
+                              name={field.name}
+                              label={t.descriptionFi}
+                              rows={4}
+                              value={field.state.value}
+                              onBlur={field.handleBlur}
+                              onChange={(e) => field.handleChange(e.target.value)}
+                            />
+                          )}
+                        </form.Field>
+                        <form.Field name="description_en">
+                          {(field) => (
+                            <TextareaInput
+                              id={field.name}
+                              name={field.name}
+                              label={t.descriptionEn}
+                              rows={4}
+                              value={field.state.value}
+                              onBlur={field.handleBlur}
+                              onChange={(e) => field.handleChange(e.target.value)}
+                            />
+                          )}
+                        </form.Field>
+                      </FieldGroup>
+                    </section>
+
                     <section id="section-location" style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
                       <FieldGroup style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(240px,1fr))", gap: "1.25rem" }}>
                         <Box position="relative">
@@ -791,7 +822,7 @@ export default function EventRequestForm({
                         </h3>
                         <p style={{ fontSize: "0.875rem", color: "#475569", margin: 0, marginBottom: "0.75rem" }}>{t.mapLocationHint}</p>
                         <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
-                          <div style={{ overflow: "hidden", borderRadius: "6px", border: "1px solid #e2e8f0", width: "100%" }}>
+                          <div style={{ overflow: "hidden", borderRadius: "6px", border: "1px solid #e2e8f0", width: "80%", marginRight: "auto" }}>
                             {mapComponent}
                           </div>
                           <form.Subscribe selector={(state) => [state.values.latitude, state.values.longitude]}>
@@ -828,36 +859,6 @@ export default function EventRequestForm({
                       </div>
                     </section>
 
-                    <section id="section-details">
-                      <FieldGroup style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(240px,1fr))", gap: "1.25rem" }}>
-                        <form.Field name="description_fi">
-                          {(field) => (
-                            <TextareaInput
-                              id={field.name}
-                              name={field.name}
-                              label={t.descriptionFi}
-                              rows={4}
-                              value={field.state.value}
-                              onBlur={field.handleBlur}
-                              onChange={(e) => field.handleChange(e.target.value)}
-                            />
-                          )}
-                        </form.Field>
-                        <form.Field name="description_en">
-                          {(field) => (
-                            <TextareaInput
-                              id={field.name}
-                              name={field.name}
-                              label={t.descriptionEn}
-                              rows={4}
-                              value={field.state.value}
-                              onBlur={field.handleBlur}
-                              onChange={(e) => field.handleChange(e.target.value)}
-                            />
-                          )}
-                        </form.Field>
-                      </FieldGroup>
-                    </section>
 
                     {RECAPTCHA_SITE_KEY && (
                       <div>
@@ -867,7 +868,17 @@ export default function EventRequestForm({
 
                     <p style={{ fontSize: "0.875rem", color: "#475569", margin: "0 0 1rem 0" }}>{t.adminReviewNote}</p>
 
-                    <section id="section-submit" style={{ display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "flex-end", gap: "0.75rem", padding: "1rem 0" }}>
+                    <section id="section-submit" style={{
+                      display: "flex",
+                      flexWrap: "wrap",
+                      alignItems: "center",
+                      justifyContent: "flex-end",
+                      gap: "0.75rem",
+                      padding: "1rem 0",
+                      position: "sticky",
+                      bottom: 0,
+                      zIndex: 100,
+                    }}>
                       {message && <p style={{ fontSize: "0.875rem", fontWeight: 600, color: "#334155", margin: 0, background: "rgba(255,255,255,0.8)", padding: "0.25rem 0.5rem", borderRadius: "4px" }}>{message}</p>}
 
                       <Popover.Root>
