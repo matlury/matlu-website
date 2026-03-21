@@ -36,6 +36,15 @@ interface BoardNode {
   officers: Officer[] | null;
   teams: Team[] | null;
   hidden: boolean;
+  Seo?: {
+    metaTitle?: { fi: string; en: string };
+    metaDescription?: { fi: string; en: string };
+    shareImage?: {
+      url: string;
+      alternativeText?: string;
+    };
+    canonicalUrl?: string;
+  };
 }
 
 interface BoardQueryResult {
@@ -76,6 +85,21 @@ const BOARD_QUERY = gql`
           name
         }
       }
+      Seo {
+        metaTitle {
+          fi
+          en
+        }
+        metaDescription {
+          fi
+          en
+        }
+        shareImage {
+          url
+          alternativeText
+        }
+        canonicalUrl
+      }
     }
   }
 `;
@@ -113,6 +137,21 @@ const LATEST_BOARD_QUERY = gql`
           id
           name
         }
+      }
+      Seo {
+        metaTitle {
+          fi
+          en
+        }
+        metaDescription {
+          fi
+          en
+        }
+        shareImage {
+          url
+          alternativeText
+        }
+        canonicalUrl
       }
     }
   }
@@ -181,6 +220,7 @@ export async function generateMetadata({
 }: {
   params: Promise<{ year?: string[] }>;
 }): Promise<Metadata> {
+  const lang = "fi";
   const { year } = await params;
   const targetYear = year ? Number(year[0]) : undefined;
   const board = await getBoardData(targetYear);
@@ -189,18 +229,36 @@ export async function generateMetadata({
     return { title: "Hallitusta ei löytynyt | Matlu ry" };
   }
 
-  const title = `Hallitus ${board.year}`;
+  const seo = board.Seo;
+  const defaultTitle = `Hallitus ${board.year}`;
+  const title = seo?.metaTitle?.[lang] || defaultTitle;
+  const description = seo?.metaDescription?.[lang] || "";
+  const canonical = seo?.canonicalUrl || (targetYear ? `/board/${targetYear}` : "/board");
+
+  const shareImage = seo?.shareImage?.url;
 
   return {
     title: `${title} | Matlu ry`,
+    description: description,
+    alternates: {
+      canonical: canonical,
+      languages: {
+        fi: targetYear ? `/board/${targetYear}` : "/board",
+        en: targetYear ? `/en/board/${targetYear}` : "/en/board",
+      },
+    },
     robots: "index, follow",
     openGraph: {
       title: title,
+      description: description,
       type: "website",
+      ...(shareImage && { images: [{ url: shareImage }] }),
     },
     twitter: {
-      card: "summary",
+      card: shareImage ? "summary_large_image" : "summary",
       title: title,
+      description: description,
+      ...(shareImage && { images: [shareImage] }),
     },
   };
 }

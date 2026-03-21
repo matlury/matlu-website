@@ -19,6 +19,15 @@ interface PageData {
   };
   HideFromSearchEngine: boolean;
   Draft: boolean;
+  Seo?: {
+    metaTitle?: { fi: string; en: string };
+    metaDescription?: { fi: string; en: string };
+    shareImage?: {
+      url: string;
+      alternativeText?: string;
+    };
+    canonicalUrl?: string;
+  };
 }
 
 interface LocationSuggestion {
@@ -108,14 +117,19 @@ export async function generateMetadata({
     return { title: "Sivua ei löytynyt | Matlu ry" };
   }
 
-  const title = page.Title[lang];
-  const description = page.Description ? page.Description[lang] : "";
+  const seo = page.Seo;
+  const title = seo?.metaTitle?.[lang] || page.Title?.[lang] || "";
+  const description =
+    seo?.metaDescription?.[lang] || page.Description?.[lang] || "";
+  const canonical = seo?.canonicalUrl || `/${pageSlug}`;
+
+  const shareImage = seo?.shareImage?.url;
 
   return {
     title: `${title} | Matlu ry`,
     description: description,
     alternates: {
-      canonical: `/${pageSlug}`,
+      canonical: canonical,
       languages: {
         fi: `/${pageSlug}`,
         en: `/en/${pageSlug}`,
@@ -126,11 +140,13 @@ export async function generateMetadata({
       title: title,
       description: description,
       type: "article",
+      ...(shareImage && { images: [{ url: shareImage }] }),
     },
     twitter: {
-      card: "summary",
+      card: shareImage ? "summary_large_image" : "summary",
       title: title,
       description: description,
+      ...(shareImage && { images: [shareImage] }),
     },
   };
 }

@@ -22,6 +22,11 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.SITE_URL || "https://www.matlu.fi"),
+  title: {
+    default: "Matlu ry",
+    template: "%s | Matlu ry",
+  },
+  description: "Matlu ry on Helsingin yliopiston matemaattis-luonnontieteellisen tiedekunnan opiskelijajärjestöjen yhteistyöjärjestö.",
   alternates: {
     canonical: "/",
   },
@@ -63,8 +68,24 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: "Matlu ry",
+    url: "https://www.matlu.fi",
+    logo: "https://www.matlu.fi/logos/matlu.png",
+    sameAs: [
+      "https://www.facebook.com/Matlury/",
+      "https://www.instagram.com/matlury/",
+    ],
+  };
+
   return (
-    <html lang="fi" className={`${geist.variable} font-sans`} suppressHydrationWarning>
+    <html
+      lang="fi"
+      className={`${geist.variable} font-sans`}
+      suppressHydrationWarning
+    >
       <head>
         <link
           rel="preload"
@@ -81,6 +102,12 @@ export default function RootLayout({
           crossOrigin="anonymous"
         />
         <ExternalStyles />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c"),
+          }}
+        />
       </head>
       <body className={openSans.className}>
         <EmotionRegistry>
