@@ -73,6 +73,7 @@
     "globals": "^17.4.0",
     "jsdom": "^29.0.0",
     "prettier": "^3.8.1",
+    "resize-observer-polyfill": "^1.5.1",
     "sass-embedded": "^1.97.3",
     "sharp": "^0.34.5",
     "stylelint": "^17.0.0",
