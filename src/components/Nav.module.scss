@@ -69,6 +69,7 @@
   &.navLinkActive {
     border-bottom: none;
     font-weight: normal;
+    background-color: transparent !important; // Prevent the highlight box on the logo
   }
 }
 
@@ -120,9 +121,35 @@
     display: none; // Hidden by default on mobile
     flex-direction: column;
     width: 100%;
-    background-color: vars.$main-color;
+    background-color: transparent; // Remove the faded box background on mobile
     padding-bottom: 16px;
     justify-content: flex-start;
+  }
+}
+
+.navMenuMobile {
+  display: flex;
+  flex-direction: column;
+  padding: 16px 0;
+
+  a.navLink {
+    margin: 8px 16px;
+    display: block;
+    width: calc(100% - 32px);
+    font-size: 1.1rem;
+  }
+}
+
+.brandText {
+  color: white;
+  font-weight: bold;
+  font-size: 1.2rem;
+  margin-left: 12px;
+  display: block;
+
+  @include mixins.mobile {
+    font-size: 1.1rem;
+    margin-left: 8px;
   }
 }
 

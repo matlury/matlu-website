@@ -17,6 +17,9 @@ This project is the frontend for the matlu.fi website, built with Next.js using 
 - `src/locales`: Translation files for internationalization.
 - `src/lib`: Apollo client configuration and other library initializations.
 - `src/tests`: Unit and integration tests.
+- `docs`: Contains specialized guides for using Chakra UI 3 (`llm-*.txt`).
+
+> **Tip:** Check the `docs/` folder for comprehensive guides on using Chakra UI components, styling, and theming. These files are optimized for AI context.
 
 ## Development Workflow
 - **Start Dev Server:** `npm run dev` (runs on port 8000)

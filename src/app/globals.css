@@ -1,5 +1,6 @@
 :root {
   --radius: 0.625rem;
+  --main-color: #0149bc;
 }
 
 @keyframes marquee {
