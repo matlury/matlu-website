@@ -67,50 +67,54 @@ export const ContactForm: React.FC<ContactFormProps> = ({ lang }) => {
     </Section>
   );
 };
-
 const Section = styled.section`
   max-width: 800px;
+  margin: 1rem 0;
 `;
 
 const Title = styled.h1`
-  font-size: 2rem;
-  font-weight: 700;
-  margin-bottom: 1rem;
+  font-size: var(--font-size-h1);
+  line-height: var(--line-height-h1);
+  margin-bottom: 0.5em;
   color: #0f172a;
 `;
 
 const Description = styled.p`
-  margin-bottom: 2rem;
-  line-height: 1.6;
+  font-size: var(--font-size-body);
+  line-height: var(--line-height-body);
+  margin-bottom: 1.5rem;
   color: #475569;
+  max-width: 65ch;
 `;
 
 const Form = styled.form`
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 1rem;
   max-width: 600px;
 `;
 
 const RecaptchaWrapper = styled.div`
-  margin: 0.5rem 0;
+  margin: 0.25rem 0;
 `;
 
 const SubmitButton = styled.button`
-  background-color: #0149bc;
+  background-color: var(--main-color);
   color: white;
   border: 0;
   border-radius: 6px;
   font-weight: 700;
   height: 48px;
-  padding: 0 2rem;
-  font-size: 1rem;
+  padding: 0 2.5rem;
+  font-size: var(--font-size-body);
   width: fit-content;
-  transition: all 0.2s;
+  align-self: flex-end;
+  transition: all 0.2s ease-in-out;
 
   &:hover:not(:disabled) {
+...
     cursor: pointer;
-    background-color: #003a96;
+    filter: brightness(0.9);
     transform: translateY(-1px);
     box-shadow: 0 4px 12px rgba(1, 73, 188, 0.2);
   }

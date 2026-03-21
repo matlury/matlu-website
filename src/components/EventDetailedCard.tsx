@@ -89,25 +89,25 @@ export const EventDetailedCard: React.FC<EventDetailedCardProps> = ({
                     alignItems: "flex-start",
                     justifyContent: "space-between",
                     gap: "1rem",
-                    padding: "0.75rem 1.5rem",
+                    padding: "1rem 1.5rem",
                 }}
             >
                 <Box>
-                    <DialogTitle m={0} style={{ fontSize: "1.25rem", fontWeight: 700, color: "#0f172a" }}>
+                    <DialogTitle m={0} style={{ color: "#0f172a" }}>
                         {title[language]}
                     </DialogTitle>
-                    <Stack gap={0} mt={0.5}>
+                    <Stack gap={0} mt={1}>
                         {dateStr && (
-                            <Text fontSize="xs" color="gray.500" fontWeight="semibold" m={0}>
+                            <Text fontSize="sm" color="gray.500" fontWeight="semibold" m={0}>
                                 {dateStr} {timeStr}
                             </Text>
                         )}
                         {organizer_name && (
                             <HStack gap={2} mt={1} align="flex-start">
                                 <Box color="blue.600" mt={0.5}>
-                                    <FaUsers size={12} />
+                                    <FaUsers size={14} />
                                 </Box>
-                                <Text fontSize="xs" color="gray.500" fontWeight="bold" m={0}>
+                                <Text fontSize="sm" color="gray.500" fontWeight="bold" m={0}>
                                     {organizer_name}
                                 </Text>
                             </HStack>
@@ -131,34 +131,34 @@ export const EventDetailedCard: React.FC<EventDetailedCardProps> = ({
                             lineHeight: 1,
                         }}
                     >
-                        <span style={{ fontSize: "1.875rem", lineHeight: 1 }}>&times;</span>
+                        <span style={{ fontSize: "2rem", lineHeight: 1 }}>&times;</span>
                     </button>
                 </DialogClose>
             </DialogHeader>
 
-            <Box p={4} pt={0}>
-                <Stack gap={4}>
+            <Box p={6} pt={0}>
+                <Stack gap={6}>
                     <Box borderBottom="1px solid #e2e8f0" />
 
                     {description?.[language] && (
                         <Box>
-                            <Text fontSize="sm" color="gray.700" whiteSpace="pre-wrap">
+                            <Text fontSize="var(--font-size-body)" lineHeight="var(--line-height-body)" color="gray.700" whiteSpace="pre-wrap">
                                 {description[language]}
                             </Text>
                         </Box>
                     )}
 
-                    <Stack gap={3}>
+                    <Stack gap={4}>
                         {price && (
                             <HStack gap={3} align="start">
                                 <Box color="blue.600" mt={1}>
-                                    <FaEuroSign size={16} />
+                                    <FaEuroSign size={18} />
                                 </Box>
                                 <Box>
                                     <Text fontSize="sm" fontWeight="bold" color="gray.800" m={0}>
                                         {language === "fi" ? "Pääsymaksu" : "Admission"}
                                     </Text>
-                                    <Text fontSize="sm" color="gray.600" m={0}>
+                                    <Text fontSize="var(--font-size-body)" color="gray.600" m={0}>
                                         {price}
                                     </Text>
                                 </Box>
@@ -168,7 +168,7 @@ export const EventDetailedCard: React.FC<EventDetailedCardProps> = ({
                         {!hide_location && location && (
                             <HStack gap={3} align="start">
                                 <Box color="blue.600" mt={1}>
-                                    <FaMapMarkerAlt size={16} />
+                                    <FaMapMarkerAlt size={18} />
                                 </Box>
                                 <Box>
                                     <Text fontSize="sm" fontWeight="bold" color="gray.800" m={0}>
@@ -179,7 +179,7 @@ export const EventDetailedCard: React.FC<EventDetailedCardProps> = ({
                                             href={`https://www.google.com/maps/search/?api=1&query=${latitude},${longitude}`}
                                             target="_blank"
                                             rel="noopener noreferrer"
-                                            fontSize="sm"
+                                            fontSize="var(--font-size-body)"
                                             color="blue.600"
                                             m={0}
                                             _hover={{ textDecoration: "underline" }}
@@ -187,7 +187,7 @@ export const EventDetailedCard: React.FC<EventDetailedCardProps> = ({
                                             {location[language]}
                                         </Link>
                                     ) : (
-                                        <Text fontSize="sm" color="gray.600" m={0}>
+                                        <Text fontSize="var(--font-size-body)" color="gray.600" m={0}>
                                             {location[language]}
                                         </Text>
                                     )}
@@ -198,13 +198,13 @@ export const EventDetailedCard: React.FC<EventDetailedCardProps> = ({
                         {event_link && (
                             <HStack gap={3} align="center">
                                 <Box color="blue.600">
-                                    <FaMapPin size={16} />
+                                    <FaMapPin size={18} />
                                 </Box>
                                 <Link
                                     href={event_link}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    fontSize="sm"
+                                    fontSize="var(--font-size-body)"
                                     fontWeight="bold"
                                     color="blue.600"
                                     _hover={{ textDecoration: "underline" }}

@@ -1,6 +1,44 @@
 :root {
   --radius: 0.625rem;
   --main-color: #0149bc;
+
+  /* Typography Design Tokens */
+  --font-size-body: 1rem;
+  --font-size-h1: clamp(1.75rem, 2.5vw, 2.25rem);
+  --font-size-h2: clamp(1.5rem, 2vw, 1.875rem);
+  --font-size-h3: clamp(1.25rem, 1.5vw, 1.5rem);
+
+  --line-height-body: 1.6;
+  --line-height-h1: 1.15;
+  --line-height-h2: 1.2;
+  --line-height-h3: 1.25;
+}
+
+body {
+  font-size: var(--font-size-body);
+  line-height: var(--line-height-body);
+}
+
+h1 {
+  font-size: var(--font-size-h1);
+  line-height: var(--line-height-h1);
+  max-width: 24ch;
+  text-wrap: balance;
+  margin: 0 0 0.75em;
+}
+
+h2 {
+  font-size: var(--font-size-h2);
+  line-height: var(--line-height-h2);
+  max-width: 28ch;
+  text-wrap: balance;
+  margin: 0 0 0.75em;
+}
+
+h3 {
+  font-size: var(--font-size-h3);
+  line-height: var(--line-height-h3);
+  margin: 0 0 0.75em;
 }
 
 @keyframes marquee {

@@ -920,7 +920,7 @@ export default function EventRequestForm({
 
                 <AsideNavigation>
                   <div style={{ padding: "0.25rem" }}>
-                    <p style={{ marginBottom: "0.75rem", fontSize: "11px", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.18em", color: "#94a3b8" }}>
+                    <p style={{ marginBottom: "1rem", fontSize: "12px", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.15em", color: "#94a3b8" }}>
                       {t.navigation}
                     </p>
                     <nav style={{ display: "flex", flexDirection: "column", gap: "0.25rem" }}>
@@ -975,14 +975,14 @@ const ToastHeader = styled.div`
 const ToastTitle = styled.p`
   font-size: 0.875rem;
   font-weight: 600;
-  line-height: 1.25;
+  line-height: var(--line-height-h3);
   margin: 0;
 `;
 
 const ToastDescription = styled.p`
   margin-top: 0.25rem;
   font-size: 0.875rem;
-  line-height: 1.35;
+  line-height: var(--line-height-body);
   opacity: 0.95;
 `;
 
@@ -990,7 +990,7 @@ const AsideNavigation = styled.aside`
   position: absolute;
   left: 100%;
   top: 92px;
-  margin-left: 1rem;
+  margin-left: 1.5rem;
   width: 220px;
   display: none;
 
@@ -1005,12 +1005,18 @@ const NavButton = styled.button<{ $active: boolean }>`
   align-items: center;
   border: 0;
   background: transparent;
-  padding: 0.25rem 0;
+  padding: 0.35rem 0;
   text-align: left;
   font-size: 0.875rem;
+  line-height: var(--line-height-h3);
   color: ${props => props.$active ? "#0f172a" : "#64748b"};
   cursor: pointer;
   position: relative;
+  transition: color 0.2s;
+
+  &:hover {
+    color: #0f172a;
+  }
 
   &:after {
     content: '';

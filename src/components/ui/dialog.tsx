@@ -235,11 +235,30 @@ function DialogFooter({
 }
 
 function DialogTitle({ className, ...props }: React.ComponentProps<typeof Box>) {
-  return <Box as="h2" data-slot="dialog-title" className={className} {...props} />;
+  return (
+    <Box
+      as="h2"
+      data-slot="dialog-title"
+      className={className}
+      fontSize="var(--font-size-h2)"
+      lineHeight="var(--line-height-h2)"
+      fontWeight="700"
+      {...props}
+    />
+  );
 }
 
 function DialogDescription({ className, ...props }: React.ComponentProps<typeof Box>) {
-  return <Box as="p" data-slot="dialog-description" className={className} {...props} />;
+  return (
+    <Box
+      as="p"
+      data-slot="dialog-description"
+      className={className}
+      fontSize="var(--font-size-body)"
+      lineHeight="var(--line-height-body)"
+      {...props}
+    />
+  );
 }
 
 export {
