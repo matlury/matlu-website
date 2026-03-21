@@ -4,11 +4,12 @@ import { FooterEn } from "./FooterEn";
 import { fetchGraphQL } from "../lib/strapi";
 import { gql } from "@apollo/client";
 
-interface FooterLogo {
+export interface FooterLogo {
   id: string;
   name: string;
   href: string;
   src: string;
+  alt: string;
 }
 
 interface FooterProps {
@@ -22,6 +23,7 @@ interface MembersQueryResult {
     url: string | null;
     logo: {
       url: string;
+      alternativeText: string | null;
     } | null;
   }>;
 }
@@ -34,6 +36,7 @@ const MEMBERS_QUERY = gql`
       url
       logo {
         url
+        alternativeText
       }
     }
   }
@@ -63,6 +66,7 @@ async function getMembers(): Promise<FooterLogo[]> {
         name: item.name,
         href: item.url || "#",
         src: toAbsoluteStrapiUrl(item.logo?.url || ""),
+        alt: item.logo?.alternativeText || item.name,
       }));
   } catch (error) {
     console.error("Failed to fetch footer members", error);

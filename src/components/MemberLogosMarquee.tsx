@@ -8,6 +8,7 @@ export interface FooterLogo {
   name: string;
   href: string;
   src: string;
+  alt: string;
 }
 
 interface MemberLogosMarqueeProps {
@@ -43,7 +44,7 @@ export default function MemberLogosMarquee({ logos = [] }: MemberLogosMarqueePro
           >
             <img
               src={logo.src}
-              alt={logo.name}
+              alt={logo.alt}
               loading="lazy"
               style={{ width: "auto", height: "46px", maxWidth: "180px", objectFit: "contain" }}
             />

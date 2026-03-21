@@ -92,6 +92,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const canonical = seo?.canonicalUrl || "/";
 
   const shareImage = seo?.shareImage?.url;
+  const shareImageAlt = seo?.shareImage?.alternativeText || title;
 
   return {
     title: `${title} | Matlu ry`,
@@ -108,7 +109,9 @@ export async function generateMetadata(): Promise<Metadata> {
       title: title,
       description: description,
       type: "website",
-      ...(shareImage && { images: [{ url: shareImage }] }),
+      ...(shareImage && {
+        images: [{ url: shareImage, alt: shareImageAlt }],
+      }),
     },
     twitter: {
       card: shareImage ? "summary_large_image" : "summary",

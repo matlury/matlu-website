@@ -235,6 +235,7 @@ export async function generateMetadata({
   const canonical = seo?.canonicalUrl || (targetYear ? `/en/board/${targetYear}` : "/en/board");
 
   const shareImage = seo?.shareImage?.url;
+  const shareImageAlt = seo?.shareImage?.alternativeText || title;
 
   return {
     title: `${title} | Matlu ry`,
@@ -251,7 +252,9 @@ export async function generateMetadata({
       title: title,
       description: description,
       type: "website",
-      ...(shareImage && { images: [{ url: shareImage }] }),
+      ...(shareImage && {
+        images: [{ url: shareImage, alt: shareImageAlt }],
+      }),
     },
     twitter: {
       card: shareImage ? "summary_large_image" : "summary",
