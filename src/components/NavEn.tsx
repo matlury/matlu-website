@@ -130,7 +130,7 @@ export const NavEn: React.FC<LocalizedNavProps> = ({
               <i className={open ? "fas fa-times" : "fas fa-bars"}></i>
             </button>
           </DrawerTrigger>
-          <DrawerContent backgroundColor="var(--main-color)">
+          <DrawerContent backgroundColor="var(--main-color)" maxWidth={{ base: "75vw", md: "400px" }}>
             <DrawerHeader
               borderBottomWidth="1px"
               borderColor="rgba(255,255,255,0.1)"
