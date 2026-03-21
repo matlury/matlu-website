@@ -136,15 +136,11 @@ export const NavEn: React.FC<LocalizedNavProps> = ({
               borderColor="rgba(255,255,255,0.1)"
               display="flex"
               alignItems="center"
-              justifyContent="space-between"
+              justifyContent="flex-end"
               padding="0"
               height="60px"
               px="1rem"
             >
-              <div className={styles.brand} style={{ padding: 0, margin: 0, height: "100%", display: "flex", alignItems: "center" }}>
-                <Image imageName="matlu" className={styles.brandLogo} />
-                <span className={styles.brandText} style={{ lineHeight: 1 }}>Matlu ry</span>
-              </div>
               <DrawerCloseTrigger asChild>
                 <CloseButton
                   size="md"
