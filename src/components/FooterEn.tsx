@@ -18,22 +18,34 @@ export const FooterEn: React.FC<LocalizedFooterProps> = ({ language, logos }) =>
     <div className={styles.appFooterSection}>
       <h4>Matlu in social media</h4>
       <ul className={styles.matluSome}>
-        <li>
+        <li style={{ display: "flex", alignItems: "center", gap: 12 }}>
+          <span style={{ width: 36, display: "flex", justifyContent: "center" }}>
+            <i className="fab fa-facebook-square" style={{ fontSize: 32 }}></i>
+          </span>
           <a
             href="https://www.facebook.com/Matlury/"
             target="_blank"
             rel="noopener noreferrer"
+            style={{ fontSize: 20 }}
           >
-            <i className="fab fa-facebook-square"></i> Facebook
+            Facebook
           </a>
         </li>
-        <li>
+        <li style={{ display: "flex", alignItems: "center", gap: 12 }}>
+          <span style={{ width: 36, display: "flex", justifyContent: "center" }}>
+            <img
+              src="/logos/instagram_logo.svg"
+              alt="Instagram"
+              style={{ width: 32, height: 32, display: "inline-block" }}
+            />
+          </span>
           <a
             href="https://instagram.com/matlury/"
             target="_blank"
             rel="noopener noreferrer"
+            style={{ fontSize: 20 }}
           >
-            <i className="fab fa-instagram-square"></i> Instagram
+            Instagram
           </a>
         </li>
       </ul>
