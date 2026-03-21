@@ -19,32 +19,32 @@ export const FooterFi: React.FC<LocalizedFooterProps> = ({ language, logos }) =>
       <h4>Matlu sosiaalisessa mediassa</h4>
       <ul className={styles.matluSome}>
         <li style={{ display: "flex", alignItems: "center", gap: 12 }}>
-          <span style={{ width: 36, display: "flex", justifyContent: "center" }}>
-            <i className="fab fa-facebook-square" style={{ fontSize: 32 }}></i>
-          </span>
           <a
             href="https://www.facebook.com/Matlury/"
             target="_blank"
             rel="noopener noreferrer"
-            style={{ fontSize: 20 }}
+            style={{ display: "flex", alignItems: "center", gap: 12, fontSize: 20, textDecoration: "none", color: "inherit" }}
           >
+            <span style={{ width: 36, display: "flex", justifyContent: "center" }}>
+              <i className="fab fa-facebook-square" style={{ fontSize: 32 }}></i>
+            </span>
             Facebook
           </a>
         </li>
         <li style={{ display: "flex", alignItems: "center", gap: 12 }}>
-          <span style={{ width: 36, display: "flex", justifyContent: "center" }}>
-            <img
-              src="/logos/instagram_logo.svg"
-              alt="Instagram"
-              style={{ width: 32, height: 32, display: "inline-block" }}
-            />
-          </span>
           <a
             href="https://www.instagram.com/matlury/"
             target="_blank"
             rel="noopener noreferrer"
-            style={{ fontSize: 20 }}
+            style={{ display: "flex", alignItems: "center", gap: 12, fontSize: 20, textDecoration: "none", color: "inherit" }}
           >
+            <span style={{ width: 36, display: "flex", justifyContent: "center" }}>
+              <img
+                src="/logos/instagram_logo.svg"
+                alt="Instagram"
+                style={{ width: 32, height: 32, display: "inline-block" }}
+              />
+            </span>
             Instagram
           </a>
         </li>
