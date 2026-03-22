@@ -91,15 +91,6 @@ export const NavFi: React.FC<LocalizedNavProps> = ({
           </NavLink>
         );
       })}
-      <NavLink
-        href="https://www.potentiaali.com"
-        onClick={() => setOpen(false)}
-        className={styles.navLink}
-      >
-        <span style={{ whiteSpace: "nowrap", display: "inline-flex", alignItems: "center" }}>
-          Kumpulan Potentiaali <FaExternalLinkAlt style={{ marginLeft: 4, fontSize: "0.9em", verticalAlign: "middle" }} />
-        </span>
-      </NavLink>
     </>
   );
 
@@ -118,6 +109,16 @@ export const NavFi: React.FC<LocalizedNavProps> = ({
           >
             <span style={{ whiteSpace: "nowrap", display: "inline-flex", alignItems: "center" }}>
               Matlu Klusteri <FaExternalLinkAlt style={{ marginLeft: 4, fontSize: "0.9em", verticalAlign: "middle" }} />
+            </span>
+          </a>
+          <a
+            className={styles.navLink}
+            href="https://www.potentiaali.com"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <span style={{ whiteSpace: "nowrap", display: "inline-flex", alignItems: "center" }}>
+              Kumpulan Potentiaali <FaExternalLinkAlt style={{ marginLeft: 4, fontSize: "0.9em", verticalAlign: "middle" }} />
             </span>
           </a>
           <Link
@@ -178,6 +179,16 @@ export const NavFi: React.FC<LocalizedNavProps> = ({
                   >
                     <span style={{ whiteSpace: "nowrap", display: "inline-flex", alignItems: "center" }}>
                       Matlu Klusteri <FaExternalLinkAlt style={{ marginLeft: 4, fontSize: "0.9em", verticalAlign: "middle" }} />
+                    </span>
+                  </a>
+                  <a
+                    className={styles.navLink}
+                    href="https://www.potentiaali.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <span style={{ whiteSpace: "nowrap", display: "inline-flex", alignItems: "center" }}>
+                      Kumpulan Potentiaali <FaExternalLinkAlt style={{ marginLeft: 4, fontSize: "0.9em", verticalAlign: "middle" }} />
                     </span>
                   </a>
                   <Link
