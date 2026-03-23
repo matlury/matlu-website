@@ -1,7 +1,6 @@
 "use client";
 
-import { Box } from "@chakra-ui/react";
-import { Marquee } from "@/components/ui/marquee";
+import { Marquee } from "@chakra-ui/react";
 
 export interface FooterLogo {
   id: string;
@@ -21,46 +20,40 @@ export default function MemberLogosMarquee({ logos = [] }: MemberLogosMarqueePro
   }
 
   return (
-    <Box position="relative" overflow="hidden">
-      <Box
-        pointerEvents="none"
-        position="absolute"
-        top={0}
-        bottom={0}
-        left={0}
-        zIndex={10}
-        width="64px"
-        bgGradient="linear(to-r, #0149bc, transparent)"
-      />
-      <Marquee pauseOnHover duration={28} gap={28}>
-        {logos.map((logo) => (
-          <a
-            key={logo.id}
-            href={logo.href}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label={logo.name}
-            style={{ display: "inline-flex", alignItems: "center" }}
-          >
-            <img
-              src={logo.src}
-              alt={logo.alt}
-              loading="lazy"
-              style={{ width: "auto", height: "46px", maxWidth: "180px", objectFit: "contain" }}
-            />
-          </a>
-        ))}
-      </Marquee>
-      <Box
-        pointerEvents="none"
-        position="absolute"
-        top={0}
-        bottom={0}
-        right={0}
-        zIndex={10}
-        width="64px"
-        bgGradient="linear(to-l, #0149bc, transparent)"
-      />
-    </Box>
+    <Marquee.Root
+      pauseOnInteraction
+      spacing="28px"
+      css={{
+        "--marquee-duration": "28s",
+        "--marquee-edge-color": "#0149bc",
+        "--marquee-edge-size": "64px",
+        bg: "#0149bc",
+      }}
+    >
+      <Marquee.Edge side="start" />
+      <Marquee.Viewport>
+        <Marquee.Content>
+          {logos.map((logo) => (
+            <Marquee.Item key={logo.id}>
+              <a
+                href={logo.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={logo.name}
+                style={{ display: "inline-flex", alignItems: "center" }}
+              >
+                <img
+                  src={logo.src}
+                  alt={logo.alt}
+                  loading="lazy"
+                  style={{ width: "auto", height: "46px", maxWidth: "180px", objectFit: "contain" }}
+                />
+              </a>
+            </Marquee.Item>
+          ))}
+        </Marquee.Content>
+      </Marquee.Viewport>
+      <Marquee.Edge side="end" />
+    </Marquee.Root>
   );
 }
