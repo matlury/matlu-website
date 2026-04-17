@@ -9,9 +9,13 @@ import qs from "qs";
 
 const STRAPI_URL = (process.env.API_URL || "http://127.0.0.1:1337").replace(
   /\/$/,
-  "",
-);
+  "");
 const STRAPI_GRAPHQL_URL = `${STRAPI_URL}/graphql`;
+
+const STRAPI_PUBLIC_URL = (
+  process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:1337"
+).replace(/\/$/, "");
+const STRAPI_PUBLIC_GRAPHQL_URL = `${STRAPI_PUBLIC_URL}/graphql`;
 const STRAPI_TOKEN = process.env.ACCESS_TOKEN;
 
 const httpLink = new HttpLink({
@@ -35,7 +39,7 @@ const client = new ApolloClient({
 });
 
 const httpLinkNoAuth = new HttpLink({
-  uri: STRAPI_GRAPHQL_URL,
+  uri: STRAPI_PUBLIC_GRAPHQL_URL,
   fetch,
 });
 
