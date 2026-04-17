@@ -4,7 +4,7 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import dynamic from "next/dynamic";
 import ReCAPTCHA from "react-google-recaptcha";
-import { Button as ChakraButton, Text, HStack, Box, Input as ChakraInput, InputGroup, Popover, useDisclosure } from "@chakra-ui/react";
+import { Button as ChakraButton, Text, HStack, Box, Input as ChakraInput, InputGroup, Popover } from "@chakra-ui/react";
 import { FaEuroSign } from "react-icons/fa";
 import axios from "axios";
 import styled from "styled-components";
@@ -122,11 +122,11 @@ export default function EventRequestForm({
   const [message, setMessage] = useState("");
   const [toastNotice, setToastNotice] = useState<ToastNotice | null>(null);
   const [isOpen, setIsOpen] = useState(false);
-  const { onClose: onPopoverClose } = useDisclosure();
   const [locationSearchInput, setLocationSearchInput] = useState("");
   const [titleFiBlurred, setTitleFiBlurred] = useState(false);
   const [titleSuggestions] = useState<TitleSuggestion[]>(initialTitleSuggestions);
   const [locationSuggestions] = useState<LocationSuggestion[]>(initialLocationSuggestions);
+  const [confirmPopoverOpen, setConfirmPopoverOpen] = useState(false);
 
   const form = useForm({
     defaultValues: {
@@ -345,7 +345,6 @@ export default function EventRequestForm({
   };
 
   function handleConfirmSubmit() {
-    onPopoverClose();
     void form.handleSubmit();
   }
 
@@ -881,7 +880,7 @@ export default function EventRequestForm({
                     }}>
                       {message && <p style={{ fontSize: "0.875rem", fontWeight: 600, color: "#334155", margin: 0, background: "rgba(255,255,255,0.8)", padding: "0.25rem 0.5rem", borderRadius: "4px" }}>{message}</p>}
 
-                      <Popover.Root>
+                      <Popover.Root open={confirmPopoverOpen} onOpenChange={(e) => setConfirmPopoverOpen(e.open)}>
                         <Popover.Trigger asChild>
                           <Button
                             type="button"
@@ -904,7 +903,7 @@ export default function EventRequestForm({
                                   size="sm"
                                   variant="ghost"
                                   onClick={() => {
-                                    onPopoverClose();
+                                    setConfirmPopoverOpen(false);
                                   }}
                                   style={{ color: "#64748b", padding: "0 1rem" }}
                                 >
@@ -914,7 +913,7 @@ export default function EventRequestForm({
                                   size="sm"
                                   style={{ background: "#0149bc", color: "#fff", padding: "0 1rem" }}
                                   onClick={() => {
-                                    onPopoverClose();
+                                    setConfirmPopoverOpen(false);
                                     handleConfirmSubmit();
                                   }}
                                 >

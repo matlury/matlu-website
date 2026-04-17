@@ -31,7 +31,18 @@ const authLink = setContext((_, { headers }) => {
 const client = new ApolloClient({
   link: authLink.concat(httpLink),
   cache: new InMemoryCache(),
-  ssrMode: typeof window === "undefined", // Set to true for SSR
+  ssrMode: typeof window === "undefined",
+});
+
+const httpLinkNoAuth = new HttpLink({
+  uri: STRAPI_GRAPHQL_URL,
+  fetch,
+});
+
+export const browserClient = new ApolloClient({
+  link: httpLinkNoAuth,
+  cache: new InMemoryCache(),
+  ssrMode: false,
 });
 
 function extractErrorDetails(error: unknown) {
@@ -68,8 +79,6 @@ export async function fetchGraphQL<T>(
     return await client.query<T>({
       query,
       variables,
-      // This ensures Apollo doesn't store data in its own memory cache,
-      // letting Next.js handle the caching/revalidation via fetch.
       fetchPolicy: "no-cache",
     });
   } catch (error) {
@@ -78,6 +87,33 @@ export async function fetchGraphQL<T>(
       : undefined;
 
     console.error("[strapi:graphql] request failed", {
+      endpoint: STRAPI_GRAPHQL_URL,
+      hasAuthToken: Boolean(STRAPI_TOKEN),
+      queryPreview,
+      variables,
+      error: extractErrorDetails(error),
+    });
+
+    throw error;
+  }
+}
+
+export async function fetchGraphQLClient<T>(
+  query: DocumentNode,
+  variables?: Record<string, unknown>,
+) {
+  try {
+    return await browserClient.query<T>({
+      query,
+      variables,
+      fetchPolicy: "network-only",
+    });
+  } catch (error) {
+    const queryPreview = query.loc?.source.body
+      ? query.loc.source.body.replace(/\s+/g, " ").slice(0, 160)
+      : undefined;
+
+    console.error("[strapi:graphql] client request failed", {
       endpoint: STRAPI_GRAPHQL_URL,
       hasAuthToken: Boolean(STRAPI_TOKEN),
       queryPreview,
