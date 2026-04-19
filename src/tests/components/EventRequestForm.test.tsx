@@ -3,6 +3,7 @@ import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import EventRequestForm from '../../components/EventRequestForm';
 import ChakraProvider from '../../components/ChakraProvider';
+import { Dialog, DialogTrigger } from '@/components/ui/dialog';
 import axios from 'axios';
 
 // Mock axios
@@ -38,7 +39,14 @@ vi.mock('@/api', () => ({
 const renderForm = (lang: 'fi' | 'en' = 'fi') => {
   return render(
     <ChakraProvider>
-      <EventRequestForm lang={lang} />
+      <Dialog>
+        <DialogTrigger asChild>
+          <button type="button">
+            {lang === 'fi' ? 'Lisää tapahtuma' : 'Add an event'}
+          </button>
+        </DialogTrigger>
+        <EventRequestForm lang={lang} />
+      </Dialog>
     </ChakraProvider>
   );
 };
@@ -100,7 +108,7 @@ describe('EventRequestForm', () => {
     });
 
     // Check success message
-    expect(await screen.findByText(/Request submitted/i)).toBeInTheDocument();
+    expect(await screen.findAllByText(/Request submitted/i)).toHaveLength(2);
   });
 
   it('shows error if submission fails', async () => {
