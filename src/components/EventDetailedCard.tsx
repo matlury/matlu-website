@@ -70,6 +70,7 @@ export const EventDetailedCard: React.FC<EventDetailedCardProps> = ({
         : "";
     const timeStr = parsedDate ? format(parsedDate, "HH:mm") : "";
 
+
     return (
         <DialogContent
             showCloseButton={false}
@@ -159,7 +160,6 @@ export const EventDetailedCard: React.FC<EventDetailedCardProps> = ({
                 }}
             >
                 <Stack gap={6}>
-                    <Box borderBottom="1px solid #e2e8f0" />
 
                     {description?.[language] && (
                         <Box>
