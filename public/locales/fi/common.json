@@ -1,0 +1,44 @@
+{
+  "nav": {
+    "home": "Etusivu",
+    "board": "Hallitus",
+    "switchLang": "In english"
+  },
+  "footer": {
+    "documents": "Dokumentteja",
+    "socialMedia": "Matlu sosiaalisessa mediassa",
+    "address": "Matlu ry",
+    "addressLine": "c/o Jyväskylän yliopiston ylioppilaskunta",
+    "addressLine2": "PL 35, 40014 Jyväskylän yliopisto"
+  },
+  "events": {
+    "upcoming": "Tulevat tapahtumat",
+    "addEvent": "Lisää tapahtuma",
+    "noEvents": "Ei tulevia tapahtumia tällä hetkellä."
+  },
+  "board": {
+    "title": "Hallitus",
+    "titleWithYear": "Hallitus {{year}}",
+    "officials": "Virkailijat {{year}}",
+    "formerBoards": "Aiemmat ja muut hallitukset",
+    "emailNote": "Hallituksen jäsenet voi tavoittaa parhaiten sähköpostitse <email>{{email}}</email>."
+  },
+  "pages": {
+    "ilotalo": {
+      "title": "Matlu Klusterin varauskalenteri",
+      "redirectText": "Siirrytään Matlu Klusterin sivuille..."
+    },
+    "thankYou": {
+      "title": "Kiitos yhteydenotostasi!"
+    }
+  },
+  "common": {
+    "closeDialog": "Sulje dialogi",
+    "closeNotification": "Sulje ilmoitus",
+    "readMore": "Lue lisää",
+    "description": "Kuvaus",
+    "minutes": "Pöytäkirjat",
+    "languageFi": "fi",
+    "languageEn": "en"
+  }
+}

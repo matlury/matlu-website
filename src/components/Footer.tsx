@@ -1,8 +1,7 @@
 import { Language } from "../utils";
-import { FooterFi } from "./FooterFi";
-import { FooterEn } from "./FooterEn";
 import { fetchGraphQL } from "../lib/strapi";
 import { gql } from "@apollo/client";
+import FooterContent from "./FooterContent";
 
 export interface FooterLogo {
   id: string;
@@ -76,9 +75,5 @@ async function getMembers(): Promise<FooterLogo[]> {
 
 export const Footer = async ({ language }: FooterProps) => {
   const logos = await getMembers();
-
-  if (language === "fi") {
-    return <FooterFi language={language} logos={logos} />;
-  }
-  return <FooterEn language={language} logos={logos} />;
+  return <FooterContent language={language} logos={logos} />;
 };

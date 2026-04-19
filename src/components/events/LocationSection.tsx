@@ -6,7 +6,7 @@ import { Language } from "@/utils";
 import { FieldGroup } from "@/components/ui/field";
 import { TextInput } from "@/components/ui/TextInput";
 import { FieldInput } from "./FieldInput";
-import type { TEXT } from "@/locales/event-request";
+import { getEventText } from "@/utils/event-locale";
 import { formatCoordinate } from "@/utils/form-utils";
 
 interface LocationSuggestion {
@@ -35,25 +35,25 @@ const LeafletLocationMap = dynamic(() => import("../LeafletLocationMap"), {
 interface LocationSectionProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   form: any;
-  t: (typeof TEXT)["en"] | (typeof TEXT)["fi"];
+  lang: Language;
   locationSearchInput: string;
   setLocationSearchInput: (v: string) => void;
   locationSuggestions: LocationSuggestion[];
-  lang: Language;
   mapLatitude: number | undefined;
   mapLongitude: number | undefined;
 }
 
 export function LocationSection({
   form,
-  t,
+  lang,
   locationSearchInput,
   setLocationSearchInput,
   locationSuggestions,
-  lang,
   mapLatitude,
   mapLongitude,
 }: LocationSectionProps) {
+  const t = getEventText(lang);
+
   return (
     <section id="section-location" style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
       <FieldGroup style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(240px,1fr))", gap: "1.25rem" }}>

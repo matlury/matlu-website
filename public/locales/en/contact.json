@@ -1,0 +1,8 @@
+{
+  "title": "Contact form",
+  "description": "The contact form is anonymous, and will be sent to the board of Matlu via email. Optionally, you can choose to leave your contact information, if you want an answer to your contact request.",
+  "messageLabel": "Message",
+  "messagePlaceholder": "Write your message...",
+  "send": "Send",
+  "closeNotification": "Close notification"
+}

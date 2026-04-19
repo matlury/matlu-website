@@ -1,8 +1,7 @@
 import { Language, LocalizedText } from "../utils";
-import { NavFi } from "./NavFi";
-import { NavEn } from "./NavEn";
 import { fetchGraphQL } from "../lib/strapi";
 import { gql } from "@apollo/client";
+import NavContent from "./NavContent";
 
 interface NavProps {
   language: Language;
@@ -57,8 +56,5 @@ export const Nav = async ({ language, localizedLinks }: NavProps) => {
     Title: node.Title,
   }));
 
-  if (language === "fi") {
-    return <NavFi navLinks={links} localizedLinks={localizedLinks} />;
-  }
-  return <NavEn navLinks={links} localizedLinks={localizedLinks} />;
+  return <NavContent lang={language} localizedLinks={localizedLinks} navLinks={links} />;
 };

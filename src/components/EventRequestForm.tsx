@@ -334,26 +334,25 @@ export default function EventRequestForm({
                 >
                   <TitleSection
                     form={form}
-                    t={t}
+                    lang={lang}
                     titleDatalistId={titleDatalistId}
                     titleSuggestions={titleSuggestions}
                     showEnglishTitle={showEnglishTitle}
                     setTitleFiBlurred={setTitleFiBlurred}
                   />
 
-                  <TimeSection form={form} t={t} />
+                  <TimeSection form={form} lang={lang} />
 
-                  <OrganizerSection form={form} t={t} />
+                  <OrganizerSection form={form} lang={lang} />
 
-                  <DetailsSection form={form} t={t} />
+                  <DetailsSection form={form} lang={lang} />
 
                   <LocationSection
                     form={form}
-                    t={t}
+                    lang={lang}
                     locationSearchInput={locationSearchInput}
                     setLocationSearchInput={setLocationSearchInput}
                     locationSuggestions={locationSuggestions}
-                    lang={lang}
                     mapLatitude={mapLatitude}
                     mapLongitude={mapLongitude}
                   />
@@ -370,7 +369,7 @@ export default function EventRequestForm({
 
                   <SubmitSection
                     form={form}
-                    t={t}
+                    lang={lang}
                     status={status}
                     message={message}
                     confirmPopoverOpen={confirmPopoverOpen}

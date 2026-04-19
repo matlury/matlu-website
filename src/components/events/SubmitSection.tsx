@@ -2,14 +2,15 @@
 
 import { Box, Popover } from "@chakra-ui/react";
 import { Button } from "@/components/ui/button";
-import type { TEXT } from "@/locales/event-request";
+import { getEventText } from "@/utils/event-locale";
+import type { Language } from "@/utils";
 
 type Status = "idle" | "submitting" | "success" | "error";
 
 interface SubmitSectionProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   form: any;
-  t: (typeof TEXT)["en"] | (typeof TEXT)["fi"];
+  lang: Language;
   status: Status;
   message: string;
   confirmPopoverOpen: boolean;
@@ -18,12 +19,14 @@ interface SubmitSectionProps {
 
 export function SubmitSection({
   form,
-  t,
+  lang,
   status,
   message,
   confirmPopoverOpen,
   setConfirmPopoverOpen,
 }: SubmitSectionProps) {
+  const t = getEventText(lang);
+
   return (
     <section
       id="section-submit"

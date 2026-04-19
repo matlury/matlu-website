@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { Dialog, DialogTrigger, DialogContent } from "@/components/ui/dialog";
+import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import CalendarEvents from "./CalendarEvents";
 import EventRequestForm from "./EventRequestForm";
 import { Language } from "../utils";

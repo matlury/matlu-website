@@ -1,0 +1,44 @@
+{
+  "nav": {
+    "home": "Home",
+    "board": "Board",
+    "switchLang": "Suomeksi"
+  },
+  "footer": {
+    "documents": "Documents",
+    "socialMedia": "Matlu in social media",
+    "address": "Matlu ry",
+    "addressLine": "c/o University of Jyväskylä Student Union",
+    "addressLine2": "P.O. Box 35, 40014 University of Jyväskylä"
+  },
+  "events": {
+    "upcoming": "Upcoming events",
+    "addEvent": "Add an event",
+    "noEvents": "No upcoming events at the moment."
+  },
+  "board": {
+    "title": "Board",
+    "titleWithYear": "Board of {{year}}",
+    "officials": "Officials of {{year}}",
+    "formerBoards": "Former and other boards",
+    "emailNote": "Board members are best reached by email at <email>{{email}}</email>."
+  },
+  "pages": {
+    "ilotalo": {
+      "title": "Matlu Klusteri booking calendar",
+      "redirectText": "Redirecting to Matlu Klusteri..."
+    },
+    "thankYou": {
+      "title": "Thank you for contacting!"
+    }
+  },
+  "common": {
+    "closeDialog": "Close dialog",
+    "closeNotification": "Close notification",
+    "readMore": "Read more",
+    "description": "Description",
+    "minutes": "Minutes",
+    "languageFi": "fi",
+    "languageEn": "en"
+  }
+}

@@ -2,8 +2,8 @@
 
 import { FieldGroup } from "@/components/ui/field";
 import { FieldInput } from "./FieldInput";
-import { FieldTextarea } from "./FieldTextarea";
-import type { TEXT } from "@/locales/event-request";
+import { getEventText } from "@/utils/event-locale";
+import type { Language } from "@/utils";
 
 interface TitleSuggestion {
   fi: string;
@@ -13,7 +13,7 @@ interface TitleSuggestion {
 interface TitleSectionProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   form: any;
-  t: (typeof TEXT)["en"] | (typeof TEXT)["fi"];
+  lang: Language;
   titleDatalistId: string;
   titleSuggestions: TitleSuggestion[];
   showEnglishTitle: boolean;
@@ -22,12 +22,14 @@ interface TitleSectionProps {
 
 export function TitleSection({
   form,
-  t,
+  lang,
   titleDatalistId,
   titleSuggestions,
   showEnglishTitle,
   setTitleFiBlurred,
 }: TitleSectionProps) {
+  const t = getEventText(lang);
+
   return (
     <section id="section-title">
       <FieldGroup style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(240px,1fr))", gap: "1.25rem" }}>

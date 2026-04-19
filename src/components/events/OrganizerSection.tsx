@@ -5,15 +5,18 @@ import { Box, HStack, InputGroup, Input as ChakraInput, Text } from "@chakra-ui/
 import { FaEuroSign } from "react-icons/fa";
 import { FieldGroup } from "@/components/ui/field";
 import { FieldInput } from "./FieldInput";
-import type { TEXT } from "@/locales/event-request";
+import { getEventText } from "@/utils/event-locale";
+import type { Language } from "@/utils";
 
 interface OrganizerSectionProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   form: any;
-  t: (typeof TEXT)["en"] | (typeof TEXT)["fi"];
+  lang: Language;
 }
 
-export function OrganizerSection({ form, t }: OrganizerSectionProps) {
+export function OrganizerSection({ form, lang }: OrganizerSectionProps) {
+  const t = getEventText(lang);
+
   return (
     <section id="section-organizer">
       <FieldGroup style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(240px,1fr))", gap: "1.25rem" }}>

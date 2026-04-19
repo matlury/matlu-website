@@ -4,7 +4,7 @@ import React from "react";
 import { FaExternalLinkAlt } from "react-icons/fa";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LocalizedLink } from "../utils";
+import { Language, LocalizedLink } from "../utils";
 import styles from "./Nav.module.scss";
 import Image from "./image";
 import {
@@ -17,18 +17,25 @@ import {
 } from "@/components/ui/drawer";
 import { CloseButton } from "@chakra-ui/react";
 
-interface LocalizedNavProps {
-  localizedLinks: LocalizedLink;
-  navLinks: {
-    id: string;
-    page: string;
-    Ordering: number;
-    Draft: boolean;
-    Title: {
-      en: string;
-      fi: string;
-    };
-  }[];
+const NAV_LABELS = {
+  fi: {
+    home: "Etusivu",
+    board: "Hallitus",
+    switchLang: "In english",
+  },
+  en: {
+    home: "Home",
+    board: "Board",
+    switchLang: "Suomeksi",
+  },
+} as const;
+
+interface NavLinkProps {
+  href: string;
+  children: React.ReactNode;
+  partiallyActive?: boolean;
+  className?: string;
+  onClick?: () => void;
 }
 
 const NavLink = ({
@@ -37,13 +44,7 @@ const NavLink = ({
   partiallyActive = false,
   className,
   onClick,
-}: {
-  href: string;
-  children: React.ReactNode;
-  partiallyActive?: boolean;
-  className?: string;
-  onClick?: () => void;
-}) => {
+}: NavLinkProps) => {
   const pathname = usePathname();
   const isActive = partiallyActive
     ? pathname.startsWith(href)
@@ -61,43 +62,65 @@ const NavLink = ({
   );
 };
 
-export const NavFi: React.FC<LocalizedNavProps> = ({
-  navLinks,
+interface NavContentProps {
+  lang: Language;
+  localizedLinks: LocalizedLink;
+  navLinks: {
+    id: string;
+    page: string;
+    Ordering: number;
+    Draft: boolean;
+    Title: {
+      en: string;
+      fi: string;
+    };
+  }[];
+}
+
+const NavContent: React.FC<NavContentProps> = ({
+  lang,
   localizedLinks,
+  navLinks,
 }) => {
   const [open, setOpen] = React.useState(false);
+  const labels = NAV_LABELS[lang];
+  const prefix = lang === "en" ? "/en" : "";
+  const switchHref =
+    lang === "fi"
+      ? localizedLinks.en.startsWith("/en")
+        ? localizedLinks.en
+        : `/en${localizedLinks.en === "/" ? "/" : localizedLinks.en}`
+      : localizedLinks.fi.replace(/^\/en/, "") || "/";
 
   const menuItems = (
     <>
-      <NavLink href={`/`} onClick={() => setOpen(false)}>
-        Etusivu
+      <NavLink href={`${prefix}/`} onClick={() => setOpen(false)}>
+        {labels.home}
       </NavLink>
       <NavLink
-        href={`/board/`}
+        href={`${prefix}/board/`}
         partiallyActive={true}
         onClick={() => setOpen(false)}
       >
-        Hallitus
+        {labels.board}
       </NavLink>
-      {navLinks.map((navLink) => {
-        return (
-          <NavLink
-            key={navLink.id}
-            href={`/${navLink.page}/`}
-            partiallyActive={true}
-            onClick={() => setOpen(false)}
-          >
-            {navLink.Title.fi}
-          </NavLink>
-        );
-      })}
+      {navLinks.map((navLink) => (
+        <NavLink
+          key={navLink.id}
+          href={`${prefix}/${navLink.page}/`}
+          partiallyActive={true}
+          onClick={() => setOpen(false)}
+        >
+          {navLink.Title[lang]}
+        </NavLink>
+      ))}
     </>
   );
 
   return (
     <nav className={styles.nav}>
       <div className={styles.navTop}>
-        <NavLink href={`/`} className={styles.brand}>
+        <NavLink href={`${prefix}/`} className={styles.brand}>
           <Image imageName="matlu" className={styles.brandLogo} />
         </NavLink>
         <div className={styles.navUtilities}>
@@ -122,14 +145,10 @@ export const NavFi: React.FC<LocalizedNavProps> = ({
             </span>
           </a>
           <Link
-            href={
-              localizedLinks.en.startsWith("/en")
-                ? localizedLinks.en
-                : `/en${localizedLinks.en === "/" ? "/" : localizedLinks.en}`
-            }
+            href={switchHref}
             className={styles.navLink}
           >
-            In english
+            {labels.switchLang}
           </Link>
         </div>
 
@@ -192,14 +211,10 @@ export const NavFi: React.FC<LocalizedNavProps> = ({
                     </span>
                   </a>
                   <Link
-                    href={
-                      localizedLinks.en.startsWith("/en")
-                        ? localizedLinks.en
-                        : `/en${localizedLinks.en === "/" ? "/" : localizedLinks.en}`
-                    }
+                    href={switchHref}
                     className={styles.navLink}
                   >
-                    In english
+                    {labels.switchLang}
                   </Link>
                 </div>
               </div>
@@ -212,3 +227,5 @@ export const NavFi: React.FC<LocalizedNavProps> = ({
     </nav>
   );
 };
+
+export default NavContent;

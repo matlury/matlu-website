@@ -1,0 +1,8 @@
+{
+  "title": "Yhteydenottolomake",
+  "description": "Yhteydenottolomake on anonyymi, ja välitetään Matlun hallitukselle sähköpostitse. Voit halutessasi jättää viestiin yhteystietosi, jos haluat vastauksen yhteydenottoosi.",
+  "messageLabel": "Viesti",
+  "messagePlaceholder": "Kirjoita viestisi...",
+  "send": "Lähetä",
+  "closeNotification": "Sulje ilmoitus"
+}
