@@ -3,10 +3,22 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { fetchStrapi } from "../../lib/strapi";
 import { Metadata } from "next";
-import CalendarEvents from "../../components/CalendarEvents";
 import ContactForm from "../../components/ContactForm";
-import EventRequestForm from "../../components/EventRequestForm";
+import EventsPageContent from "../../components/EventsPageContent";
 import { MainLayout } from "../../components/MainLayout";
+
+export interface LocationSuggestion {
+  documentId: string;
+  label_fi: string;
+  label_en: string;
+  latitude: number | null;
+  longitude: number | null;
+}
+
+export interface TitleSuggestion {
+  fi: string;
+  en: string;
+}
 
 interface PageData {
   documentId: string;
@@ -28,19 +40,6 @@ interface PageData {
     };
     canonicalUrl?: string;
   };
-}
-
-interface LocationSuggestion {
-  documentId: string;
-  label_fi: string;
-  label_en: string;
-  latitude: number | null;
-  longitude: number | null;
-}
-
-interface TitleSuggestion {
-  fi: string;
-  en: string;
 }
 
 interface DynamicPageQueryResult {
@@ -171,7 +170,7 @@ export default async function DynamicPage({ params }: DynamicPageProps) {
     );
   }
 
-  const body = page.body.Fi || "";
+  const body = page.body?.Fi || "";
 
   const isEventsPage = pageSlug === "events";
   const isContactPage = pageSlug === "contact";
@@ -200,13 +199,11 @@ export default async function DynamicPage({ params }: DynamicPageProps) {
 
   return (
     <MainLayout lang={lang} localizedLinks={localizedLinks}>
-      {isEventsPage && <h1>Tulevat tapahtumat</h1>}
-      {isEventsPage && <CalendarEvents language={lang} showAll />}
       {isEventsPage && (
-        <EventRequestForm
+        <EventsPageContent
           lang={lang}
-          initialLocationSuggestions={locationSuggestions}
-          initialTitleSuggestions={titleSuggestions}
+          locationSuggestions={locationSuggestions}
+          titleSuggestions={titleSuggestions}
         />
       )}
       {isContactPage && <ContactForm lang={lang} />}

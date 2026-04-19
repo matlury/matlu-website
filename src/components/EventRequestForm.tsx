@@ -12,13 +12,11 @@ import { useForm } from "@tanstack/react-form";
 import { Language } from "../utils";
 import { Button } from "@/components/ui/button";
 import {
-  Dialog,
   DialogClose,
   DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 import { FieldGroup } from "@/components/ui/field";
 import { TextInput } from "@/components/ui/TextInput";
@@ -121,7 +119,6 @@ export default function EventRequestForm({
   const [status, setStatus] = useState<Status>("idle");
   const [message, setMessage] = useState("");
   const [toastNotice, setToastNotice] = useState<ToastNotice | null>(null);
-  const [isOpen, setIsOpen] = useState(false);
   const [locationSearchInput, setLocationSearchInput] = useState("");
   const [titleFiBlurred, setTitleFiBlurred] = useState(false);
   const [titleSuggestions] = useState<TitleSuggestion[]>(initialTitleSuggestions);
@@ -237,7 +234,6 @@ export default function EventRequestForm({
           title: t.addEventToast,
           description: t.success,
         });
-        setIsOpen(false);
       } catch (error) {
         let errorMessage: string;
         if (axios.isAxiosError(error)) {
@@ -297,7 +293,7 @@ export default function EventRequestForm({
   }, [toastNotice]);
 
   useEffect(() => {
-    if (!isOpen || !scrollContainerRef.current) {
+    if (!scrollContainerRef.current) {
       return;
     }
 
@@ -332,7 +328,7 @@ export default function EventRequestForm({
     return () => {
       observer.disconnect();
     };
-  }, [isOpen, sectionItems]);
+  }, [sectionItems]);
 
   const scrollToSection = (sectionId: string) => {
     const target = document.getElementById(sectionId);
@@ -347,8 +343,6 @@ export default function EventRequestForm({
   function handleConfirmSubmit() {
     void form.handleSubmit();
   }
-
-  const bubbleText = lang === "fi" ? "Lisää tapahtuma" : "Add an event";
 
   return (
     <form.Subscribe selector={(state) => [state.values.latitude, state.values.longitude, state.values.title_fi]}>
@@ -411,41 +405,22 @@ export default function EventRequestForm({
                 document.body,
               )}
 
-            <Dialog open={isOpen} onOpenChange={setIsOpen}>
-              <section style={{ marginTop: "2rem", maxWidth: "760px" }}>
-                <DialogTrigger asChild>
-                  <Button
-                    type="button"
-                    style={{
-                      borderRadius: "999px",
-                      padding: "1rem 1.5rem",
-                      fontSize: "1rem",
-                      fontWeight: 700,
-                      background: "#0149bc",
-                      color: "#ffffff",
-                    }}
-                  >
-                    {bubbleText}
-                  </Button>
-                </DialogTrigger>
-              </section>
-
-              <DialogContent
-                showCloseButton={false}
-                style={{
-                  zIndex: 110,
-                  maxHeight: "90vh",
-                  width: "100%",
-                  maxWidth: "50em",
-                  overflow: "visible",
-                  borderRadius: "1rem",
-                  border: "1px solid #e2e8f0",
-                  background: "#fff",
-                  padding: 0,
-                  color: "#0f172a",
-                  boxShadow: "0 25px 50px -12px rgba(0,0,0,0.25)",
-                }}
-              >
+            <DialogContent
+              showCloseButton={false}
+              style={{
+                zIndex: 110,
+                maxHeight: "90vh",
+                width: "100%",
+                maxWidth: "50em",
+                overflow: "visible",
+                borderRadius: "1rem",
+                border: "1px solid #e2e8f0",
+                background: "#fff",
+                padding: 0,
+                color: "#0f172a",
+                boxShadow: "0 25px 50px -12px rgba(0,0,0,0.25)",
+              }}
+            >
                 <DialogHeader
                   style={{
                     display: "flex",
@@ -954,7 +929,6 @@ export default function EventRequestForm({
                   </div>
                 </AsideNavigation>
               </DialogContent>
-            </Dialog>
           </>
         );
       }}

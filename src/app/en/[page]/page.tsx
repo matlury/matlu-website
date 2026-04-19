@@ -3,9 +3,8 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { fetchStrapi } from "../../../lib/strapi";
 import { Metadata } from "next";
-import CalendarEvents from "../../../components/CalendarEvents";
 import ContactForm from "../../../components/ContactForm";
-import EventRequestForm from "../../../components/EventRequestForm";
+import EventsPageContent from "../../../components/EventsPageContent";
 import { MainLayout } from "../../../components/MainLayout";
 
 interface PageData {
@@ -158,7 +157,7 @@ export default async function DynamicPage({
     );
   }
 
-  const body = page.body.En || "";
+  const body = page.body?.En || "";
 
   const isEventsPage = pageSlug === "events";
   const isContactPage = pageSlug === "contact";
@@ -170,9 +169,13 @@ export default async function DynamicPage({
 
   return (
     <MainLayout lang={lang} localizedLinks={localizedLinks}>
-      {isEventsPage && <h1>Upcoming events</h1>}
-      {isEventsPage && <CalendarEvents language={lang} showAll />}
-      {isEventsPage && <EventRequestForm lang={lang} />}
+      {isEventsPage && (
+        <EventsPageContent
+          lang={lang}
+          locationSuggestions={[]}
+          titleSuggestions={[]}
+        />
+      )}
       {isContactPage && <ContactForm lang={lang} />}
       <ReactMarkdown remarkPlugins={[remarkGfm]}>{body}</ReactMarkdown>
     </MainLayout>
