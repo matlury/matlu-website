@@ -76,6 +76,9 @@ export const EventDetailedCard: React.FC<EventDetailedCardProps> = ({
             style={{
                 width: "100%",
                 maxWidth: "40rem",
+                maxHeight: "calc(100vh - 4rem)",
+                display: "flex",
+                flexDirection: "column",
                 padding: 0,
                 overflow: "hidden",
                 border: "1px solid #e2e8f0",
@@ -90,6 +93,8 @@ export const EventDetailedCard: React.FC<EventDetailedCardProps> = ({
                     justifyContent: "space-between",
                     gap: "1rem",
                     padding: "1rem 1.5rem",
+                    flexShrink: 0,
+                    borderBottom: "1px solid #e2e8f0",
                 }}
             >
                 <Box>
@@ -136,7 +141,23 @@ export const EventDetailedCard: React.FC<EventDetailedCardProps> = ({
                 </DialogClose>
             </DialogHeader>
 
-            <Box p={6} pt={0}>
+            <Box
+                p={6}
+                pt={4}
+                overflowY="auto"
+                css={{
+                    "&::-webkit-scrollbar": {
+                        width: "6px",
+                    },
+                    "&::-webkit-scrollbar-track": {
+                        background: "#f1f5f9",
+                    },
+                    "&::-webkit-scrollbar-thumb": {
+                        background: "#cbd5e1",
+                        borderRadius: "3px",
+                    },
+                }}
+            >
                 <Stack gap={6}>
                     <Box borderBottom="1px solid #e2e8f0" />
 

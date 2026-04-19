@@ -162,8 +162,14 @@ function DialogContent({
       }
     };
 
+    const originalStyle = window.getComputedStyle(document.body).overflow;
+    document.body.style.overflow = "hidden";
+
     window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      document.body.style.overflow = originalStyle;
+    };
   }, [open, setOpen]);
 
   if (!open) {
