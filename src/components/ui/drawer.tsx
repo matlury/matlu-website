@@ -2,7 +2,6 @@
 
 import * as React from "react";
 import { Drawer as ChakraDrawer, Portal } from "@chakra-ui/react";
-import { CloseButton } from "@chakra-ui/react";
 
 export const DrawerRoot = ChakraDrawer.Root;
 export const DrawerTrigger = ChakraDrawer.Trigger;

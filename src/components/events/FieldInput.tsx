@@ -1,6 +1,5 @@
 "use client";
 
-import type { ComponentProps } from "react";
 import { TextInput } from "@/components/ui/TextInput";
 
 interface FieldInputProps {

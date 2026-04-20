@@ -74,7 +74,7 @@ export function validateRecaptcha(
   return null;
 }
 
-export function extractErrorMessage(error: unknown, fallback: string): string {
+export function extractErrorMessage(error: unknown, _fallback: string): string {
   if (axios.isAxiosError(error)) {
     const data = error.response?.data;
     if (data?.error?.message) return data.error.message;

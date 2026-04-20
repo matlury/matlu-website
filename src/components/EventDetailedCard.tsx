@@ -57,7 +57,6 @@ export const EventDetailedCard: React.FC<EventDetailedCardProps> = ({
     hide_location,
     organizer_name,
     price,
-    end_date,
 }) => {
     const hasCoordinates =
         typeof latitude === "number" &&

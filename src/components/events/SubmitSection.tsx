@@ -1,6 +1,6 @@
 "use client";
 
-import { Box, Popover } from "@chakra-ui/react";
+import { Popover } from "@chakra-ui/react";
 import { Button } from "@/components/ui/button";
 import { getEventText } from "@/utils/event-locale";
 import type { Language } from "@/utils";

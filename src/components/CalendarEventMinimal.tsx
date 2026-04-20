@@ -7,10 +7,6 @@ import { Language } from "../utils";
 import {
   Dialog,
   DialogTrigger,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogClose,
 } from "@/components/ui/dialog";
 import {
   Box,
