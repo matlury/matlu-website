@@ -60,11 +60,7 @@ const CalendarEvent: React.FC<EventProps> = (props) => {
 
   const statusLabel = status === "active"
     ? (language === "fi" ? "Käynnissä" : "Active")
-    : status === "past"
-      ? (language === "fi" ? "Päättynyt" : "Past")
-      : null;
-
-  const isPast = status === "past";
+    : null;
 
   return (
     <Dialog>
@@ -73,18 +69,17 @@ const CalendarEvent: React.FC<EventProps> = (props) => {
           variant="elevated"
           overflow="hidden"
           transition="all 0.2s"
-          _hover={{ transform: isPast ? "none" : "translateY(-4px)", shadow: "sm", borderColor: isPast ? "gray.300" : "blue.500", cursor: isPast ? "default" : "pointer" }}
+          _hover={{ transform: "translateY(-4px)", shadow: "sm", borderColor: "blue.500", cursor: "pointer" }}
           borderLeftWidth="4px"
-          borderLeftColor={isPast ? "gray.400" : "blue.600"}
+          borderLeftColor="blue.600"
           height="100%"
-          opacity={isPast ? 0.7 : 1}
         >
           <Card.Body p={4}>
             <Stack gap={0}>
               {statusLabel && (
                 <HStack mb={1} justify="flex-start">
                   <Badge
-                    colorPalette={isPast ? "gray" : "green"}
+                    colorPalette="green"
                     variant="solid"
                     fontSize="xs"
                     fontWeight="bold"

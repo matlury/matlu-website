@@ -22,8 +22,7 @@ export default function EventsPageContent({
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", flexWrap: "wrap" }}>
-        <h1 style={{ margin: 0 }}>Tulevat tapahtumat</h1>
+      <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", flexWrap: "wrap", marginBottom: "0.5rem" }}>
         <DialogTrigger asChild>
           <button
             type="button"

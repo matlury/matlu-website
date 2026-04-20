@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { SimpleGrid } from "@chakra-ui/react";
+import { SimpleGrid, Box, Text } from "@chakra-ui/react";
 import { Language } from "../utils";
 import CalendarEvent from "./CalendarEvent";
 import { compareAsc, isAfter, isBefore, parseISO } from "date-fns";
@@ -107,7 +107,8 @@ export default function CalendarEvents({
   language,
   showAll = false,
 }: CalendarEventsProps) {
-  const [events, setEvents] = useState<EventData[]>([]);
+  const [activeAndUpcoming, setActiveAndUpcoming] = useState<EventData[]>([]);
+  const [pastEvents, setPastEvents] = useState<EventData[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
 
@@ -159,23 +160,21 @@ export default function CalendarEvents({
           return { ...event, status };
         });
 
-        const activeAndUpcoming = withStatus.filter(
+        const upcoming = withStatus.filter(
           (e) => e.status === "active" || e.status === "upcoming",
+        ).sort((a, b) =>
+          compareAsc(parseISO(a.start_date), parseISO(b.start_date)),
         );
-        const pastEvents = withStatus.filter((e) => e.status === "past");
+        const past = withStatus.filter((e) => e.status === "past").sort((a, b) =>
+          compareAsc(parseISO(b.start_date), parseISO(a.start_date)),
+        );
 
         if (showAll) {
-          const sorted = [
-            ...activeAndUpcoming.sort((a, b) =>
-              compareAsc(parseISO(a.start_date), parseISO(b.start_date)),
-            ),
-            ...pastEvents.sort((a, b) =>
-              compareAsc(parseISO(b.start_date), parseISO(a.start_date)),
-            ),
-          ];
-          setEvents(sorted);
+          setActiveAndUpcoming(upcoming);
+          setPastEvents(past);
         } else {
-          setEvents(activeAndUpcoming.slice(0, 2));
+          setActiveAndUpcoming(upcoming.slice(0, 2));
+          setPastEvents([]);
         }
       } catch (err) {
         console.error("Failed to load calendar events", err);
@@ -187,6 +186,9 @@ export default function CalendarEvents({
 
     fetchEvents();
   }, [showAll]);
+
+  const sectionTitle = language === "fi" ? "Tulevat tapahtumat" : "Upcoming events";
+  const pastSectionTitle = language === "fi" ? "Päättyneet tapahtumat" : "Past events";
 
   if (loading) {
     return (
@@ -207,22 +209,19 @@ export default function CalendarEvents({
     );
   }
 
-  if (events.length === 0) {
-    const hasAnyEvents = !loading && !error;
+  const hasNoEvents = activeAndUpcoming.length === 0 && pastEvents.length === 0;
+
+  if (hasNoEvents) {
     return (
       <div style={{ color: "#64748b", fontStyle: "italic", margin: "1rem 0" }}>
         {language === "fi"
-          ? (hasAnyEvents
-              ? "Ei tulevia tai käynnissä olevia tapahtumia tällä hetkellä."
-              : "Ei tulevia tapahtumia tällä hetkellä.")
-          : (hasAnyEvents
-              ? "No upcoming or active events at the moment."
-              : "No upcoming events at the moment.")}
+          ? "Ei tapahtumia tällä hetkellä."
+          : "No events at the moment."}
       </div>
     );
   }
 
-  return (
+  const renderEvents = (events: EventData[]) => (
     <SimpleGrid columns={{ base: 1, md: 2, lg: 4 }} gap={4} my={6}>
       {events.map((evt) => (
         <CalendarEvent
@@ -244,4 +243,43 @@ export default function CalendarEvents({
       ))}
     </SimpleGrid>
   );
+
+  if (showAll) {
+    return (
+      <Box>
+        {activeAndUpcoming.length > 0 && (
+          <Box>
+            <Text
+              as="h2"
+              fontSize="xl"
+              fontWeight="bold"
+              color="gray.800"
+              mt={6}
+              mb={2}
+            >
+              {sectionTitle}
+            </Text>
+            {renderEvents(activeAndUpcoming)}
+          </Box>
+        )}
+        {pastEvents.length > 0 && (
+          <Box>
+            <Text
+              as="h2"
+              fontSize="xl"
+              fontWeight="bold"
+              color="gray.800"
+              mt={6}
+              mb={2}
+            >
+              {pastSectionTitle}
+            </Text>
+            {renderEvents(pastEvents)}
+          </Box>
+        )}
+      </Box>
+    );
+  }
+
+  return renderEvents(activeAndUpcoming);
 }
