@@ -4,6 +4,22 @@ import { fetchGraphQL } from "../lib/strapi";
 import { Metadata } from "next";
 import { gql } from "@apollo/client";
 import { MainLayout } from "../components/MainLayout";
+import CalendarEventsStatic from "../components/CalendarEventsStatic";
+
+interface CalendarEventData {
+  documentId: string;
+  start_date: string;
+  end_date: string | null;
+  title: { fi: string; en: string };
+  location: { fi: string; en: string } | null;
+  description: { fi: string; en: string } | null;
+  organizer_name: string | null;
+  price: string | null;
+  event_link: string;
+  hide_location: boolean;
+  location_coordinates: { lat: number; lng: number } | null;
+  hidden: boolean;
+}
 
 interface PageData {
   documentId: string;
@@ -25,6 +41,7 @@ interface PageData {
     };
     canonicalUrl?: string;
   };
+  calendarEvents: CalendarEventData[];
 }
 
 interface HomePageQueryResult {
@@ -65,6 +82,29 @@ const HOME_PAGE_QUERY = gql`
         }
         canonicalUrl
       }
+    }
+    calendarEvents(filters: { hidden: { eq: false } }, sort: "start_date:asc") {
+      documentId
+      start_date
+      end_date
+      title {
+        fi
+        en
+      }
+      location {
+        fi
+        en
+      }
+      description {
+        fi
+        en
+      }
+      organizer_name
+      price
+      event_link
+      hide_location
+      location_coordinates
+      hidden
     }
   }
 `;
@@ -142,6 +182,7 @@ export default async function HomePage() {
   }
 
   const body = page.body.Fi || "";
+  const events = page.calendarEvents || [];
 
   const localizedLinks = {
     fi: "/",
@@ -151,6 +192,7 @@ export default async function HomePage() {
   return (
     <MainLayout lang={lang} localizedLinks={localizedLinks}>
       <ReactMarkdown remarkPlugins={[remarkGfm]}>{body}</ReactMarkdown>
+      <CalendarEventsStatic language={lang} events={events} />
     </MainLayout>
   );
 }

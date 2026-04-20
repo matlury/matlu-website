@@ -7,6 +7,8 @@ on:
   schedule:
     - cron: '0 */12 * * *'
   workflow_dispatch:
+  repository_dispatch:
+    types: [rebuild-calendar-events]
 jobs:
   build:
     runs-on: ubuntu-latest
