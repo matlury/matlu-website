@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { SimpleGrid } from "@chakra-ui/react";
 import { Language } from "../utils";
 import CalendarEvent from "./CalendarEvent";
-import { compareAsc, parseISO } from "date-fns";
+import { compareAsc, isAfter, isBefore, parseISO } from "date-fns";
 import { fetchGraphQLClient } from "../lib/strapi";
 import { gql } from "@apollo/client";
 
@@ -23,6 +23,7 @@ interface CalendarEventsQueryResult {
       lng: number;
     } | null;
     start_date: string;
+    end_date: string | null;
     title: {
       fi: string;
       en: string;
@@ -58,6 +59,7 @@ const CALENDAR_EVENTS_QUERY = gql`
       hide_location
       location_coordinates
       start_date
+      end_date
       title {
         fi
         en
@@ -91,12 +93,14 @@ interface EventData {
   latitude: number | null;
   longitude: number | null;
   start_date: string;
+  end_date: string | null;
   title: { fi: string; en: string };
   location: { en: string; fi: string } | null;
   description: { en: string; fi: string } | null;
   organizer_name: string | null;
   price: string | null;
   hidden: boolean;
+  status: "active" | "past" | "upcoming";
 }
 
 export default function CalendarEvents({
@@ -128,6 +132,7 @@ export default function CalendarEvents({
           latitude: node.location_coordinates?.lat || null,
           longitude: node.location_coordinates?.lng || null,
           start_date: node.start_date,
+          end_date: node.end_date || null,
           title: node.title,
           location: node.location,
           description: node.description,
@@ -136,11 +141,42 @@ export default function CalendarEvents({
           hidden: node.hidden,
         }));
 
-        const filtered = allEvents.filter(
-          (event) => compareAsc(parseISO(event.start_date), new Date()) >= 0,
-        );
+        const now = new Date();
 
-        setEvents(showAll ? filtered : filtered.slice(0, 2));
+        const withStatus = allEvents.map((event) => {
+          const start = parseISO(event.start_date);
+          const end = event.end_date ? parseISO(event.end_date) : null;
+
+          let status: "active" | "past" | "upcoming";
+          if (isBefore(now, start)) {
+            status = "upcoming";
+          } else if (end && isAfter(now, end)) {
+            status = "past";
+          } else {
+            status = "active";
+          }
+
+          return { ...event, status };
+        });
+
+        const activeAndUpcoming = withStatus.filter(
+          (e) => e.status === "active" || e.status === "upcoming",
+        );
+        const pastEvents = withStatus.filter((e) => e.status === "past");
+
+        if (showAll) {
+          const sorted = [
+            ...activeAndUpcoming.sort((a, b) =>
+              compareAsc(parseISO(a.start_date), parseISO(b.start_date)),
+            ),
+            ...pastEvents.sort((a, b) =>
+              compareAsc(parseISO(b.start_date), parseISO(a.start_date)),
+            ),
+          ];
+          setEvents(sorted);
+        } else {
+          setEvents(activeAndUpcoming.slice(0, 2));
+        }
       } catch (err) {
         console.error("Failed to load calendar events", err);
         setError(true);
@@ -161,12 +197,27 @@ export default function CalendarEvents({
     );
   }
 
-  if (error || events.length === 0) {
+  if (error) {
     return (
       <div style={{ color: "#64748b", fontStyle: "italic", margin: "1rem 0" }}>
         {language === "fi"
-          ? "Ei tulevia tapahtumia tällä hetkellä."
-          : "No upcoming events at the moment."}
+          ? "Tapahtumien lataus epäonnistui."
+          : "Failed to load events."}
+      </div>
+    );
+  }
+
+  if (events.length === 0) {
+    const hasAnyEvents = !loading && !error;
+    return (
+      <div style={{ color: "#64748b", fontStyle: "italic", margin: "1rem 0" }}>
+        {language === "fi"
+          ? (hasAnyEvents
+              ? "Ei tulevia tai käynnissä olevia tapahtumia tällä hetkellä."
+              : "Ei tulevia tapahtumia tällä hetkellä.")
+          : (hasAnyEvents
+              ? "No upcoming or active events at the moment."
+              : "No upcoming events at the moment.")}
       </div>
     );
   }
@@ -186,7 +237,9 @@ export default function CalendarEvents({
           latitude={evt.latitude}
           longitude={evt.longitude}
           start_date={evt.start_date}
+          end_date={evt.end_date}
           event_link={evt.event_link}
+          status={evt.status}
         />
       ))}
     </SimpleGrid>

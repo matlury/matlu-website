@@ -37,10 +37,12 @@ interface EventDetailedCardProps {
     latitude: number | null;
     longitude: number | null;
     start_date: string;
+    end_date: string | null;
     event_link: string;
     language: Language;
     organizer_name: string | null;
     price: string | null;
+    status: "active" | "past" | "upcoming";
 }
 
 export const EventDetailedCard: React.FC<EventDetailedCardProps> = ({
@@ -55,6 +57,7 @@ export const EventDetailedCard: React.FC<EventDetailedCardProps> = ({
     hide_location,
     organizer_name,
     price,
+    end_date,
 }) => {
     const hasCoordinates =
         typeof latitude === "number" &&

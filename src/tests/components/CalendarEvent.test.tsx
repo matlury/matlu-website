@@ -21,6 +21,8 @@ describe(`CalendarEvent`, () => {
           organizer_name="Matlu"
           price="0€"
           start_date={startDate}
+          end_date={null}
+          status="upcoming"
           title={{
             en: title_en,
             fi: title_fi,

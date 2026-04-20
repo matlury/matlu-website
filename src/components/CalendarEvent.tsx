@@ -16,6 +16,7 @@ import {
   Stack,
   HStack,
   Link,
+  Badge,
 } from "@chakra-ui/react";
 import { FaCalendarAlt, FaClock, FaMapMarkerAlt, FaUsers } from "react-icons/fa";
 import { EventDetailedCard } from "./EventDetailedCard";
@@ -28,10 +29,12 @@ interface EventProps {
   latitude: number | null;
   longitude: number | null;
   start_date: string;
+  end_date: string | null;
   event_link: string;
   language: Language;
   organizer_name: string | null;
   price: string | null;
+  status: "active" | "past" | "upcoming";
 }
 
 const CalendarEvent: React.FC<EventProps> = (props) => {
@@ -44,6 +47,7 @@ const CalendarEvent: React.FC<EventProps> = (props) => {
     organizer_name,
     latitude,
     longitude,
+    status,
   } = props;
 
   const parsedDate = start_date ? parseISO(start_date) : null;
@@ -54,6 +58,14 @@ const CalendarEvent: React.FC<EventProps> = (props) => {
     : "";
   const timeStr = parsedDate ? format(parsedDate, "HH:mm") : "";
 
+  const statusLabel = status === "active"
+    ? (language === "fi" ? "Käynnissä" : "Active")
+    : status === "past"
+      ? (language === "fi" ? "Päättynyt" : "Past")
+      : null;
+
+  const isPast = status === "past";
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -61,13 +73,29 @@ const CalendarEvent: React.FC<EventProps> = (props) => {
           variant="elevated"
           overflow="hidden"
           transition="all 0.2s"
-          _hover={{ transform: "translateY(-4px)", shadow: "sm", borderColor: "blue.500", cursor: "pointer" }}
+          _hover={{ transform: isPast ? "none" : "translateY(-4px)", shadow: "sm", borderColor: isPast ? "gray.300" : "blue.500", cursor: isPast ? "default" : "pointer" }}
           borderLeftWidth="4px"
-          borderLeftColor="blue.600"
+          borderLeftColor={isPast ? "gray.400" : "blue.600"}
           height="100%"
+          opacity={isPast ? 0.7 : 1}
         >
           <Card.Body p={4}>
             <Stack gap={0}>
+              {statusLabel && (
+                <HStack mb={1} justify="flex-start">
+                  <Badge
+                    colorPalette={isPast ? "gray" : "green"}
+                    variant="solid"
+                    fontSize="xs"
+                    fontWeight="bold"
+                    textTransform="capitalize"
+                    px={2}
+                    py={0.5}
+                  >
+                    {statusLabel}
+                  </Badge>
+                </HStack>
+              )}
               <Box minH="3.1rem">
                 <Box css={{ containerType: "inline-size" }} w="full">
                   <Heading
