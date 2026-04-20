@@ -53,7 +53,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     .filter((p) => !p.HideFromSearchEngine && p.page !== "home") // 'home' is handled by root '/'
     .flatMap((p) => [
       {
-        url: `${SITE_URL}/fi/${p.page}`,
+        url: `${SITE_URL}/${p.page}`,
         lastModified: new Date(),
         changeFrequency: "weekly" as const,
         priority: 0.7,
@@ -70,7 +70,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     .filter((b) => !b.hidden)
     .flatMap((b) => [
       {
-        url: `${SITE_URL}/fi/board/${b.year}`,
+        url: `${SITE_URL}/board/${b.year}`,
         lastModified: new Date(),
         changeFrequency: "monthly" as const,
         priority: 0.5,
@@ -89,7 +89,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const mainBoardPages = latestBoard
     ? [
         {
-          url: `${SITE_URL}/fi/board`,
+          url: `${SITE_URL}/board`,
           lastModified: new Date(),
           changeFrequency: "weekly" as const,
           priority: 0.8,
@@ -105,7 +105,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   return [
     {
-      url: `${SITE_URL}/fi`,
+      url: `${SITE_URL}`,
       lastModified: new Date(),
       changeFrequency: "yearly" as const,
       priority: 1,
@@ -120,7 +120,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...boards,
     ...mainBoardPages,
     {
-      url: `${SITE_URL}/fi/ilotalo`,
+      url: `${SITE_URL}/ilotalo`,
       lastModified: new Date(),
       changeFrequency: "monthly" as const,
       priority: 0.3,

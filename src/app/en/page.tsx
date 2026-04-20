@@ -6,6 +6,7 @@ import { gql } from "@apollo/client";
 import { Box } from "@chakra-ui/react";
 import { MainLayout } from "../../components/MainLayout";
 import CalendarEventsStatic from "../../components/CalendarEventsStatic";
+import { SeoFields, DEFAULT_DESCRIPTION_EN } from "../../types/seo";
 
 interface CalendarEventData {
   documentId: string;
@@ -33,15 +34,7 @@ interface PageData {
   };
   HideFromSearchEngine: boolean;
   Draft: boolean;
-  Seo?: {
-    metaTitle?: { fi: string; en: string };
-    metaDescription?: { fi: string; en: string };
-    shareImage?: {
-      url: string;
-      alternativeText?: string;
-    };
-    canonicalUrl?: string;
-  };
+  Seo?: SeoFields;
 }
 
 interface HomePageQueryResult {
@@ -129,7 +122,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const seo = page.Seo;
   const title = seo?.metaTitle?.[lang] || page.Title?.[lang] || "";
   const description =
-    seo?.metaDescription?.[lang] || page.Description?.[lang] || "";
+    seo?.metaDescription?.[lang] || page.Description?.[lang] || DEFAULT_DESCRIPTION_EN;
   const canonical = seo?.canonicalUrl || "/en";
 
   const shareImage = seo?.shareImage?.url;

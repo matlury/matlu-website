@@ -4,6 +4,7 @@ import { fetchGraphQL } from "../../../lib/strapi";
 import { Metadata } from "next";
 import { MainLayout } from "../../../components/MainLayout";
 import { gql } from "@apollo/client";
+import { SeoFields } from "../../../types/seo";
 
 interface BoardMember {
   id: string;
@@ -36,15 +37,7 @@ interface BoardNode {
   officers: Officer[] | null;
   teams: Team[] | null;
   hidden: boolean;
-  Seo?: {
-    metaTitle?: { fi: string; en: string };
-    metaDescription?: { fi: string; en: string };
-    shareImage?: {
-      url: string;
-      alternativeText?: string;
-    };
-    canonicalUrl?: string;
-  };
+  Seo?: SeoFields;
 }
 
 interface BoardQueryResult {
@@ -232,7 +225,7 @@ export async function generateMetadata({
   const seo = board.Seo;
   const defaultTitle = `Hallitus ${board.year}`;
   const title = seo?.metaTitle?.[lang] || defaultTitle;
-  const description = seo?.metaDescription?.[lang] || "";
+  const description = seo?.metaDescription?.[lang] || `Hallitus ${board.year} - Matlu ry`;
   const canonical = seo?.canonicalUrl || (targetYear ? `/board/${targetYear}` : "/board");
 
   const shareImage = seo?.shareImage?.url;
@@ -261,6 +254,7 @@ export async function generateMetadata({
       card: shareImage ? "summary_large_image" : "summary",
       title: title,
       description: description,
+      creator: "Matlu ry",
       ...(shareImage && { images: [shareImage] }),
     },
   };

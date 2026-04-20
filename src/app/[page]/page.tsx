@@ -6,6 +6,7 @@ import { Metadata } from "next";
 import ContactForm from "../../components/ContactForm";
 import EventsPageContent from "../../components/EventsPageContent";
 import { MainLayout } from "../../components/MainLayout";
+import { SeoFields, DEFAULT_DESCRIPTION_FI } from "../../types/seo";
 
 export interface LocationSuggestion {
   documentId: string;
@@ -31,15 +32,7 @@ interface PageData {
   };
   HideFromSearchEngine: boolean;
   Draft: boolean;
-  Seo?: {
-    metaTitle?: { fi: string; en: string };
-    metaDescription?: { fi: string; en: string };
-    shareImage?: {
-      url: string;
-      alternativeText?: string;
-    };
-    canonicalUrl?: string;
-  };
+  Seo?: SeoFields;
 }
 
 interface DynamicPageQueryResult {
@@ -119,7 +112,7 @@ export async function generateMetadata({
   const seo = page.Seo;
   const title = seo?.metaTitle?.[lang] || page.Title?.[lang] || "";
   const description =
-    seo?.metaDescription?.[lang] || page.Description?.[lang] || "";
+    seo?.metaDescription?.[lang] || page.Description?.[lang] || DEFAULT_DESCRIPTION_FI;
   const canonical = seo?.canonicalUrl || `/${pageSlug}`;
 
   const shareImage = seo?.shareImage?.url;
@@ -139,7 +132,7 @@ export async function generateMetadata({
     openGraph: {
       title: title,
       description: description,
-      type: "article",
+      type: "website",
       ...(shareImage && {
         images: [{ url: shareImage, alt: shareImageAlt }],
       }),
@@ -148,6 +141,7 @@ export async function generateMetadata({
       card: shareImage ? "summary_large_image" : "summary",
       title: title,
       description: description,
+      creator: "Matlu ry",
       ...(shareImage && { images: [shareImage] }),
     },
   };

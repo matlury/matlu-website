@@ -1,5 +1,12 @@
+import { Metadata } from "next";
 import Link from "next/link";
 import { MainLayout } from "../components/MainLayout";
+
+export const metadata: Metadata = {
+  title: "404 - Page Not Found | Matlu ry",
+  description: "The page you are looking for could not be found.",
+  robots: "noindex, nofollow",
+};
 
 export default function NotFound() {
   return (

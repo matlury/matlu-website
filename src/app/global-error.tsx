@@ -8,7 +8,7 @@ export default function GlobalError({
   reset: () => void;
 }) {
   return (
-    <html lang="fi">
+    <html lang="en">
       <body>
         <h2>Something went wrong!</h2>
         <p>{error.message}</p>
