@@ -22,27 +22,29 @@ export default function EventsPageContent({
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", flexWrap: "wrap", marginBottom: "0.5rem" }}>
-        <DialogTrigger asChild>
-          <button
-            type="button"
-            style={{
-              borderRadius: "999px",
-              padding: "0.5rem 1rem",
-              fontSize: "0.875rem",
-              fontWeight: 700,
-              background: "#0149bc",
-              color: "#ffffff",
-              border: "none",
-              cursor: "pointer",
-            }}
-          >
-            {lang === "fi" ? "Lisää tapahtuma" : "Add an event"}
-          </button>
-        </DialogTrigger>
-      </div>
-
-      <CalendarEvents language={lang} showAll />
+      <CalendarEvents
+        language={lang}
+        showAll
+        headerAction={
+          <DialogTrigger asChild>
+            <button
+              type="button"
+              style={{
+                borderRadius: "999px",
+                padding: "0.5rem 1rem",
+                fontSize: "0.875rem",
+                fontWeight: 700,
+                background: "#0149bc",
+                color: "#ffffff",
+                border: "none",
+                cursor: "pointer",
+              }}
+            >
+              {lang === "fi" ? "Lisää tapahtuma" : "Add event"}
+            </button>
+          </DialogTrigger>
+        }
+      />
 
       <EventRequestForm
         lang={lang}

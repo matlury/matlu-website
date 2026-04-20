@@ -3,6 +3,7 @@ import remarkGfm from "remark-gfm";
 import { fetchGraphQL } from "../lib/strapi";
 import { Metadata } from "next";
 import { gql } from "@apollo/client";
+import { Box } from "@chakra-ui/react";
 import { MainLayout } from "../components/MainLayout";
 import CalendarEventsStatic from "../components/CalendarEventsStatic";
 
@@ -41,11 +42,17 @@ interface PageData {
     };
     canonicalUrl?: string;
   };
-  calendarEvents: CalendarEventData[];
 }
 
 interface HomePageQueryResult {
   pages: PageData[];
+  calendarEvents: CalendarEventData[];
+}
+
+async function getHomePageData() {
+  const { data } = await fetchGraphQL<HomePageQueryResult>(HOME_PAGE_QUERY);
+  if (!data?.pages || data.pages.length === 0) return { page: null, events: [] };
+  return { page: data.pages[0], events: data.calendarEvents || [] };
 }
 
 const HOME_PAGE_QUERY = gql`
@@ -109,15 +116,9 @@ const HOME_PAGE_QUERY = gql`
   }
 `;
 
-async function getHomePageData() {
-  const { data } = await fetchGraphQL<HomePageQueryResult>(HOME_PAGE_QUERY);
-  if (!data?.pages || data.pages.length === 0) return null;
-  return data.pages[0];
-}
-
 export async function generateMetadata(): Promise<Metadata> {
   const lang = "fi";
-  const page = await getHomePageData();
+  const { page } = await getHomePageData();
 
   if (!page) {
     return {
@@ -168,7 +169,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function HomePage() {
   const lang = "fi";
-  const page = await getHomePageData();
+  const { page, events } = await getHomePageData();
 
   if (!page) {
     return (
@@ -182,7 +183,15 @@ export default async function HomePage() {
   }
 
   const body = page.body.Fi || "";
-  const events = page.calendarEvents || [];
+  const marker = "<!-- CALENDAR_EVENTS -->";
+  const markerIndex = body.indexOf(marker);
+  let beforeContent = body;
+  let afterContent = "";
+
+  if (markerIndex !== -1) {
+    beforeContent = body.slice(0, markerIndex);
+    afterContent = body.slice(markerIndex + marker.length);
+  }
 
   const localizedLinks = {
     fi: "/",
@@ -191,8 +200,11 @@ export default async function HomePage() {
 
   return (
     <MainLayout lang={lang} localizedLinks={localizedLinks}>
-      <ReactMarkdown remarkPlugins={[remarkGfm]}>{body}</ReactMarkdown>
-      <CalendarEventsStatic language={lang} events={events} />
+      <ReactMarkdown remarkPlugins={[remarkGfm]}>{beforeContent}</ReactMarkdown>
+      <Box style={{ float: "right", width: "21rem", marginLeft: "2rem", marginBottom: "1rem" }}>
+        <CalendarEventsStatic language={lang} events={events} />
+      </Box>
+      {afterContent && <ReactMarkdown remarkPlugins={[remarkGfm]}>{afterContent}</ReactMarkdown>}
     </MainLayout>
   );
 }

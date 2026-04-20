@@ -1,9 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { SimpleGrid } from "@chakra-ui/react";
+import { Box, Stack } from "@chakra-ui/react";
 import { Language } from "../utils";
-import CalendarEvent from "./CalendarEvent";
+import CalendarEventMinimal from "./CalendarEventMinimal";
 import { parseISO } from "date-fns";
 
 interface CalendarEventData {
@@ -29,12 +29,14 @@ interface CalendarEventsStaticProps {
   language: Language;
   events: CalendarEventData[];
   showAll?: boolean;
+  maxEvents?: number;
 }
 
 export default function CalendarEventsStatic({
   language,
   events,
   showAll = false,
+  maxEvents = 5,
 }: CalendarEventsStaticProps) {
   const [filtered] = useState<CalendarEventProps[]>(() => {
     const now = new Date();
@@ -56,7 +58,7 @@ export default function CalendarEventsStatic({
               : "past";
         return { ...event, status };
       });
-    return showAll ? upcoming : upcoming.slice(0, 2);
+    return showAll ? upcoming : upcoming.slice(0, maxEvents);
   });
 
   if (filtered.length === 0) {
@@ -70,25 +72,27 @@ export default function CalendarEventsStatic({
   }
 
   return (
-    <SimpleGrid columns={{ base: 1, md: 2, lg: 4 }} gap={4} my={6}>
-      {filtered.map((evt) => (
-        <CalendarEvent
-          key={evt.documentId}
-          language={language}
-          title={evt.title}
-          description={evt.description}
-          organizer_name={evt.organizer_name}
-          price={evt.price}
-          hide_location={evt.hide_location}
-          location={evt.location}
-          latitude={evt.location_coordinates?.lat || null}
-          longitude={evt.location_coordinates?.lng || null}
-          start_date={evt.start_date}
-          end_date={evt.end_date}
-          event_link={evt.event_link}
-          status={evt.status}
-        />
-      ))}
-    </SimpleGrid>
+    <Box my={6}>
+      <Stack gap={2} w="21rem" ml="auto">
+        {filtered.map((evt) => (
+          <CalendarEventMinimal
+            key={evt.documentId}
+            language={language}
+            title={evt.title}
+            description={evt.description}
+            organizer_name={evt.organizer_name}
+            price={evt.price}
+            hide_location={evt.hide_location}
+            location={evt.location}
+            latitude={evt.location_coordinates?.lat || null}
+            longitude={evt.location_coordinates?.lng || null}
+            start_date={evt.start_date}
+            end_date={evt.end_date}
+            event_link={evt.event_link}
+            status={evt.status}
+          />
+        ))}
+      </Stack>
+    </Box>
   );
 }

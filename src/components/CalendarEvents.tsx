@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { SimpleGrid, Box, Text } from "@chakra-ui/react";
+import { SimpleGrid, Box, Text, HStack } from "@chakra-ui/react";
 import { Language } from "../utils";
 import CalendarEvent from "./CalendarEvent";
 import { compareAsc, isAfter, isBefore, parseISO } from "date-fns";
@@ -11,6 +11,7 @@ import { gql } from "@apollo/client";
 interface CalendarEventsProps {
   language: Language;
   showAll?: boolean;
+  headerAction?: React.ReactNode;
 }
 
 interface CalendarEventsQueryResult {
@@ -106,6 +107,7 @@ interface EventData {
 export default function CalendarEvents({
   language,
   showAll = false,
+  headerAction,
 }: CalendarEventsProps) {
   const [activeAndUpcoming, setActiveAndUpcoming] = useState<EventData[]>([]);
   const [pastEvents, setPastEvents] = useState<EventData[]>([]);
@@ -249,16 +251,18 @@ export default function CalendarEvents({
       <Box>
         {activeAndUpcoming.length > 0 && (
           <Box>
-            <Text
-              as="h2"
-              fontSize="xl"
-              fontWeight="bold"
-              color="gray.800"
-              mt={6}
-              mb={2}
-            >
-              {sectionTitle}
-            </Text>
+            <HStack justify="flex-start" align="center" mt={6} mb={2} gap={4}>
+              <Text
+                as="h2"
+                fontSize="xl"
+                fontWeight="bold"
+                color="gray.800"
+                m={0}
+              >
+                {sectionTitle}
+              </Text>
+              {headerAction}
+            </HStack>
             {renderEvents(activeAndUpcoming)}
           </Box>
         )}
