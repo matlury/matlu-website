@@ -6,8 +6,7 @@ export const EVENT_SUGGESTIONS_QUERY = gql`
       documentId
       label_fi
       label_en
-      latitude
-      longitude
+      location_coordinates
     }
   }
 `;
@@ -28,8 +27,7 @@ export interface EventSuggestionsQueryResult {
     documentId: string;
     label_fi: string;
     label_en: string;
-    latitude: number | null;
-    longitude: number | null;
+    location_coordinates: unknown;
   }>;
 }
 

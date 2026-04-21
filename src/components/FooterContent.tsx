@@ -3,17 +3,22 @@ import Image from "./image";
 import { Language } from "../utils";
 import { MatluDocuments } from "./Documents";
 import MemberLogosMarquee, { FooterLogo } from "./MemberLogosMarquee";
+import TelegramShare from "./TelegramShare";
 
 const FOOTER_LABELS = {
   fi: {
     documents: "Dokumentteja",
     socialMedia: "Matlu sosiaalisessa mediassa",
     sponsoredBy: "Yhteistyössä",
+    telegramJoin: "Liity Matlun infokanavalle",
+    telegramChannel: "@matluInfo",
   },
   en: {
     documents: "Documents",
     socialMedia: "Matlu in social media",
     sponsoredBy: "Sponsored by",
+    telegramJoin: "Join to Matlu's info channel",
+    telegramChannel: "@matluInfo",
   },
 } as const;
 
@@ -63,6 +68,9 @@ const FooterContent: React.FC<FooterContentProps> = ({ language, logos }) => {
               </span>
               Instagram
             </a>
+          </li>
+          <li>
+            <TelegramShare joinChannel={labels.telegramJoin} channelName={labels.telegramChannel} />
           </li>
         </ul>
       </div>

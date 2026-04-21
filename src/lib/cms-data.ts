@@ -254,8 +254,18 @@ export const getEventSuggestions = cache(async () => {
     fetchGraphQL<TitleSuggestionsQueryResult>(TITLE_SUGGESTIONS_QUERY),
   ]);
 
-  const locationSuggestions: LocationSuggestion[] =
-    locationsResult.data?.eventLocations || [];
+  const locationSuggestions: LocationSuggestion[] = (
+    locationsResult.data?.eventLocations || []
+  ).map((loc) => {
+    const coords = loc.location_coordinates as { lat: number; lng: number } | null;
+    return {
+      documentId: loc.documentId,
+      label_fi: loc.label_fi,
+      label_en: loc.label_en,
+      latitude: coords?.lat ?? null,
+      longitude: coords?.lng ?? null,
+    };
+  });
 
   const uniqueTitles = new Map<string, TitleSuggestion>();
   for (const event of titlesResult.data?.eventRequests || []) {
