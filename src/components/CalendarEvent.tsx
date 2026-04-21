@@ -141,14 +141,15 @@ const CalendarEvent: React.FC<EventProps> = (props) => {
                         color="blue.600"
                         fontWeight="medium"
                         m={0}
+                        textAlign="start"
                         _hover={{ textDecoration: "underline" }}
                       >
                         {location[language]}
                       </Link>
                     ) : (
-                      <Text fontSize="xs" color="gray.600" fontWeight="medium" m={0}>
-                        {location[language]}
-                      </Text>
+<Text fontSize="xs" color="gray.600" fontWeight="medium" m={0} textAlign="start">
+                      {location[language]}
+                    </Text>
                     )}
                   </HStack>
                 )}
@@ -157,7 +158,7 @@ const CalendarEvent: React.FC<EventProps> = (props) => {
                     <Box color="blue.600" mt={0.5}>
                       <FaUsers size={14} />
                     </Box>
-                    <Text fontSize="xs" color="gray.600" fontWeight="medium" m={0}>
+                    <Text fontSize="xs" color="gray.600" fontWeight="medium" m={0} textAlign="start">
                       {organizer_name}
                     </Text>
                   </HStack>

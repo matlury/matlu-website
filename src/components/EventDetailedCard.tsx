@@ -203,7 +203,7 @@ export const EventDetailedCard: React.FC<EventDetailedCardProps> = ({
                             <Text fontSize="sm" fontWeight="bold" color="gray.800" m={0} mb={1}>
                                 {language === "fi" ? "Kuvaus" : "Description"}
                             </Text>
-                            <Text fontSize="var(--font-size-body)" lineHeight="var(--line-height-body)" color="gray.700" whiteSpace="pre-wrap">
+                            <Text fontSize="var(--font-size-body)" lineHeight="var(--line-height-body)" color="gray.700" whiteSpace="pre-wrap" textAlign="start">
                                 {description[language]}
                             </Text>
                         </Box>
