@@ -5,7 +5,7 @@ import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import CalendarEvents from "./CalendarEvents";
 import EventRequestForm from "./EventRequestForm";
 import { Language } from "../utils";
-import { LocationSuggestion, TitleSuggestion } from "../app/[page]/page";
+import type { LocationSuggestion, TitleSuggestion } from "../lib/cms-data";
 
 interface EventsPageContentProps {
   lang: Language;

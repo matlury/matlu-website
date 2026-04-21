@@ -5,7 +5,6 @@ import {
   DocumentNode,
 } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
-import qs from "qs";
 
 const STRAPI_URL = (process.env.API_URL || "http://127.0.0.1:1337").replace(
   /\/$/,
@@ -83,7 +82,7 @@ export async function fetchGraphQL<T>(
     return await client.query<T>({
       query,
       variables,
-      fetchPolicy: "no-cache",
+      fetchPolicy: "cache-first",
     });
   } catch (error) {
     const queryPreview = query.loc?.source.body
@@ -127,62 +126,4 @@ export async function fetchGraphQLClient<T>(
 
     throw error;
   }
-}
-
-// Keep the old fetchStrapi for now, but mark it for removal or refactor
-export async function fetchStrapi<T>(
-  path: string,
-  urlParamsObject: Record<string, unknown> = {},
-  options: RequestInit = {},
-): Promise<T> {
-  const queryString = qs.stringify(urlParamsObject, {
-    encodeValuesOnly: true, // prettify URL
-  });
-
-  const mergedOptions = {
-    headers: {
-      "Content-Type": "application/json",
-      ...(STRAPI_TOKEN ? { Authorization: `Bearer ${STRAPI_TOKEN}` } : {}),
-    },
-    ...options,
-  };
-
-  const requestUrl = `${STRAPI_URL}/api/${path}${queryString ? `?${queryString}` : ""}`;
-
-  let response: Response;
-
-  try {
-    response = await fetch(requestUrl, mergedOptions);
-  } catch (error) {
-    console.error("[strapi:rest] network failure", {
-      requestUrl,
-      method: mergedOptions.method || "GET",
-      hasAuthToken: Boolean(STRAPI_TOKEN),
-      params: urlParamsObject,
-      error: extractErrorDetails(error),
-    });
-
-    throw error;
-  }
-
-  if (!response.ok) {
-    const responseText = await response.text().catch(() => "");
-
-    console.error("[strapi:rest] non-ok response", {
-      requestUrl,
-      method: mergedOptions.method || "GET",
-      status: response.status,
-      statusText: response.statusText,
-      bodySnippet: responseText.slice(0, 600),
-      hasAuthToken: Boolean(STRAPI_TOKEN),
-      params: urlParamsObject,
-    });
-
-    throw new Error(
-      `Strapi request failed (${response.status}) ${response.statusText}`,
-    );
-  }
-
-  const data = (await response.json()) as T;
-  return data;
 }

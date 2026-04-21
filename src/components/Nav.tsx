@@ -1,6 +1,5 @@
 import { Language, LocalizedText } from "../utils";
-import { fetchGraphQL } from "../lib/strapi";
-import { gql } from "@apollo/client";
+import { getNavLinks, type NavLink } from "../lib/cms-data";
 import NavContent from "./NavContent";
 
 interface NavProps {
@@ -8,53 +7,13 @@ interface NavProps {
   localizedLinks: LocalizedText;
 }
 
-interface NavQueryResult {
-  pages: Array<{
-    documentId: string;
-    page: string;
-    Ordering: number;
-    Draft: boolean;
-    Title: {
-      en: string;
-      fi: string;
-    };
-  }>;
-}
-
-const NAV_QUERY = gql`
-  query NavQuery {
-    pages(
-      filters: { Draft: { eq: false }, page: { notIn: ["home", "board"] } }
-      sort: "Ordering:asc"
-    ) {
-      documentId
-      page
-      Ordering
-      Draft
-      Title {
-        en
-        fi
-      }
-    }
-  }
-`;
-
 export const Nav = async ({ language, localizedLinks }: NavProps) => {
-  let data;
+  let links: NavLink[] = [];
   try {
-    const response = await fetchGraphQL<NavQueryResult>(NAV_QUERY);
-    data = response.data;
+    links = await getNavLinks();
   } catch (err) {
     console.error("Failed to load navigation links", err);
   }
-
-  const links = (data?.pages || []).map((node) => ({
-    id: node.documentId,
-    Draft: node.Draft,
-    Ordering: node.Ordering,
-    page: node.page,
-    Title: node.Title,
-  }));
 
   return <NavContent lang={language} localizedLinks={localizedLinks} navLinks={links} />;
 };

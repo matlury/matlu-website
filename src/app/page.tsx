@@ -1,113 +1,11 @@
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import { fetchGraphQL } from "../lib/strapi";
+import { getHomePageData } from "../lib/cms-data";
 import { Metadata } from "next";
-import { gql } from "@apollo/client";
 import { Box } from "@chakra-ui/react";
 import { MainLayout } from "../components/MainLayout";
 import CalendarEventsStatic from "../components/CalendarEventsStatic";
-import { SeoFields, DEFAULT_DESCRIPTION_FI } from "../types/seo";
-
-interface CalendarEventData {
-  documentId: string;
-  start_date: string;
-  end_date: string | null;
-  title: { fi: string; en: string };
-  location: { fi: string; en: string } | null;
-  description: { fi: string; en: string } | null;
-  organizer_name: string | null;
-  price: string | null;
-  event_link: string;
-  hide_location: boolean;
-  location_coordinates: { lat: number; lng: number } | null;
-  hidden: boolean;
-}
-
-interface PageData {
-  documentId: string;
-  page: string;
-  Title: { fi: string; en: string };
-  Description: { fi: string; en: string };
-  body: {
-    Fi: string;
-    En: string;
-  };
-  HideFromSearchEngine: boolean;
-  Draft: boolean;
-  Seo?: SeoFields;
-}
-
-interface HomePageQueryResult {
-  pages: PageData[];
-  calendarEvents: CalendarEventData[];
-}
-
-async function getHomePageData() {
-  const { data } = await fetchGraphQL<HomePageQueryResult>(HOME_PAGE_QUERY);
-  if (!data?.pages || data.pages.length === 0) return { page: null, events: [] };
-  return { page: data.pages[0], events: data.calendarEvents || [] };
-}
-
-const HOME_PAGE_QUERY = gql`
-  query HomePageQuery {
-    pages(filters: { page: { eq: "home" }, Draft: { eq: false } }) {
-      documentId
-      page
-      Title {
-        fi
-        en
-      }
-      Description {
-        fi
-        en
-      }
-      body {
-        Fi
-        En
-      }
-      HideFromSearchEngine
-      Draft
-      Seo {
-        metaTitle {
-          fi
-          en
-        }
-        metaDescription {
-          fi
-          en
-        }
-        shareImage {
-          url
-          alternativeText
-        }
-        canonicalUrl
-      }
-    }
-    calendarEvents(filters: { hidden: { eq: false } }, sort: "start_date:asc") {
-      documentId
-      start_date
-      end_date
-      title {
-        fi
-        en
-      }
-      location {
-        fi
-        en
-      }
-      description {
-        fi
-        en
-      }
-      organizer_name
-      price
-      event_link
-      hide_location
-      location_coordinates
-      hidden
-    }
-  }
-`;
+import { DEFAULT_DESCRIPTION_FI } from "../types/seo";
 
 export async function generateMetadata(): Promise<Metadata> {
   const lang = "fi";

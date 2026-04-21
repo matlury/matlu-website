@@ -1,56 +1,18 @@
 import { MetadataRoute } from "next";
-import { fetchGraphQL } from "../lib/strapi";
-import { gql } from "@apollo/client";
+import { getSitemapPages, getSitemapBoards } from "../lib/cms-data";
 
 export const dynamic = "force-static";
 
 const SITE_URL = process.env.SITE_URL || "https://www.matlu.fi";
 
-interface PageData {
-  page: string;
-  HideFromSearchEngine: boolean;
-  Draft: boolean;
-}
-
-interface BoardData {
-  year: number;
-  hidden: boolean;
-}
-
-interface StrapiPageQueryResult {
-  pages: PageData[];
-}
-
-interface StrapiBoardQueryResult {
-  boards: BoardData[];
-}
-
-const ALL_PAGES_FOR_SITEMAP_QUERY = gql`
-  query AllPagesForSitemap {
-    pages(filters: { Draft: { eq: false } }) {
-      page
-      HideFromSearchEngine
-    }
-  }
-`;
-
-const ALL_BOARDS_FOR_SITEMAP_QUERY = gql`
-  query AllBoardsForSitemap {
-    boards(filters: { hidden: { eq: false } }, sort: "year:desc") {
-      year
-      hidden
-    }
-  }
-`;
-
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const [pagesResult, boardsResult] = await Promise.all([
-    fetchGraphQL<StrapiPageQueryResult>(ALL_PAGES_FOR_SITEMAP_QUERY),
-    fetchGraphQL<StrapiBoardQueryResult>(ALL_BOARDS_FOR_SITEMAP_QUERY),
+  const [pages, boards] = await Promise.all([
+    getSitemapPages(),
+    getSitemapBoards(),
   ]);
 
-  const pages = (pagesResult.data?.pages || [])
-    .filter((p) => !p.HideFromSearchEngine && p.page !== "home") // 'home' is handled by root '/'
+  const sitemapPages = pages
+    .filter((p) => !p.HideFromSearchEngine && p.page !== "home")
     .flatMap((p) => [
       {
         url: `${SITE_URL}/${p.page}`,
@@ -66,7 +28,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       },
     ]);
 
-  const boards = (boardsResult.data?.boards || [])
+  const sitemapBoards = boards
     .filter((b) => !b.hidden)
     .flatMap((b) => [
       {
@@ -83,8 +45,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       },
     ]);
 
-  // Special handling for the main board page (latest)
-  const latestBoard = (boardsResult.data?.boards || []).find((b) => !b.hidden);
+  const latestBoard = boards.find((b) => !b.hidden);
 
   const mainBoardPages = latestBoard
     ? [
@@ -116,8 +77,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: "yearly" as const,
       priority: 1,
     },
-    ...pages,
-    ...boards,
+    ...sitemapPages,
+    ...sitemapBoards,
     ...mainBoardPages,
     {
       url: `${SITE_URL}/ilotalo`,
@@ -131,6 +92,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: "monthly" as const,
       priority: 0.3,
     },
-    // Thank you page and 404 are hidden from search engines, so not included
   ];
 }

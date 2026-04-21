@@ -1,95 +1,26 @@
 import React from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import { fetchStrapi } from "../../lib/strapi";
+import {
+  getPageData,
+  getAllPageSlugs,
+  getEventSuggestions,
+  type LocationSuggestion,
+  type TitleSuggestion,
+} from "../../lib/cms-data";
 import { Metadata } from "next";
 import ContactForm from "../../components/ContactForm";
 import EventsPageContent from "../../components/EventsPageContent";
 import { MainLayout } from "../../components/MainLayout";
-import { SeoFields, DEFAULT_DESCRIPTION_FI } from "../../types/seo";
-
-export interface LocationSuggestion {
-  documentId: string;
-  label_fi: string;
-  label_en: string;
-  latitude: number | null;
-  longitude: number | null;
-}
-
-export interface TitleSuggestion {
-  fi: string;
-  en: string;
-}
-
-interface PageData {
-  documentId: string;
-  page: string;
-  Title: { fi: string; en: string };
-  Description: { fi: string; en: string };
-  body: {
-    Fi: string;
-    En: string;
-  };
-  HideFromSearchEngine: boolean;
-  Draft: boolean;
-  Seo?: SeoFields;
-}
-
-interface DynamicPageQueryResult {
-  data: PageData[];
-  meta: {
-    pagination?: {
-      page: number;
-      pageSize: number;
-      pageCount: number;
-      total: number;
-    };
-  };
-}
+import { DEFAULT_DESCRIPTION_FI } from "../../types/seo";
 
 type DynamicPageParams = { page: string };
 type DynamicPageParamsInput = Promise<DynamicPageParams> | DynamicPageParams;
 
-const ALL_PAGES_QUERY = {
-  filters: { Draft: { $eq: false }, page: { $notIn: ["home", "board"] } },
-  fields: ["documentId", "page"],
-};
-
-async function getPageData(pageSlug: string) {
-  try {
-    const queryParams = {
-      filters: { page: { $eq: pageSlug }, Draft: { $eq: false } },
-      populate: "*",
-    };
-    const result = await fetchStrapi<DynamicPageQueryResult>(
-      "pages",
-      queryParams,
-    );
-    if (!result?.data || result.data.length === 0) return null;
-    return result.data[0];
-  } catch (error) {
-    console.error(`Failed to fetch page data for slug: ${pageSlug}`, error);
-    return null;
-  }
-}
-
 export async function generateStaticParams() {
   try {
-    const result = await fetchStrapi<DynamicPageQueryResult>(
-      "pages",
-      ALL_PAGES_QUERY,
-    );
-
-    const params: Array<{ page: string }> = [];
-    if (result?.data) {
-      result.data.forEach((page: PageData) => {
-        if (page.page) {
-          params.push({ page: page.page });
-        }
-      });
-    }
-
-    return params;
+    const pageSlugs = await getAllPageSlugs();
+    return pageSlugs.map((page) => ({ page }));
   } catch (error) {
     console.error("Failed to generate static params for /[page]", error);
     return [];
@@ -174,13 +105,10 @@ export default async function DynamicPage({ params }: DynamicPageProps) {
 
   if (isEventsPage) {
     try {
-      // Fetch suggestions server-side during build using the token-authenticated fetchStrapi
-      const [locRes, titleRes] = await Promise.all([
-        fetchStrapi<{ data: LocationSuggestion[] }>("event-requests/suggestions"),
-        fetchStrapi<{ data: TitleSuggestion[] }>("event-requests/title-suggestions")
-      ]);
-      locationSuggestions = locRes.data || [];
-      titleSuggestions = titleRes.data || [];
+      const { locationSuggestions: loc, titleSuggestions: titles } =
+        await getEventSuggestions();
+      locationSuggestions = loc;
+      titleSuggestions = titles;
     } catch (error) {
       console.error("Failed to fetch event suggestions during build", error);
     }

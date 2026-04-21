@@ -1,82 +1,20 @@
 import React from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import { fetchStrapi } from "../../../lib/strapi";
+import { getPageData, getAllPageSlugs } from "../../../lib/cms-data";
 import { Metadata } from "next";
 import ContactForm from "../../../components/ContactForm";
 import EventsPageContent from "../../../components/EventsPageContent";
 import { MainLayout } from "../../../components/MainLayout";
-import { SeoFields, DEFAULT_DESCRIPTION_EN } from "../../../types/seo";
-
-interface PageData {
-  documentId: string;
-  page: string;
-  Title: { fi: string; en: string };
-  Description: { fi: string; en: string };
-  body: {
-    Fi: string;
-    En: string;
-  };
-  HideFromSearchEngine: boolean;
-  Draft: boolean;
-  Seo?: SeoFields;
-}
-
-interface DynamicPageQueryResult {
-  data: PageData[];
-  meta: {
-    pagination?: {
-      page: number;
-      pageSize: number;
-      pageCount: number;
-      total: number;
-    };
-  };
-}
+import { DEFAULT_DESCRIPTION_EN } from "../../../types/seo";
 
 type DynamicPageParams = { page: string };
 type DynamicPageParamsInput = Promise<DynamicPageParams> | DynamicPageParams;
 
-const ALL_PAGES_QUERY = {
-  filters: { Draft: { $eq: false }, page: { $notIn: ["home", "board"] } },
-  fields: ["documentId", "page"],
-};
-
-async function getPageData(pageSlug: string) {
-  try {
-    const queryParams = {
-      filters: { page: { $eq: pageSlug }, Draft: { $eq: false } },
-      populate: "*",
-    };
-    const result = await fetchStrapi<DynamicPageQueryResult>(
-      "pages",
-      queryParams,
-    );
-    if (!result?.data || result.data.length === 0) return null;
-    return result.data[0];
-  } catch (error) {
-    console.error(`Failed to fetch page data for slug: ${pageSlug}`, error);
-    return null;
-  }
-}
-
 export async function generateStaticParams() {
   try {
-    const result = await fetchStrapi<DynamicPageQueryResult>(
-      "pages",
-      ALL_PAGES_QUERY,
-    );
-
-    const params: Array<{ page: string }> = [];
-    if (result?.data) {
-      result.data.forEach((page: PageData) => {
-        if (page.page) {
-          params.push({ page: page.page });
-        }
-      });
-    }
-
-    return params;
+    const pageSlugs = await getAllPageSlugs();
+    return pageSlugs.map((page) => ({ page }));
   } catch (error) {
     console.error("Failed to generate static params for /en/[page]", error);
     return [];
@@ -171,7 +109,11 @@ export default async function DynamicPage({
         />
       )}
       {isContactPage && <ContactForm lang={lang} />}
-      <ReactMarkdown remarkPlugins={[remarkGfm]}>{body}</ReactMarkdown>
+      <ReactMarkdown
+        remarkPlugins={[remarkGfm]}
+      >
+        {body}
+      </ReactMarkdown>
     </MainLayout>
   );
 }

@@ -1,79 +1,17 @@
 import { Language } from "../utils";
-import { fetchGraphQL } from "../lib/strapi";
-import { gql } from "@apollo/client";
+import { getFooterMembers, type FooterLogo } from "../lib/cms-data";
 import FooterContent from "./FooterContent";
-
-export interface FooterLogo {
-  id: string;
-  name: string;
-  href: string;
-  src: string;
-  alt: string;
-}
 
 interface FooterProps {
   language: Language;
 }
 
-interface MembersQueryResult {
-  members: Array<{
-    documentId: string;
-    name: string;
-    url: string | null;
-    logo: {
-      url: string;
-      alternativeText: string | null;
-    } | null;
-  }>;
-}
-
-const MEMBERS_QUERY = gql`
-  query MembersQuery {
-    members(filters: { enabled: { eq: true } }, sort: "order:asc") {
-      documentId
-      name
-      url
-      logo {
-        url
-        alternativeText
-      }
-    }
-  }
-`;
-
-const STRAPI_URL = (process.env.API_URL || "http://localhost:1337").replace(
-  /\/$/,
-  "",
-);
-
-function toAbsoluteStrapiUrl(url: string): string {
-  if (url.startsWith("http://") || url.startsWith("https://")) {
-    return url;
-  }
-
-  return `${STRAPI_URL}${url.startsWith("/") ? "" : "/"}${url}`;
-}
-
-async function getMembers(): Promise<FooterLogo[]> {
+export const Footer = async ({ language }: FooterProps) => {
+  let logos: FooterLogo[] = [];
   try {
-    const { data } = await fetchGraphQL<MembersQueryResult>(MEMBERS_QUERY);
-
-    return (data?.members || [])
-      .filter((item) => item.logo?.url)
-      .map((item) => ({
-        id: item.documentId,
-        name: item.name,
-        href: item.url || "#",
-        src: toAbsoluteStrapiUrl(item.logo?.url || ""),
-        alt: item.logo?.alternativeText || item.name,
-      }));
+    logos = await getFooterMembers();
   } catch (error) {
     console.error("Failed to fetch footer members", error);
-    return [];
   }
-}
-
-export const Footer = async ({ language }: FooterProps) => {
-  const logos = await getMembers();
   return <FooterContent language={language} logos={logos} />;
 };

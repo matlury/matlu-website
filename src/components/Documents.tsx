@@ -1,59 +1,18 @@
 import { Language } from "../utils";
-import { fetchGraphQL } from "../lib/strapi";
-import { gql } from "@apollo/client";
+import { getDocuments, type DocumentNode } from "../lib/cms-data";
 import styles from "./Documents.module.scss";
-
-interface DocumentNode {
-  documentId: string;
-  title: {
-    fi: string;
-    en: string;
-  };
-  file: {
-    url: string;
-  } | null;
-}
-
-interface DocumentsQueryResult {
-  documents: Array<{
-    documentId: string;
-    title: {
-      fi: string;
-      en: string;
-    };
-    file: {
-      url: string;
-    } | null;
-  }>;
-}
-
-const DOCUMENTS_QUERY = gql`
-  query DocumentsQuery {
-    documents {
-      documentId
-      title {
-        fi
-        en
-      }
-      file {
-        url
-      }
-    }
-  }
-`;
 
 interface Props {
   language: Language;
 }
 
 export const MatluDocuments: React.FC<Props> = async ({ language }) => {
-  const { data } = await fetchGraphQL<DocumentsQueryResult>(DOCUMENTS_QUERY);
-
-  const nodes: DocumentNode[] = (data?.documents || []).map((node) => ({
-    documentId: node.documentId,
-    title: node.title,
-    file: node.file ? { url: node.file.url } : null,
-  }));
+  let nodes: DocumentNode[] = [];
+  try {
+    nodes = await getDocuments();
+  } catch (error) {
+    console.error("Failed to fetch documents", error);
+  }
 
   return (
     <ul className={styles.documentLinks}>
