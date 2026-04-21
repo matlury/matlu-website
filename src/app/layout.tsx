@@ -77,7 +77,6 @@ export const metadata: Metadata = {
 };
 
 import EmotionRegistry from "@/lib/emotion-registry";
-import StyledComponentsRegistry from "@/lib/registry";
 
 export default function RootLayout({
   children,
@@ -127,9 +126,7 @@ export default function RootLayout({
       </head>
       <body className={openSans.className}>
         <EmotionRegistry>
-          <StyledComponentsRegistry>
-            <ChakraProvider>{children}</ChakraProvider>
-          </StyledComponentsRegistry>
+          <ChakraProvider>{children}</ChakraProvider>
         </EmotionRegistry>
       </body>
     </html>

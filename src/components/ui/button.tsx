@@ -1,8 +1,8 @@
 import * as React from "react";
 import { Button as ChakraButton } from "@chakra-ui/react";
 
-type ButtonVariant = "default" | "outline" | "ghost";
-type ButtonSize = "default" | "sm" | "lg";
+type ButtonVariant = "default" | "primary" | "secondary" | "outline" | "ghost" | "nav";
+type ButtonSize = "default" | "sm" | "md" | "lg";
 
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -10,7 +10,7 @@ export interface ButtonProps
   size?: ButtonSize;
 }
 
-function getVariantClass(variant: ButtonVariant): "outline" | "ghost" | "solid" {
+function getVariantClass(variant: ButtonVariant): "outline" | "ghost" | "solid" | undefined {
   if (variant === "outline") {
     return "outline";
   }

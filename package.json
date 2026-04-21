@@ -25,7 +25,6 @@
     "@emotion/cache": "^11.14.0",
     "@emotion/react": "^11.14.0",
     "@tanstack/react-form": "^1.28.5",
-    "@types/styled-components": "^5.1.36",
     "autoprefixer": "^10.4.27",
     "axios": "^1.13.6",
     "date-fns": "^4.1.0",
@@ -44,8 +43,7 @@
     "react-leaflet": "^5.0.0",
     "react-markdown": "^10.1.0",
     "remark-gfm": "^4.0.1",
-    "sass": "^1.97.3",
-    "styled-components": "^6.3.11"
+    "sass": "^1.97.3"
   },
   "devDependencies": {
     "@testing-library/dom": "^10.4.1",

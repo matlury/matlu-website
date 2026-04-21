@@ -34,6 +34,74 @@ const config = defineConfig({
         },
       },
     },
+    recipes: {
+      button: {
+        base: {
+          fontWeight: "700",
+          transition: "all 0.2s ease-in-out",
+        },
+        variants: {
+          primary: {
+            backgroundColor: "var(--main-color)",
+            color: "white",
+            borderRadius: "6px",
+            height: "48px",
+            padding: "0 2.5rem",
+            fontSize: "var(--font-size-body)",
+            _hover: {
+              filter: "brightness(0.9)",
+              transform: "translateY(-1px)",
+              boxShadow: "0 4px 12px rgba(1, 73, 188, 0.2)",
+            },
+            _active: {
+              transform: "translateY(0)",
+            },
+          },
+          secondary: {
+            backgroundColor: "transparent",
+            color: "var(--main-color)",
+            border: "2px solid var(--main-color)",
+            borderRadius: "6px",
+            height: "48px",
+            padding: "0 2rem",
+            fontSize: "var(--font-size-body)",
+            _hover: {
+              backgroundColor: "var(--main-color)",
+              color: "white",
+            },
+          },
+          nav: {
+            display: "inline-flex",
+            width: "fit-content",
+            alignItems: "center",
+            border: "0",
+            background: "transparent",
+            padding: "0.35rem 0",
+            textAlign: "left",
+            fontSize: "0.875rem",
+            lineHeight: "var(--line-height-h3)",
+            cursor: "pointer",
+            position: "relative",
+            transition: "color 0.2s",
+            _hover: {
+              color: "{colors.surface}",
+            },
+          },
+        },
+        sizes: {
+          sm: {
+            height: "36px",
+            padding: "0 1.5rem",
+            fontSize: "0.875rem",
+          },
+          md: {
+            height: "48px",
+            padding: "0 2.5rem",
+            fontSize: "var(--font-size-body)",
+          },
+        },
+      },
+    },
   },
 });
 
