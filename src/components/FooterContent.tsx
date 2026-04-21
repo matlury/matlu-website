@@ -39,33 +39,29 @@ const FooterContent: React.FC<FooterContentProps> = ({ language, logos }) => {
       <div className={styles.appFooterSection}>
         <h4>{labels.socialMedia}</h4>
         <ul className={styles.matluSome}>
-          <li style={{ display: "flex", alignItems: "center", gap: 12 }}>
+          <li>
             <a
               href="https://www.facebook.com/Matlury/"
               target="_blank"
               rel="noopener noreferrer"
-              style={{ display: "flex", alignItems: "center", gap: 12, fontSize: 20, textDecoration: "none", color: "inherit" }}
+              style={{ display: "flex", alignItems: "center", gap: 8, padding: "8px 12px", borderRadius: 8, background: "linear-gradient(135deg, #1877f2 0%, #4293f6 100%)", color: "white", textDecoration: "none", fontSize: 14, fontWeight: 500 }}
             >
-              <span style={{ width: 36, display: "flex", justifyContent: "center" }}>
-                <i className="fab fa-facebook-square" style={{ fontSize: 32 }}></i>
-              </span>
+              <i className="fab fa-facebook-square" style={{ fontSize: 20 }}></i>
               Facebook
             </a>
           </li>
-          <li style={{ display: "flex", alignItems: "center", gap: 12 }}>
+          <li>
             <a
               href="https://www.instagram.com/matlury/"
               target="_blank"
               rel="noopener noreferrer"
-              style={{ display: "flex", alignItems: "center", gap: 12, fontSize: 20, textDecoration: "none", color: "inherit" }}
+              style={{ display: "flex", alignItems: "center", gap: 8, padding: "8px 12px", borderRadius: 8, background: "linear-gradient(135deg, #833ab4 0%, #fd1d1d 50%, #fcb045 100%)", color: "white", textDecoration: "none", fontSize: 14, fontWeight: 500 }}
             >
-              <span style={{ width: 36, display: "flex", justifyContent: "center" }}>
-                <img
-                  src="/logos/instagram_logo.svg"
-                  alt="Instagram"
-                  style={{ width: 32, height: 32, display: "inline-block" }}
-                />
-              </span>
+              <img
+                src="/logos/instagram_logo.svg"
+                alt="Instagram"
+                style={{ width: 20, height: 20, display: "inline-block", filter: "brightness(0) invert(1)" }}
+              />
               Instagram
             </a>
           </li>
