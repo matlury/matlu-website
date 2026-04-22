@@ -73,7 +73,7 @@ export default function CalendarEventsStatic({
 
   return (
     <Box my={6}>
-      <Stack gap={2} w="21rem" ml="auto">
+      <Stack gap={2} w={{ base: "100%", md: "21rem" }} ml={{ base: 0, md: "auto" }}>
         {filtered.map((evt) => (
           <CalendarEventMinimal
             key={evt.documentId}

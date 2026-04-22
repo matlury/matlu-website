@@ -57,6 +57,7 @@ const CalendarEventMinimal: React.FC<EventProps> = (props) => {
     <Dialog>
       <DialogTrigger asChild>
         <Box
+          minW={0}
           p={3}
           border="1px solid"
           borderColor="gray.200"

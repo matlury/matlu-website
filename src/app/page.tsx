@@ -92,7 +92,12 @@ export default async function HomePage() {
   return (
     <MainLayout lang={lang} localizedLinks={localizedLinks}>
       <ReactMarkdown remarkPlugins={[remarkGfm]}>{beforeContent}</ReactMarkdown>
-      <Box style={{ float: "right", width: "21rem", marginLeft: "2rem", marginBottom: "1rem" }}>
+      <Box
+        w={{ base: "100%", md: "21rem" }}
+        ml={{ base: 0, md: "2rem" }}
+        mb="1rem"
+        float={{ base: "none", md: "right" }}
+      >
         <CalendarEventsStatic language={lang} events={events} />
       </Box>
       {afterContent && <ReactMarkdown remarkPlugins={[remarkGfm]}>{afterContent}</ReactMarkdown>}
