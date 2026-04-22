@@ -106,24 +106,14 @@ const CalendarEvent: React.FC<EventProps> = (props) => {
                 </Box>
               </Box>
 
-              <Stack gap={1}>
+              <Stack gap={0.5}>
                 {dateStr && (
                   <HStack gap={2} align="center">
                     <Box color="blue.600">
                       <FaCalendarAlt size={14} />
                     </Box>
                     <Text fontSize="xs" color="gray.600" fontWeight="medium" m={0}>
-                      {dateStr}
-                    </Text>
-                  </HStack>
-                )}
-                {timeStr && (
-                  <HStack gap={2} align="center">
-                    <Box color="blue.600">
-                      <FaClock size={14} />
-                    </Box>
-                    <Text fontSize="xs" color="gray.600" fontWeight="medium" m={0}>
-                      {timeStr}
+                      {dateStr}{timeStr ? ` ${timeStr}` : ""}
                     </Text>
                   </HStack>
                 )}

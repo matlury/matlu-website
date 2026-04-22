@@ -11,7 +11,7 @@
     "optimize": "node optimize.mjs",
     "start": "echo \"Error: Use 'npm run serve' to test the static build locally.\" && exit 1",
     "serve": "npx serve@latest out",
-    "lint": "eslint .",
+    "lint": "eslint . --cache",
     "lint:fix": "eslint . --fix",
     "typecheck": "tsc --noEmit",
     "typegen:scss": "typed-scss-modules src --exportType default",
