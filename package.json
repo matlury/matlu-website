@@ -82,7 +82,7 @@
     "typed-scss-modules": "^8.1.1",
     "typescript": "^5.9.3",
     "vite-tsconfig-paths": "^6.1.1",
-    "vitest": "^4.1.0",
+    "vitest": "^4.1.4",
     "vitest-axe": "^0.1.0"
   },
   "keywords": [
