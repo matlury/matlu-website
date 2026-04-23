@@ -24,11 +24,8 @@ export default [
     languageOptions: {
       parser: tsparser,
       parserOptions: {
-        project: "./tsconfig.json",
         sourceType: "module",
         ecmaFeatures: { jsx: true },
-        // Use a tsconfig that includes the test files if they aren't in the main one,
-        // but here it seems they are in src/
       },
       globals: {
         ...globals.browser,
