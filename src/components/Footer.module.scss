@@ -33,10 +33,14 @@ ul.matluSome {
 
   li {
     margin-bottom: 16px;
+    min-width: 0;
+    width: 100%;
+    max-width: 280px;
   }
 
   a {
     color: white;
+    width: 100%;
   }
 }
 
