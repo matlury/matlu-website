@@ -7,7 +7,7 @@
   "type": "module",
   "scripts": {
     "dev": "next dev -p 8000",
-    "build": "next build && npm run optimize",
+    "build": "node scripts/optimize-logos.mjs && next build && npm run optimize",
     "optimize": "node optimize.mjs",
     "start": "echo \"Error: Use 'npm run serve' to test the static build locally.\" && exit 1",
     "serve": "npx serve@latest out",

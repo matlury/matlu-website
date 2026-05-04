@@ -68,3 +68,6 @@ deploy-s3.sh
 # nextjs
 .next
 out
+
+# build artifacts
+public/logos/members

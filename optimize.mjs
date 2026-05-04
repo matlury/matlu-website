@@ -6,7 +6,7 @@ const publicDir = './public';
 
 // Optimize images in public directory
 const optimizeImages = async () => {
-  console.log('[Global CSS Minify] Starting...');
+  console.log('[Image] Scanning public directory for optimization opportunities...');
 
   try {
     const files = globSync(`${publicDir}/**/*.{png,jpg,jpeg}`);
@@ -16,19 +16,16 @@ const optimizeImages = async () => {
 
       const ext = path.extname(file);
       const filename = path.basename(file, ext);
-      const dir = path.dirname(file);
 
       // Skip already optimized images
       if (filename.includes('.optimized')) continue;
 
-      const optimizedPath = path.join(dir, `${filename}${ext}`);
-
-      console.log(`[Image] Optimized ${path.relative(publicDir, optimizedPath)}`);
+      console.log(`[Image] Found ${path.relative(publicDir, file)} (consider converting to WebP)`);
     }
 
-    console.log('[Global CSS Minify] Completed.');
+    console.log('[Image] Scan complete. Use optimize-logos.mjs for CMS logo optimization.');
   } catch (err) {
-    console.error('[Global CSS Minify] Error:', err);
+    console.error('[Image] Error:', err);
   }
 };
 
@@ -37,7 +34,8 @@ const inlineCriticalCss = async () => {
   console.log('[CSS] Inlining small stylesheets into HTML...');
 
   try {
-    const htmlFiles = globSync('.next/server/app/**/*.html');
+    // Target the static export output directory
+    const htmlFiles = globSync('./out/**/*.html');
 
     for (const htmlFile of htmlFiles) {
       let html = await fs.readFile(htmlFile, 'utf-8');
@@ -47,8 +45,6 @@ const inlineCriticalCss = async () => {
         for (const match of cssMatches) {
           const href = match.match(/href="([^"]+)"/)[1];
           // Determine the local file path for the CSS file
-          // Since href starts with /, we treat it relative to .next/static/
-          // e.g. /_next/static/css/abc.css -> .next/static/css/abc.css
           let localCssPath = '';
 
           if (href.startsWith('/_next/')) {
@@ -60,8 +56,8 @@ const inlineCriticalCss = async () => {
           try {
             const cssContent = await fs.readFile(localCssPath, 'utf-8');
 
-            // Only inline small CSS files (< 10KB)
-            if (cssContent.length < 10240) {
+            // Only inline small CSS files (< 12KB)
+            if (cssContent.length < 12288) {
               html = html.replace(
                 match,
                 `<style>${cssContent}</style>`
@@ -69,7 +65,7 @@ const inlineCriticalCss = async () => {
               console.log(`[CSS] Inlined ${href} into ${path.basename(htmlFile)}`);
             }
           } catch (err) {
-            console.warn(`[CSS] Warning: Could not read CSS file ${localCssPath}. Skipping inlining for ${href}., Error: ${err.message}`);
+            console.warn(`[CSS] Warning: Could not read CSS file ${localCssPath}. Skipping inlining for ${href}. Error: ${err.message}`);
           }
         }
 

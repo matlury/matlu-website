@@ -1,4 +1,6 @@
 import { cache } from "react";
+import fs from "fs/promises";
+import path from "path";
 import { fetchGraphQL } from "./strapi";
 
 import {
@@ -192,15 +194,28 @@ export const getNavLinks = cache(async () => {
 export const getFooterMembers = cache(async () => {
   const { data } = await fetchGraphQL<MembersQueryResult>(MEMBERS_QUERY);
 
+  // Try to load optimized logo manifest (generated at build time)
+  let logoManifest: Record<string, { src: string; alt: string; href: string; name: string }> | null = null;
+  try {
+    const manifestPath = path.join(process.cwd(), "public", "logos", "members", "manifest.json");
+    const raw = await fs.readFile(manifestPath, "utf-8");
+    logoManifest = JSON.parse(raw);
+  } catch {
+    // Manifest not found - fall back to CMS URLs (development mode)
+  }
+
   return (data?.members || [])
     .filter((item) => item.logo?.url)
-    .map((item) => ({
-      id: item.documentId,
-      name: item.name,
-      href: item.url || "#",
-      src: toAbsoluteStrapiUrl(item.logo!.url),
-      alt: item.logo!.alternativeText || item.name,
-    }));
+    .map((item) => {
+      const optimized = logoManifest?.[item.documentId];
+      return {
+        id: item.documentId,
+        name: item.name,
+        href: optimized?.href || item.url || "#",
+        src: optimized?.src || toAbsoluteStrapiUrl(item.logo!.url),
+        alt: optimized?.alt || item.logo!.alternativeText || item.name,
+      };
+    });
 });
 
 export const getDocuments = cache(async () => {
