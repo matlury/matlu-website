@@ -58,6 +58,12 @@ const inlineCriticalCss = async () => {
           try {
             const cssContent = await fs.readFile(localCssPath, 'utf-8');
 
+            // Skip CSS files with relative font/media paths (../media/) - these break when inlined
+            if (cssContent.includes('../media/') || cssContent.includes('url(')) {
+              console.log(`[CSS] Skipping ${href} (contains relative asset paths)`);
+              continue;
+            }
+
             // Only inline small CSS files (< 12KB)
             if (cssContent.length < 12288) {
               html = html.replace(
