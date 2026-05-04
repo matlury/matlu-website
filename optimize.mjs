@@ -39,7 +39,9 @@ const inlineCriticalCss = async () => {
 
     for (const htmlFile of htmlFiles) {
       let html = await fs.readFile(htmlFile, 'utf-8');
-      const cssMatches = html.match(/<link rel="stylesheet" href="([^"]+)"/g);
+      // Match the full <link> tag including trailing attributes and self-closing />
+      const cssRegex = /<link rel="stylesheet" href="([^"]+)"[^>]*\/>/g;
+      const cssMatches = html.match(cssRegex);
 
       if (cssMatches) {
         for (const match of cssMatches) {
