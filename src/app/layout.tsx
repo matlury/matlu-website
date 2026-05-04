@@ -1,7 +1,6 @@
 import React from "react";
 import "../style.scss"; // Global styles
 import "./globals.css";
-import "leaflet/dist/leaflet.css";
 import { Metadata, Viewport } from "next";
 import { Open_Sans, Geist } from "next/font/google";
 import ExternalStyles from "@/components/ExternalStyles";
@@ -102,6 +101,10 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <head>
+        <meta httpEquiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.google.com https://www.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data: https: blob:; connect-src 'self' https://cms.matlu.fi https://www.google.com; frame-src https://www.google.com; media-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self';" />
+        <meta httpEquiv="X-Content-Type-Options" content="nosniff" />
+        <meta httpEquiv="Referrer-Policy" content="strict-origin-when-cross-origin" />
+        <meta httpEquiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=()" />
         <link
           rel="preload"
           href="/webfonts/fa-solid-900.woff2"

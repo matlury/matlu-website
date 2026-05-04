@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import "leaflet/dist/leaflet.css";
 import L, { type Map as LeafletMap, type Marker as LeafletMarker } from "leaflet";
 
 interface LeafletLocationMapProps {
