@@ -58,7 +58,7 @@ const FooterContent: React.FC<FooterContentProps> = ({ language, logos }) => {
               style={{ display: "flex", alignItems: "center", gap: 8, padding: "8px 12px", borderRadius: 8, background: "linear-gradient(135deg, #833ab4 0%, #fd1d1d 50%, #fcb045 100%)", color: "white", textDecoration: "none", fontSize: 14, fontWeight: 500 }}
             >
               <img
-                src="/logos/instagram_logo.svg"
+                src="/logos/instagram_white_logo.svg"
                 alt="Instagram"
                 style={{ width: 20, height: 20, display: "inline-block", filter: "brightness(0) invert(1)" }}
               />
