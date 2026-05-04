@@ -63,9 +63,9 @@ export const metadata: Metadata = {
     siteName: "Matlu ry",
     images: [
       {
-        url: "/logos/matlu.png",
-        width: 800,
-        height: 600,
+        url: "/logos/matlu-optimized.png",
+        width: 375,
+        height: 187,
       },
     ],
   },
@@ -87,7 +87,7 @@ export default function RootLayout({
     "@type": "Organization",
     name: "Matlu ry",
     url: "https://www.matlu.fi",
-    logo: "https://www.matlu.fi/logos/matlu.png",
+    logo: "https://www.matlu.fi/logos/matlu-optimized.png",
     sameAs: [
       "https://www.facebook.com/Matlury/",
       "https://www.instagram.com/matlury/",

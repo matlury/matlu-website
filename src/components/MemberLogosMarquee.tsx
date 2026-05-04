@@ -32,8 +32,16 @@ export default function MemberLogosMarquee({ logos = [] }: MemberLogosMarqueePro
 
     disableLinksInClones(root);
 
+    let ticking = false;
+
     const observer = new MutationObserver(() => {
-      disableLinksInClones(root);
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          disableLinksInClones(root);
+          ticking = false;
+        });
+        ticking = true;
+      }
     });
 
     observer.observe(root, { childList: true, subtree: true });

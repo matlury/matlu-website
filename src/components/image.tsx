@@ -1,5 +1,4 @@
 import NextImage from "next/image";
-import matluImage from "../images/matlu.png";
 import loimuImage from "../images/loimu_varillinen.png";
 
 interface ImageProps {
@@ -8,18 +7,32 @@ interface ImageProps {
 }
 
 export const Image: React.FC<ImageProps> = ({ imageName, className }) => {
-  const image = imageName === "matlu" ? matluImage : loimuImage;
+  if (imageName === "matlu") {
+    return (
+      <NextImage
+        src="/logos/matlu-optimized.png"
+        alt="matlu"
+        width={375}
+        height={187}
+        priority
+        className={className}
+        style={{
+          width: "auto",
+          height: className ? undefined : "80px",
+        }}
+      />
+    );
+  }
 
   return (
     <NextImage
-      src={image}
+      src={loimuImage}
       alt={imageName}
-      height={imageName === "matlu" ? 80 : 70}
-      priority={imageName === "matlu"}
+      height={70}
       className={className}
       style={{
         width: "auto",
-        height: className ? undefined : (imageName === "matlu" ? "80px" : "70px"),
+        height: className ? undefined : "70px",
       }}
     />
   );
