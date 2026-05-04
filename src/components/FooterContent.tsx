@@ -59,7 +59,7 @@ const FooterContent: React.FC<FooterContentProps> = ({ language, logos }) => {
             >
               <img
                 src="/logos/instagram_white_logo.svg"
-                alt="Instagram"
+                alt=""
                 style={{ width: 20, height: 20, display: "inline-block", filter: "brightness(0) invert(1)" }}
               />
               Instagram

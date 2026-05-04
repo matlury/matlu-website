@@ -3,9 +3,13 @@
 import React, { useState } from "react";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import CalendarEvents from "./CalendarEvents";
-import EventRequestForm from "./EventRequestForm";
+import dynamic from "next/dynamic";
 import { Language } from "../utils";
 import type { LocationSuggestion, TitleSuggestion } from "../lib/cms-data";
+
+const EventRequestForm = dynamic(() => import("./EventRequestForm"), {
+  loading: () => <div style={{ padding: "2rem", textAlign: "center" }}>Loading...</div>,
+});
 
 interface EventsPageContentProps {
   lang: Language;

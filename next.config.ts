@@ -3,6 +3,7 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   output: "export",
   trailingSlash: true,
+  compress: true,
   compiler: {
     removeConsole: process.env.NODE_ENV === "production",
   },
@@ -19,6 +20,9 @@ const nextConfig: NextConfig = {
         pathname: "/uploads/**",
       },
     ],
+  },
+  experimental: {
+    optimizePackageImports: ["@chakra-ui/react", "leaflet", "react-leaflet"],
   },
 };
 
