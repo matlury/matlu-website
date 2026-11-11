@@ -16,7 +16,7 @@
     "node": true
   },
   "categories": {
-    "correctness": "off",
+    "correctness": "error",
     "suspicious": "off",
     "pedantic": "off",
     "perf": "off",
@@ -388,6 +388,9 @@
     "promise/no-return-wrap": "error",
     "no-case-declarations": "off",
     "promise/always-return": "off",
-    "react/react-in-jsx-scope": "off"
+    "react/react-in-jsx-scope": "off",
+    "vitest/require-mock-type-parameters": "off",
+    "jsx-a11y/prefer-tag-over-role": "off",
+    "jsx-a11y/control-has-associated-label": "off"
   }
 }
