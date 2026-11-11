@@ -2,7 +2,11 @@ import { gql } from "@apollo/client";
 
 export const MEMBERS_QUERY = gql`
   query MembersQuery {
-    members(filters: { enabled: { eq: true } }, sort: "order:asc") {
+    members(
+      filters: { enabled: { eq: true } }
+      sort: "order:asc"
+      pagination: { page: 1, pageSize: 100 }
+    ) {
       documentId
       name
       url

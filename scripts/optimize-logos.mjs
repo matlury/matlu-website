@@ -16,7 +16,11 @@ const MAX_HEIGHT = 46;
 
 const MEMBERS_QUERY = `
   query MembersQuery {
-    members(filters: { enabled: { eq: true } }, sort: "order:asc") {
+    members(
+      filters: { enabled: { eq: true } }
+      sort: "order:asc"
+      pagination: { page: 1, pageSize: 100 }
+    ) {
       documentId
       name
       url
