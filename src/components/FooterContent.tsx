@@ -5,6 +5,8 @@ import { MatluDocuments } from "./Documents";
 import MemberLogosMarquee, { FooterLogo } from "./MemberLogosMarquee";
 import TelegramShare from "./TelegramShare";
 
+const CURRENT_YEAR = new Date().getFullYear();
+
 const FOOTER_LABELS = {
   fi: {
     documents: "Dokumentteja",
@@ -115,9 +117,7 @@ const FooterContent: React.FC<FooterContentProps> = ({ language, logos }) => {
       <div className={styles.footerMarquee}>
         <MemberLogosMarquee logos={logos} />
       </div>
-      <div className={styles.footerBottom}>
-        &copy; {new Date().getFullYear()} Matlu ry
-      </div>
+      <div className={styles.footerBottom}>&copy; {CURRENT_YEAR} Matlu ry</div>
     </footer>
   );
 };

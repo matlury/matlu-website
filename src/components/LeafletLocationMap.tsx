@@ -81,9 +81,8 @@ export default function LeafletLocationMap({
     typeof longitude === "number" &&
     Number.isFinite(longitude);
 
-  const center: [number, number] = hasCoordinates
-    ? [latitude, longitude]
-    : DEFAULT_CENTER;
+  const lat = hasCoordinates ? latitude : DEFAULT_CENTER[0];
+  const lng = hasCoordinates ? longitude : DEFAULT_CENTER[1];
 
   React.useEffect(() => {
     const map = mapRef.current;
@@ -91,6 +90,7 @@ export default function LeafletLocationMap({
       return;
     }
 
+    const center: [number, number] = [lat, lng];
     map.setView(center, zoom);
 
     if (hasCoordinates) {
@@ -115,7 +115,7 @@ export default function LeafletLocationMap({
       markerRef.current.remove();
       markerRef.current = null;
     }
-  }, [center, hasCoordinates, zoom]);
+  }, [lat, lng, hasCoordinates, zoom]);
 
   return (
     <div ref={containerRef} style={{ height: `${height}px`, width: "100%" }} />

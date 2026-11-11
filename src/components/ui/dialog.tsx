@@ -117,6 +117,7 @@ function DialogPortal({ children }: React.PropsWithChildren) {
   const [mounted, setMounted] = React.useState(false);
 
   React.useEffect(() => {
+    // oxlint-disable-next-line react/set-state-in-effect -- portal needs document, so mount only after hydration
     setMounted(true);
     return () => setMounted(false);
   }, []);

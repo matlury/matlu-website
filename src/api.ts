@@ -14,3 +14,11 @@ export const RECAPTCHA_SITE_KEY =
   process.env.NEXT_PUBLIC_EVENT_REQUEST_RECAPTCHA_SITE_KEY ||
   process.env.NEXT_PUBLIC_GATSBY_RECAPTCHA_SITE_KEY ||
   "";
+
+// A missing key silently drops the captcha from every form, so make it loud in dev.
+if (!RECAPTCHA_SITE_KEY && process.env.NODE_ENV !== "production") {
+  console.warn(
+    "[captcha] No reCAPTCHA site key set. Forms will submit without a captcha. " +
+      "Set NEXT_PUBLIC_EVENT_REQUEST_RECAPTCHA_SITE_KEY.",
+  );
+}

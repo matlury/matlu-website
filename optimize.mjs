@@ -2,33 +2,6 @@ import fs from 'fs/promises';
 import path from 'path';
 import { globSync } from 'glob';
 
-const publicDir = './public';
-
-// Optimize images in public directory
-const optimizeImages = async () => {
-  console.log('[Image] Scanning public directory for optimization opportunities...');
-
-  try {
-    const files = globSync(`${publicDir}/**/*.{png,jpg,jpeg}`);
-
-    for (const file of files) {
-      if (file.includes('node_modules')) continue;
-
-      const ext = path.extname(file);
-      const filename = path.basename(file, ext);
-
-      // Skip already optimized images
-      if (filename.includes('.optimized')) continue;
-
-      console.log(`[Image] Found ${path.relative(publicDir, file)} (consider converting to WebP)`);
-    }
-
-    console.log('[Image] Scan complete. Use optimize-logos.mjs for CMS logo optimization.');
-  } catch (err) {
-    console.error('[Image] Error:', err);
-  }
-};
-
 // Inline critical CSS
 const inlineCriticalCss = async () => {
   console.log('[CSS] Inlining small stylesheets into HTML...');
@@ -86,7 +59,6 @@ const inlineCriticalCss = async () => {
 };
 
 const main = async () => {
-  await optimizeImages();
   await inlineCriticalCss();
 
   console.log('\n✅ CRP Optimization Complete!');
