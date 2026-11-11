@@ -56,5 +56,5 @@ Object.defineProperty(window, "navigator", {
   },
 });
 
-// Override globalThis
-Object.assign(global, { window, document: window.document });
+// window and document are already provided by the jsdom environment;
+// assigning them onto globalThis throws in Vitest 5 (read-only getters).
