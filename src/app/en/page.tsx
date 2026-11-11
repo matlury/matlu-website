@@ -20,7 +20,9 @@ export async function generateMetadata(): Promise<Metadata> {
   const seo = page.Seo;
   const title = seo?.metaTitle?.[lang] || page.Title?.[lang] || "";
   const description =
-    seo?.metaDescription?.[lang] || page.Description?.[lang] || DEFAULT_DESCRIPTION_EN;
+    seo?.metaDescription?.[lang] ||
+    page.Description?.[lang] ||
+    DEFAULT_DESCRIPTION_EN;
   const canonical = seo?.canonicalUrl || "/en";
 
   const shareImage = seo?.shareImage?.url;
@@ -102,10 +104,21 @@ export default async function HomePage() {
   return (
     <MainLayout lang={lang} localizedLinks={localizedLinks}>
       <ReactMarkdown remarkPlugins={[remarkGfm]}>{beforeContent}</ReactMarkdown>
-      <Box style={{ float: "right", width: "21rem", marginLeft: "2rem", marginBottom: "1rem" }}>
+      <Box
+        style={{
+          float: "right",
+          width: "21rem",
+          marginLeft: "2rem",
+          marginBottom: "1rem",
+        }}
+      >
         <CalendarEventsStatic language={lang} events={events} />
       </Box>
-      {afterContent && <ReactMarkdown remarkPlugins={[remarkGfm]}>{afterContent}</ReactMarkdown>}
+      {afterContent && (
+        <ReactMarkdown remarkPlugins={[remarkGfm]}>
+          {afterContent}
+        </ReactMarkdown>
+      )}
     </MainLayout>
   );
 }

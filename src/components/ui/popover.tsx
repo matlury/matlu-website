@@ -3,23 +3,26 @@
 import * as React from "react";
 import { Popover as ChakraPopover, Portal } from "@chakra-ui/react";
 
-export interface PopoverContentProps extends React.ComponentProps<typeof ChakraPopover.Content> {
-    portalled?: boolean;
+export interface PopoverContentProps extends React.ComponentProps<
+  typeof ChakraPopover.Content
+> {
+  portalled?: boolean;
 }
 
-export const PopoverContent = React.forwardRef<HTMLDivElement, PopoverContentProps>(
-    function PopoverContent(props, ref) {
-        const { portalled = true, children, ...rest } = props;
-        const Wrapper = portalled ? Portal : React.Fragment;
-        return (
-            <Wrapper>
-                <ChakraPopover.Content ref={ref} {...rest}>
-                    {children}
-                </ChakraPopover.Content>
-            </Wrapper>
-        );
-    }
-);
+export const PopoverContent = React.forwardRef<
+  HTMLDivElement,
+  PopoverContentProps
+>(function PopoverContent(props, ref) {
+  const { portalled = true, children, ...rest } = props;
+  const Wrapper = portalled ? Portal : React.Fragment;
+  return (
+    <Wrapper>
+      <ChakraPopover.Content ref={ref} {...rest}>
+        {children}
+      </ChakraPopover.Content>
+    </Wrapper>
+  );
+});
 
 export const PopoverArrow = ChakraPopover.Arrow;
 export const PopoverBody = ChakraPopover.Body;

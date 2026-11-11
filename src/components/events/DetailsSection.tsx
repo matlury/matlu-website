@@ -16,9 +16,23 @@ export function DetailsSection({ form, lang }: DetailsSectionProps) {
 
   return (
     <section id="section-details">
-      <FieldGroup style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(240px,1fr))", gap: "1.25rem" }}>
-        <FieldTextarea form={form} name="description_fi" label={t.descriptionFi} />
-        <FieldTextarea form={form} name="description_en" label={t.descriptionEn} />
+      <FieldGroup
+        style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fit,minmax(240px,1fr))",
+          gap: "1.25rem",
+        }}
+      >
+        <FieldTextarea
+          form={form}
+          name="description_fi"
+          label={t.descriptionFi}
+        />
+        <FieldTextarea
+          form={form}
+          name="description_en"
+          label={t.descriptionEn}
+        />
       </FieldGroup>
     </section>
   );

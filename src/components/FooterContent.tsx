@@ -44,9 +44,23 @@ const FooterContent: React.FC<FooterContentProps> = ({ language, logos }) => {
               href="https://www.facebook.com/Matlury/"
               target="_blank"
               rel="noopener noreferrer"
-              style={{ display: "flex", alignItems: "center", gap: 8, padding: "8px 12px", borderRadius: 8, background: "linear-gradient(135deg, #1877f2 0%, #4293f6 100%)", color: "white", textDecoration: "none", fontSize: 14, fontWeight: 500 }}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: 8,
+                padding: "8px 12px",
+                borderRadius: 8,
+                background: "linear-gradient(135deg, #1877f2 0%, #4293f6 100%)",
+                color: "white",
+                textDecoration: "none",
+                fontSize: 14,
+                fontWeight: 500,
+              }}
             >
-              <i className="fab fa-facebook-square" style={{ fontSize: 20 }}></i>
+              <i
+                className="fab fa-facebook-square"
+                style={{ fontSize: 20 }}
+              ></i>
               Facebook
             </a>
           </li>
@@ -55,18 +69,38 @@ const FooterContent: React.FC<FooterContentProps> = ({ language, logos }) => {
               href="https://www.instagram.com/matlury/"
               target="_blank"
               rel="noopener noreferrer"
-              style={{ display: "flex", alignItems: "center", gap: 8, padding: "8px 12px", borderRadius: 8, background: "linear-gradient(135deg, #833ab4 0%, #fd1d1d 50%, #fcb045 100%)", color: "white", textDecoration: "none", fontSize: 14, fontWeight: 500 }}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: 8,
+                padding: "8px 12px",
+                borderRadius: 8,
+                background:
+                  "linear-gradient(135deg, #833ab4 0%, #fd1d1d 50%, #fcb045 100%)",
+                color: "white",
+                textDecoration: "none",
+                fontSize: 14,
+                fontWeight: 500,
+              }}
             >
               <img
                 src="/logos/instagram_white_logo.svg"
                 alt=""
-                style={{ width: 20, height: 20, display: "inline-block", filter: "brightness(0) invert(1)" }}
+                style={{
+                  width: 20,
+                  height: 20,
+                  display: "inline-block",
+                  filter: "brightness(0) invert(1)",
+                }}
               />
               Instagram
             </a>
           </li>
           <li>
-            <TelegramShare joinChannel={labels.telegramJoin} channelName={labels.telegramChannel} />
+            <TelegramShare
+              joinChannel={labels.telegramJoin}
+              channelName={labels.telegramChannel}
+            />
           </li>
         </ul>
       </div>

@@ -8,9 +8,9 @@
 }
 
 .wrapper {
-    width: vars.$app-width;
-    margin-left: auto;
-    margin-right: auto;
+  width: vars.$app-width;
+  margin-left: auto;
+  margin-right: auto;
   background-color: white;
   flex: 1;
   display: flex;
@@ -21,11 +21,11 @@
   overflow: hidden; /* Ensure footer background doesn't bleed out of rounded corners */
 
   main {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-    }
-  
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
   article {
     padding: 20px;
     a {
@@ -33,10 +33,10 @@
     }
   }
 
-    >article,
-    main>article {
-      flex: 1;
-    }
+  > article,
+  main > article {
+    flex: 1;
+  }
 
   @include mixins.mobile {
     width: 100%;
@@ -47,4 +47,3 @@
     }
   }
 }
-

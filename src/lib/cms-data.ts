@@ -3,10 +3,7 @@ import fs from "fs/promises";
 import path from "path";
 import { fetchGraphQL } from "./strapi";
 
-import {
-  HOME_PAGE_QUERY,
-  type HomePageQueryResult,
-} from "../queries/home";
+import { HOME_PAGE_QUERY, type HomePageQueryResult } from "../queries/home";
 
 import {
   PAGE_QUERY,
@@ -17,7 +14,10 @@ import {
 
 import { NAV_QUERY, type NavQueryResult } from "../queries/nav";
 import { MEMBERS_QUERY, type MembersQueryResult } from "../queries/footer";
-import { DOCUMENTS_QUERY, type DocumentsQueryResult } from "../queries/documents";
+import {
+  DOCUMENTS_QUERY,
+  type DocumentsQueryResult,
+} from "../queries/documents";
 import {
   BOARD_QUERY,
   LATEST_BOARD_QUERY,
@@ -42,7 +42,8 @@ import {
 
 const STRAPI_URL = (process.env.API_URL || "http://localhost:1337").replace(
   /\/$/,
-  "");
+  "",
+);
 
 function toAbsoluteStrapiUrl(url: string): string {
   if (url.startsWith("http://") || url.startsWith("https://")) {
@@ -158,12 +159,15 @@ export type { LocationSuggestion, TitleSuggestion };
 
 export const getHomePageData = cache(async () => {
   const { data } = await fetchGraphQL<HomePageQueryResult>(HOME_PAGE_QUERY);
-  if (!data?.pages || data.pages.length === 0) return { page: null, events: [] };
+  if (!data?.pages || data.pages.length === 0)
+    return { page: null, events: [] };
   return { page: data.pages[0], events: data.calendarEvents || [] };
 });
 
 export const getPageData = cache(async (pageSlug: string) => {
-  const { data } = await fetchGraphQL<PageQueryResult>(PAGE_QUERY, { page: pageSlug });
+  const { data } = await fetchGraphQL<PageQueryResult>(PAGE_QUERY, {
+    page: pageSlug,
+  });
   if (!data?.pages || data.pages.length === 0) return null;
   return data.pages[0];
 });
@@ -195,9 +199,18 @@ export const getFooterMembers = cache(async () => {
   const { data } = await fetchGraphQL<MembersQueryResult>(MEMBERS_QUERY);
 
   // Try to load optimized logo manifest (generated at build time)
-  let logoManifest: Record<string, { src: string; alt: string; href: string; name: string }> | null = null;
+  let logoManifest: Record<
+    string,
+    { src: string; alt: string; href: string; name: string }
+  > | null = null;
   try {
-    const manifestPath = path.join(process.cwd(), "public", "logos", "members", "manifest.json");
+    const manifestPath = path.join(
+      process.cwd(),
+      "public",
+      "logos",
+      "members",
+      "manifest.json",
+    );
     const raw = await fs.readFile(manifestPath, "utf-8");
     logoManifest = JSON.parse(raw);
   } catch {
@@ -244,7 +257,9 @@ export const getBoardData = cache(async (year?: number) => {
 
 export const getAllBoardYears = cache(async () => {
   try {
-    const { data } = await fetchGraphQL<BoardYearsQueryResult>(ALL_BOARD_YEARS_QUERY);
+    const { data } = await fetchGraphQL<BoardYearsQueryResult>(
+      ALL_BOARD_YEARS_QUERY,
+    );
     if (!data?.boards) return [];
     return data.boards.map((board) => board.year);
   } catch (error) {
@@ -254,12 +269,14 @@ export const getAllBoardYears = cache(async () => {
 });
 
 export const getSitemapPages = cache(async () => {
-  const { data } = await fetchGraphQL<SitemapPagesQueryResult>(SITEMAP_PAGES_QUERY);
+  const { data } =
+    await fetchGraphQL<SitemapPagesQueryResult>(SITEMAP_PAGES_QUERY);
   return data?.pages || [];
 });
 
 export const getSitemapBoards = cache(async () => {
-  const { data } = await fetchGraphQL<SitemapBoardsQueryResult>(SITEMAP_BOARDS_QUERY);
+  const { data } =
+    await fetchGraphQL<SitemapBoardsQueryResult>(SITEMAP_BOARDS_QUERY);
   return data?.boards || [];
 });
 
@@ -272,7 +289,10 @@ export const getEventSuggestions = cache(async () => {
   const locationSuggestions: LocationSuggestion[] = (
     locationsResult.data?.eventLocations || []
   ).map((loc) => {
-    const coords = loc.location_coordinates as { lat: number; lng: number } | null;
+    const coords = loc.location_coordinates as {
+      lat: number;
+      lng: number;
+    } | null;
     return {
       documentId: loc.documentId,
       label_fi: loc.label_fi,

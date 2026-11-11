@@ -12,7 +12,11 @@ interface TelegramShareProps {
   style?: CSSProperties;
 }
 
-const TelegramShare: React.FC<TelegramShareProps> = ({ joinChannel, channelName, style }) => {
+const TelegramShare: React.FC<TelegramShareProps> = ({
+  joinChannel,
+  channelName,
+  style,
+}) => {
   return (
     <a
       href="https://t.me/matluInfo"

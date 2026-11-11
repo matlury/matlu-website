@@ -8,7 +8,9 @@ import { Language } from "../utils";
 import type { LocationSuggestion, TitleSuggestion } from "../lib/cms-data";
 
 const EventRequestForm = dynamic(() => import("./EventRequestForm"), {
-  loading: () => <div style={{ padding: "2rem", textAlign: "center" }}>Loading...</div>,
+  loading: () => (
+    <div style={{ padding: "2rem", textAlign: "center" }}>Loading...</div>
+  ),
 });
 
 interface EventsPageContentProps {

@@ -4,18 +4,8 @@ import React from "react";
 import { format, parseISO } from "date-fns";
 import { fi, enUS } from "date-fns/locale";
 import { Language } from "../utils";
-import {
-  Dialog,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import {
-  Box,
-  Text,
-  Heading,
-  Stack,
-  HStack,
-  Badge,
-} from "@chakra-ui/react";
+import { Dialog, DialogTrigger } from "@/components/ui/dialog";
+import { Box, Text, Heading, Stack, HStack, Badge } from "@chakra-ui/react";
 import { EventDetailedCard } from "./EventDetailedCard";
 
 interface EventProps {
@@ -35,23 +25,17 @@ interface EventProps {
 }
 
 const CalendarEventMinimal: React.FC<EventProps> = (props) => {
-  const {
-    title,
-    start_date,
-    language,
-    status,
-  } = props;
+  const { title, start_date, language, status } = props;
 
   const parsedDate = start_date ? parseISO(start_date) : null;
   const dateTimeStr = parsedDate
     ? format(parsedDate, "dd.MM.yyyy HH:mm", {
-      locale: language === "fi" ? fi : enUS,
-    })
+        locale: language === "fi" ? fi : enUS,
+      })
     : "";
 
-  const statusLabel = status === "active"
-    ? (language === "fi" ? "Käynnissä" : "Active")
-    : null;
+  const statusLabel =
+    status === "active" ? (language === "fi" ? "Käynnissä" : "Active") : null;
 
   return (
     <Dialog>

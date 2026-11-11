@@ -33,9 +33,7 @@ export function Marquee({
       {...props}
     >
       <ChakraMarquee.Viewport>
-        <ChakraMarquee.Content>
-          {children}
-        </ChakraMarquee.Content>
+        <ChakraMarquee.Content>{children}</ChakraMarquee.Content>
       </ChakraMarquee.Viewport>
     </ChakraMarquee.Root>
   );

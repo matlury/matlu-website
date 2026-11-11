@@ -18,7 +18,12 @@ export function FieldTextarea({
 }: FieldTextareaProps) {
   return (
     <form.Field name={name}>
-      {(field: { name: string; state: { value: string }; handleBlur: () => void; handleChange: (v: string) => void }) => (
+      {(field: {
+        name: string;
+        state: { value: string };
+        handleBlur: () => void;
+        handleChange: (v: string) => void;
+      }) => (
         <TextareaInput
           id={field.name}
           name={field.name}

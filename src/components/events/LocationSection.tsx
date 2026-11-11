@@ -55,8 +55,17 @@ export function LocationSection({
   const t = getEventText(lang);
 
   return (
-    <section id="section-location" style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
-      <FieldGroup style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(240px,1fr))", gap: "1.25rem" }}>
+    <section
+      id="section-location"
+      style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}
+    >
+      <FieldGroup
+        style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fit,minmax(240px,1fr))",
+          gap: "1.25rem",
+        }}
+      >
         <Box position="relative">
           <TextInput
             id="location_search"
@@ -83,7 +92,9 @@ export function LocationSection({
               {locationSuggestions
                 .filter((item) => {
                   const label = lang === "fi" ? item.label_fi : item.label_en;
-                  return label.toLowerCase().includes(locationSearchInput.toLowerCase());
+                  return label
+                    .toLowerCase()
+                    .includes(locationSearchInput.toLowerCase());
                 })
                 .map((item) => {
                   const label = lang === "fi" ? item.label_fi : item.label_en;
@@ -97,8 +108,14 @@ export function LocationSection({
                         form.setFieldValue("location_fi", item.label_fi);
                         form.setFieldValue("location_en", item.label_en);
                         if (item.latitude !== null && item.longitude !== null) {
-                          form.setFieldValue("latitude", formatCoordinate(item.latitude));
-                          form.setFieldValue("longitude", formatCoordinate(item.longitude));
+                          form.setFieldValue(
+                            "latitude",
+                            formatCoordinate(item.latitude),
+                          );
+                          form.setFieldValue(
+                            "longitude",
+                            formatCoordinate(item.longitude),
+                          );
                         }
                       }}
                     >
@@ -111,18 +128,50 @@ export function LocationSection({
         </Box>
       </FieldGroup>
 
-      <FieldGroup style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(240px,1fr))", gap: "1.25rem" }}>
+      <FieldGroup
+        style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fit,minmax(240px,1fr))",
+          gap: "1.25rem",
+        }}
+      >
         <FieldInput form={form} name="location_fi" label={t.locationFi} />
         <FieldInput form={form} name="location_en" label={t.locationEn} />
       </FieldGroup>
 
       <div style={{ display: "flex", flexDirection: "column", gap: 0 }}>
-        <h3 style={{ fontSize: "0.875rem", fontWeight: 600, color: "#0f172a", margin: 0, marginBottom: "0.75rem" }}>
+        <h3
+          style={{
+            fontSize: "0.875rem",
+            fontWeight: 600,
+            color: "#0f172a",
+            margin: 0,
+            marginBottom: "0.75rem",
+          }}
+        >
           {t.mapLocationTitle}
         </h3>
-        <p style={{ fontSize: "0.875rem", color: "#475569", margin: 0, marginBottom: "0.75rem" }}>{t.mapLocationHint}</p>
+        <p
+          style={{
+            fontSize: "0.875rem",
+            color: "#475569",
+            margin: 0,
+            marginBottom: "0.75rem",
+          }}
+        >
+          {t.mapLocationHint}
+        </p>
         <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
-          <div style={{ overflow: "hidden", borderRadius: "6px", border: "1px solid", borderColor: "border", width: "80%", marginRight: "auto" }}>
+          <div
+            style={{
+              overflow: "hidden",
+              borderRadius: "6px",
+              border: "1px solid",
+              borderColor: "border",
+              width: "80%",
+              marginRight: "auto",
+            }}
+          >
             <LeafletLocationMap
               latitude={mapLatitude}
               longitude={mapLongitude}
@@ -133,9 +182,24 @@ export function LocationSection({
               zoom={13}
             />
           </div>
-          <form.Subscribe selector={(state: { values: { latitude: string; longitude: string } }) => [state.values.latitude, state.values.longitude]}>
+          <form.Subscribe
+            selector={(state: {
+              values: { latitude: string; longitude: string };
+            }) => [state.values.latitude, state.values.longitude]}
+          >
             {([latVal, lonVal]: [string, string]) => (
-              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "1rem", padding: "0.25rem 0.5rem", background: "#f8fafc", borderRadius: "6px", fontSize: "0.875rem" }}>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  gap: "1rem",
+                  padding: "0.25rem 0.5rem",
+                  background: "#f8fafc",
+                  borderRadius: "6px",
+                  fontSize: "0.875rem",
+                }}
+              >
                 <div style={{ display: "flex", gap: "1rem" }}>
                   <Text fontSize="sm" color="gray.700" m={0}>
                     <strong>{t.latitude}:</strong> {latVal || "-"}

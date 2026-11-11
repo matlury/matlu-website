@@ -32,7 +32,14 @@ export function AsideNavigation({
       css={{ "@media (min-width: 1280px)": { display: "block" } }}
     >
       <Box padding="0.25rem">
-        <Text marginBottom="1rem" fontSize="12px" fontWeight="700" textTransform="uppercase" letterSpacing="0.15em" color="muted">
+        <Text
+          marginBottom="1rem"
+          fontSize="12px"
+          fontWeight="700"
+          textTransform="uppercase"
+          letterSpacing="0.15em"
+          color="muted"
+        >
           {navigationLabel}
         </Text>
         <Box as="nav" display="flex" flexDirection="column" gap="0.25rem">

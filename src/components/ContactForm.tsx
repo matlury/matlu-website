@@ -30,17 +30,34 @@ export const ContactForm: React.FC<ContactFormProps> = ({ lang }) => {
 
   return (
     <Box as="section" maxWidth="800px" margin="1rem 0">
-      <Heading as="h1" fontSize="var(--font-size-h1)" lineHeight="var(--line-height-h1)" marginBottom="0.5em" color="#0f172a">
+      <Heading
+        as="h1"
+        fontSize="var(--font-size-h1)"
+        lineHeight="var(--line-height-h1)"
+        marginBottom="0.5em"
+        color="#0f172a"
+      >
         {t.title}
       </Heading>
-      <Text fontSize="var(--font-size-body)" lineHeight="var(--line-height-body)" marginBottom="1.5rem" color="#475569" maxWidth="65ch">
+      <Text
+        fontSize="var(--font-size-body)"
+        lineHeight="var(--line-height-body)"
+        marginBottom="1.5rem"
+        color="#475569"
+        maxWidth="65ch"
+      >
         {t.description}
       </Text>
 
       <form
         action={API_ENDPOINTS.FEEDBACK_FORM_HANDLER}
         method="POST"
-        style={{ display: "flex", flexDirection: "column", gap: "1rem", maxWidth: "600px" }}
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          gap: "1rem",
+          maxWidth: "600px",
+        }}
       >
         <TextareaInput
           id="contactmsg"

@@ -8,18 +8,23 @@ export type FormFieldBaseProps = {
   hint?: string;
 };
 
-export type FormFieldProps = FormFieldBaseProps & 
-  (
-    | ({ as?: "input" } & InputProps)
-    | ({ as: "textarea" } & TextareaProps)
-  );
+export type FormFieldProps = FormFieldBaseProps &
+  (({ as?: "input" } & InputProps) | ({ as: "textarea" } & TextareaProps));
 
-export function FormField({ label, id, required, hint, ...props }: FormFieldProps) {
+export function FormField({
+  label,
+  id,
+  required,
+  hint,
+  ...props
+}: FormFieldProps) {
   const isTextarea = props.as === "textarea";
   const { as: _removed, ...rest } = props; // eslint-disable-line @typescript-eslint/no-unused-vars
 
   return (
-    <Field.Root style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+    <Field.Root
+      style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}
+    >
       <FieldLabel
         htmlFor={id}
         style={{ fontSize: "0.875rem", fontWeight: 600, color: "#0f172a" }}

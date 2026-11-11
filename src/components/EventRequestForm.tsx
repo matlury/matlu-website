@@ -84,8 +84,12 @@ export default function EventRequestForm({
 
   const [locationSearchInput, setLocationSearchInput] = useState("");
   const [titleFiBlurred, setTitleFiBlurred] = useState(false);
-  const [titleSuggestions] = useState<TitleSuggestion[]>(initialTitleSuggestions);
-  const [locationSuggestions] = useState<LocationSuggestion[]>(initialLocationSuggestions);
+  const [titleSuggestions] = useState<TitleSuggestion[]>(
+    initialTitleSuggestions,
+  );
+  const [locationSuggestions] = useState<LocationSuggestion[]>(
+    initialLocationSuggestions,
+  );
   const [confirmPopoverOpen, setConfirmPopoverOpen] = useState(false);
 
   const [status, setStatus] = useState<Status>("idle");
@@ -100,11 +104,23 @@ export default function EventRequestForm({
 
   const sectionItems = useMemo(
     () => [
-      { id: "section-title", label: lang === "fi" ? "Tapahtuman nimi" : "Event title" },
+      {
+        id: "section-title",
+        label: lang === "fi" ? "Tapahtuman nimi" : "Event title",
+      },
       { id: "section-time", label: lang === "fi" ? "Aikavali" : "Time range" },
-      { id: "section-organizer", label: lang === "fi" ? "Jarjestajataho" : "Organizer" },
-      { id: "section-location", label: lang === "fi" ? "Sijainti" : "Location" },
-      { id: "section-details", label: lang === "fi" ? "Lisatiedot" : "Details" },
+      {
+        id: "section-organizer",
+        label: lang === "fi" ? "Jarjestajataho" : "Organizer",
+      },
+      {
+        id: "section-location",
+        label: lang === "fi" ? "Sijainti" : "Location",
+      },
+      {
+        id: "section-details",
+        label: lang === "fi" ? "Lisatiedot" : "Details",
+      },
       { id: "section-submit", label: lang === "fi" ? "Laheta" : "Submit" },
     ],
     [lang],
@@ -171,7 +187,11 @@ export default function EventRequestForm({
         ? recaptchaRef.current?.getValue() || ""
         : "";
 
-      const recaptchaError = validateRecaptcha(!!RECAPTCHA_SITE_KEY, recaptchaToken, t.recaptchaRequired);
+      const recaptchaError = validateRecaptcha(
+        !!RECAPTCHA_SITE_KEY,
+        recaptchaToken,
+        t.recaptchaRequired,
+      );
       if (recaptchaError) {
         setStatus("error");
         setMessage(recaptchaError);
@@ -184,7 +204,11 @@ export default function EventRequestForm({
 
       const payload = {
         organizer_name: value.organizer_name.trim(),
-        price: isFree ? (lang === "fi" ? "Ilmainen" : "Free") : value.price.trim(),
+        price: isFree
+          ? lang === "fi"
+            ? "Ilmainen"
+            : "Free"
+          : value.price.trim(),
         start_date: startDate,
         end_date: endDate,
         event_link: value.event_link.trim(),
@@ -236,15 +260,25 @@ export default function EventRequestForm({
   });
 
   return (
-    <form.Subscribe selector={(state) => [state.values.latitude, state.values.longitude, state.values.title_fi]}>
+    <form.Subscribe
+      selector={(state) => [
+        state.values.latitude,
+        state.values.longitude,
+        state.values.title_fi,
+      ]}
+    >
       {([latitudeVal, longitudeVal, titleFiVal]) => {
         const debouncedLat = useDebouncedValue(latitudeVal);
         const debouncedLon = useDebouncedValue(longitudeVal);
 
         const latitudeValue = parseOptionalCoordinate(debouncedLat);
         const longitudeValue = parseOptionalCoordinate(debouncedLon);
-        const mapLatitude = Number.isFinite(latitudeValue) ? (latitudeValue as number) : undefined;
-        const mapLongitude = Number.isFinite(longitudeValue) ? (longitudeValue as number) : undefined;
+        const mapLatitude = Number.isFinite(latitudeValue)
+          ? (latitudeValue as number)
+          : undefined;
+        const mapLongitude = Number.isFinite(longitudeValue)
+          ? (longitudeValue as number)
+          : undefined;
         const titleDatalistId = `event-title-suggestions-${lang}`;
         const showEnglishTitle = titleFiBlurred || titleFiVal.trim().length > 0;
 
@@ -256,7 +290,9 @@ export default function EventRequestForm({
                 title={toastNotice.title}
                 description={toastNotice.description}
                 onClose={() => setToastNotice(null)}
-                closeAriaLabel={lang === "fi" ? "Sulje ilmoitus" : "Close notification"}
+                closeAriaLabel={
+                  lang === "fi" ? "Sulje ilmoitus" : "Close notification"
+                }
               />
             )}
 
@@ -287,13 +323,23 @@ export default function EventRequestForm({
                   padding: "1rem 1.5rem 0.375rem 1.5rem",
                 }}
               >
-                <DialogTitle style={{ fontSize: "1.875rem", fontWeight: 700, lineHeight: 1.1, color: "#0f172a", margin: 0 }}>
+                <DialogTitle
+                  style={{
+                    fontSize: "1.875rem",
+                    fontWeight: 700,
+                    lineHeight: 1.1,
+                    color: "#0f172a",
+                    margin: 0,
+                  }}
+                >
                   {t.title}
                 </DialogTitle>
                 <DialogClose asChild>
                   <button
                     type="button"
-                    aria-label={lang === "fi" ? "Sulje dialogi" : "Close dialog"}
+                    aria-label={
+                      lang === "fi" ? "Sulje dialogi" : "Close dialog"
+                    }
                     style={{
                       marginLeft: "auto",
                       display: "inline-flex",
@@ -306,7 +352,9 @@ export default function EventRequestForm({
                       cursor: "pointer",
                     }}
                   >
-                    <span style={{ fontSize: "1.875rem", lineHeight: 1 }}>&times;</span>
+                    <span style={{ fontSize: "1.875rem", lineHeight: 1 }}>
+                      &times;
+                    </span>
                   </button>
                 </DialogClose>
               </DialogHeader>
@@ -319,7 +367,13 @@ export default function EventRequestForm({
                   padding: "0 1.5rem 1.5rem",
                 }}
               >
-                <DialogDescription style={{ fontSize: "1rem", color: "#475569", margin: "0.75rem 0 0" }}>
+                <DialogDescription
+                  style={{
+                    fontSize: "1rem",
+                    color: "#475569",
+                    margin: "0.75rem 0 0",
+                  }}
+                >
                   {t.description}
                 </DialogDescription>
 
@@ -330,7 +384,11 @@ export default function EventRequestForm({
                     event.stopPropagation();
                     void form.handleSubmit();
                   }}
-                  style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: "1.5rem",
+                  }}
                 >
                   <TitleSection
                     form={form}
@@ -359,11 +417,20 @@ export default function EventRequestForm({
 
                   {RECAPTCHA_SITE_KEY && (
                     <div>
-                      <ReCAPTCHA ref={recaptchaRef} sitekey={RECAPTCHA_SITE_KEY} />
+                      <ReCAPTCHA
+                        ref={recaptchaRef}
+                        sitekey={RECAPTCHA_SITE_KEY}
+                      />
                     </div>
                   )}
 
-                  <p style={{ fontSize: "0.875rem", color: "#475569", margin: "0 0 1rem 0" }}>
+                  <p
+                    style={{
+                      fontSize: "0.875rem",
+                      color: "#475569",
+                      margin: "0 0 1rem 0",
+                    }}
+                  >
                     {t.adminReviewNote}
                   </p>
 

@@ -33,8 +33,10 @@ export async function generateMetadata({
   const seo = board.Seo;
   const defaultTitle = `Board ${board.year}`;
   const title = seo?.metaTitle?.[lang] || defaultTitle;
-  const description = seo?.metaDescription?.[lang] || `Board ${board.year} - Matlu ry`;
-  const canonical = seo?.canonicalUrl || (targetYear ? `/en/board/${targetYear}` : "/en/board");
+  const description =
+    seo?.metaDescription?.[lang] || `Board ${board.year} - Matlu ry`;
+  const canonical =
+    seo?.canonicalUrl || (targetYear ? `/en/board/${targetYear}` : "/en/board");
 
   const shareImage = seo?.shareImage?.url;
   const shareImageAlt = seo?.shareImage?.alternativeText || title;
@@ -96,7 +98,9 @@ export default async function BoardPage({
     fi: `/board/${currentYearPath}`,
     en: `/en/board/${currentYearPath}`,
   };
-  const otherBoardYears = boardYears.filter((boardYear) => boardYear !== board.year);
+  const otherBoardYears = boardYears.filter(
+    (boardYear) => boardYear !== board.year,
+  );
 
   return (
     <MainLayout lang="en" localizedLinks={localizedLinks}>
@@ -117,9 +121,7 @@ export default async function BoardPage({
               <div className="member-name">
                 <h4>{member.name}</h4>
               </div>
-              <div className="member-title">
-                {member.role.en}
-              </div>
+              <div className="member-title">{member.role.en}</div>
               {member.email !== null && (
                 <div className="member-email">
                   <a href={"mailto:" + member.email}>{member.email}</a>
@@ -141,9 +143,7 @@ export default async function BoardPage({
                 <div className="officer-name">
                   <h4>{officer.name}</h4>
                 </div>
-                <div className="officer-title">
-                  {officer.role.en}
-                </div>
+                <div className="officer-title">{officer.role.en}</div>
               </section>
             ))}
           </div>

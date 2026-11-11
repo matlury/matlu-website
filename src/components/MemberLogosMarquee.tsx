@@ -16,14 +16,18 @@ interface MemberLogosMarqueeProps {
 }
 
 function disableLinksInClones(container: HTMLElement) {
-  const clones = container.querySelectorAll('[data-clone=""] a, [aria-hidden="true"] a');
+  const clones = container.querySelectorAll(
+    '[data-clone=""] a, [aria-hidden="true"] a',
+  );
   clones.forEach((el) => {
     el.setAttribute("tabindex", "-1");
     el.setAttribute("aria-hidden", "true");
   });
 }
 
-export default function MemberLogosMarquee({ logos = [] }: MemberLogosMarqueeProps) {
+export default function MemberLogosMarquee({
+  logos = [],
+}: MemberLogosMarqueeProps) {
   const rootRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -84,7 +88,12 @@ export default function MemberLogosMarquee({ logos = [] }: MemberLogosMarqueePro
                   height="46"
                   loading="lazy"
                   decoding="async"
-                  style={{ width: "auto", height: "46px", maxWidth: "180px", objectFit: "contain" }}
+                  style={{
+                    width: "auto",
+                    height: "46px",
+                    maxWidth: "180px",
+                    objectFit: "contain",
+                  }}
                 />
               </a>
             </Marquee.Item>

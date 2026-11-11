@@ -130,8 +130,21 @@ const NavContent: React.FC<NavContentProps> = ({
             target="_blank"
             rel="noopener noreferrer"
           >
-            <span style={{ whiteSpace: "nowrap", display: "inline-flex", alignItems: "center" }}>
-              Matlu Klusteri <FaExternalLinkAlt style={{ marginLeft: 4, fontSize: "0.9em", verticalAlign: "middle" }} />
+            <span
+              style={{
+                whiteSpace: "nowrap",
+                display: "inline-flex",
+                alignItems: "center",
+              }}
+            >
+              Matlu Klusteri{" "}
+              <FaExternalLinkAlt
+                style={{
+                  marginLeft: 4,
+                  fontSize: "0.9em",
+                  verticalAlign: "middle",
+                }}
+              />
             </span>
           </a>
           <a
@@ -140,14 +153,24 @@ const NavContent: React.FC<NavContentProps> = ({
             target="_blank"
             rel="noopener noreferrer"
           >
-            <span style={{ whiteSpace: "nowrap", display: "inline-flex", alignItems: "center" }}>
-              Kumpulan Potentiaali <FaExternalLinkAlt style={{ marginLeft: 4, fontSize: "0.9em", verticalAlign: "middle" }} />
+            <span
+              style={{
+                whiteSpace: "nowrap",
+                display: "inline-flex",
+                alignItems: "center",
+              }}
+            >
+              Kumpulan Potentiaali{" "}
+              <FaExternalLinkAlt
+                style={{
+                  marginLeft: 4,
+                  fontSize: "0.9em",
+                  verticalAlign: "middle",
+                }}
+              />
             </span>
           </a>
-          <Link
-            href={switchHref}
-            className={styles.navLink}
-          >
+          <Link href={switchHref} className={styles.navLink}>
             {labels.switchLang}
           </Link>
         </div>
@@ -162,7 +185,10 @@ const NavContent: React.FC<NavContentProps> = ({
               <i className={open ? "fas fa-times" : "fas fa-bars"}></i>
             </button>
           </DrawerTrigger>
-          <DrawerContent backgroundColor="var(--main-color)" maxWidth={{ base: "75vw", md: "400px" }}>
+          <DrawerContent
+            backgroundColor="var(--main-color)"
+            maxWidth={{ base: "75vw", md: "400px" }}
+          >
             <DrawerHeader
               borderBottomWidth="1px"
               borderColor="rgba(255,255,255,0.1)"
@@ -196,8 +222,21 @@ const NavContent: React.FC<NavContentProps> = ({
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    <span style={{ whiteSpace: "nowrap", display: "inline-flex", alignItems: "center" }}>
-                      Matlu Klusteri <FaExternalLinkAlt style={{ marginLeft: 4, fontSize: "0.9em", verticalAlign: "middle" }} />
+                    <span
+                      style={{
+                        whiteSpace: "nowrap",
+                        display: "inline-flex",
+                        alignItems: "center",
+                      }}
+                    >
+                      Matlu Klusteri{" "}
+                      <FaExternalLinkAlt
+                        style={{
+                          marginLeft: 4,
+                          fontSize: "0.9em",
+                          verticalAlign: "middle",
+                        }}
+                      />
                     </span>
                   </a>
                   <a
@@ -206,14 +245,24 @@ const NavContent: React.FC<NavContentProps> = ({
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    <span style={{ whiteSpace: "nowrap", display: "inline-flex", alignItems: "center" }}>
-                      Kumpulan Potentiaali <FaExternalLinkAlt style={{ marginLeft: 4, fontSize: "0.9em", verticalAlign: "middle" }} />
+                    <span
+                      style={{
+                        whiteSpace: "nowrap",
+                        display: "inline-flex",
+                        alignItems: "center",
+                      }}
+                    >
+                      Kumpulan Potentiaali{" "}
+                      <FaExternalLinkAlt
+                        style={{
+                          marginLeft: 4,
+                          fontSize: "0.9em",
+                          verticalAlign: "middle",
+                        }}
+                      />
                     </span>
                   </a>
-                  <Link
-                    href={switchHref}
-                    className={styles.navLink}
-                  >
+                  <Link href={switchHref} className={styles.navLink}>
                     {labels.switchLang}
                   </Link>
                 </div>
