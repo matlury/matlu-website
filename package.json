@@ -69,7 +69,7 @@
     "sass-embedded": "^1.97.3",
     "sharp": "^0.34.5",
     "typed-scss-modules": "^8.1.1",
-    "typescript": "^5.9.3",
+    "typescript": "^7.0.2",
     "vite-tsconfig-paths": "^6.1.1",
     "vitest": "^4.1.5",
     "vitest-axe": "^0.1.0"
