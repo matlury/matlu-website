@@ -26,18 +26,17 @@
       flex-direction: column;
     }
   
-    >article,
-    main>article {
-      flex: 1;
-    }
-
-
   article {
     padding: 20px;
     a {
       color: vars.$main-color;
     }
   }
+
+    >article,
+    main>article {
+      flex: 1;
+    }
 
   @include mixins.mobile {
     width: 100%;

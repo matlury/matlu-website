@@ -178,7 +178,8 @@ article {
       display: block;
       margin: 0 auto;
       max-width: 100%;
-      height: auto !important; // Prevents squishing by prioritizing aspect ratio
+      /* biome-ignore lint/complexity/noImportantStyles: overrides the img width/height attributes to keep aspect ratio */
+      height: auto !important;
       max-height: 100px;
       transition: transform 0.2s ease-in-out;
 
