@@ -1,6 +1,23 @@
 @use "../vars";
 @use "../mixins";
 
+.navMenu {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center; // Center main links on desktop
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.1); // Slightly darker for the main link area
+
+  @include mixins.mobile {
+    display: none; // Hidden by default on mobile
+    flex-direction: column;
+    width: 100%;
+    background-color: transparent; // Remove the faded box background on mobile
+    padding-bottom: 16px;
+    justify-content: flex-start;
+  }
+}
+
 .nav {
   background-color: vars.$main-color;
   margin-left: auto;
@@ -69,7 +86,29 @@
   &.navLinkActive {
     border-bottom: none;
     font-weight: normal;
-    background-color: transparent !important; // Prevent the highlight box on the logo
+    /* biome-ignore lint/complexity/noImportantStyles: keeps the active-link highlight off the logo */
+    background-color: transparent !important;
+  }
+}
+
+a.navLink {
+  margin: 8px 12px;
+  color: white;
+  min-height: 16px;
+  display: inline-block;
+  text-decoration: none;
+  transition: opacity 0.2s;
+
+  &:hover {
+    opacity: 0.8;
+  }
+
+  @include mixins.mobile {
+    margin: 8px 16px;
+    display: block;
+    width: calc(100% - 32px);
+    /* biome-ignore lint/complexity/noImportantStyles: overrides .navUtilities a.navLink opacity on mobile */
+    opacity: 1 !important;
   }
 }
 
@@ -110,23 +149,6 @@
   }
 }
 
-.navMenu {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center; // Center main links on desktop
-  width: 100%;
-  background-color: rgba(0, 0, 0, 0.1); // Slightly darker for the main link area
-
-  @include mixins.mobile {
-    display: none; // Hidden by default on mobile
-    flex-direction: column;
-    width: 100%;
-    background-color: transparent; // Remove the faded box background on mobile
-    padding-bottom: 16px;
-    justify-content: flex-start;
-  }
-}
-
 .navMenuMobile {
   display: flex;
   flex-direction: column;
@@ -155,26 +177,6 @@
   @include mixins.mobile {
     font-size: 0.95rem;
     margin-left: 8px;
-  }
-}
-
-a.navLink {
-  margin: 8px 12px;
-  color: white;
-  min-height: 16px;
-  display: inline-block;
-  text-decoration: none;
-  transition: opacity 0.2s;
-
-  &:hover {
-    opacity: 0.8;
-  }
-
-  @include mixins.mobile {
-    margin: 8px 16px;
-    display: block;
-    width: calc(100% - 32px);
-    opacity: 1 !important;
   }
 }
 
