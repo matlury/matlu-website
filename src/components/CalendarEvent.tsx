@@ -18,7 +18,7 @@ import {
   Link,
   Badge,
 } from "@chakra-ui/react";
-import { FaCalendarAlt, FaClock, FaMapMarkerAlt, FaUsers } from "react-icons/fa";
+import { FaCalendarAlt, FaMapMarkerAlt, FaUsers } from "react-icons/fa";
 import { EventDetailedCard } from "./EventDetailedCard";
 
 interface EventProps {

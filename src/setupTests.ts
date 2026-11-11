@@ -40,7 +40,7 @@ window.Element.prototype.scrollTo = () => { };
 window.Element.prototype.scrollIntoView = () => { };
 
 // requestAnimationFrame mock
-window.requestAnimationFrame = (cb: FrameRequestCallback) => setTimeout(cb, 1000 / 60);
+window.requestAnimationFrame = (cb) => window.setTimeout(() => cb(performance.now()), 1000 / 60);
 
 // URL object mock
 window.URL.createObjectURL = () => "https://i.pravatar.cc/300";
