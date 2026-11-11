@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import ReCAPTCHA from "react-google-recaptcha";
 import { Box, Heading, Text } from "@chakra-ui/react";
 import { Button } from "./ui/button";
@@ -17,7 +17,6 @@ export const ContactForm: React.FC<ContactFormProps> = ({ lang }) => {
   const t = CONTACT_TEXT[lang];
   // No site key means no captcha to solve, so start verified and enabled.
   const [verified, setVerified] = useState(!RECAPTCHA_SITE_KEY);
-  const recaptchaRef = useRef<ReCAPTCHA>(null);
 
   return (
     <Box as="section" maxWidth="800px" margin="1rem 0">
@@ -62,7 +61,6 @@ export const ContactForm: React.FC<ContactFormProps> = ({ lang }) => {
         {RECAPTCHA_SITE_KEY && (
           <Box margin="0.25rem 0">
             <ReCAPTCHA
-              ref={recaptchaRef}
               sitekey={RECAPTCHA_SITE_KEY}
               onChange={(value) => {
                 setVerified(!!value);
