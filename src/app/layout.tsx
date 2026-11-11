@@ -6,7 +6,7 @@ import { Open_Sans, Geist } from "next/font/google";
 import ExternalStyles from "@/components/ExternalStyles";
 import ChakraProvider from "@/components/ChakraProvider";
 
-const geist = Geist({ subsets: ['latin'], variable: '--font-sans' });
+const geist = Geist({ subsets: ["latin"], variable: "--font-sans" });
 
 const openSans = Open_Sans({
   subsets: ["latin"],
@@ -25,7 +25,8 @@ export const metadata: Metadata = {
     default: "Matlu ry | Matemaattis-luonnontieteelliset opiskelijajärjestöt",
     template: "%s | Matlu ry",
   },
-  description: "Matlu ry on Helsingin yliopiston matemaattis-luonnontieteellisen tiedekunnan opiskelijajärjestöjen edunvalvonta- ja yhteistyöjärjestö.",
+  description:
+    "Matlu ry on Helsingin yliopiston matemaattis-luonnontieteellisen tiedekunnan opiskelijajärjestöjen edunvalvonta- ja yhteistyöjärjestö.",
   applicationName: "Matlu ry",
   authors: [{ name: "Matlu ry", url: "https://www.matlu.fi" }],
   generator: "Next.js",
@@ -39,7 +40,7 @@ export const metadata: Metadata = {
     "luonnontieteelliset",
     "edunvalvonta",
     "ainejärjestöt",
-    "Onkalo"
+    "Onkalo",
   ],
   category: "organization",
   alternates: {
@@ -49,7 +50,7 @@ export const metadata: Metadata = {
     icon: [
       { url: "/logos/favicon-96x96.png", sizes: "96x96", type: "image/png" },
       { url: "/logos/favicon.svg", type: "image/svg+xml" },
-      { url: "/logos/favicon.ico" }
+      { url: "/logos/favicon.ico" },
     ],
     shortcut: "/logos/favicon.ico",
     apple: { url: "/logos/apple-touch-icon.png", sizes: "180x180" },

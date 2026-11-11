@@ -1,7 +1,12 @@
 "use client";
 
 import React from "react";
-import { ChakraProvider as Provider, createSystem, defaultConfig, defineConfig } from "@chakra-ui/react";
+import {
+  ChakraProvider as Provider,
+  createSystem,
+  defaultConfig,
+  defineConfig,
+} from "@chakra-ui/react";
 
 const config = defineConfig({
   theme: {
@@ -23,7 +28,10 @@ const config = defineConfig({
       },
       shadows: {
         dialog: { value: "0 25px 50px -12px rgba(0,0,0,0.25)" },
-        popover: { value: "0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04)" },
+        popover: {
+          value:
+            "0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04)",
+        },
       },
     },
     semanticTokens: {

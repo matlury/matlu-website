@@ -2,7 +2,10 @@
 
 import React from "react";
 import "leaflet/dist/leaflet.css";
-import L, { type Map as LeafletMap, type Marker as LeafletMarker } from "leaflet";
+import L, {
+  type Map as LeafletMap,
+  type Marker as LeafletMarker,
+} from "leaflet";
 
 interface LeafletLocationMapProps {
   latitude?: number;
@@ -40,7 +43,8 @@ export default function LeafletLocationMap({
     }).setView(DEFAULT_CENTER, zoom);
 
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      attribution:
+        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
     }).addTo(map);
 
     if (onSelect) {
@@ -60,7 +64,9 @@ export default function LeafletLocationMap({
 
       markerRef.current = null;
 
-      const containerWithId = container as HTMLElement & { _leaflet_id?: string };
+      const containerWithId = container as HTMLElement & {
+        _leaflet_id?: string;
+      };
       if (container && containerWithId._leaflet_id) {
         delete containerWithId._leaflet_id;
       }
@@ -90,10 +96,12 @@ export default function LeafletLocationMap({
     if (hasCoordinates) {
       if (!markerRef.current) {
         const blueIcon = new L.Icon({
-          iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
+          iconUrl:
+            "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png",
           iconSize: [25, 41],
           iconAnchor: [12, 41],
-          shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
+          shadowUrl:
+            "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
           shadowSize: [41, 41],
         });
         markerRef.current = L.marker(center, { icon: blueIcon }).addTo(map);
@@ -109,5 +117,7 @@ export default function LeafletLocationMap({
     }
   }, [center, hasCoordinates, zoom]);
 
-  return <div ref={containerRef} style={{ height: `${height}px`, width: "100%" }} />;
+  return (
+    <div ref={containerRef} style={{ height: `${height}px`, width: "100%" }} />
+  );
 }

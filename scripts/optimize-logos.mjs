@@ -1,14 +1,17 @@
-import fs from 'fs/promises';
-import path from 'path';
-import sharp from 'sharp';
-import dotenv from 'dotenv';
+import fs from "fs/promises";
+import path from "path";
+import sharp from "sharp";
+import dotenv from "dotenv";
 
 // Load environment variables from .env file
 dotenv.config();
 
-const CMS_URL = (process.env.API_URL || 'https://cms.matlu.fi').replace(/\/$/, '');
-const OUTPUT_DIR = './public/logos/members';
-const MANIFEST_PATH = './public/logos/members/manifest.json';
+const CMS_URL = (process.env.API_URL || "https://cms.matlu.fi").replace(
+  /\/$/,
+  "",
+);
+const OUTPUT_DIR = "./public/logos/members";
+const MANIFEST_PATH = "./public/logos/members/manifest.json";
 
 // Max dimensions for marquee logos
 const MAX_WIDTH = 180;
@@ -34,8 +37,8 @@ const MEMBERS_QUERY = `
 
 async function fetchMembers() {
   const response = await fetch(`${CMS_URL}/graphql`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ query: MEMBERS_QUERY }),
   });
 
@@ -50,17 +53,19 @@ async function fetchMembers() {
 function slugify(name) {
   return name
     .toLowerCase()
-    .replace(/[^a-z0-9äöå]+/g, '-')
-    .replace(/^-+|-+$/g, '')
+    .replace(/[^a-z0-9äöå]+/g, "-")
+    .replace(/^-+|-+$/g, "")
     .substring(0, 50);
 }
 
 async function downloadAndOptimizeLogo(logoUrl, outputName) {
-  const fullUrl = logoUrl.startsWith('http') ? logoUrl : `${CMS_URL}${logoUrl}`;
+  const fullUrl = logoUrl.startsWith("http") ? logoUrl : `${CMS_URL}${logoUrl}`;
 
   const response = await fetch(fullUrl);
   if (!response.ok) {
-    console.warn(`  [Skip] Failed to download ${fullUrl}: ${response.statusText}`);
+    console.warn(
+      `  [Skip] Failed to download ${fullUrl}: ${response.statusText}`,
+    );
     return null;
   }
 
@@ -69,7 +74,7 @@ async function downloadAndOptimizeLogo(logoUrl, outputName) {
   // Resize to fit within MAX_WIDTH x MAX_HEIGHT, maintaining aspect ratio
   const optimized = await sharp(buffer)
     .resize(MAX_WIDTH, MAX_HEIGHT, {
-      fit: 'inside',
+      fit: "inside",
       withoutEnlargement: true,
     })
     .webp({ quality: 85, effort: 6 })
@@ -91,7 +96,7 @@ async function downloadAndOptimizeLogo(logoUrl, outputName) {
 }
 
 async function main() {
-  console.log('[Logos] Fetching member data from CMS...');
+  console.log("[Logos] Fetching member data from CMS...");
 
   await fs.mkdir(OUTPUT_DIR, { recursive: true });
 
@@ -114,11 +119,11 @@ async function main() {
         name: member.name,
         src: result.outputPath,
         alt: member.logo.alternativeText || member.name,
-        href: member.url || '#',
+        href: member.url || "#",
       };
       totalSaved += result.originalSize - result.optimizedSize;
       console.log(
-        `  [OK] ${slug}.webp (${(result.originalSize / 1024).toFixed(1)}KB → ${(result.optimizedSize / 1024).toFixed(1)}KB, saved ${result.savings}%)`
+        `  [OK] ${slug}.webp (${(result.originalSize / 1024).toFixed(1)}KB → ${(result.optimizedSize / 1024).toFixed(1)}KB, saved ${result.savings}%)`,
       );
     }
   }
@@ -131,6 +136,6 @@ async function main() {
 }
 
 main().catch((err) => {
-  console.error('[Logos] Error:', err);
+  console.error("[Logos] Error:", err);
   process.exit(1);
 });

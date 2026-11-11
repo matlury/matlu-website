@@ -35,8 +35,10 @@ export async function generateMetadata({
   const seo = board.Seo;
   const defaultTitle = `Hallitus ${board.year}`;
   const title = seo?.metaTitle?.[lang] || defaultTitle;
-  const description = seo?.metaDescription?.[lang] || `Hallitus ${board.year} - Matlu ry`;
-  const canonical = seo?.canonicalUrl || (targetYear ? `/board/${targetYear}` : "/board");
+  const description =
+    seo?.metaDescription?.[lang] || `Hallitus ${board.year} - Matlu ry`;
+  const canonical =
+    seo?.canonicalUrl || (targetYear ? `/board/${targetYear}` : "/board");
 
   const shareImage = seo?.shareImage?.url;
   const shareImageAlt = seo?.shareImage?.alternativeText || title;
@@ -98,7 +100,9 @@ export default async function BoardPage({
     fi: `/board/${currentYearPath}`,
     en: `/en/board/${currentYearPath}`,
   };
-  const otherBoardYears = boardYears.filter((boardYear) => boardYear !== board.year);
+  const otherBoardYears = boardYears.filter(
+    (boardYear) => boardYear !== board.year,
+  );
 
   return (
     <MainLayout lang="fi" localizedLinks={localizedLinks}>

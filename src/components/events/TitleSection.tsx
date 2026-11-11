@@ -32,7 +32,13 @@ export function TitleSection({
 
   return (
     <section id="section-title">
-      <FieldGroup style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(240px,1fr))", gap: "1.25rem" }}>
+      <FieldGroup
+        style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fit,minmax(240px,1fr))",
+          gap: "1.25rem",
+        }}
+      >
         <FieldInput
           form={form}
           name="title_fi"

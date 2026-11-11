@@ -4,10 +4,7 @@ import React from "react";
 import { format, parseISO } from "date-fns";
 import { fi, enUS } from "date-fns/locale";
 import { Language } from "../utils";
-import {
-  Dialog,
-  DialogTrigger,
-} from "@/components/ui/dialog";
+import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import {
   Card,
   Box,
@@ -53,14 +50,13 @@ const CalendarEvent: React.FC<EventProps> = (props) => {
   const parsedDate = start_date ? parseISO(start_date) : null;
   const dateStr = parsedDate
     ? format(parsedDate, "do MMMM yyyy", {
-      locale: language === "fi" ? fi : enUS,
-    })
+        locale: language === "fi" ? fi : enUS,
+      })
     : "";
   const timeStr = parsedDate ? format(parsedDate, "HH:mm") : "";
 
-  const statusLabel = status === "active"
-    ? (language === "fi" ? "Käynnissä" : "Active")
-    : null;
+  const statusLabel =
+    status === "active" ? (language === "fi" ? "Käynnissä" : "Active") : null;
 
   return (
     <Dialog>
@@ -69,7 +65,12 @@ const CalendarEvent: React.FC<EventProps> = (props) => {
           variant="elevated"
           overflow="hidden"
           transition="all 0.2s"
-          _hover={{ transform: "translateY(-4px)", shadow: "sm", borderColor: "blue.500", cursor: "pointer" }}
+          _hover={{
+            transform: "translateY(-4px)",
+            shadow: "sm",
+            borderColor: "blue.500",
+            cursor: "pointer",
+          }}
           borderLeftWidth="4px"
           borderLeftColor="blue.600"
           height="100%"
@@ -112,8 +113,14 @@ const CalendarEvent: React.FC<EventProps> = (props) => {
                     <Box color="blue.600">
                       <FaCalendarAlt size={14} />
                     </Box>
-                    <Text fontSize="xs" color="gray.600" fontWeight="medium" m={0}>
-                      {dateStr}{timeStr ? ` ${timeStr}` : ""}
+                    <Text
+                      fontSize="xs"
+                      color="gray.600"
+                      fontWeight="medium"
+                      m={0}
+                    >
+                      {dateStr}
+                      {timeStr ? ` ${timeStr}` : ""}
                     </Text>
                   </HStack>
                 )}
@@ -137,9 +144,15 @@ const CalendarEvent: React.FC<EventProps> = (props) => {
                         {location[language]}
                       </Link>
                     ) : (
-<Text fontSize="xs" color="gray.600" fontWeight="medium" m={0} textAlign="start">
-                      {location[language]}
-                    </Text>
+                      <Text
+                        fontSize="xs"
+                        color="gray.600"
+                        fontWeight="medium"
+                        m={0}
+                        textAlign="start"
+                      >
+                        {location[language]}
+                      </Text>
                     )}
                   </HStack>
                 )}
@@ -148,7 +161,13 @@ const CalendarEvent: React.FC<EventProps> = (props) => {
                     <Box color="blue.600" mt={0.5}>
                       <FaUsers size={14} />
                     </Box>
-                    <Text fontSize="xs" color="gray.600" fontWeight="medium" m={0} textAlign="start">
+                    <Text
+                      fontSize="xs"
+                      color="gray.600"
+                      fontWeight="medium"
+                      m={0}
+                      textAlign="start"
+                    >
                       {organizer_name}
                     </Text>
                   </HStack>

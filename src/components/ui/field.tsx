@@ -14,7 +14,12 @@ function FieldLegend({
   ...props
 }: React.ComponentProps<"legend"> & { variant?: "legend" | "label" }) {
   return (
-    <legend data-slot="field-legend" data-variant={variant} className={className} {...props} />
+    <legend
+      data-slot="field-legend"
+      data-variant={variant}
+      className={className}
+      {...props}
+    />
   );
 }
 
@@ -23,14 +28,19 @@ function FieldGroup({ className, ...props }: React.ComponentProps<"div">) {
 }
 
 function Field({ className, ...props }: React.ComponentProps<"div">) {
-  return <div role="group" data-slot="field" className={className} {...props} />;
+  return (
+    <div role="group" data-slot="field" className={className} {...props} />
+  );
 }
 
 function FieldContent({ className, ...props }: React.ComponentProps<"div">) {
   return <div data-slot="field-content" className={className} {...props} />;
 }
 
-function FieldLabel({ className, ...props }: React.ComponentProps<typeof Label>) {
+function FieldLabel({
+  className,
+  ...props
+}: React.ComponentProps<typeof Label>) {
   return <Label data-slot="field-label" className={className} {...props} />;
 }
 
@@ -50,7 +60,12 @@ function FieldSeparator({
   children?: React.ReactNode;
 }) {
   return (
-    <div data-slot="field-separator" data-content={!!children} className={className} {...props}>
+    <div
+      data-slot="field-separator"
+      data-content={!!children}
+      className={className}
+      {...props}
+    >
       <Separator />
       {children}
     </div>
@@ -85,7 +100,8 @@ function FieldError({
     return (
       <ul>
         {uniqueErrors.map(
-          (error, index) => error?.message && <li key={index}>{error.message}</li>,
+          (error, index) =>
+            error?.message && <li key={index}>{error.message}</li>,
         )}
       </ul>
     );

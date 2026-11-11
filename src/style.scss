@@ -132,14 +132,17 @@ article {
     background: #ffffff;
     border-radius: 8px;
     overflow: hidden;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+    box-shadow:
+      0 4px 6px -1px rgba(0, 0, 0, 0.05),
+      0 2px 4px -1px rgba(0, 0, 0, 0.03);
 
     thead {
       background-color: #f8fafc;
       border-bottom: 2px solid vars.$main-color;
     }
 
-    th, td {
+    th,
+    td {
       padding: 1.25rem;
       border-bottom: 1px solid #edf2f7;
       vertical-align: middle;
@@ -160,10 +163,14 @@ article {
       line-height: 1.6;
       hyphens: auto;
       word-break: break-word;
-      
+
       // Allow alignment override if needed
-      &[align="left"] { text-align: left; }
-      &[align="right"] { text-align: right; }
+      &[align="left"] {
+        text-align: left;
+      }
+      &[align="right"] {
+        text-align: right;
+      }
     }
 
     tr:last-child td {
@@ -193,8 +200,9 @@ article {
       width: 100%;
       overflow-x: auto;
       -webkit-overflow-scrolling: touch;
-      
-      th, td {
+
+      th,
+      td {
         padding: 12px;
       }
 

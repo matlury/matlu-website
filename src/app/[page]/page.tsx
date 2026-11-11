@@ -43,7 +43,9 @@ export async function generateMetadata({
   const seo = page.Seo;
   const title = seo?.metaTitle?.[lang] || page.Title?.[lang] || "";
   const description =
-    seo?.metaDescription?.[lang] || page.Description?.[lang] || DEFAULT_DESCRIPTION_FI;
+    seo?.metaDescription?.[lang] ||
+    page.Description?.[lang] ||
+    DEFAULT_DESCRIPTION_FI;
   const canonical = seo?.canonicalUrl || `/${pageSlug}`;
 
   const shareImage = seo?.shareImage?.url;

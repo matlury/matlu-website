@@ -2,7 +2,10 @@ import { gql } from "@apollo/client";
 
 export const BOARD_QUERY = gql`
   query BoardQuery($year: Int!) {
-    boards(filters: { hidden: { eq: false }, year: { eq: $year } }, sort: "year:desc") {
+    boards(
+      filters: { hidden: { eq: false }, year: { eq: $year } }
+      sort: "year:desc"
+    ) {
       documentId
       year
       hidden

@@ -10,9 +10,11 @@ interface DialogContextValue {
   setOpen: (open: boolean) => void;
 }
 
-type DialogButtonProps = React.PropsWithChildren<{
-  asChild?: boolean;
-} & React.ButtonHTMLAttributes<HTMLButtonElement>>;
+type DialogButtonProps = React.PropsWithChildren<
+  {
+    asChild?: boolean;
+  } & React.ButtonHTMLAttributes<HTMLButtonElement>
+>;
 
 const DialogContext = React.createContext<DialogContextValue | null>(null);
 
@@ -38,7 +40,10 @@ function Dialog({
   open,
   onOpenChange,
   children,
-}: React.PropsWithChildren<{ open?: boolean; onOpenChange?: (open: boolean) => void }>) {
+}: React.PropsWithChildren<{
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
+}>) {
   const [internalOpen, setInternalOpen] = React.useState(false);
   const isControlled = typeof open === "boolean";
   const resolvedOpen = isControlled ? open : internalOpen;
@@ -60,11 +65,7 @@ function Dialog({
   );
 }
 
-function DialogTrigger({
-  asChild,
-  children,
-  ...props
-}: DialogButtonProps) {
+function DialogTrigger({ asChild, children, ...props }: DialogButtonProps) {
   const { setOpen } = useDialogContext();
 
   if (asChild && React.isValidElement(children)) {
@@ -78,17 +79,17 @@ function DialogTrigger({
   }
 
   return (
-    <button type="button" {...props} onClick={composeHandlers(props.onClick, () => setOpen(true))}>
+    <button
+      type="button"
+      {...props}
+      onClick={composeHandlers(props.onClick, () => setOpen(true))}
+    >
       {children}
     </button>
   );
 }
 
-function DialogClose({
-  asChild,
-  children,
-  ...props
-}: DialogButtonProps) {
+function DialogClose({ asChild, children, ...props }: DialogButtonProps) {
   const { setOpen } = useDialogContext();
 
   if (asChild && React.isValidElement(children)) {
@@ -102,7 +103,11 @@ function DialogClose({
   }
 
   return (
-    <button type="button" {...props} onClick={composeHandlers(props.onClick, () => setOpen(false))}>
+    <button
+      type="button"
+      {...props}
+      onClick={composeHandlers(props.onClick, () => setOpen(false))}
+    >
       {children}
     </button>
   );
@@ -123,7 +128,10 @@ function DialogPortal({ children }: React.PropsWithChildren) {
   return createPortal(children, document.body);
 }
 
-function DialogOverlay({ className, ...props }: React.ComponentProps<typeof Box>) {
+function DialogOverlay({
+  className,
+  ...props
+}: React.ComponentProps<typeof Box>) {
   const { open } = useDialogContext();
   if (!open) {
     return null;
@@ -207,7 +215,13 @@ function DialogContent({
           {children}
           {showCloseButton && (
             <DialogClose asChild>
-              <CloseButton aria-label="Close" position="absolute" top={4} right={4} size="lg" />
+              <CloseButton
+                aria-label="Close"
+                position="absolute"
+                top={4}
+                right={4}
+                size="lg"
+              />
             </DialogClose>
           )}
         </Box>
@@ -216,7 +230,10 @@ function DialogContent({
   );
 }
 
-function DialogHeader({ className, ...props }: React.ComponentProps<typeof Box>) {
+function DialogHeader({
+  className,
+  ...props
+}: React.ComponentProps<typeof Box>) {
   return <Box data-slot="dialog-header" className={className} {...props} />;
 }
 
@@ -240,7 +257,10 @@ function DialogFooter({
   );
 }
 
-function DialogTitle({ className, ...props }: React.ComponentProps<typeof Box>) {
+function DialogTitle({
+  className,
+  ...props
+}: React.ComponentProps<typeof Box>) {
   return (
     <Box
       as="h2"
@@ -254,7 +274,10 @@ function DialogTitle({ className, ...props }: React.ComponentProps<typeof Box>) 
   );
 }
 
-function DialogDescription({ className, ...props }: React.ComponentProps<typeof Box>) {
+function DialogDescription({
+  className,
+  ...props
+}: React.ComponentProps<typeof Box>) {
   return (
     <Box
       as="p"

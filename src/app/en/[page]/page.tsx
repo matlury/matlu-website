@@ -37,7 +37,9 @@ export async function generateMetadata({
   const seo = page.Seo;
   const title = seo?.metaTitle?.[lang] || page.Title?.[lang] || "";
   const description =
-    seo?.metaDescription?.[lang] || page.Description?.[lang] || DEFAULT_DESCRIPTION_EN;
+    seo?.metaDescription?.[lang] ||
+    page.Description?.[lang] ||
+    DEFAULT_DESCRIPTION_EN;
   const canonical = seo?.canonicalUrl || `/en/${pageSlug}`;
 
   const shareImage = seo?.shareImage?.url;
@@ -109,11 +111,7 @@ export default async function DynamicPage({
         />
       )}
       {isContactPage && <ContactForm lang={lang} />}
-      <ReactMarkdown
-        remarkPlugins={[remarkGfm]}
-      >
-        {body}
-      </ReactMarkdown>
+      <ReactMarkdown remarkPlugins={[remarkGfm]}>{body}</ReactMarkdown>
     </MainLayout>
   );
 }

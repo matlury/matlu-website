@@ -17,7 +17,14 @@ export function TimeSection({ form, lang }: TimeSectionProps) {
   return (
     <section id="section-time">
       <FieldGroup>
-        <div id="time-range" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
+        <div
+          id="time-range"
+          style={{
+            display: "grid",
+            gridTemplateColumns: "1fr 1fr",
+            gap: "1rem",
+          }}
+        >
           <FieldInput
             form={form}
             name="start_date"

@@ -11,7 +11,14 @@ interface LabelProps {
 }
 
 const Label = ({ htmlFor, children, hasError }: LabelProps) => (
-  <label htmlFor={htmlFor} style={{ fontSize: "0.875rem", fontWeight: 600, color: hasError ? "#ef4444" : "#0f172a" }}>
+  <label
+    htmlFor={htmlFor}
+    style={{
+      fontSize: "0.875rem",
+      fontWeight: 600,
+      color: hasError ? "#ef4444" : "#0f172a",
+    }}
+  >
     {children}
   </label>
 );
@@ -31,11 +38,19 @@ export const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
           {label} {required && requiredText && `(${requiredText})`}
         </Label>
         <Input id={id} ref={ref} {...props} />
-        {hint && !error && <Text fontSize="0.75rem" color="#64748b" margin="0">{hint}</Text>}
-        {error && <Text fontSize="0.75rem" color="#ef4444" margin="0">{error}</Text>}
+        {hint && !error && (
+          <Text fontSize="0.75rem" color="#64748b" margin="0">
+            {hint}
+          </Text>
+        )}
+        {error && (
+          <Text fontSize="0.75rem" color="#ef4444" margin="0">
+            {error}
+          </Text>
+        )}
       </Box>
     );
-  }
+  },
 );
 
 TextInput.displayName = "TextInput";

@@ -15,5 +15,11 @@ export const Nav = async ({ language, localizedLinks }: NavProps) => {
     console.error("Failed to load navigation links", err);
   }
 
-  return <NavContent lang={language} localizedLinks={localizedLinks} navLinks={links} />;
+  return (
+    <NavContent
+      lang={language}
+      localizedLinks={localizedLinks}
+      navLinks={links}
+    />
+  );
 };

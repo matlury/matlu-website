@@ -33,19 +33,31 @@ export function Toast({
       boxShadow="0 10px 25px rgba(0,0,0,0.2)"
       background={type === "success" ? "#059669" : "#dc2626"}
     >
-      <Box display="flex" alignItems="flex-start" justifyContent="space-between" gap="0.5rem">
+      <Box
+        display="flex"
+        alignItems="flex-start"
+        justifyContent="space-between"
+        gap="0.5rem"
+      >
         <Box>
-          <Text fontSize="0.875rem" fontWeight="600" lineHeight="var(--line-height-h3)" margin="0">
+          <Text
+            fontSize="0.875rem"
+            fontWeight="600"
+            lineHeight="var(--line-height-h3)"
+            margin="0"
+          >
             {title}
           </Text>
-          <Text marginTop="0.25rem" fontSize="0.875rem" lineHeight="var(--line-height-body)" opacity="0.95">
+          <Text
+            marginTop="0.25rem"
+            fontSize="0.875rem"
+            lineHeight="var(--line-height-body)"
+            opacity="0.95"
+          >
             {description}
           </Text>
         </Box>
-        <CloseButton
-          aria-label={closeAriaLabel}
-          onClick={onClose}
-        />
+        <CloseButton aria-label={closeAriaLabel} onClick={onClose} />
       </Box>
     </Box>,
     document.body,

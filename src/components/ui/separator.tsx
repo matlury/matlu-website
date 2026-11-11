@@ -1,6 +1,6 @@
-"use client"
+"use client";
 
-import * as React from "react"
+import * as React from "react";
 
 interface SeparatorProps {
   className?: string;
@@ -27,7 +27,7 @@ function Separator({
       }
       {...props}
     />
-  )
+  );
 }
 
-export { Separator }
+export { Separator };

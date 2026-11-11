@@ -162,14 +162,16 @@ export default function CalendarEvents({
           return { ...event, status };
         });
 
-        const upcoming = withStatus.filter(
-          (e) => e.status === "active" || e.status === "upcoming",
-        ).sort((a, b) =>
-          compareAsc(parseISO(a.start_date), parseISO(b.start_date)),
-        );
-        const past = withStatus.filter((e) => e.status === "past").sort((a, b) =>
-          compareAsc(parseISO(b.start_date), parseISO(a.start_date)),
-        );
+        const upcoming = withStatus
+          .filter((e) => e.status === "active" || e.status === "upcoming")
+          .sort((a, b) =>
+            compareAsc(parseISO(a.start_date), parseISO(b.start_date)),
+          );
+        const past = withStatus
+          .filter((e) => e.status === "past")
+          .sort((a, b) =>
+            compareAsc(parseISO(b.start_date), parseISO(a.start_date)),
+          );
 
         if (showAll) {
           setActiveAndUpcoming(upcoming);
@@ -189,8 +191,10 @@ export default function CalendarEvents({
     fetchEvents();
   }, [showAll]);
 
-  const sectionTitle = language === "fi" ? "Tulevat tapahtumat" : "Upcoming events";
-  const pastSectionTitle = language === "fi" ? "Päättyneet tapahtumat" : "Past events";
+  const sectionTitle =
+    language === "fi" ? "Tulevat tapahtumat" : "Upcoming events";
+  const pastSectionTitle =
+    language === "fi" ? "Päättyneet tapahtumat" : "Past events";
 
   if (loading) {
     return (
