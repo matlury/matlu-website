@@ -71,3 +71,4 @@ out
 
 # build artifacts
 public/logos/members
+*.tsbuildinfo
