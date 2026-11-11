@@ -9,7 +9,7 @@ export const BOARD_QUERY = gql`
       documentId
       year
       hidden
-      members(pagination: { page: 1, pageSize: 100 }) {
+      members {
         id
         name
         email
@@ -18,7 +18,7 @@ export const BOARD_QUERY = gql`
           en
         }
       }
-      officers(pagination: { page: 1, pageSize: 100 }) {
+      officers {
         id
         name
         role {
@@ -26,13 +26,13 @@ export const BOARD_QUERY = gql`
           en
         }
       }
-      teams(pagination: { page: 1, pageSize: 100 }) {
+      teams {
         id
         title {
           fi
           en
         }
-        team_members(pagination: { page: 1, pageSize: 100 }) {
+        team_members {
           id
           name
         }
@@ -62,7 +62,7 @@ export const LATEST_BOARD_QUERY = gql`
       documentId
       year
       hidden
-      members(pagination: { page: 1, pageSize: 100 }) {
+      members {
         id
         name
         email
@@ -71,7 +71,7 @@ export const LATEST_BOARD_QUERY = gql`
           en
         }
       }
-      officers(pagination: { page: 1, pageSize: 100 }) {
+      officers {
         id
         name
         role {
@@ -79,13 +79,13 @@ export const LATEST_BOARD_QUERY = gql`
           en
         }
       }
-      teams(pagination: { page: 1, pageSize: 100 }) {
+      teams {
         id
         title {
           fi
           en
         }
-        team_members(pagination: { page: 1, pageSize: 100 }) {
+        team_members {
           id
           name
         }

@@ -13,7 +13,7 @@ export const EVENT_SUGGESTIONS_QUERY = gql`
 
 export const TITLE_SUGGESTIONS_QUERY = gql`
   query TitleSuggestions {
-    eventRequests(pagination: { limit: 100 }) {
+    eventRequests {
       title {
         fi
         en

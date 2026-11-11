@@ -5,7 +5,6 @@ export const MEMBERS_QUERY = gql`
     members(
       filters: { enabled: { eq: true } }
       sort: "order:asc"
-      pagination: { page: 1, pageSize: 100 }
     ) {
       documentId
       name
