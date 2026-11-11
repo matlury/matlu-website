@@ -96,7 +96,5 @@ assets belong in `assets/`, not `public/`.
 ## Existing instruction files
 
 - `.github/copilot-instructions.md` — do not read or modify gitignored files.
-- `GEMINI.md` — stale Gemini CLI guide. Claims styled-components (not present)
-  and mislabels `typegen:scss` as typecheck. Do not trust; prefer this file.
 - `docs/llm-*.txt` — Chakra UI 3 component/styling/theme reference. Useful when
   writing UI.
