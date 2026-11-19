@@ -35,7 +35,7 @@
     "leaflet": "^1.9.4",
     "next": "^16.4.6",
     "path-browserify": "^1.0.1",
-    "postcss": "^8.5.32",
+    "postcss": "^8.5.33",
     "prop-types": "^15.7.2",
     "react": "^19.3.1",
     "react-dom": "^19.3.1",
